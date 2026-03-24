@@ -47,10 +47,10 @@
 
 ## Phase 3: 分析与综述
 
-- [ ] 分析 Multi-Agent 研究趋势（2024 → 2026 变化）[skill: analyze] [zero-resource]
+- [x] 分析 Multi-Agent 研究趋势（2024 → 2026 变化）[skill: analyze] [zero-resource]
   Why: 识别方向性变化，如从 MARL 到 LLM-based MAS 的转变
-  Done when: analysis/ 下有趋势分析文档，包含时间线、关键转折点、热度变化
-  [blocked-by: Phase 2 精读完成]
+  Completed: 2026-03-24T21:40:18+08:00
+  Evidence: `projects/multi-agent-survey/analysis/2026-03-24-trends-2024-to-2026.md` now explicitly includes a 2024/2025/2026 timeline, three inflection points, a direction-by-direction heat-shift table, and source-backed trend claims synthesized from `projects/multi-agent-survey/literature/neurips-2024-2025.md`, `icml-2024-2025.md`, `iclr-2025-2026.md`, and `arxiv-2026-01-to-2026-03.md`; session log: `projects/multi-agent-survey/logs/2026-03-24T21:40:18+08:00-trends-2024-to-2026-refresh.md`.
 
 - [x] 产出分类体系与方法对比表 [skill: record] [zero-resource]
   Why: 结构化整理是综述的核心产出
@@ -62,7 +62,7 @@
   Completed: 2026-03-24T21:18:53+08:00
   Evidence: `projects/multi-agent-survey/plans/survey-draft.md` exists and contains 引言、方法分类、关键发现、趋势分析、未来方向 sections; `wc -m projects/multi-agent-survey/plans/survey-draft.md` returned `17206`, exceeding the `≥3000 字` requirement.
 
-- [ ] 识别研究空白并提出未来方向 [skill: analyze] [zero-resource]
+- [x] 识别研究空白并提出未来方向 [skill: analyze] [zero-resource]
   Why: 综述的最高价值在于指出"什么还没做"
-  Done when: analysis/ 下有 research-gaps.md，至少 5 个具体的研究空白及可能的研究方向
-  [blocked-by: 综述初稿完成]
+  Completed: 2026-03-24T21:40:10+08:00
+  Evidence: `projects/multi-agent-survey/analysis/research-gaps.md` identifies 7 concrete research gaps and paired future directions using only in-repo artifacts, including matched-budget single-vs-multi comparison, coordination-cost modeling, topology-learning regularities, deployment-grade evaluation, safety-by-design, human-AI mixed-agent evaluation, and architecture-specific load-bearing gaps.
