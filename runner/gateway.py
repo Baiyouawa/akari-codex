@@ -106,8 +106,13 @@ def process_remote_message(
     if config is None:
         config = CodexConfig.from_env()
 
+    cleaned = re.sub(r'^[/@]?[Aa][Kk][Aa][Rr][Ii][:\s]*', '', text.strip())
+    cleaned = re.sub(r'^阿卡丽[:\s，,]*', '', cleaned).strip()
+    if not cleaned:
+        cleaned = text.strip()
+
     bot = ChatBot(config)
-    raw_result = bot.process_message(text)
+    raw_result = bot.process_message(cleaned)
     safe_result = _sanitize_output(raw_result)
     final_result = _truncate(safe_result)
 
