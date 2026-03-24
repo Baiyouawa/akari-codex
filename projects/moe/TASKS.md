@@ -20,13 +20,13 @@
 - [ ] 分析 MoE routing 与负载均衡机制 [zero-resource]
   Why: routing 是 MoE 与 dense Transformer 的关键差异，也是训练稳定性与专家利用率的核心问题。
   Done when: `projects/moe/analysis/` 下存在 routing 分析文档，明确比较至少 3 类机制或设计权衡，并给出来源。
-  Next step: 先从 `projects/moe/literature/2026-03-24-moe-source-map.md` 中的 `Switch Transformers`、`BASE Layers`、`ST-MoE` 抽取 routing、balancing loss、stability intervention 三类对比维度。
+  Progress: 2026-03-24 repo-internal prioritization now resolves the first extraction trio as `Switch Transformers`, `BASE Layers`, and `ST-MoE`, because the current source map and routing synthesis position them as the clearest contrast set for simplified routing, balancing-by-assignment, and stability intervention.
+  Next step: 从 `Switch Transformers`、`BASE Layers`、`ST-MoE` 实际抽取 row-level 字段，至少形成 `experts-per-token`、`balancing method`、`capacity / overflow handling`、`stability intervention` 四列的紧凑对比表，并把每列值回链到 `projects/moe/analysis/2026-03-24-routing-and-load-balancing.md` 或原始 source-map 条目。
 
-- [ ] 分析 MoE 系统瓶颈与效率权衡 [zero-resource]
+- [x] 分析 MoE 系统瓶颈与效率权衡 [zero-resource]
+  Completed: 2026-03-24T04:08:52Z
   Why: MoE 的价值不仅取决于参数规模，也取决于 dispatch、通信和并行策略是否真正带来吞吐收益。
-  Done when: `projects/moe/analysis/` 下存在 systems 分析文档，覆盖至少 3 个系统层瓶颈或优化点，并给出来源。
-  Progress: 2026-03-24 repo-internal synthesis says training and inference should be treated as separate comparison axes for now, but the claim is not yet literature-backed because source-backed systems analysis is still pending.
-  Next step: 先从 `projects/moe/literature/2026-03-24-moe-source-map.md` 中的 `GShard`、`DeepSpeed MoE`、`Megatron-LM` 提取 dispatch、all-to-all、expert parallelism 相关系统瓶颈条目。
+  Evidence: `projects/moe/analysis/2026-03-24-systems-bottlenecks-and-efficiency-tradeoffs.md` covers four source-backed system-layer bottlenecks / optimization points — token dispatch and gather overhead, cross-device communication from expert parallelism, expert placement / utilization efficiency, and capacity-factor / overflow tuning — citing `GShard`, `DeepSpeed MoE`, `Megatron-LM`, `Switch Transformers`, and Hugging Face SwitchTransformers docs; `projects/moe/logs/2026-03-24T040852Z-systems-analysis.md` records the original completion and verification.
 
 ## Phase 3: 结构化沉淀
 

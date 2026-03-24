@@ -1,14 +1,7 @@
 """OneBot11 QQ 客户端配置（基于 NapCatQQ 协议端）。
 
-Required env vars:
-    ONEBOT_SELF_QQ   — 小白登录的 QQ 号（用于判断群里 @ 自己）
-
-Optional env vars:
-    ONEBOT_WS_URL    — NapCat 正向 WebSocket 地址 (default: ws://localhost:3001)
-    ONEBOT_TOKEN     — NapCat WebSocket 的 Token（在 NapCat 网络配置中设置的）
-    ONEBOT_ADMIN_USERS — 逗号分隔的允许使用的 QQ 号 (empty = allow all)
-    ONEBOT_REPLY_PRIVATE — 是否回复私聊 (default: "1")
-    ONEBOT_REPLY_GROUP_AT — 是否回复群里 @ (default: "1")
+所有配置项都有内置默认值，可通过同名环境变量覆盖。
+直接 `python3 -m integrations.onebot_client` 即可启动，无需任何 export。
 """
 
 from __future__ import annotations
@@ -16,10 +9,18 @@ from __future__ import annotations
 import os
 from dataclasses import dataclass, field
 
+_DEFAULTS = {
+    "self_qq": "3759826713",
+    "owner_qq": "1094638877",
+    "ws_url": "ws://172.28.144.1:3002",
+    "token": "AuuTxNtTKV_Jpt2T",
+}
+
 
 @dataclass(frozen=True)
 class OneBotConfig:
     self_qq: str
+    owner_qq: str = ""
     ws_url: str = "ws://localhost:3001"
     token: str = ""
     admin_users: frozenset[str] = field(default_factory=frozenset)
@@ -28,27 +29,27 @@ class OneBotConfig:
 
     @classmethod
     def from_env(cls) -> OneBotConfig:
-        self_qq = os.environ.get("ONEBOT_SELF_QQ", "")
-        if not self_qq:
-            raise EnvironmentError(
-                "ONEBOT_SELF_QQ is required — set to the QQ number that NapCat logged in with."
-            )
-
         raw_admins = os.environ.get("ONEBOT_ADMIN_USERS", "").strip()
         admins = frozenset(
             u.strip() for u in raw_admins.split(",") if u.strip()
         ) if raw_admins else frozenset()
 
         return cls(
-            self_qq=self_qq,
-            ws_url=os.environ.get("ONEBOT_WS_URL", "ws://localhost:3001"),
-            token=os.environ.get("ONEBOT_TOKEN", ""),
+            self_qq=os.environ.get("ONEBOT_SELF_QQ", _DEFAULTS["self_qq"]),
+            owner_qq=os.environ.get("ONEBOT_OWNER_QQ", _DEFAULTS["owner_qq"]),
+            ws_url=os.environ.get("ONEBOT_WS_URL", _DEFAULTS["ws_url"]),
+            token=os.environ.get("ONEBOT_TOKEN", _DEFAULTS["token"]),
             admin_users=admins,
             reply_private=os.environ.get("ONEBOT_REPLY_PRIVATE", "1") == "1",
             reply_group_at=os.environ.get("ONEBOT_REPLY_GROUP_AT", "1") == "1",
         )
 
+    def is_owner(self, user_id: str) -> bool:
+        return bool(self.owner_qq) and user_id == self.owner_qq
+
     def is_user_allowed(self, user_id: str) -> bool:
+        if self.is_owner(user_id):
+            return True
         if not self.admin_users:
             return True
         return user_id in self.admin_users

@@ -52,13 +52,40 @@ Findings:
    - Provenance: `projects/moe/plans/moe-survey-draft.md` written in this session.
 2. The draft’s routing section is the strongest-supported portion because it reuses the existing source-backed comparison in `projects/moe/analysis/2026-03-24-routing-and-load-balancing.md`.
    - Provenance: `projects/moe/analysis/2026-03-24-routing-and-load-balancing.md`; `projects/moe/plans/moe-survey-draft.md`.
-3. The draft includes systems as a structured outline rather than a closed conclusion because the project still lacks a dedicated systems analysis artifact under `projects/moe/analysis/`.
-   - Provenance: `projects/moe/TASKS.md`; directory contents of `projects/moe/analysis/` observed in this session; `projects/moe/plans/moe-survey-draft.md`.
+3. The draft includes systems as a structured outline rather than a closed conclusion because the project still lacked a dedicated systems analysis artifact under `projects/moe/analysis/` at the time of drafting.
+   - Provenance: `projects/moe/TASKS.md` state at draft time; directory contents of `projects/moe/analysis/` observed in that session; `projects/moe/plans/moe-survey-draft.md`.
 4. The survey draft now gives future sessions a reusable synthesis layer above the source map and analysis notes, reducing the need to reassemble architecture / routing / systems context from scratch.
    - Provenance: `projects/moe/plans/moe-survey-draft.md` and its `Artifact map`, section structure, and `Recommended next increments` section.
 
+### 2026-03-24T13:17:45Z
+
+Resolved the first open routing question using only repo-internal evidence and tightened the next extraction target accordingly.
+
+Findings:
+1. The strongest first trio for a routing / load-balancing comparison table is `Switch Transformers`, `BASE Layers`, and `ST-MoE`.
+   - Provenance: `projects/moe/TASKS.md` already names these three as the routing task’s next-step extraction set; `projects/moe/literature/2026-03-24-moe-source-map.md` assigns them three complementary roles: routing simplification (`Switch Transformers`), balancing alternative (`BASE Layers`), and stability-focused refinement (`ST-MoE`).
+2. This trio is preferable to alternatives in the current source map because it spans three distinct comparison axes with minimal overlap: single-expert simplified routing, balancing-by-assignment, and stability intervention layered onto sparse routing.
+   - Provenance: `projects/moe/analysis/2026-03-24-routing-and-load-balancing.md` sections `Token-choice routing simplified to top-1: Switch Transformer style`, `Balanced assignment routing: BASE Layers style`, and `Stability-oriented routing refinements: ST-MoE style`.
+3. Repo-internal synthesis had already converged on the same answer before this session: the survey draft states that these three are the strongest immediate trio for a first routing table because they produce the cleanest contrast set for `experts-per-token / balancing method / stability intervention` style columns.
+   - Provenance: `projects/moe/plans/moe-survey-draft.md`, section `2.3 Routing implications for this project`; `projects/moe/analysis/2026-03-24-routing-and-load-balancing.md`, `Implications for projects/moe`.
+4. What still remains undone is the actual row-level extraction into a compact matrix; the answer here resolves source prioritization, not the full table build.
+   - Provenance: `projects/moe/TASKS.md` keeps the routing task open and defines extraction as the next step.
+
+### 2026-03-24T13:17:44Z
+
+Reconciled project state for the systems task after verifying that the required artifact had already been completed in an earlier session.
+
+Findings:
+1. `projects/moe/analysis/2026-03-24-systems-bottlenecks-and-efficiency-tradeoffs.md` already satisfies the assignment acceptance bar because it covers four system-layer bottlenecks / optimization points — token dispatch and gather overhead, cross-device communication from expert parallelism, expert placement / utilization efficiency, and capacity-factor / overflow tuning — exceeding the minimum requirement of three.
+   - Provenance: direct read of `projects/moe/analysis/2026-03-24-systems-bottlenecks-and-efficiency-tradeoffs.md` in the reconciliation session.
+2. The systems note is source-backed within current repo scope because it cites `GShard`, `DeepSpeed MoE`, `Megatron-LM`, `Switch Transformers`, and Hugging Face SwitchTransformers docs, all of which are also registered in `projects/moe/literature/2026-03-24-moe-source-map.md`.
+   - Provenance: `projects/moe/analysis/2026-03-24-systems-bottlenecks-and-efficiency-tradeoffs.md`; `projects/moe/literature/2026-03-24-moe-source-map.md`.
+3. Before reconciliation, `projects/moe/TASKS.md` still listed the systems task as open despite the prior completion log `projects/moe/logs/2026-03-24T040852Z-systems-analysis.md` and the existing analysis artifact.
+   - Provenance: direct comparison among `projects/moe/TASKS.md`, `projects/moe/logs/2026-03-24T040852Z-systems-analysis.md`, and `projects/moe/analysis/2026-03-24-systems-bottlenecks-and-efficiency-tradeoffs.md`.
+4. After reconciliation, project memory now reflects that the systems baseline artifact exists, so future sessions can move to configuration extraction and finer-grained evidence rather than redoing the first-pass note.
+   - Provenance: updated `projects/moe/TASKS.md`; `projects/moe/logs/2026-03-24T131744Z-fleet-智乃-02-1774358212-4f942d-systems-task-closeout.md`.
+
 ## Open questions
 
-1. 在当前来源地图中，哪三篇论文最适合优先抽取为 routing / load balancing 对比表？
-2. `DeepSpeed MoE`、`Megatron-LM` 与 `fairseq` 三个实现入口中，哪个最适合作为首轮配置旋钮抽取的基线？
-3. 训练与推理场景应先分开建模与比较；但仍需外部文献/实现证据来验证两者各自主导瓶颈是否显著不同，以及是否需要统一指标桥接二者。
+1. `DeepSpeed MoE`、`Megatron-LM` 与 `fairseq` 三个实现入口中，哪个最适合作为首轮配置旋钮抽取的基线？
+2. 训练与推理场景应先分开建模与比较；但仍需外部文献/实现证据来验证两者各自主导瓶颈是否显著不同，以及是否需要统一指标桥接二者。

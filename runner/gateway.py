@@ -90,6 +90,8 @@ def process_remote_message(
     user: str,
     text: str,
     config: CodexConfig | None = None,
+    *,
+    role: str = "owner",
 ) -> str:
     """Primary entry point for all remote channels.
 
@@ -98,6 +100,8 @@ def process_remote_message(
         user: Sender identifier (GitHub username, QQ user id, etc.)
         text: The natural language command.
         config: Optional config override; defaults to CodexConfig.from_env().
+        role: "owner" for the master user (full access), "public" for others
+              (chat-only, no actions/tools).
 
     Returns:
         Sanitized, truncated result string suitable for posting back.
@@ -116,7 +120,7 @@ def process_remote_message(
         cleaned = text.strip()
 
     bot = ChatBot(config)
-    raw_result = bot.process_message(cleaned)
+    raw_result = bot.process_message(cleaned, role=role, user=user)
     safe_result = _sanitize_output(raw_result)
     final_result = _truncate(safe_result)
 

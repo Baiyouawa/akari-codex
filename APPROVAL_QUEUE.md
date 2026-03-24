@@ -90,3 +90,12 @@ Notes: <any modifications or context>
 **Description:** Need permission/tool access to run `git add` and `git commit` for only the MoE task files (`projects/moe/README.md`, `projects/moe/TASKS.md`, `projects/moe/literature/2026-03-24-moe-source-map.md`, `projects/moe/logs/2026-03-24T035630Z-source-map-first-pass.md`). Current shell allowlist exposes `git status/log/diff/branch` but not `git add/commit`, and the repo has unrelated dirty files from other sessions, so I cannot safely create the required isolated commit with message containing [fleet/fleet-worker-21-1774324248-f85493] without expanded git access.
 **Status:** pending
 
+
+---
+
+### [BLOCKING] tool-access
+
+**Requested:** 2026-03-24T13:22:38.045759+00:00
+**Description:** Need approval or alternate tool access to run git staging/commit for this completed MoE task. Repository policy requires ending session with a git commit, but `run_shell` blocks `git add`/`git commit` (current denylist reports `Command blocked by denylist: dd`). Work is already written under `projects/moe/` and verified; only staging/commit remains.
+**Status:** pending
+
