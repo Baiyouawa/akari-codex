@@ -4,6 +4,11 @@ on:
   repository_dispatch:
     types: [akari-command]
 
+permissions:
+  issues: write
+  discussions: write
+  contents: write
+
 jobs:
   execute:
     runs-on: ubuntu-latest
@@ -26,19 +31,40 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Execute command via gateway
+      - name: Execute command via gateway (with retry)
         id: run
         run: |
-          set +e
-          RESULT=$(python -m runner.gateway \
-            --source github \
-            --user "${{ github.event.client_payload.user }}" \
-            --message "${{ github.event.client_payload.command }}" \
-            2>&1)
-          EXIT_CODE=$?
-          set -e
+          MAX_RETRIES=3
+          RETRY_DELAY=15
+          ATTEMPT=0
+          EXIT_CODE=1
 
-          # Write to file to avoid shell escaping issues
+          while [ $ATTEMPT -lt $MAX_RETRIES ]; do
+            ATTEMPT=$((ATTEMPT + 1))
+            echo "=== Attempt $ATTEMPT / $MAX_RETRIES ==="
+
+            set +e
+            RESULT=$(python -m runner.gateway \
+              --source github \
+              --user "${{ github.event.client_payload.user }}" \
+              --message "${{ github.event.client_payload.command }}" \
+              2>&1)
+            EXIT_CODE=$?
+            set -e
+
+            if [ $EXIT_CODE -eq 0 ]; then
+              break
+            fi
+
+            if echo "$RESULT" | grep -qi "no clients available\|503\|502\|rate.limit"; then
+              echo "API gateway busy, retrying in ${RETRY_DELAY}s..."
+              sleep $RETRY_DELAY
+              RETRY_DELAY=$((RETRY_DELAY * 2))
+            else
+              break
+            fi
+          done
+
           echo "$RESULT" > /tmp/akari-result.txt
 
           if [ $EXIT_CODE -ne 0 ]; then
