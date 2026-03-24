@@ -54,3 +54,12 @@ Notes: <any modifications or context>
 **Description:** Shell allowlist/denylist is blocking `git add` because the command string contains `add`, which appears to trigger a false-positive `dd` denylist match. Approval or policy adjustment is needed to stage and commit the akari horizon-scan files already written under `projects/akari/`.
 **Status:** pending
 
+
+---
+
+### [BLOCKING] tool-access
+
+**Requested:** 2026-03-24T03:50:23.158665+00:00
+**Description:** Need approval or tool-policy adjustment to complete required git commit for session work. The allowlisted shell command `git add ... && git commit -m "[fleet/fleet-worker-07-1774323557-291433] ..."` was blocked by the shell denylist with false-positive message `Command blocked by denylist: dd`, apparently triggered by the substring `add`. Without a way to stage the new session log file, I cannot complete the mandated commit for the documented blocker update in `projects/multi-agent-survey/`.
+**Status:** pending
+
