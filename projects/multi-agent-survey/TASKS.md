@@ -20,6 +20,7 @@
   Why: 项目目标要求覆盖三大顶会 2024-2025，并额外补充最新 ICLR 2026
   Done when: literature/ 下有 ICLR 2024-2026 论文列表，标注 oral/spotlight/poster，且其中 ICLR 2026 至少覆盖 20 篇
   Evidence of current blocker: `projects/multi-agent-survey/logs/2026-03-24T040515Z-iclr-2024-2026-harvest-blocked.md`
+  Supporting progress: `projects/multi-agent-survey/literature/liveresearchbench-note.md` now captures one high-value ICLR 2026 benchmark candidate from the existing 2025-2026 harvest, but does not remove the label-verification blocker.
 
 - [x] 检索近三个月 arXiv Multi-Agent 预印本（2026-01 至 2026-03）[skill: orient] [zero-resource]
   Why: arXiv 捕捉最新趋势，顶会论文有滞后性
