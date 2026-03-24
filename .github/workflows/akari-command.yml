@@ -20,33 +20,34 @@ jobs:
       !startsWith(github.event.comment.body, '❌') &&
       github.event.comment.user.login != 'github-actions[bot]'
     steps:
-      - name: Extract command
+      - name: Extract and sanitize command
         id: parse
-        run: |
-          BODY=$(cat <<'ENDOFBODY'
-          ${{ github.event.comment.body }}
-          ENDOFBODY
-          )
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.comment.body || '';
 
-          # Strip common prefixes (case-insensitive): /akari, /Akari, @akari, akari:, 阿卡丽 etc.
-          COMMAND=$(echo "$BODY" | sed -E 's|^[/@]?[Aa][Kk][Aa][Rr][Ii][: ]*||; s|^阿卡丽[: ，,]*||' | xargs)
+            // Strip common prefixes (case-insensitive)
+            let command = body
+              .replace(/^[/@]?akari[:\s]*/i, '')
+              .replace(/^阿卡丽[:\s，,]*/i, '')
+              .trim();
+            if (!command) command = body.trim();
 
-          # If prefix stripping removed nothing, use original body as-is
-          if [ -z "$COMMAND" ]; then
-            COMMAND="$BODY"
-          fi
+            // JSON-safe: escape for embedding in client-payload
+            const safeCommand = JSON.stringify(command);
 
-          # Write to file to avoid escaping issues
-          echo "$COMMAND" > /tmp/akari-command.txt
-          echo "user=${{ github.event.comment.user.login }}" >> "$GITHUB_OUTPUT"
+            core.setOutput('command', command);
+            core.setOutput('safe_command', safeCommand);
+            core.setOutput('user', context.payload.comment.user.login);
 
-          if [ "${{ github.event_name }}" = "issue_comment" ]; then
-            echo "context_type=issue" >> "$GITHUB_OUTPUT"
-            echo "context_number=${{ github.event.issue.number }}" >> "$GITHUB_OUTPUT"
-          else
-            echo "context_type=discussion" >> "$GITHUB_OUTPUT"
-            echo "context_number=${{ github.event.discussion.number }}" >> "$GITHUB_OUTPUT"
-          fi
+            if (context.eventName === 'issue_comment') {
+              core.setOutput('context_type', 'issue');
+              core.setOutput('context_number', String(context.payload.issue.number));
+            } else {
+              core.setOutput('context_type', 'discussion');
+              core.setOutput('context_number', String(context.payload.discussion.number));
+            }
 
       - name: React to acknowledge
         uses: actions/github-script@v7
@@ -60,15 +61,18 @@ jobs:
             });
 
       - name: Dispatch execution
-        uses: peter-evans/repository-dispatch@v3
+        uses: actions/github-script@v7
         with:
-          event-type: akari-command
-          client-payload: >-
-            {
-              "command_file": "/tmp/akari-command.txt",
-              "command": "${{ github.event.comment.body }}",
-              "user": "${{ steps.parse.outputs.user }}",
-              "context_type": "${{ steps.parse.outputs.context_type }}",
-              "context_number": "${{ steps.parse.outputs.context_number }}",
-              "comment_id": "${{ github.event.comment.id }}"
-            }
+          script: |
+            await github.rest.repos.createDispatchEvent({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              event_type: 'akari-command',
+              client_payload: {
+                command: `${{ steps.parse.outputs.command }}`,
+                user: `${{ steps.parse.outputs.user }}`,
+                context_type: `${{ steps.parse.outputs.context_type }}`,
+                context_number: `${{ steps.parse.outputs.context_number }}`,
+                comment_id: String(context.payload.comment.id),
+              },
+            });
