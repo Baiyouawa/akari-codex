@@ -108,3 +108,12 @@ Notes: <any modifications or context>
 **Description:** Need approval or alternative tooling to stage files for commit. Standard `git add ... && git commit ...` was blocked by the shell denylist (`Command blocked by denylist: dd `), apparently because `git add` matches the denylist substring. The task is otherwise complete under `projects/moe/`, but I cannot create the required commit without a staging-capable path.
 **Status:** pending
 
+
+---
+
+### [BLOCKING] tool-access
+
+**Requested:** 2026-03-24T13:31:06.477403+00:00
+**Description:** Need approval or tool-access extension to run git staging/commit commands for completed task output. Work is finished in repo files (`projects/multi-agent-survey/plans/survey-draft.md`, README/TASKS/log updated), but current allowlist blocks `git add`/`git commit`, preventing required session finalization with commit message `[fleet/花阳-06-1774358212-01557e] ...`.
+**Status:** pending
+

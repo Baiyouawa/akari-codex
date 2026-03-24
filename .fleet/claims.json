@@ -439,7 +439,8 @@
       "session_id": "岛村-01-1774358662-6b27d8",
       "project": "moe",
       "claimed_at": 1774358662.7940018,
-      "active": true
+      "active": false,
+      "released_at": 1774359040.6221018
     }
   }
 }
