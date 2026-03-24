@@ -64,29 +64,51 @@ Findings:
 
 Interpretation: this is a local miniature of the target meta-loop — operational evidence identified a workflow coupling problem, the repo-memory state was changed to isolate usable work from blocked work, and a later session produced new knowledge without waiting for the blocked half to clear.
 
-### 2026-03-24T03:41:44Z
+### 2026-03-23T17:20:00Z
 
-Investigated which self-improvement metrics are robust enough to compare across different forks or deployments of openakari, using only repository sources.
+Investigated which capability improvements appear to transfer across projects versus which depend on repo-specific history and conventions.
 
 Findings:
-1. The current measurement plan already names five candidate self-improvement metrics: Gap Detection Rate, Closure Rate, Improvement Effectiveness, Human Intervention Rate, and System-Learning Rate.
-   - Provenance: `projects/akari/plans/self-improvement-measurement.md`.
-2. Human Intervention Rate is the strongest current cross-fork metric because this fork already defines both a machine-countable denominator (`sessions`) and a concrete intervention-event source (`APPROVAL_QUEUE.md` requests tied to session evidence).
-   - Provenance: `projects/akari/plans/self-improvement-measurement.md`; `projects/akari/analysis/human-intervention-rate-2026-03-23.md`.
-3. Gap Detection Rate, Closure Rate, and System-Learning Rate are potentially comparable across forks if they are counted from explicit artifact classes such as diagnosis files, linked fixes/tasks, decision records, skill updates, or infrastructure changes, rather than narrative descriptions.
-   - Provenance: `projects/akari/plans/self-improvement-measurement.md`; `projects/akari/diagnosis/self-observation-examples.md`.
-4. Improvement Effectiveness is only weakly comparable today because ADR 0052 requires explicit denominators and filtering conditions for cross-context metric comparison, but this project does not yet define a standard before/after schema for self-improvement interventions.
-   - Provenance: `decisions/0052-metric-comparison-standardization.md`; `projects/akari/plans/self-improvement-measurement.md`.
-5. Findings-per-dollar is not yet a robust cross-fork metric in this repo even though it is a design principle, because the principle is stated normatively but this fork does not yet define a mechanical counting rule for `findings` or a standardized cost ledger for all sessions.
-   - Provenance: `AGENTS.md`; absence of any repository files operationalizing `findings per dollar` or related counting rules in this session's repository searches.
+1. The most portable improvements are the ones that create more mechanical ground truth for stateless agents: structured records, explicit before/after verification, and machine-countable operational artifacts.
+   - Provenance: `projects/akari/diagnosis/self-observation-examples.md`; `projects/akari/patterns/structured-work-records.md`.
+2. State-handoff improvements also appear broadly transferable because they address general statelessness problems rather than one project's topic area: repo-as-cognitive-state, inline logging, and explicit task decomposition into usable versus blocked work.
+   - Provenance: `projects/akari/patterns/repo-as-cognitive-state.md`; `projects/akari/patterns/inline-logging.md`; `projects/akari/analysis/local-self-improvement-loop-example.md`.
+3. Improvements are less transferable when they depend on local semantics: exact file destinations, archival thresholds, task taxonomies, approval conventions, and the contents of a repo's skill library all rely on accumulated repo history and established conventions.
+   - Provenance: `projects/akari/patterns/repo-as-cognitive-state.md`; `projects/akari/patterns/skills-architecture.md`.
+4. A practical split is: transferable improvements mostly upgrade the form of coordination and evidence; repo-specific improvements mostly encode local judgment about where knowledge belongs and how this repo names, counts, and routes work.
+   - Provenance: synthesis from the sources above.
 
-Provisional answer: the most robust cross-fork comparison set is a normalized event metric family grounded in mechanical repo artifacts — first `Human Intervention Rate`, then `Gap Detection Rate`, `Closure Rate`, and `System-Learning Rate` once artifact classes and linking rules are standardized. `Improvement Effectiveness` and `findings-per-dollar` are important, but they are not yet robust for cross-fork comparison in this deployment.
+Provisional answer: improvements that reduce ambiguity by adding structure, provenance, and reusable blocked/unblocked workflow patterns are the best cross-project candidates. Improvements that encode a particular repo's vocabulary, thresholds, skills, and counting rules should be treated as fork-local until validated elsewhere.
 
-More research needed: define a fork-invariant event schema for gaps, fixes, interventions, and system-level improvements; define required denominators and filters for each metric; and add one throughput/knowledge-output companion metric so forks cannot appear better merely by escalating less.
+Further research needed: the repo does not yet contain a controlled comparison across multiple forks using shared counting rules, so transferability is still argued from design-pattern evidence rather than demonstrated by cross-deployment measurement. The next internal step is to compare at least two deployments with the same definitions for intervention events, gap artifacts, and system-level improvements.
+
+### 2026-03-24T03:45:00Z
+
+Investigated the smallest useful amount of operational logging needed for real self-study without overwhelming orient cost.
+
+Findings:
+1. The repo already shows that some self-study metrics do not require verbose prose logs: human-intervention rate was computed from only session counts in `logs/sessions/session-*.json` plus explicit escalation records in `APPROVAL_QUEUE.md`.
+   - Provenance: `projects/akari/analysis/human-intervention-rate-2026-03-23.md`; `logs/sessions/session-20260323-120013-60cedbe2.json`; `logs/sessions/session-20260323-160117-0eb0dceb.json`; `logs/sessions/session-20260323-161007-0e17eb63.json`; `APPROVAL_QUEUE.md`.
+2. The local self-improvement-loop example shows that a second minimal logging requirement is one durable repo-state change that links a detected gap to a changed task/artifact state and a later reuse event.
+   - Provenance: `projects/akari/analysis/local-self-improvement-loop-example.md`; `projects/multi-agent-survey/TASKS.md`; `projects/multi-agent-survey/README.md`; `logs/sessions/2026-03-23T161441Z-neurips-2024-harvest.md`.
+3. Repo guidance explicitly prefers mechanical ground truth over narrative claims for self-observation.
+   - Provenance: `projects/akari/diagnosis/self-observation-examples.md`; `decisions/0004-inline-logging.md`.
+4. Orient cost is intentionally bounded by keeping only the 5 most recent README log entries, with older detail archived elsewhere.
+   - Provenance: `decisions/0066-log-retention-count-based.md`.
+
+Provisional answer: the smallest useful logging bundle is not a full prose diary. It is:
+- one machine-readable per-session record with stable identifiers and timestamps;
+- one explicit record of human intervention/escalation events when they occur;
+- one durable repo-state record of outcome when a session discovers a gap or changes operating state (for example, task-state updates, a README finding, or a diagnosis artifact);
+- provenance strong enough to recompute any numerical claim from files or inline arithmetic.
+
+This appears sufficient to support at least three kinds of self-study already demonstrated in-repo: intervention-rate measurement, gap->change->reuse loop reconstruction, and convention/quality audits. Anything substantially less would lose either the denominator (`sessions`), the explicit intervention signal, or the before/after state change needed to study improvement. Anything substantially more should be treated as optional detail and archived out of the README path to avoid raising orient cost.
+
+Further research needed: this answer is still based on a very small local sample. The next internal test is to check whether the same minimal bundle still supports self-study once session volume is much higher, especially whether session JSON + approval records + task/README deltas remain enough without also logging standardized touched-file lists or explicit outcome tags.
 
 ## Open questions
 
+- Which self-improvement metrics are robust enough to compare across different forks or deployments of openakari?
 - What is the smallest useful amount of operational logging needed to support real self-study without overwhelming orient cost?
 - Which kinds of capability improvements transfer across projects, and which depend on the specific repo's history and conventions?
 - Should this deployment standardize on `APPROVAL_QUEUE.md` requests, resolved approvals, or both as the canonical intervention-event source for future autonomy comparisons?
-- What is the smallest fork-invariant event schema that would let `Human Intervention Rate`, `Gap Detection Rate`, `Closure Rate`, and `System-Learning Rate` be recomputed mechanically across deployments?

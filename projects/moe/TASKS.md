@@ -1,23 +1,31 @@
 # MoE — Tasks
 
-## Open
+## Phase 1: 定义范围与资料入口
 
-- [ ] 梳理并初始化 MoE 任务目标与执行计划 [zero-resource] [skill: orient]
-  Why: 项目已完成基础工作空间搭建，但后续推进需要先明确研究目标、范围与下一步执行顺序。
-  Done when: `projects/moe/plans/` 或等价项目文档中存在一份可执行计划，至少说明目标、优先级和下一步任务。
-  Priority: high
+- [x] 在 Project 下新建 MoE 工作空间 [zero-resource]
+  Completed: 2026-03-24T03:42:29Z
+  Evidence: `projects/moe/README.md`, `projects/moe/TASKS.md`, `projects/moe/budget.yaml`, `projects/moe/logs/2026-03-24T034229Z-workspace-initialization.md`, plus the project subdirectories `analysis/`, `literature/`, `plans/`, and `logs/` together establish the baseline MoE workspace.
 
-- [ ] 继续推进 MoE 任务 [zero-resource] [skill: multi]
-  Why: 项目 mission 明确要求持续推进 MoE 相关任务，需在目标清晰后形成连续研究增量。
-  Done when: 至少一个新的 MoE 研究产物（如 analysis、literature note、plan 或 diagnosis）被提交并在 README 日志中记录。
-  Priority: high
+- [x] 梳理并初始化 MoE 任务目标与执行计划 [zero-resource]
+  Completed: 2026-03-24T03:44:26Z
+  Evidence: `projects/moe/plans/2026-03-24-initial-execution-plan.md` defines research scope, phase plan, deliverables, and non-goals; `projects/moe/analysis/2026-03-24-problem-framing.md` records prioritized research questions.
 
-## Completed
+- [ ] 建立 MoE 首版来源地图 [zero-resource]
+  Why: 后续任何文献或实现分析都需要统一的来源入口，避免 session 间重复从零开始找材料。
+  Done when: `projects/moe/literature/2026-03-24-moe-source-map.md` 至少补充 8 个带来源与用途说明的条目，覆盖论文 / 开源实现 / 工程参考中的至少 2 类。
 
-- [x] 在 Project 下新建 MoE 工作空间 [zero-resource] [skill: persist]
-  Completed: 2026-03-24
-  Evidence: `projects/moe/README.md` records “Project created.” under the `2026-03-24` log entry, and the project directory already contains `README.md`, `TASKS.md`, `budget.yaml`, `analysis/`, `literature/`, and `plans/`.
+## Phase 2: 机制分析
 
-- [x] Audit conventions and quality for moe [zero-resource] [skill: govern]
-  Completed: 2026-03-24T03:44:17Z
-  Evidence: `projects/moe/README.md` and `projects/moe/TASKS.md` were audited in this session; the README was updated to include missing `Done when` and `## Context` sections, and `projects/moe/TASKS.md` was corrected to remove the stale open setup task and duplicate follow-on task.
+- [ ] 分析 MoE routing 与负载均衡机制 [zero-resource]
+  Why: routing 是 MoE 与 dense Transformer 的关键差异，也是训练稳定性与专家利用率的核心问题。
+  Done when: `projects/moe/analysis/` 下存在 routing 分析文档，明确比较至少 3 类机制或设计权衡，并给出来源。
+
+- [ ] 分析 MoE 系统瓶颈与效率权衡 [zero-resource]
+  Why: MoE 的价值不仅取决于参数规模，也取决于 dispatch、通信和并行策略是否真正带来吞吐收益。
+  Done when: `projects/moe/analysis/` 下存在 systems 分析文档，覆盖至少 3 个系统层瓶颈或优化点，并给出来源。
+
+## Phase 3: 结构化沉淀
+
+- [ ] 撰写 MoE 结构化综述初稿 [zero-resource]
+  Why: 项目的最终价值在于把分散来源整理成可复用的结构化知识，而不是只留下零散笔记。
+  Done when: `projects/moe/plans/moe-survey-draft.md` 存在，能够回链到 literature / analysis artifacts，并覆盖 architecture、routing、systems 三个主题。

@@ -16,9 +16,9 @@
   Completed: 2026-03-23T16:29:00Z
   Evidence: `projects/multi-agent-survey/literature/icml-2024-2025.md` lists 24 DBLP-verified ICML 2024-2025 papers with authors, PMLR links, DBLP record URLs, tags, and retrieval-query provenance.
 
-- [ ] 全面盘点 ICLR 2025-2026 Multi-Agent 方向论文 [skill: orient] [zero-resource]
-  Why: ICLR 2026 是最新会议，代表学术前沿
-  Done when: literature/ 下有 ICLR 论文列表，标注 oral/spotlight/poster，至少覆盖 20 篇
+- [ ] 全面盘点 ICLR 2024-2026 Multi-Agent 方向论文 [skill: orient] [zero-resource]
+  Why: 项目目标要求覆盖三大顶会 2024-2025，并额外补充最新 ICLR 2026
+  Done when: literature/ 下有 ICLR 2024-2026 论文列表，标注 oral/spotlight/poster，且其中 ICLR 2026 至少覆盖 20 篇
 
 - [x] 检索近三个月 arXiv Multi-Agent 预印本（2026-01 至 2026-03）[skill: orient] [zero-resource]
   Why: arXiv 捕捉最新趋势，顶会论文有滞后性
@@ -35,7 +35,7 @@
 - [ ] 精读 Phase 1 中标记为 load-bearing 的论文（Coordination & Communication 类）[skill: analyze] [zero-resource]
   Why: 协作与通信是区分 multi-agent 与 single-agent 的关键
   Done when: 每篇 load-bearing 论文有 literature note
-  [blocked-by: Phase 1 检索未完成，且当前文献清单未显式标注 load-bearing 论文]
+  [blocked-by: Phase 1 检索完成]
 
 - [ ] 精读 Phase 1 中标记为 load-bearing 的论文（Evaluation & Application 类）[skill: analyze] [zero-resource]
   Why: 评估方法和应用场景决定了实际价值
