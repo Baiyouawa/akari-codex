@@ -268,7 +268,9 @@ def _save_fleet_session_log(
         "project": opts.task.project,
         "task_id": opts.task.task_id,
         "task_text": opts.task.text,
-        "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "timestamp": datetime.datetime.now(
+            datetime.timezone(datetime.timedelta(hours=8))
+        ).strftime("%Y-%m-%d %H:%M:%S CST"),
         "model": "gpt-5.4",
         "turns": session_result.turns,
         "success": session_result.success,

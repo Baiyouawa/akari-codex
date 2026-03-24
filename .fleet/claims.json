@@ -303,7 +303,8 @@
       "session_id": "fleet-worker-28-1774325119-abda60",
       "project": "moe",
       "claimed_at": 1774325119.7156866,
-      "active": true
+      "active": false,
+      "released_at": 1774325893.5774922
     },
     "claim-83a61d91c917": {
       "task_id": "3ae34235a51717dc",
@@ -311,7 +312,8 @@
       "session_id": "fleet-worker-29-1774325119-9ceeba",
       "project": "moe",
       "claimed_at": 1774325119.717057,
-      "active": true
+      "active": false,
+      "released_at": 1774325925.5096278
     },
     "claim-64e6d1e1f20a": {
       "task_id": "1c7a745a14e39df3",
