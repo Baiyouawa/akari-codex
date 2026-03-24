@@ -1,0 +1,11 @@
+{
+  "job_id": "default-research",
+  "project_path": ".",
+  "task_selector": "auto",
+  "frequency_seconds": 3600,
+  "model": "",
+  "max_budget_usd": 10.0,
+  "approval_policy": "standard",
+  "output_location": "logs/sessions",
+  "enabled": true
+}

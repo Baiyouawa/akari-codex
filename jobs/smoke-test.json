@@ -1,0 +1,11 @@
+{
+  "job_id": "smoke-test",
+  "project_path": ".",
+  "task_selector": "tasks/demo_task.md",
+  "frequency_seconds": 0,
+  "model": "",
+  "max_budget_usd": 1.0,
+  "approval_policy": "standard",
+  "output_location": "logs/sessions",
+  "enabled": true
+}

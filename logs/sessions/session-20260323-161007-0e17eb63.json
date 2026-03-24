@@ -1,0 +1,247 @@
+{
+  "session_id": "session-20260323-161007-0e17eb63",
+  "timestamp": "2026-03-23T16:17:10Z",
+  "task_id": "projects/multi-agent-survey/TASKS.md",
+  "model": "gpt-5.4",
+  "turns": 18,
+  "success": true,
+  "error": null,
+  "token_usage": {
+    "prompt_tokens": 399140,
+    "completion_tokens": 7940,
+    "total_tokens": 407080
+  },
+  "latency_seconds": 422.18,
+  "tool_calls": [
+    {
+      "turn": 1,
+      "tool": "read_file",
+      "args": {
+        "path": "AGENTS.md"
+      },
+      "result_preview": "# AGENTS.md\n\nThis file provides guidance to the autonomous agent (powered by Codex/OpenAI Responses API) when working in this repository.\n\n## What this repo is\n\nThis is a research group monorepo operated autonomously by LLM agents. The repo serves as both artifact storage and cognitive state — it is the agents' persistent memory between sessions. See [docs/design.md](docs/design.md) for rationale.\n\n## Work cycle\n\nThe conversation is ephemeral; the repo is permanent. Record as you go, not at the "
+    },
+    {
+      "turn": 1,
+      "tool": "read_file",
+      "args": {
+        "path": "README.md"
+      },
+      "result_preview": "# OpenAkari-Codex\n\n**Autonomous Knowledge Acquisition and Research Intelligence — powered by Codex/OpenAI**\n\nThis is a local reproduction of the [OpenAkari](https://github.com/victoriacity/openakari) research operating system, with the agent runtime rebuilt around the OpenAI Responses API (Codex models).\n\n## What this is\n\nA repository-as-memory system where LLM agents operate as persistent researchers — selecting tasks, running experiments, recording findings, and building institutional knowledg"
+    },
+    {
+      "turn": 1,
+      "tool": "read_file",
+      "args": {
+        "path": "projects/multi-agent-survey/README.md"
+      },
+      "result_preview": "# Multi-Agent Systems Survey\n\nPriority: high\nStatus: active\nMission: 系统调研近两年（2024-2026）Multi-Agent 领域的研究进展，覆盖三大 AI 顶会（NeurIPS、ICML、ICLR）+ 最新 ICLR 2026 + 近三个月 arXiv 论文。\nDone when: (1) 三大顶会 2024-2025 相关论文梳理完成并分类建档 (2) ICLR 2026 accepted papers 中 Multi-Agent 方向论文全面盘点 (3) 近三个月 arXiv 论文趋势分析完成 (4) 综述文档产出包含方法分类、关键发现、研究趋势、未来方向 (5) 每篇 load-bearing 论文有 literature note\n\n## Context\n\nMulti-Agent Systems (MAS) 是当前 AI 领域最活跃的研究方向之一。LLM-based Multi-Agent 框架（如 AutoGen、CrewAI、MetaGPT、ChatDev）在 2024-2025 年爆发式增长，同时学"
+    },
+    {
+      "turn": 1,
+      "tool": "read_file",
+      "args": {
+        "path": "projects/multi-agent-survey/TASKS.md"
+      },
+      "result_preview": "# Multi-Agent Survey — Tasks\n\n## Phase 1: 顶会论文检索与建档\n\n- [ ] 检索 NeurIPS 2024-2025 Multi-Agent 相关论文 [skill: orient] [zero-resource]\n  Why: 确定顶会中 multi-agent 方向的论文集合，为后续精读建立候选池\n  Done when: literature/ 下有 NeurIPS 论文列表，包含标题、作者、链接、分类标签，至少覆盖 15 篇\n\n- [ ] 检索 ICML 2024-2025 Multi-Agent 相关论文 [skill: orient] [zero-resource]\n  Why: ICML 侧重方法论和理论，与 NeurIPS 互补\n  Done when: literature/ 下有 ICML 论文列表，至少覆盖 15 篇\n\n- [ ] 全面盘点 ICLR 2025-2026 Multi-Agent 方向论文 [skill: orient] [zero-resource]\n  Why: ICLR 2026 是最新会议，代表学术前"
+    },
+    {
+      "turn": 1,
+      "tool": "list_files",
+      "args": {
+        "path": "logs",
+        "recursive": true
+      },
+      "result_preview": "[\n  {\n    \"path\": \"logs/failures\",\n    \"type\": \"dir\"\n  },\n  {\n    \"path\": \"logs/sessions\",\n    \"type\": \"dir\"\n  },\n  {\n    \"path\": \"logs/sessions/2026-03-23T120114Z-repo-health-check.md\",\n    \"type\": \"file\"\n  },\n  {\n    \"path\": \"logs/sessions/2026-03-23T160340Z-caption-pilot-blocked.md\",\n    \"type\": \"file\"\n  },\n  {\n    \"path\": \"logs/sessions/session-20260323-120013-60cedbe2.json\",\n    \"type\": \"file\"\n  },\n  {\n    \"path\": \"logs/sessions/session-20260323-160117-0eb0dceb.json\",\n    \"type\": \"file\"\n  }"
+    },
+    {
+      "turn": 2,
+      "tool": "read_file",
+      "args": {
+        "path": "logs/sessions/2026-03-23T160340Z-caption-pilot-blocked.md"
+      },
+      "result_preview": "# Session Log — Caption Pilot Baseline Blocked\n\n- Timestamp: 2026-03-23T16:03:40Z\n- Task: `examples/my-research-project/TASKS.md` — Run baseline captioning with 3 models on 50-image pilot set\n- Classification: TOOL-ACCESS\n- Status: blocked\n\n## Summary\n\nAttempted to execute the baseline captioning pilot task for the example image-captioning project. The task could not be executed because the repository copy used in this session lacks the referenced pilot dataset files and does not contain configu"
+    },
+    {
+      "turn": 2,
+      "tool": "list_files",
+      "args": {
+        "path": "projects/multi-agent-survey",
+        "recursive": true
+      },
+      "result_preview": "[\n  {\n    \"path\": \"projects/multi-agent-survey/README.md\",\n    \"type\": \"file\"\n  },\n  {\n    \"path\": \"projects/multi-agent-survey/TASKS.md\",\n    \"type\": \"file\"\n  },\n  {\n    \"path\": \"projects/multi-agent-survey/analysis\",\n    \"type\": \"dir\"\n  },\n  {\n    \"path\": \"projects/multi-agent-survey/budget.yaml\",\n    \"type\": \"file\"\n  },\n  {\n    \"path\": \"projects/multi-agent-survey/literature\",\n    \"type\": \"dir\"\n  },\n  {\n    \"path\": \"projects/multi-agent-survey/logs\",\n    \"type\": \"dir\"\n  },\n  {\n    \"path\": \"pr"
+    },
+    {
+      "turn": 3,
+      "tool": "read_file",
+      "args": {
+        "path": "projects/multi-agent-survey/scripts/harvest_neurips_crossref.py"
+      },
+      "result_preview": "#!/usr/bin/env python3\n\"\"\"Harvest NeurIPS multi-agent candidates from Crossref.\n\nProvenance:\n- Source API: https://api.crossref.org/works\n- Retrieval heuristic: query within NeurIPS proceedings container title and keyword-match\n  titles/abstract surrogates from the returned records.\n- This script intentionally preserves an explicit note when 2025 venue-constrained\n  retrieval does not return NeurIPS proceedings records in the current index snapshot.\n\"\"\"\n\nfrom __future__ import annotations\n\nimpor"
+    },
+    {
+      "turn": 3,
+      "tool": "list_files",
+      "args": {
+        "path": "projects/multi-agent-survey/literature",
+        "recursive": true
+      },
+      "result_preview": "[]"
+    },
+    {
+      "turn": 3,
+      "tool": "read_file",
+      "args": {
+        "path": "projects/multi-agent-survey/budget.yaml"
+      },
+      "result_preview": "resources:\n  llm_api_calls:\n    limit: 2000\n    unit: calls\n  total_tokens:\n    limit: 5000000\n    unit: tokens\n\ndeadline: 2026-04-30T00:00:00Z\n"
+    },
+    {
+      "turn": 4,
+      "tool": "run_shell",
+      "args": {
+        "command": "python projects/multi-agent-survey/scripts/harvest_neurips_crossref.py",
+        "working_dir": "."
+      },
+      "result_preview": "{\"exit_code\": 127, \"output\": \"/bin/sh: 1: python: not found\\n\"}"
+    },
+    {
+      "turn": 5,
+      "tool": "run_shell",
+      "args": {
+        "command": "python3 projects/multi-agent-survey/scripts/harvest_neurips_crossref.py",
+        "working_dir": "."
+      },
+      "result_preview": "{\"error\": \"Command timed out after 60 seconds\"}"
+    },
+    {
+      "turn": 6,
+      "tool": "run_shell",
+      "args": {
+        "command": "python3 --version",
+        "working_dir": "."
+      },
+      "result_preview": "{\"exit_code\": 0, \"output\": \"Python 3.10.12\\n\"}"
+    },
+    {
+      "turn": 6,
+      "tool": "search_text",
+      "args": {
+        "pattern": "Crossref|api.crossref.org|harvest_neurips_crossref",
+        "path": "projects/multi-agent-survey",
+        "max_results": 20
+      },
+      "result_preview": "(no matches)"
+    },
+    {
+      "turn": 7,
+      "tool": "run_shell",
+      "args": {
+        "command": "python3 - <<'PY'\nimport json, urllib.parse, urllib.request\nurl='https://api.crossref.org/works?'+urllib.parse.urlencode({'query':'multi-agent','rows':'1'})\nreq=urllib.request.Request(url, headers={'User-Agent':'OpenAkari-Codex/0.1 (mailto:research@example.com)'})\nwith urllib.request.urlopen(req, timeout=20) as resp:\n    data=json.load(resp)\nprint('items', len(data.get('message',{}).get('items',[])))\nPY",
+        "working_dir": "."
+      },
+      "result_preview": "{\"exit_code\": 0, \"output\": \"items 1\\n\"}"
+    },
+    {
+      "turn": 8,
+      "tool": "run_shell",
+      "args": {
+        "command": "python3 - <<'PY'\nimport json, time, urllib.parse, urllib.request\nfrom collections import OrderedDict\nfrom pathlib import Path\n\nUSER_AGENT='OpenAkari-Codex/0.1 (mailto:research@example.com)'\nCROSSREF='https://api.crossref.org/works'\nCONTAINER='Advances in Neural Information Processing Systems'\nKEYWORDS=['multi-agent','multi agent','agent','agents','coordination','communication','cooperative','teamwork','collaboration','reinforcement learning']\nQUERIES=['multi-agent','agent','cooperative','coordination','communication','teamwork','collaboration','reinforcement learning']\n\ndef fetch(params):\n    url=CROSSREF+'?'+urllib.parse.urlencode(params)\n    req=urllib.request.Request(url, headers={'User-Agent':USER_AGENT})\n    with urllib.request.urlopen(req, timeout=20) as resp:\n        return json.load(resp)\n\ndef normalize_title(item):\n    return ' '.join(((item.get('title') or [''])[0]).split())\n\ndef authors(item):\n    names=[]\n    for a in item.get('author',[]):\n        full=' '.join(x for x in [a.get('given','').strip(), a.get('family','').strip()] if x)\n        if full:\n            names.append(full)\n    return ', '.join(names)\n\ndef year_of(item):\n    for key in ('published-print','published-online','issued'):\n        date=item.get(key,{}).get('date-parts')\n        if date and date[0]:\n            return str(date[0][0])\n    return 'unknown'\n\ndef score(title):\n    lower=title.lower()\n    return sum(1 for kw in KEYWORDS if kw in lower)\n\ndef classify(title):\n    lower=title.lower()\n    tags=[]\n    if any(k in lower for k in ['framework','system','collaboration','assistant']): tags.append('Architecture')\n    if any(k in lower for k in ['coordination','teamwork','allocation']): tags.append('Coordination')\n    if any(k in lower for k in ['communication','message','memory']): tags.append('Communication')\n    if any(k in lower for k in ['benchmark','evaluation','assessing']): tags.append('Evaluation')\n    if any(k in lower for k in ['software','mathematical','mobile','device','health']): tags.append('Application')\n    if any(k in lower for k in ['game','regret','equilibr','learning']): tags.append('Theory/MARL')\n    if not tags: tags.append('Unclassified')\n    return tags\n\nyear_to_rows={}\nyear_to_notes={}\nfor year in (2024, 2025):\n    seen=OrderedDict(); notes=[]\n    for q in QUERIES:\n        params={'query':q,'query.container-title':CONTAINER,'filter':f'from-pub-date:{year}-01-01,until-pub-date:{year}-12-31','rows':'50'}\n        data=fetch(params)\n        items=data.get('message',{}).get('items',[])\n        matched=0\n        for item in items:\n            container=(item.get('container-title') or [''])[0]\n            title=normalize_title(item)\n            if not title: continue\n            if 'advances in neural information processing systems' not in container.lower():\n                continue\n            matched += 1\n            if score(title) <= 0:\n                continue\n            doi=item.get('DOI','')\n            key=doi or title.lower()\n            if key in seen: continue\n            seen[key]={'title':title,'authors':authors(item),'year':year_of(item),'link':f'https://doi.org/{doi}' if doi else item.get('URL',''),'tags':classify(title),'query':q}\n        notes.append(f\"query={q!r}: {len(items)} items returned, {matched} with NeurIPS container-title\")\n    rows=sorted(seen.values(), key=lambda x:(-score(x['title']), x['title'].lower()))\n    if year==2025 and not rows:\n        notes.append('No NeurIPS 2025 records survived venue-constrained Crossref retrieval in this session; likely indexing lag or proceedings metadata mismatch.')\n    year_to_rows[year]=rows\n    year_to_notes[year]=notes\n\nlines=['# NeurIPS 2024-2025 Multi-Agent candidate list','',\n'Source: Crossref `works` API queried via inline Python in this session using the same retrieval logic as `projects/multi-agent-survey/scripts/harvest_neurips_crossref.py`.','',\n'Method:','- Venue filter: container-title contains `Advances in Neural Information Processing Systems`.','- Year filter: publication year 2024 and 2025 separately.',f\"- Query set: {', '.join(QUERIES)}.\",'- Relevance heuristic: keep titles containing at least one agent/MAS-related keyword; assign lightweight topic tags from title tokens.','- Caveat: this is a retrieval snapshot, not a claim of exhaustive conference coverage.','',f\"Total harvested candidates: {sum(len(v) for v in year_to_rows.values())}.\",'']\nfor year in sorted(year_to_rows):\n    lines += [f'## {year}','','Retrieval notes:']\n    lines += [f'- {n}' for n in year_to_notes[year]]\n    lines += ['']\n    rows=year_to_rows[year]\n    if not rows:\n        lines += ['No candidates harvested for this year in the current Crossref snapshot.','']\n        continue\n    for i,row in enumerate(rows,1):\n        lines += [f\"{i}. **{row['title']}**\",f\"   - Authors: {row['authors'] or 'not returned by Crossref'}\",f\"   - Link: {row['link']}\",f\"   - Tags: {', '.join(row['tags'])}\",f\"   - Retrieved via query: `{row['query']}`\"]\n    lines += ['']\n\nout=Path('projects/multi-agent-survey/literature/neurips-2024-2025.md')\nout.parent.mkdir(parents=True, exist_ok=True)\nout.write_text('\\n'.join(lines), encoding='utf-8')\nprint('wrote', out)\nfor year, rows in year_to_rows.items():\n    print(year, len(rows))\nPY",
+        "working_dir": "."
+      },
+      "result_preview": "{\"exit_code\": 0, \"output\": \"wrote projects/multi-agent-survey/literature/neurips-2024-2025.md\\n2024 138\\n2025 0\\n\"}"
+    },
+    {
+      "turn": 9,
+      "tool": "read_file",
+      "args": {
+        "path": "projects/multi-agent-survey/literature/neurips-2024-2025.md"
+      },
+      "result_preview": "# NeurIPS 2024-2025 Multi-Agent candidate list\n\nSource: Crossref `works` API queried via inline Python in this session using the same retrieval logic as `projects/multi-agent-survey/scripts/harvest_neurips_crossref.py`.\n\nMethod:\n- Venue filter: container-title contains `Advances in Neural Information Processing Systems`.\n- Year filter: publication year 2024 and 2025 separately.\n- Query set: multi-agent, agent, cooperative, coordination, communication, teamwork, collaboration, reinforcement learn"
+    },
+    {
+      "turn": 9,
+      "tool": "read_file",
+      "args": {
+        "path": "tasks/TASKS.md"
+      },
+      "result_preview": "# Tasks\n\n## Open\n\n- [ ] Validate all 25 skills migrated from upstream [zero-resource] [skill: govern]\n  Done when: each skills/ subdirectory has a SKILL.md\n\n- [ ] Write first decision record for the Codex migration [zero-resource] [skill: record]\n  Done when: decisions/ contains the new ADR\n\n## Completed\n\n- [x] Repository health check — verify structure, read key files, write session log [zero-resource] [skill: orient]\n  Completed: 2026-03-23T12:01:14Z\n  Evidence: `logs/sessions/2026-03-23T12011"
+    },
+    {
+      "turn": 10,
+      "tool": "run_shell",
+      "args": {
+        "command": "date -u +\"%Y-%m-%dT%H:%M:%SZ\"",
+        "working_dir": "."
+      },
+      "result_preview": "{\"exit_code\": 0, \"output\": \"2026-03-23T16:14:41Z\\n\"}"
+    },
+    {
+      "turn": 11,
+      "tool": "read_file",
+      "args": {
+        "path": "projects/multi-agent-survey/TASKS.md"
+      },
+      "result_preview": "# Multi-Agent Survey — Tasks\n\n## Phase 1: 顶会论文检索与建档\n\n- [ ] 检索 NeurIPS 2024-2025 Multi-Agent 相关论文 [skill: orient] [zero-resource]\n  Why: 确定顶会中 multi-agent 方向的论文集合，为后续精读建立候选池\n  Done when: literature/ 下有 NeurIPS 论文列表，包含标题、作者、链接、分类标签，至少覆盖 15 篇\n\n- [ ] 检索 ICML 2024-2025 Multi-Agent 相关论文 [skill: orient] [zero-resource]\n  Why: ICML 侧重方法论和理论，与 NeurIPS 互补\n  Done when: literature/ 下有 ICML 论文列表，至少覆盖 15 篇\n\n- [ ] 全面盘点 ICLR 2025-2026 Multi-Agent 方向论文 [skill: orient] [zero-resource]\n  Why: ICLR 2026 是最新会议，代表学术前"
+    },
+    {
+      "turn": 11,
+      "tool": "read_file",
+      "args": {
+        "path": "projects/multi-agent-survey/README.md"
+      },
+      "result_preview": "# Multi-Agent Systems Survey\n\nPriority: high\nStatus: active\nMission: 系统调研近两年（2024-2026）Multi-Agent 领域的研究进展，覆盖三大 AI 顶会（NeurIPS、ICML、ICLR）+ 最新 ICLR 2026 + 近三个月 arXiv 论文。\nDone when: (1) 三大顶会 2024-2025 相关论文梳理完成并分类建档 (2) ICLR 2026 accepted papers 中 Multi-Agent 方向论文全面盘点 (3) 近三个月 arXiv 论文趋势分析完成 (4) 综述文档产出包含方法分类、关键发现、研究趋势、未来方向 (5) 每篇 load-bearing 论文有 literature note\n\n## Context\n\nMulti-Agent Systems (MAS) 是当前 AI 领域最活跃的研究方向之一。LLM-based Multi-Agent 框架（如 AutoGen、CrewAI、MetaGPT、ChatDev）在 2024-2025 年爆发式增长，同时学"
+    },
+    {
+      "turn": 12,
+      "tool": "write_file",
+      "args": {
+        "path": "projects/multi-agent-survey/TASKS.md",
+        "content": "# Multi-Agent Survey — Tasks\n\n## Phase 1: 顶会论文检索与建档\n\n- [x] 检索 NeurIPS 2024 Multi-Agent 相关论文 [skill: orient] [zero-resource]\n  Why: 先建立可验证的 NeurIPS 候选池，为后续精读建立候选集\n  Completed: 2026-03-23T16:14:41Z\n  Evidence: `projects/multi-agent-survey/literature/neurips-2024-2025.md` contains 138 Crossref-harvested NeurIPS 2024 candidates with title, authors, link, and classification tags, generated via inline Python using the same retrieval logic as `projects/multi-agent-survey/scripts/harvest_neurips_crossref.py`.\n\n- [ ] 补全并验证 NeurIPS 2025 Multi-Agent 相关论文 [skill: orient] [zero-resource] [blocked-by: Crossref 当前快照未返回 NeurIPS 2025 proceedings records，需要更换来源或等待索引更新]\n  Why: 原始任务要求覆盖 NeurIPS 2024-2025，但本次仅验证到 2024，2025 需要单独补齐\n  Done when: `literature/` 下补充 NeurIPS 2025 论文列表，包含标题、作者、链接、分类标签，至少覆盖 15 篇，并注明数据源\n\n- [ ] 检索 ICML 2024-2025 Multi-Agent 相关论文 [skill: orient] [zero-resource]\n  Why: ICML 侧重方法论和理论，与 NeurIPS 互补\n  Done when: literature/ 下有 ICML 论文列表，至少覆盖 15 篇\n\n- [ ] 全面盘点 ICLR 2025-2026 Multi-Agent 方向论文 [skill: orient] [zero-resource]\n  Why: ICLR 2026 是最新会议，代表学术前沿\n  Done when: literature/ 下有 ICLR 论文列表，标注 oral/spotlight/poster，至少覆盖 20 篇\n\n- [ ] 检索近三个月 arXiv Multi-Agent 预印本（2026-01 至 2026-03）[skill: orient] [zero-resource]\n  Why: arXiv 捕捉最新趋势，顶会论文有滞后性\n  Done when: literature/ 下有 arXiv 论文列表，按月份分组，至少覆盖 20 篇\n\n## Phase 2: 精读与 Literature Notes\n\n- [ ] 精读 Phase 1 中标记为 load-bearing 的论文（Architecture 类）[skill: analyze] [zero-resource]\n  Why: 框架设计是 multi-agent 最核心的子方向\n  Done when: 每篇 load-bearing 论文有标准格式的 literature note 文件\n  [blocked-by: Phase 1 检索完成]\n\n- [ ] 精读 Phase 1 中标记为 load-bearing 的论文（Coordination & Communication 类）[skill: analyze] [zero-resource]\n  Why: 协作与通信是区分 multi-agent 与 single-agent 的关键\n  Done when: 每篇 load-bearing 论文有 literature note\n  [blocked-by: Phase 1 检索完成]\n\n- [ ] 精读 Phase 1 中标记为 load-bearing 的论文（Evaluation & Application 类）[skill: analyze] [zero-resource]\n  Why: 评估方法和应用场景决定了实际价值\n  Done when: 每篇 load-bearing 论文有 literature note\n  [blocked-by: Phase 1 检索完成]\n\n## Phase 3: 分析与综述\n\n- [ ] 分析 Multi-Agent 研究趋势（2024 → 2026 变化）[skill: analyze] [zero-resource]\n  Why: 识别方向性变化，如从 MARL 到 LLM-based MAS 的转变\n  Done when: analysis/ 下有趋势分析文档，包含时间线、关键转折点、热度变化\n  [blocked-by: Phase 2 精读完成]\n\n- [ ] 产出分类体系与方法对比表 [skill: record] [zero-resource]\n  Why: 结构化整理是综述的核心产出\n  Done when: analysis/ 下有方法分类表，每个类别有代表论文、优缺点、适用场景\n  [blocked-by: Phase 2 精读完成]\n\n- [ ] 撰写综述初稿 [skill: record] [zero-resource]\n  Why: 最终交付物\n  Done when: plans/survey-draft.md 存在，包含引言、方法分类、关键发现、趋势分析、未来方向，≥3000 字\n  [blocked-by: 趋势分析和分类体系完成]\n\n- [ ] 识别研究空白并提出未来方向 [skill: analyze] [zero-resource]\n  Why: 综述的最高价值在于指出\"什么还没做\"\n  Done when: analysis/ 下有 research-gaps.md，至少 5 个具体的研究空白及可能的研究方向\n  [blocked-by: 综述初稿完成]\n"
+      },
+      "result_preview": "{\"status\": \"ok\", \"path\": \"projects/multi-agent-survey/TASKS.md\", \"bytes\": 2671}"
+    },
+    {
+      "turn": 13,
+      "tool": "write_file",
+      "args": {
+        "path": "projects/multi-agent-survey/logs/2026-03-23T161441Z-neurips-2024-harvest.md",
+        "content": "# Session Log — NeurIPS 2024 Multi-Agent Harvest\n\n- Timestamp: 2026-03-23T16:14:41Z\n- Project: `projects/multi-agent-survey`\n- Task: `projects/multi-agent-survey/TASKS.md` — NeurIPS multi-agent literature retrieval\n- Classification: ROUTINE\n- Status: partial task decomposition completed\n\n## Summary\n\nCreated the first literature artifact for the multi-agent survey project: a venue-constrained NeurIPS 2024-2025 candidate list harvested from Crossref. The current Crossref snapshot yielded 138 NeurIPS 2024 candidates with title/author/link/tag metadata, but 0 NeurIPS 2025 proceedings records under the same venue filter, so the original combined 2024-2025 task was split into a completed 2024 task and a follow-up 2025 verification task.\n\n## Findings\n\n1. The repository already contained a reusable NeurIPS harvester script.\n   - Provenance: `projects/multi-agent-survey/scripts/harvest_neurips_crossref.py`.\n\n2. The default shell environment does not provide `python`, but does provide `python3`.\n   - Provenance: `run_shell(\"python projects/multi-agent-survey/scripts/harvest_neurips_crossref.py\")` returned `/bin/sh: 1: python: not found`; `run_shell(\"python3 --version\")` returned `Python 3.10.12`.\n\n3. Direct Crossref access worked during this session.\n   - Provenance: `run_shell` inline Python request to `https://api.crossref.org/works?query=multi-agent&rows=1` returned `items 1`.\n\n4. Venue-constrained Crossref harvesting produced 138 NeurIPS 2024 candidates and 0 NeurIPS 2025 candidates.\n   - Provenance: inline Python execution using the same retrieval logic as `projects/multi-agent-survey/scripts/harvest_neurips_crossref.py`; output printed `2024 138` and `2025 0` and wrote `projects/multi-agent-survey/literature/neurips-2024-2025.md`.\n\n5. The 2025 absence is currently an indexing/source limitation, not evidence that NeurIPS 2025 had no multi-agent papers.\n   - Provenance: `projects/multi-agent-survey/literature/neurips-2024-2025.md` retrieval notes show 0 items with the NeurIPS container-title for every 2025 query despite non-empty Crossref result sets.\n\n## Actions taken\n\n1. Wrote `projects/multi-agent-survey/literature/neurips-2024-2025.md`.\n2. Split the original NeurIPS 2024-2025 task in `projects/multi-agent-survey/TASKS.md` into:\n   - completed NeurIPS 2024 retrieval\n   - blocked NeurIPS 2025 completion/verification\n3. Recorded this session in project logs and project README.\n\n## Next steps\n\n1. Use an alternate source for NeurIPS 2025 coverage (conference proceedings page, OpenReview, DBLP, or Semantic Scholar) and document provenance.\n2. After source validation, either merge 2024+2025 into one final artifact or keep per-year artifacts with a combined index.\n"
+      },
+      "result_preview": "{\"status\": \"ok\", \"path\": \"projects/multi-agent-survey/logs/2026-03-23T161441Z-neurips-2024-harvest.md\", \"bytes\": 2703}"
+    },
+    {
+      "turn": 14,
+      "tool": "write_file",
+      "args": {
+        "path": "projects/multi-agent-survey/README.md",
+        "content": "# Multi-Agent Systems Survey\n\nPriority: high\nStatus: active\nMission: 系统调研近两年（2024-2026）Multi-Agent 领域的研究进展，覆盖三大 AI 顶会（NeurIPS、ICML、ICLR）+ 最新 ICLR 2026 + 近三个月 arXiv 论文。\nDone when: (1) 三大顶会 2024-2025 相关论文梳理完成并分类建档 (2) ICLR 2026 accepted papers 中 Multi-Agent 方向论文全面盘点 (3) 近三个月 arXiv 论文趋势分析完成 (4) 综述文档产出包含方法分类、关键发现、研究趋势、未来方向 (5) 每篇 load-bearing 论文有 literature note\n\n## Context\n\nMulti-Agent Systems (MAS) 是当前 AI 领域最活跃的研究方向之一。LLM-based Multi-Agent 框架（如 AutoGen、CrewAI、MetaGPT、ChatDev）在 2024-2025 年爆发式增长，同时学术界在 multi-agent communication、coordination、evaluation 等方面产出了大量高质量工作。\n\n本项目旨在系统性地收集、分类、分析这些工作，产出一份结构化的文献综述。\n\n## Scope\n\n### 会议论文\n- **NeurIPS 2024, 2025**: multi-agent, LLM agent collaboration, cooperative AI\n- **ICML 2024, 2025**: multi-agent reinforcement learning, agent communication, agent systems\n- **ICLR 2025, 2026**: multi-agent, agent framework, agent evaluation\n\n### arXiv 预印本\n- **时间窗口**: 2026-01-01 至 2026-03-23\n- **关键词**: multi-agent, LLM agent, agent collaboration, agent framework, cooperative agents\n\n### 分类维度\n1. **Architecture**: 框架设计、agent 拓扑、通信协议\n2. **Coordination**: 任务分配、协作策略、冲突解决\n3. **Communication**: 消息传递、共享记忆、tool sharing\n4. **Evaluation**: benchmark、metrics、human evaluation\n5. **Application**: 代码生成、科学发现、游戏、机器人\n6. **Theory**: 博弈论、社会选择、emergence\n\n## Log\n\n### 2026-03-23\n\n项目创建。定义了调研范围、分类体系和产出目标。\n\n- 2026-03-23T16:14:41Z — Harvested the first NeurIPS literature artifact into `projects/multi-agent-survey/literature/neurips-2024-2025.md` using Crossref venue-constrained retrieval logic mirrored from `projects/multi-agent-survey/scripts/harvest_neurips_crossref.py`. This session produced 138 NeurIPS 2024 candidates with title/author/link/tag metadata and 0 NeurIPS 2025 venue-matched records in the current Crossref snapshot, so `projects/multi-agent-survey/TASKS.md` was decomposed into a completed 2024 task and a blocked 2025 follow-up.\n\n## Open questions\n\n- Multi-Agent 与 Single-Agent + tools 的性能边界在哪里？什么时候值得用多智能体？\n- ICLR 2026 是否有关于 multi-agent evaluation benchmark 的新工作？\n- 最近三个月 arXiv 上的 multi-agent 论文主要集中在哪些子方向？\n- Agent-to-agent communication 的最新范式是什么？shared memory vs message passing vs tool use?\n- 除 Crossref 之外，NeurIPS 2025 应优先采用哪个可验证来源（OpenReview / 官方 proceedings / DBLP）以补齐论文池？\n"
+      },
+      "result_preview": "{\"status\": \"ok\", \"path\": \"projects/multi-agent-survey/README.md\", \"bytes\": 2213}"
+    },
+    {
+      "turn": 15,
+      "tool": "read_file",
+      "args": {
+        "path": "projects/multi-agent-survey/literature/neurips-2024-2025.md"
+      },
+      "result_preview": "# NeurIPS 2024-2025 Multi-Agent candidate list\n\nSource: Crossref `works` API queried via inline Python in this session using the same retrieval logic as `projects/multi-agent-survey/scripts/harvest_neurips_crossref.py`.\n\nMethod:\n- Venue filter: container-title contains `Advances in Neural Information Processing Systems`.\n- Year filter: publication year 2024 and 2025 separately.\n- Query set: multi-agent, agent, cooperative, coordination, communication, teamwork, collaboration, reinforcement learn"
+    },
+    {
+      "turn": 16,
+      "tool": "git_status",
+      "args": {},
+      "result_preview": "## No commits yet on master\nA  .gitignore\nAM AGENTS.md\nAM APPROVAL_QUEUE.md\nA  LICENSE\nA  MIGRATION_MAP.md\nAM README.md\nA  decisions/0001-initial-structure.md\nA  decisions/0002-shared-infra.md\nA  decisions/0003-skills-architecture.md\nA  decisions/0004-inline-logging.md\nA  decisions/0005-autonomous-execution.md\nA  decisions/0006-resource-constraints.md\nA  decisions/0007-gateway-verified-budgets.md\nA  decisions/0008-chat-agent-concurrency.md\nA  decisions/0009-transient-failure-retry.md\nA  decision"
+    },
+    {
+      "turn": 17,
+      "tool": "run_shell",
+      "args": {
+        "command": "git add projects/multi-agent-survey && git commit -m \"Add NeurIPS 2024 multi-agent literature harvest\"",
+        "working_dir": "."
+      },
+      "result_preview": "{\"error\": \"Command blocked by denylist: dd \", \"action\": \"request_approval\"}"
+    }
+  ],
+  "output_preview": "Completed one unblocked zero-resource task in `projects/multi-agent-survey`.\n\nWhat I did:\n- Oriented on `AGENTS.md`, root `README.md`, project `README.md`, project `TASKS.md`, and recent logs.\n- Selected/classified the NeurIPS literature retrieval task as ROUTINE.\n- Used the existing harvester logic in `projects/multi-agent-survey/scripts/harvest_neurips_crossref.py`.\n- Generated:\n  - `projects/multi-agent-survey/literature/neurips-2024-2025.md`\n- Updated task state:\n  - Split the original combined NeurIPS 2024–2025 task into:\n    - completed NeurIPS 2024 retrieval\n    - blocked NeurIPS 2025 follow-up\n- Logged work in:\n  - `projects/multi-agent-survey/logs/2026-03-23T161441Z-neurips-2024-harvest.md`\n- Appended project README log entry and open question.\n\nKey findings with provenance:\n- `python` is unavailable, `python3` is available.\n  - Provenance: shell outputs from `python ...` and `python3 --version`\n- Crossref access worked.\n  - Provenance: inline Python request to `https://api.crossref.org/works`\n- Harvest output contained 138 NeurIPS 2024 candidates and 0 NeurIPS 2025 venue-matched records in the current Crossref snapshot.\n  - Provenance: `projects/multi-agent-survey/literature/neurips-2024-2025.md` and inline Python run output\n\nImportant caveat:\n- The original “NeurIPS 2024-2025” task could not honestly be marked complete, because 2025 records did not appear under the venue-constrained Crossref retrieval. I decomposed the task instead, per repo rules.\n\nBlocking issue:\n- Attempted git commit failed because the shell tool rejected the command with:\n  - `Command blocked by denylist: dd `\n- So repository changes were written, but not committed from this session.\n\nSuggested next step:\n- Use an alternate source for NeurIPS 2025 coverage: official proceedings, OpenReview, DBLP, or Semantic Scholar, with explicit provenance."
+}

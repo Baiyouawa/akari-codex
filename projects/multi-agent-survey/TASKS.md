@@ -1,0 +1,65 @@
+# Multi-Agent Survey — Tasks
+
+## Phase 1: 顶会论文检索与建档
+
+- [x] 检索 NeurIPS 2024 Multi-Agent 相关论文 [skill: orient] [zero-resource]
+  Why: 先建立可验证的 NeurIPS 候选池，为后续精读建立候选集
+  Completed: 2026-03-23T16:14:41Z
+  Evidence: `projects/multi-agent-survey/literature/neurips-2024-2025.md` contains 138 Crossref-harvested NeurIPS 2024 candidates with title, authors, link, and classification tags, generated via inline Python using the same retrieval logic as `projects/multi-agent-survey/scripts/harvest_neurips_crossref.py`.
+
+- [ ] 补全并验证 NeurIPS 2025 Multi-Agent 相关论文 [skill: orient] [zero-resource] [blocked-by: Crossref 当前快照未返回 NeurIPS 2025 proceedings records，需要更换来源或等待索引更新]
+  Why: 原始任务要求覆盖 NeurIPS 2024-2025，但本次仅验证到 2024，2025 需要单独补齐
+  Done when: `literature/` 下补充 NeurIPS 2025 论文列表，包含标题、作者、链接、分类标签，至少覆盖 15 篇，并注明数据源
+
+- [x] 检索 ICML 2024-2025 Multi-Agent 相关论文 [skill: orient] [zero-resource]
+  Why: ICML 侧重方法论和理论，与 NeurIPS 互补
+  Completed: 2026-03-23T16:29:00Z
+  Evidence: `projects/multi-agent-survey/literature/icml-2024-2025.md` lists 24 DBLP-verified ICML 2024-2025 papers with authors, PMLR links, DBLP record URLs, tags, and retrieval-query provenance.
+
+- [ ] 全面盘点 ICLR 2025-2026 Multi-Agent 方向论文 [skill: orient] [zero-resource]
+  Why: ICLR 2026 是最新会议，代表学术前沿
+  Done when: literature/ 下有 ICLR 论文列表，标注 oral/spotlight/poster，至少覆盖 20 篇
+
+- [x] 检索近三个月 arXiv Multi-Agent 预印本（2026-01 至 2026-03）[skill: orient] [zero-resource]
+  Why: arXiv 捕捉最新趋势，顶会论文有滞后性
+  Completed: 2026-03-23T16:34:00Z
+  Evidence: `projects/multi-agent-survey/scripts/harvest_arxiv_recent.py` queries the arXiv Atom API and writes `projects/multi-agent-survey/literature/arxiv-2026-01-to-2026-03.md`, which groups 32 selected papers by month (2026-01/02/03), documents query sources and deduplication rules, and reports classification counts from a deduplicated pool of 396 in-window MAS-relevant records.
+
+## Phase 2: 精读与 Literature Notes
+
+- [ ] 精读 Phase 1 中标记为 load-bearing 的论文（Architecture 类）[skill: analyze] [zero-resource]
+  Why: 框架设计是 multi-agent 最核心的子方向
+  Done when: 每篇 load-bearing 论文有标准格式的 literature note 文件
+  [blocked-by: Phase 1 检索完成]
+
+- [ ] 精读 Phase 1 中标记为 load-bearing 的论文（Coordination & Communication 类）[skill: analyze] [zero-resource]
+  Why: 协作与通信是区分 multi-agent 与 single-agent 的关键
+  Done when: 每篇 load-bearing 论文有 literature note
+  [blocked-by: Phase 1 检索未完成，且当前文献清单未显式标注 load-bearing 论文]
+
+- [ ] 精读 Phase 1 中标记为 load-bearing 的论文（Evaluation & Application 类）[skill: analyze] [zero-resource]
+  Why: 评估方法和应用场景决定了实际价值
+  Done when: 每篇 load-bearing 论文有 literature note
+  [blocked-by: Phase 1 检索完成]
+
+## Phase 3: 分析与综述
+
+- [ ] 分析 Multi-Agent 研究趋势（2024 → 2026 变化）[skill: analyze] [zero-resource]
+  Why: 识别方向性变化，如从 MARL 到 LLM-based MAS 的转变
+  Done when: analysis/ 下有趋势分析文档，包含时间线、关键转折点、热度变化
+  [blocked-by: Phase 2 精读完成]
+
+- [ ] 产出分类体系与方法对比表 [skill: record] [zero-resource]
+  Why: 结构化整理是综述的核心产出
+  Done when: analysis/ 下有方法分类表，每个类别有代表论文、优缺点、适用场景
+  [blocked-by: Phase 2 精读完成]
+
+- [ ] 撰写综述初稿 [skill: record] [zero-resource]
+  Why: 最终交付物
+  Done when: plans/survey-draft.md 存在，包含引言、方法分类、关键发现、趋势分析、未来方向，≥3000 字
+  [blocked-by: 趋势分析和分类体系完成]
+
+- [ ] 识别研究空白并提出未来方向 [skill: analyze] [zero-resource]
+  Why: 综述的最高价值在于指出"什么还没做"
+  Done when: analysis/ 下有 research-gaps.md，至少 5 个具体的研究空白及可能的研究方向
+  [blocked-by: 综述初稿完成]

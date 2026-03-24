@@ -1,0 +1,11 @@
+{
+  "job_id": "multi-agent-survey",
+  "project_path": "projects/multi-agent-survey",
+  "task_selector": "auto",
+  "frequency_seconds": 3600,
+  "model": "gpt-5.4",
+  "max_budget_usd": 20.0,
+  "approval_policy": "standard",
+  "output_location": "logs/sessions",
+  "enabled": true
+}

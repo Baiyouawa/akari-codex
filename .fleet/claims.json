@@ -1,0 +1,262 @@
+{
+  "claims": {
+    "claim-4f8e20d5ca6a": {
+      "task_id": "7a3107f314b0f1bc",
+      "worker_id": "fleet-worker-01",
+      "session_id": "fleet-worker-01-1774283039-67cc22",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774283039.8862069,
+      "active": false,
+      "released_at": 1774283116.6163282
+    },
+    "claim-ad4c4506d5e9": {
+      "task_id": "4577b1dfdf430085",
+      "worker_id": "fleet-worker-02",
+      "session_id": "fleet-worker-02-1774283039-aad80f",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774283039.9092665,
+      "active": false,
+      "released_at": 1774283116.6670012
+    },
+    "claim-ebb2dc960916": {
+      "task_id": "7d40f7eba938ed5d",
+      "worker_id": "fleet-worker-03",
+      "session_id": "fleet-worker-03-1774283039-65b73e",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774283039.9112506,
+      "active": false,
+      "released_at": 1774283116.6448932
+    },
+    "claim-a84a248d971f": {
+      "task_id": "5ccbd8a700d04286",
+      "worker_id": "fleet-worker-00",
+      "session_id": "fleet-worker-00-1774283039-5f2cbe",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774283039.9126446,
+      "active": false,
+      "released_at": 1774283116.622792
+    },
+    "claim-f1ab1b1f7e1a": {
+      "task_id": "7a3107f314b0f1bc",
+      "worker_id": "fleet-worker-01",
+      "session_id": "fleet-worker-01-1774283492-0c8378",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774283492.081381,
+      "active": false,
+      "released_at": 1774283546.0451162
+    },
+    "claim-e70737ba0fd2": {
+      "task_id": "4577b1dfdf430085",
+      "worker_id": "fleet-worker-02",
+      "session_id": "fleet-worker-02-1774283492-9a742c",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774283492.1285665,
+      "active": false,
+      "released_at": 1774283546.0397172
+    },
+    "claim-655fceafd4ca": {
+      "task_id": "7d40f7eba938ed5d",
+      "worker_id": "fleet-worker-03",
+      "session_id": "fleet-worker-03-1774283492-53904e",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774283492.1316302,
+      "active": false,
+      "released_at": 1774283546.196158
+    },
+    "claim-fdba3e6dc6e1": {
+      "task_id": "5ccbd8a700d04286",
+      "worker_id": "fleet-worker-00",
+      "session_id": "fleet-worker-00-1774283492-c4d5ff",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774283492.1346219,
+      "active": false,
+      "released_at": 1774283546.0955038
+    },
+    "claim-83d77d43d8eb": {
+      "task_id": "7a3107f314b0f1bc",
+      "worker_id": "fleet-worker-01",
+      "session_id": "fleet-worker-01-1774283662-271fbf",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774283662.2333293,
+      "active": false,
+      "released_at": 1774322959.8103256,
+      "release_reason": "stale_cleanup"
+    },
+    "claim-0b0573c4a6da": {
+      "task_id": "4577b1dfdf430085",
+      "worker_id": "fleet-worker-02",
+      "session_id": "fleet-worker-02-1774283662-886e42",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774283662.3036613,
+      "active": false,
+      "released_at": 1774322959.8103256,
+      "release_reason": "stale_cleanup"
+    },
+    "claim-b0fdf41d24d8": {
+      "task_id": "7d40f7eba938ed5d",
+      "worker_id": "fleet-worker-03",
+      "session_id": "fleet-worker-03-1774283662-80726d",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774283662.3065777,
+      "active": false,
+      "released_at": 1774322959.8103256,
+      "release_reason": "stale_cleanup"
+    },
+    "claim-4400f142778b": {
+      "task_id": "5ccbd8a700d04286",
+      "worker_id": "fleet-worker-04",
+      "session_id": "fleet-worker-04-1774283662-5eb7fe",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774283662.30869,
+      "active": false,
+      "released_at": 1774283892.9069016
+    },
+    "claim-d1ef404c38f0": {
+      "task_id": "c50cb088ed32ff8a",
+      "worker_id": "fleet-worker-05",
+      "session_id": "fleet-worker-05-1774283662-4d4946",
+      "project": "akari",
+      "claimed_at": 1774283662.3108504,
+      "active": false,
+      "released_at": 1774283971.9338412
+    },
+    "claim-76bf521ecf04": {
+      "task_id": "b7485eaa30067875",
+      "worker_id": "fleet-worker-06",
+      "session_id": "fleet-worker-06-1774283662-bb1c41",
+      "project": "akari",
+      "claimed_at": 1774283662.3133118,
+      "active": false,
+      "released_at": 1774284168.5135589
+    },
+    "claim-63ddc865b749": {
+      "task_id": "5ccbd8a700d04286",
+      "worker_id": "fleet-worker-17",
+      "session_id": "fleet-worker-17-1774283962-73003d",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774283962.7511337,
+      "active": false,
+      "released_at": 1774284076.6361928
+    },
+    "claim-23d9e829fb08": {
+      "task_id": "c50cb088ed32ff8a",
+      "worker_id": "fleet-worker-18",
+      "session_id": "fleet-worker-18-1774283992-8d170a",
+      "project": "akari",
+      "claimed_at": 1774283992.8001223,
+      "active": false,
+      "released_at": 1774284071.921908
+    },
+    "claim-e80ccd9f3250": {
+      "task_id": "5ccbd8a700d04286",
+      "worker_id": "fleet-worker-19",
+      "session_id": "fleet-worker-19-1774284112-7ff530",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774284112.9606915,
+      "active": false,
+      "released_at": 1774322959.8103256,
+      "release_reason": "stale_cleanup"
+    },
+    "claim-334fdccca446": {
+      "task_id": "4577b1dfdf430085",
+      "worker_id": "fleet-worker-01",
+      "session_id": "fleet-worker-01-1774322959-32f31b",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774322959.8168492,
+      "active": false,
+      "released_at": 1774323129.9817305
+    },
+    "claim-d7aec1c3e962": {
+      "task_id": "5ccbd8a700d04286",
+      "worker_id": "fleet-worker-02",
+      "session_id": "fleet-worker-02-1774322959-e4b36e",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774322959.847371,
+      "active": false,
+      "released_at": 1774323129.9313989
+    },
+    "claim-82ed6bd299d7": {
+      "task_id": "1c7a745a14e39df3",
+      "worker_id": "fleet-worker-03",
+      "session_id": "fleet-worker-03-1774322959-86aba0",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774322959.8526802,
+      "active": false,
+      "released_at": 1774323130.0322442
+    },
+    "claim-862244717016": {
+      "task_id": "86da25910deb71d6",
+      "worker_id": "fleet-worker-00",
+      "session_id": "fleet-worker-00-1774322959-2e33e3",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774322959.8569663,
+      "active": false,
+      "released_at": 1774323130.0826054
+    },
+    "claim-d72d224f9b9f": {
+      "task_id": "37fa180b1e3a1de0",
+      "worker_id": "fleet-worker-01",
+      "session_id": "fleet-worker-01-1774323557-b9b4e6",
+      "project": "moe",
+      "claimed_at": 1774323557.5023928,
+      "active": false,
+      "released_at": 1774323987.2340193
+    },
+    "claim-22944dfac2a7": {
+      "task_id": "4167d2256754256a",
+      "worker_id": "fleet-worker-02",
+      "session_id": "fleet-worker-02-1774323557-db59ac",
+      "project": "moe",
+      "claimed_at": 1774323557.6142278,
+      "active": true
+    },
+    "claim-1ee15ad4f6b3": {
+      "task_id": "a9fb2d59cd175248",
+      "worker_id": "fleet-worker-03",
+      "session_id": "fleet-worker-03-1774323557-89bc3c",
+      "project": "moe",
+      "claimed_at": 1774323557.617477,
+      "active": true
+    },
+    "claim-3b8736c19d10": {
+      "task_id": "4e420ad8261df5c5",
+      "worker_id": "fleet-worker-04",
+      "session_id": "fleet-worker-04-1774323557-3415c8",
+      "project": "moe",
+      "claimed_at": 1774323557.619619,
+      "active": true
+    },
+    "claim-021340ff0ec3": {
+      "task_id": "4577b1dfdf430085",
+      "worker_id": "fleet-worker-05",
+      "session_id": "fleet-worker-05-1774323557-6f4e16",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774323557.6210454,
+      "active": true
+    },
+    "claim-773746e0f726": {
+      "task_id": "5ccbd8a700d04286",
+      "worker_id": "fleet-worker-06",
+      "session_id": "fleet-worker-06-1774323557-c7dd48",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774323557.623585,
+      "active": true
+    },
+    "claim-a00f09d7f4e2": {
+      "task_id": "1c7a745a14e39df3",
+      "worker_id": "fleet-worker-07",
+      "session_id": "fleet-worker-07-1774323557-291433",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774323557.6281023,
+      "active": true
+    },
+    "claim-8dd14109232b": {
+      "task_id": "86da25910deb71d6",
+      "worker_id": "fleet-worker-08",
+      "session_id": "fleet-worker-08-1774323557-6363fa",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774323557.6317267,
+      "active": true
+    }
+  }
+}

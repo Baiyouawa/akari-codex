@@ -1,0 +1,6 @@
+resources:
+  llm_api_calls:
+    limit: 1000
+    unit: calls
+
+deadline: 2026-06-01T00:00:00Z

@@ -1,0 +1,55 @@
+name: "Akari Command Listener"
+
+on:
+  issue_comment:
+    types: [created]
+  discussion_comment:
+    types: [created]
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    if: >-
+      startsWith(github.event.comment.body, '/akari ') &&
+      contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)
+    steps:
+      - name: Extract command
+        id: parse
+        run: |
+          BODY="${{ github.event.comment.body }}"
+          COMMAND="${BODY#/akari }"
+          echo "command=${COMMAND}" >> "$GITHUB_OUTPUT"
+          echo "user=${{ github.event.comment.user.login }}" >> "$GITHUB_OUTPUT"
+
+          # Determine comment context for reply
+          if [ "${{ github.event_name }}" = "issue_comment" ]; then
+            echo "context_type=issue" >> "$GITHUB_OUTPUT"
+            echo "context_number=${{ github.event.issue.number }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "context_type=discussion" >> "$GITHUB_OUTPUT"
+            echo "context_number=${{ github.event.discussion.number }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: React to acknowledge
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: context.payload.comment.id,
+              content: 'eyes'
+            });
+
+      - name: Dispatch execution
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          event-type: akari-command
+          client-payload: >-
+            {
+              "command": "${{ steps.parse.outputs.command }}",
+              "user": "${{ steps.parse.outputs.user }}",
+              "context_type": "${{ steps.parse.outputs.context_type }}",
+              "context_number": "${{ steps.parse.outputs.context_number }}",
+              "comment_id": "${{ github.event.comment.id }}"
+            }

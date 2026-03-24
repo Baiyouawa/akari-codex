@@ -1,0 +1,23 @@
+{
+  "session_id": "session-20260323-160117-0eb0dceb",
+  "timestamp": "2026-03-23T16:01:17Z",
+  "task_source": "examples/my-research-project/TASKS.md",
+  "model": "gpt-5.4",
+  "commands_executed": [],
+  "files_read": [],
+  "files_written": [],
+  "decisions_made": [],
+  "approvals": {
+    "requested": [],
+    "granted": [],
+    "denied": []
+  },
+  "token_usage": {
+    "prompt_tokens": 191839,
+    "completion_tokens": 6234,
+    "total_tokens": 198073
+  },
+  "latency_seconds": 218.49904036521912,
+  "success": true,
+  "error": null
+}

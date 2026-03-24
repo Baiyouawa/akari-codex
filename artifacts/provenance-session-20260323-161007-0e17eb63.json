@@ -1,0 +1,23 @@
+{
+  "session_id": "session-20260323-161007-0e17eb63",
+  "timestamp": "2026-03-23T16:10:07Z",
+  "task_source": "projects/multi-agent-survey/TASKS.md",
+  "model": "gpt-5.4",
+  "commands_executed": [],
+  "files_read": [],
+  "files_written": [],
+  "decisions_made": [],
+  "approvals": {
+    "requested": [],
+    "granted": [],
+    "denied": []
+  },
+  "token_usage": {
+    "prompt_tokens": 399140,
+    "completion_tokens": 7940,
+    "total_tokens": 407080
+  },
+  "latency_seconds": 422.1845738887787,
+  "success": true,
+  "error": null
+}

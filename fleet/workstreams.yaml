@@ -1,0 +1,50 @@
+# Fleet Workstream Configuration
+# Defines how projects map to workstreams and their capacity allocation.
+#
+# Aligned with ADR 0042-v2: per-project concurrency cap K=4,
+# remaining slots round-robin across active projects.
+
+defaults:
+  max_per_project: 4
+  worker_max_turns: 64
+  worker_timeout_seconds: 900
+
+workstreams:
+  research:
+    description: "Literature review, survey, analysis tasks"
+    default_role: knowledge
+    skills:
+      - record
+      - persist
+      - analyze
+
+  engineering:
+    description: "Code implementation, testing, tooling tasks"
+    default_role: implementation
+    skills:
+      - execute
+      - diagnose
+
+  governance:
+    description: "Documentation, decision records, compliance"
+    default_role: default
+    skills:
+      - govern
+      - persist
+
+idle_exploration:
+  enabled: true
+  cooldown_seconds: 21600  # 6 hours per project+type
+  types:
+    horizon-scan:
+      weight: 3
+      description: "Scan literature for new developments"
+    self-audit:
+      weight: 1
+      description: "Check project conventions and quality"
+    stale-blocker-check:
+      weight: 1
+      description: "Verify external blockers still valid"
+    open-question:
+      weight: 2
+      description: "Investigate open questions from README"
