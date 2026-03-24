@@ -5,6 +5,7 @@ Required env vars:
 
 Optional env vars:
     ONEBOT_WS_URL    — NapCat 正向 WebSocket 地址 (default: ws://localhost:3001)
+    ONEBOT_TOKEN     — NapCat WebSocket 的 Token（在 NapCat 网络配置中设置的）
     ONEBOT_ADMIN_USERS — 逗号分隔的允许使用的 QQ 号 (empty = allow all)
     ONEBOT_REPLY_PRIVATE — 是否回复私聊 (default: "1")
     ONEBOT_REPLY_GROUP_AT — 是否回复群里 @ (default: "1")
@@ -20,6 +21,7 @@ from dataclasses import dataclass, field
 class OneBotConfig:
     self_qq: str
     ws_url: str = "ws://localhost:3001"
+    token: str = ""
     admin_users: frozenset[str] = field(default_factory=frozenset)
     reply_private: bool = True
     reply_group_at: bool = True
@@ -40,6 +42,7 @@ class OneBotConfig:
         return cls(
             self_qq=self_qq,
             ws_url=os.environ.get("ONEBOT_WS_URL", "ws://localhost:3001"),
+            token=os.environ.get("ONEBOT_TOKEN", ""),
             admin_users=admins,
             reply_private=os.environ.get("ONEBOT_REPLY_PRIVATE", "1") == "1",
             reply_group_at=os.environ.get("ONEBOT_REPLY_GROUP_AT", "1") == "1",

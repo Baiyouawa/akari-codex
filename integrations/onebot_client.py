@@ -156,15 +156,22 @@ async def _run(config: OneBotConfig) -> None:
     logger.info("正在连接 NapCatQQ: %s", config.ws_url)
     logger.info("小白 QQ 号: %s", config.self_qq)
     logger.info("回复私聊: %s, 回复群@: %s", config.reply_private, config.reply_group_at)
+    if config.token:
+        logger.info("Token: 已配置")
     if config.admin_users:
         logger.info("允许用户: %s", ", ".join(config.admin_users))
     else:
         logger.info("允许用户: 所有人")
 
+    headers = {}
+    if config.token:
+        headers["Authorization"] = f"Bearer {config.token}"
+
     while True:
         try:
             async with websockets.client.connect(
                 config.ws_url,
+                additional_headers=headers,
                 ping_interval=20,
                 ping_timeout=20,
                 close_timeout=10,
