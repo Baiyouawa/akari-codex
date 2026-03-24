@@ -39,8 +39,8 @@
 | 任务分解与协调优化 | 通过 task allocation、joint planning、coordination policy 优化协作过程 | `CaPo` (`iclr-2025-2026.md`, entry 8); `MiTa` (`arxiv-2026-01-to-2026-03.md`, 2026-01 entry 5); `Cross-environment Cooperation Enables Zero-shot Multi-agent Coordination` (`icml-2024-2025.md`, entry 23) | 当任务天然可分工时效果最好；可并行；能提升鲁棒性和覆盖面 | 协调开销高；分工不当会抵消收益；对任务边界和接口定义敏感 | embodied cooperation、复杂流程任务、多人/多体系统协调 |
 | 通信与共享记忆机制 | 将消息传递、共享记忆、KV sharing、memory masking、压缩通信作为关键变量 | `Cut the Crap` (`iclr-2025-2026.md`, entry 13); `KVComm` (`iclr-2025-2026.md`, entry 100); `Agent Reviewers` (`icml-2024-2025.md`, entry 16) | 可降低 token/带宽成本；保留必要协作；能提升可解释性与长期一致性 | 通信不足会损害协作质量；共享记忆可能引入污染/级联错误；协议设计复杂 | token 成本敏感场景、长任务上下文共享、多 agent 共写共审 |
 | 训练/自改进型多智能体 | 用 self-play、actor-critic、post-training、preference optimization 直接训练协作行为 | `ACC-Collab` (`iclr-2025-2026.md`, entry 3); `AgentPO` (`iclr-2025-2026.md`, entry 60); `Learning Decentralized LLM Collaboration with Multi-Agent Actor Critic` (`arxiv-2026-01-to-2026-03.md`, 2026-01 entry 9) | 能把“合作本身”学出来，而非手写协议；在固定 benchmark 上可显著提升协作质量 | 训练成本高；泛化与稳定性不一定好；很难与 single-agent + tools 公平对比 | 有可重复环境、可在线/离线训练、希望优化协作策略而非仅 orchestration 的任务 |
-| 评测/基准/诊断型工作 | 把 benchmark、failure attribution、安全压力测试、能力维度建模做成核心贡献 | `Windows Agent Arena` (`windows-agent-arena-note.md`); `OmniBench` (`omnibench-note.md`); `A2ASecBench` (`iclr-2025-2026.md`, entry 55); `LiveResearchBench` (`iclr-2025-2026.md`, entry 103); `Agent Smith` (`agent-smith-note.md`) | 能回答“什么时候值得用多智能体”；揭示系统级失败模式；为 head-to-head 比较打基础 | 不直接提升系统能力； benchmark 往往带有任务偏置；指标设计可能落后于真实使用需求 | survey、系统评估、产品选型、安全评测、研究复现 |
-| 高价值应用型系统 | 面向医学、科学发现、GUI/OS、交通、网络等具体高价值场景设计 agent society | `MDAgents` (`mdagents-note.md`); `AI Agents Can Already Autonomously Perform Experimental High Energy Physics` (`ai-agents-hep-note.md`); `CellAgent` (`iclr-2025-2026.md`, entry 69); `ATLAS` (`iclr-2025-2026.md`, entry 62) | 最能检验真实价值；容易体现角色互补和专家分工；对综述“未来方向”最有承载力 | 容易受领域工程和专有流程影响；跨任务迁移性弱； often 缺少强 single-agent baseline | 高风险决策支持、科研 workflow、跨工具复杂工作流、需要多视角审查的任务 |
+| 评测/基准/诊断型工作 | 把 benchmark、failure attribution、安全压力测试、能力维度建模做成核心贡献 | `Windows Agent Arena` (`windows-agent-arena-note.md`); `OmniBench` (`omnibench-note.md`); `A2ASecBench` (`iclr-2025-2026.md`, entry 55); `LiveResearchBench` (`iclr-2025-2026.md`, entry 103); `Agent Smith` (`agent-smith-note.md`) | 能回答“什么时候值得用多智能体”；揭示系统级失败模式；为 head-to-head 比较打基础 | 不直接提升系统能力；benchmark 往往带有任务偏置；指标设计可能落后于真实使用需求 | survey、系统评估、产品选型、安全评测、研究复现 |
+| 高价值应用型系统 | 面向医学、科学发现、GUI/OS、交通、网络等具体高价值场景设计 agent society | `MDAgents` (`mdagents-note.md`); `AI Agents Can Already Autonomously Perform Experimental High Energy Physics` (`ai-agents-hep-note.md`); `CellAgent` (`iclr-2025-2026.md`, entry 69); `ATLAS` (`iclr-2025-2026.md`, entry 62) | 最能检验真实价值；容易体现角色互补和专家分工；对综述“未来方向”最有承载力 | 容易受领域工程和专有流程影响；跨任务迁移性弱；常缺少强 single-agent baseline | 高风险决策支持、科研 workflow、跨工具复杂工作流、需要多视角审查的任务 |
 
 ## Per-category comparison notes
 
@@ -101,7 +101,7 @@
 **Representative papers**
 - `Cut the Crap: An Economical Communication Pipeline for LLM-based Multi-Agent Systems` — `iclr-2025-2026.md`, entry 13.
 - `KVComm: Enabling Efficient LLM Communication through Selective KV Sharing` — `iclr-2025-2026.md`, entry 100.
-- `Agent Reviewers: Domain-specific Multimodal Agents with Shared Memory for Paper Review` — `icml-2025-2025.md` typo? see note below.
+- `Agent Reviewers: Domain-specific Multimodal Agents with Shared Memory for Paper Review` — `projects/multi-agent-survey/literature/icml-2024-2025.md`, entry 16.
 - `Multi-Agent Debate with Memory Masking` — `iclr-2025-2026.md`, entry 116.
 - `Benefits and Limitations of Communication in Multi-Agent Reasoning` — `iclr-2025-2026.md`, entry 65.
 
@@ -117,9 +117,6 @@
 
 **Best-fit scenarios**
 - 上下文很长、多个 agent 必须共享中间产物、token 成本敏感的任务。
-
-**Note**
-- `Agent Reviewers` 的准确出处为 `projects/multi-agent-survey/literature/icml-2024-2025.md`, entry 16。
 
 ### 4. 训练/自改进型多智能体
 

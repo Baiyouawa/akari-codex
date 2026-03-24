@@ -398,7 +398,8 @@
       "session_id": "智乃-02-1774358212-4f942d",
       "project": "moe",
       "claimed_at": 1774358212.2181976,
-      "active": true
+      "active": false,
+      "released_at": 1774358681.3739944
     },
     "claim-5b06c23fd8dd": {
       "task_id": "1c7a745a14e39df3",

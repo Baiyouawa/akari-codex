@@ -50,10 +50,10 @@
   Done when: analysis/ 下有趋势分析文档，包含时间线、关键转折点、热度变化
   [blocked-by: Phase 2 精读完成]
 
-- [ ] 产出分类体系与方法对比表 [skill: record] [zero-resource]
+- [x] 产出分类体系与方法对比表 [skill: record] [zero-resource]
   Why: 结构化整理是综述的核心产出
-  Done when: analysis/ 下有方法分类表，每个类别有代表论文、优缺点、适用场景
-  [blocked-by: Phase 2 精读完成]
+  Completed: 2026-03-24T21:18:07+08:00
+  Evidence: `projects/multi-agent-survey/analysis/2026-03-24-method-taxonomy-and-comparison.md` provides a 6-category method taxonomy and comparison tables covering representative papers, strengths, weaknesses, and fit-for-use scenarios, synthesized from in-repo literature artifacts and notes.
 
 - [ ] 撰写综述初稿 [skill: record] [zero-resource]
   Why: 最终交付物
