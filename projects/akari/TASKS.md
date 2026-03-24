@@ -2,12 +2,11 @@
 
 ## Meta-project setup
 
-- [ ] Adapt the self-improvement measurement plan to your own repo [in-progress: 2026-03-24] [requires-opus] [skill: design] [zero-resource]
+- [ ] Adapt the self-improvement measurement plan to your own repo [in-progress: 2026-03-23] [requires-opus] [skill: design] [zero-resource]
   Why: The public examples show the pattern, but each deployment needs its own metrics, denominators, and failure modes.
   Done when: A repo-specific measurement plan exists with 3-5 concrete metrics and explicit data sources.
-  Progress: `2026-03-24` investigation in `projects/akari/README.md` established a provisional cross-fork ranking: `Human Intervention Rate` is currently the strongest comparable metric in this deployment; `Gap Detection Rate`, `Closure Rate`, and `System-Learning Rate` are next if artifact classes and linking rules are standardized; `Improvement Effectiveness` and `findings-per-dollar` are not yet robust here because before/after schemas, finding counts, and cost ledgers are not standardized.
-  Remaining gaps: define a fork-invariant event schema for gaps, fixes, interventions, and system-level improvements; define denominator/filter rules per ADR `0052`; add one throughput or knowledge-output companion metric.
   Priority: high
+  Progress: `projects/akari/logs/2026-03-23T170000Z-metric-comparison-investigation.md`, `projects/akari/logs/2026-03-23T163541Z-minimum-operational-logging.md`, and `projects/akari/logs/2026-03-23T172000Z-transferability-investigation.md` now bound three design constraints for that plan: which metrics look cross-fork-comparable, what minimum logging supports them, and which improvement types are likely portable versus repo-local.
 
 - [ ] Write one self-observation diagnosis from operational evidence [requires-opus] [skill: diagnose] [zero-resource]
   Why: The meta-project only becomes real when the system diagnoses its own failure modes from its own logs and artifacts.
@@ -18,7 +17,7 @@
 
 - [x] Audit conventions and quality for akari
   Completed: 2026-03-23T16:15:00Z
-  Evidence: `logs/sessions/2026-03-23T161500Z-akari-conventions-audit.md` records that `projects/akari/README.md` and `projects/akari/TASKS.md` were checked for convention compliance and that one stale root `README.md` decision-count claim was corrected using shell-count provenance.
+  Evidence: `projects/akari/audits/2026-03-23-conventions-audit.md` records that `projects/akari/README.md` and `projects/akari/TASKS.md` were checked for convention compliance and that the root `README.md` decision-count claim was identified as stale via `run_shell("find decisions -maxdepth 1 -type f | wc -l") = 68`; the repository summary count was corrected in `README.md` on 2026-03-24.
 
 - [x] Measure human intervention rate in your deployment [fleet-eligible] [skill: analyze] [zero-resource]
   Why: A decreasing intervention rate is one of the clearest signals that the system is becoming more autonomous.
