@@ -267,6 +267,22 @@
       "project": "moe",
       "claimed_at": 1774324248.581171,
       "active": true
+    },
+    "claim-2a7b9515f781": {
+      "task_id": "8f800d1c23ca893b",
+      "worker_id": "fleet-worker-22",
+      "session_id": "fleet-worker-22-1774324338-0d846b",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774324338.6989253,
+      "active": true
+    },
+    "claim-4c86df3aa196": {
+      "task_id": "5ccbd8a700d04286",
+      "worker_id": "fleet-worker-26",
+      "session_id": "fleet-worker-26-1774324368-873610",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774324368.7433596,
+      "active": true
     }
   }
 }
