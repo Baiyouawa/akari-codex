@@ -79,22 +79,20 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            const result = fs.readFileSync('/tmp/akari-result.txt', 'utf8');
+            const result = fs.readFileSync('/tmp/akari-result.txt', 'utf8').trim();
             const success = '${{ steps.run.outputs.success }}' === 'true';
             const icon = success ? '✅' : '❌';
             const user = '${{ github.event.client_payload.user }}';
-            const command = '${{ github.event.client_payload.command }}';
+            const command = `${{ github.event.client_payload.command }}`.substring(0, 200);
 
             const body = [
-              `${icon} **Akari 执行完毕** (by @${user})`,
+              `${icon} **Akari** — @${user}`,
               '',
-              `> \`/akari ${command}\``,
+              `> ${command}`,
               '',
-              '```',
-              result.substring(0, 3500),
-              '```',
+              result.substring(0, 3800),
               '',
-              result.length > 3500 ? '_结果过长，已截断。完整日志见 Actions run。_' : '',
+              result.length > 3800 ? '\n---\n_结果过长，已截断。完整日志见 [Actions run](' + context.serverUrl + '/' + context.repo.owner + '/' + context.repo.repo + '/actions)。_' : '',
             ].join('\n');
 
             await github.rest.issues.createComment({
@@ -110,20 +108,20 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            const result = fs.readFileSync('/tmp/akari-result.txt', 'utf8');
+            const result = fs.readFileSync('/tmp/akari-result.txt', 'utf8').trim();
             const success = '${{ steps.run.outputs.success }}' === 'true';
             const icon = success ? '✅' : '❌';
             const user = '${{ github.event.client_payload.user }}';
-            const command = '${{ github.event.client_payload.command }}';
+            const command = `${{ github.event.client_payload.command }}`.substring(0, 200);
 
             const body = [
-              `${icon} **Akari 执行完毕** (by @${user})`,
+              `${icon} **Akari** — @${user}`,
               '',
-              `> \`/akari ${command}\``,
+              `> ${command}`,
               '',
-              '```',
-              result.substring(0, 3500),
-              '```',
+              result.substring(0, 3800),
+              '',
+              result.length > 3800 ? '\n---\n_结果过长，已截断。_' : '',
             ].join('\n');
 
             const discussionNumber = Number('${{ github.event.client_payload.context_number }}');

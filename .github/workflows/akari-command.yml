@@ -6,22 +6,40 @@ on:
   discussion_comment:
     types: [created]
 
+permissions:
+  issues: write
+  discussions: write
+  contents: write
+
 jobs:
   dispatch:
     runs-on: ubuntu-latest
     if: >-
-      startsWith(github.event.comment.body, '/akari ') &&
-      contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)
+      contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association) &&
+      !startsWith(github.event.comment.body, '✅') &&
+      !startsWith(github.event.comment.body, '❌') &&
+      github.event.comment.user.login != 'github-actions[bot]'
     steps:
       - name: Extract command
         id: parse
         run: |
-          BODY="${{ github.event.comment.body }}"
-          COMMAND="${BODY#/akari }"
-          echo "command=${COMMAND}" >> "$GITHUB_OUTPUT"
+          BODY=$(cat <<'ENDOFBODY'
+          ${{ github.event.comment.body }}
+          ENDOFBODY
+          )
+
+          # Strip common prefixes (case-insensitive): /akari, /Akari, @akari, akari:, 阿卡丽 etc.
+          COMMAND=$(echo "$BODY" | sed -E 's|^[/@]?[Aa][Kk][Aa][Rr][Ii][: ]*||; s|^阿卡丽[: ，,]*||' | xargs)
+
+          # If prefix stripping removed nothing, use original body as-is
+          if [ -z "$COMMAND" ]; then
+            COMMAND="$BODY"
+          fi
+
+          # Write to file to avoid escaping issues
+          echo "$COMMAND" > /tmp/akari-command.txt
           echo "user=${{ github.event.comment.user.login }}" >> "$GITHUB_OUTPUT"
 
-          # Determine comment context for reply
           if [ "${{ github.event_name }}" = "issue_comment" ]; then
             echo "context_type=issue" >> "$GITHUB_OUTPUT"
             echo "context_number=${{ github.event.issue.number }}" >> "$GITHUB_OUTPUT"
@@ -47,7 +65,8 @@ jobs:
           event-type: akari-command
           client-payload: >-
             {
-              "command": "${{ steps.parse.outputs.command }}",
+              "command_file": "/tmp/akari-command.txt",
+              "command": "${{ github.event.comment.body }}",
               "user": "${{ steps.parse.outputs.user }}",
               "context_type": "${{ steps.parse.outputs.context_type }}",
               "context_number": "${{ steps.parse.outputs.context_number }}",

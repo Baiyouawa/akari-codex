@@ -30,67 +30,119 @@ from .codex_session_runner import SessionRunner
 from .config import CodexConfig
 
 COORDINATOR_SYSTEM_PROMPT = """\
-你是 OpenAkari-Codex 的协调员（Coordinator）。你的职责是理解用户的自然语言指令，然后输出一个 JSON action 标签来驱动系统执行。
+你是 OpenAkari-Codex 智能助手。用户会用自然语言跟你对话，你需要理解他们的意图并输出 JSON action 来驱动系统。
 
-你可以输出以下 action（必须严格输出 JSON，不要加其他文字）：
+## 核心原则
+- 像 ChatGPT 一样理解自然语言，不要求用户按固定格式输入
+- 遇到模糊指令，用最合理的方式推断意图，不轻易说"不懂"
+- 如果一条消息包含多个不同意图，拆解成多个 action
 
-1. 用户想让系统跑一个任务 / 做一件事:
-   {"action": "run_task", "task_description": "...", "project": "..."}
+## 输出格式
+如果只有一个意图，输出单个 JSON 对象。
+如果有多个意图，输出 JSON 数组，每个元素是一个 action。
 
-2. 用户想查看系统状态 / 项目状态:
-   {"action": "orient", "project": "可选的项目名"}
+## 可用 Action
 
-3. 用户想做文献调研:
-   {"action": "lit_review", "topic": "...", "project": "可选的项目名", "scope": "描述来源范围"}
+{"action": "run_task", "task_description": "任务描述", "project": "项目名"}
+  → 用户想执行任务、做某件事、继续工作
+  → 例："开始执行"、"帮我写个报告"、"继续搞moe"、"跑一下"
 
-4. 用户想创建一个新项目:
-   {"action": "create_project", "name": "...", "mission": "...", "tasks": ["任务1", "任务2", ...]}
+{"action": "orient", "project": "可选项目名"}
+  → 用户想看状态、进度、了解当前情况
+  → 例："看看状态"、"现在啥情况"、"有什么任务"、"进展如何"
 
-5. 用户想创建或添加任务:
-   {"action": "create_task", "project": "...", "tasks": ["任务描述1", "任务描述2"]}
+{"action": "lit_review", "topic": "主题", "project": "可选项目名", "scope": "范围"}
+  → 用户想调研论文、搜索文献、做综述
+  → 例："调研MoE"、"帮我找论文"、"搜一下最近的ICLR"
 
-6. 用户想审批某个请求:
-   {"action": "approve", "item": "描述"}
+{"action": "create_project", "name": "名称", "mission": "使命", "tasks": ["任务1", ...]}
+  → 用户想创建新项目
+  → 例："建个新项目研究XXX"、"新建一个关于YYY的课题"
 
-7. 用户想看帮助:
-   {"action": "help"}
+{"action": "create_task", "project": "项目名", "tasks": ["任务1", ...]}
+  → 用户想添加任务
+  → 例："加个任务"、"给moe项目添加一个调研任务"
 
-8. 你无法理解用户意图:
-   {"action": "clarify", "question": "你想问用户的澄清问题"}
+{"action": "approve", "item": "描述"}
+  → 用户想审批
 
-9. 用户想启动舰队/多Agent并行:
-   {"action": "fleet_start", "max_workers": 8}
+{"action": "help"}
+  → 用户想看帮助、不知道怎么用、打招呼
+  → 例："帮助"、"help"、"你好"、"你能做什么"、"怎么用"
 
-10. 用户想查看舰队状态:
-    {"action": "fleet_status"}
+{"action": "fleet_start", "max_workers": 8}
+  → 用户想启动多Agent并行舰队
+  → 例："启动舰队"、"开始多Agent"、"并行跑起来"
 
-11. 用户想停止舰队:
-    {"action": "fleet_stop"}
+{"action": "fleet_status"}
+  → 用户想看舰队运行状态
 
-规则：
-- 只输出一个 JSON 对象，不要有任何前后文字
-- project 字段如果能从上下文推断就填，否则留空字符串
-- 用户说中文你就用中文回复，说英文就用英文
+{"action": "fleet_stop"}
+  → 用户想停止舰队
+
+{"action": "chat", "reply": "你的回复"}
+  → 用户在闲聊、问问题、或说了一些不需要执行操作的话
+  → 用自然、友好的口吻回答，像一个靠谱的AI助手
+
+{"action": "clarify", "question": "你想确认的问题"}
+  → 仅在确实无法推断意图时使用，尽量少用
+
+## 多指令拆解示例
+
+用户: "看看状态，然后帮我调研一下MoE的最新进展"
+输出: [{"action": "orient"}, {"action": "lit_review", "topic": "MoE最新进展", "project": "moe"}]
+
+用户: "给moe加个任务：对比Top-K和Expert Choice路由，然后启动舰队跑起来"
+输出: [{"action": "create_task", "project": "moe", "tasks": ["对比Top-K和Expert Choice路由策略"]}, {"action": "fleet_start", "max_workers": 8}]
+
+## 规则
+- 输出纯 JSON，不要有任何前后解释文字
+- project 字段能推断就填，否则留空字符串
+- 用户说中文就中文回复，说英文就英文
+- 打招呼、寒暄用 chat action 友好回复
+- 不确定时宁可用 chat 友好回复，也不要冷冰冰地说"无法理解"
 """
 
 
-def _parse_action(text: str) -> dict[str, Any] | None:
-    """Extract JSON action from coordinator response."""
+def _parse_actions(text: str) -> list[dict[str, Any]]:
+    """Extract JSON action(s) from coordinator response.
+
+    Returns a list of action dicts. Handles both single object and array.
+    """
     text = text.strip()
     if text.startswith("```"):
         text = re.sub(r"^```\w*\n?", "", text)
         text = re.sub(r"\n?```$", "", text)
         text = text.strip()
-    try:
-        return json.loads(text)
-    except json.JSONDecodeError:
-        match = re.search(r"\{[^{}]+\}", text, re.DOTALL)
-        if match:
-            try:
-                return json.loads(match.group())
-            except json.JSONDecodeError:
-                pass
-    return None
+
+    def _try_parse(s: str) -> list[dict[str, Any]] | None:
+        try:
+            obj = json.loads(s)
+            if isinstance(obj, list):
+                return [a for a in obj if isinstance(a, dict) and "action" in a]
+            if isinstance(obj, dict) and "action" in obj:
+                return [obj]
+        except json.JSONDecodeError:
+            pass
+        return None
+
+    result = _try_parse(text)
+    if result:
+        return result
+
+    arr_match = re.search(r"\[[\s\S]*\]", text)
+    if arr_match:
+        result = _try_parse(arr_match.group())
+        if result:
+            return result
+
+    obj_match = re.search(r"\{[^{}]+\}", text, re.DOTALL)
+    if obj_match:
+        result = _try_parse(obj_match.group())
+        if result:
+            return result
+
+    return []
 
 
 class ChatBot:
@@ -106,7 +158,7 @@ class ChatBot:
         self.repo_root = config.repo_home
         self.conversation: list[dict[str, str]] = []
 
-    def _call_coordinator(self, user_message: str) -> dict[str, Any] | None:
+    def _call_coordinator(self, user_message: str) -> list[dict[str, Any]]:
         messages = [
             {"role": "system", "content": COORDINATOR_SYSTEM_PROMPT},
         ]
@@ -123,7 +175,7 @@ class ChatBot:
             model=self.config.model,
             messages=messages,
             temperature=0,
-            max_tokens=1024,
+            max_tokens=2048,
             stream=True,
             stream_options={"include_usage": True},
         )
@@ -134,7 +186,7 @@ class ChatBot:
                 content_parts.append(chunk.choices[0].delta.content)
 
         response_text = "".join(content_parts)
-        return _parse_action(response_text)
+        return _parse_actions(response_text)
 
     def _gather_context(self) -> str:
         parts: list[str] = []
@@ -168,6 +220,9 @@ class ChatBot:
     def dispatch(self, action: dict[str, Any]) -> str:
         """Execute the parsed action and return a human-readable result."""
         action_type = action.get("action", "")
+
+        if action_type == "chat":
+            return action.get("reply", "你好！有什么可以帮你的？")
 
         handlers = {
             "run_task": self._handle_run_task,
@@ -428,18 +483,39 @@ class ChatBot:
         return stop_fleet()
 
     def process_message(self, message: str) -> str:
-        """Full pipeline: parse intent → dispatch → return result."""
+        """Full pipeline: parse intent → dispatch → return result.
+
+        Supports multiple actions in a single message — each is executed
+        sequentially and results are concatenated.
+        """
         self.conversation.append({"role": "user", "content": message})
 
         print("  🧠 正在理解你的意图...")
-        action = self._call_coordinator(message)
+        actions = self._call_coordinator(message)
 
-        if not action:
-            result = "❌ 无法解析指令，请换个说法试试。输入「帮助」查看使用指南。"
-        else:
+        if not actions:
+            result = (
+                "👋 你好！我是 OpenAkari-Codex 智能助手。\n\n"
+                "你可以直接用自然语言跟我说话，比如：\n"
+                "  • 「看看现在什么状态」\n"
+                "  • 「帮我调研 MoE 最新进展」\n"
+                "  • 「创建一个关于 XX 的项目」\n"
+                "  • 「启动舰队并行跑任务」\n\n"
+                "随便说，我都能理解！"
+            )
+        elif len(actions) == 1:
+            action = actions[0]
             action_type = action.get("action", "unknown")
             print(f"  📌 识别到: {action_type}")
             result = self.dispatch(action)
+        else:
+            parts: list[str] = []
+            for i, action in enumerate(actions, 1):
+                action_type = action.get("action", "unknown")
+                print(f"  📌 指令 {i}/{len(actions)}: {action_type}")
+                part = self.dispatch(action)
+                parts.append(f"**[{i}/{len(actions)}] {action_type}**\n{part}")
+            result = "\n\n---\n\n".join(parts)
 
         self.conversation.append({"role": "assistant", "content": result})
         return result

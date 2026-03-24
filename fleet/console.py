@@ -277,29 +277,38 @@ def _handle_command(
     # ── fallback: natural language via ChatBot ───────────────────
     if bot is not None:
         print("  🧠 正在理解你的意图...")
-        action = bot._call_coordinator(cmd)
-        if not action:
-            print("  ❌ 无法解析指令，请换个说法试试。输入 help 查看使用指南。")
+        actions = bot._call_coordinator(cmd)
+        if not actions:
+            print("  👋 你好！直接用自然语言跟我说话就行，比如「看看状态」「帮我调研MoE」")
             return True
 
-        action_type = action.get("action", "")
-        print(f"  📌 识别到: {action_type}")
+        for i, action in enumerate(actions):
+            action_type = action.get("action", "")
+            if len(actions) > 1:
+                print(f"  📌 指令 {i+1}/{len(actions)}: {action_type}")
+            else:
+                print(f"  📌 识别到: {action_type}")
 
-        if action_type in ("run_task", "lit_review"):
-            return _dispatch_as_fleet_task(action, repo_root, config, bot)
+            if action_type in ("run_task", "lit_review"):
+                _dispatch_as_fleet_task(action, repo_root, config, bot)
+                continue
 
-        if action_type == "fleet_start":
-            return _handle_command(
-                f"start {action.get('max_workers', config.max_workers)}",
-                repo_root, config, bot,
-            )
-        if action_type == "fleet_status":
-            return _handle_command("status", repo_root, config, bot)
-        if action_type == "fleet_stop":
-            return _handle_command("stop", repo_root, config, bot)
+            if action_type == "fleet_start":
+                _handle_command(
+                    f"start {action.get('max_workers', config.max_workers)}",
+                    repo_root, config, bot,
+                )
+                continue
+            if action_type == "fleet_status":
+                _handle_command("status", repo_root, config, bot)
+                continue
+            if action_type == "fleet_stop":
+                _handle_command("stop", repo_root, config, bot)
+                continue
 
-        result = bot.dispatch(action)
-        print(f"\n{result}\n")
+            result = bot.dispatch(action)
+            print(f"\n{result}\n")
+
         return True
 
     print(f"  ❓ 未知命令: {verb}")
