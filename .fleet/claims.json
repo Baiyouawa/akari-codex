@@ -208,7 +208,8 @@
       "session_id": "fleet-worker-02-1774323557-db59ac",
       "project": "moe",
       "claimed_at": 1774323557.6142278,
-      "active": true
+      "active": false,
+      "released_at": 1774324642.617309
     },
     "claim-1ee15ad4f6b3": {
       "task_id": "a9fb2d59cd175248",
