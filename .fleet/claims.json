@@ -415,7 +415,8 @@
       "session_id": "由希奈-04-1774358212-fe5347",
       "project": "multi-agent-survey",
       "claimed_at": 1774358212.228619,
-      "active": true
+      "active": false,
+      "released_at": 1774359243.3634577
     },
     "claim-e01782df5526": {
       "task_id": "00b29b0713d795a8",
@@ -450,7 +451,8 @@
       "session_id": "智乃-02-1774359143-ef5b1d",
       "project": "multi-agent-survey",
       "claimed_at": 1774359143.4008136,
-      "active": true
+      "active": false,
+      "released_at": 1774359346.1559315
     }
   }
 }
