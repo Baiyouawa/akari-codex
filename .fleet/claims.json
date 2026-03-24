@@ -431,6 +431,14 @@
       "project": "multi-agent-survey",
       "claimed_at": 1774358212.2400477,
       "active": true
+    },
+    "claim-30397f9b3aa1": {
+      "task_id": "a541e9e3ae7eb14d",
+      "worker_id": "岛村-01",
+      "session_id": "岛村-01-1774358662-6b27d8",
+      "project": "moe",
+      "claimed_at": 1774358662.7940018,
+      "active": true
     }
   }
 }
