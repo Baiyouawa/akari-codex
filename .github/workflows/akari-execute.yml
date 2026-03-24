@@ -33,11 +33,17 @@ jobs:
 
       - name: Execute command via gateway (with retry)
         id: run
+        env:
+          AKARI_USER: ${{ github.event.client_payload.user }}
+          AKARI_COMMAND: ${{ github.event.client_payload.command }}
         run: |
           MAX_RETRIES=3
           RETRY_DELAY=15
           ATTEMPT=0
           EXIT_CODE=1
+
+          echo "Command: $AKARI_COMMAND"
+          echo "User: $AKARI_USER"
 
           while [ $ATTEMPT -lt $MAX_RETRIES ]; do
             ATTEMPT=$((ATTEMPT + 1))
@@ -46,8 +52,8 @@ jobs:
             set +e
             RESULT=$(python -m runner.gateway \
               --source github \
-              --user "${{ github.event.client_payload.user }}" \
-              --message "${{ github.event.client_payload.command }}" \
+              --user "$AKARI_USER" \
+              --message "$AKARI_COMMAND" \
               2>&1)
             EXIT_CODE=$?
             set -e

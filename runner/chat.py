@@ -171,22 +171,33 @@ class ChatBot:
 
         messages.append({"role": "user", "content": user_message})
 
-        stream = self.client.chat.completions.create(
-            model=self.config.model,
-            messages=messages,
-            temperature=0,
-            max_tokens=2048,
-            stream=True,
-            stream_options={"include_usage": True},
-        )
+        try:
+            stream = self.client.chat.completions.create(
+                model=self.config.model,
+                messages=messages,
+                temperature=0,
+                max_tokens=2048,
+                stream=True,
+                stream_options={"include_usage": True},
+            )
 
-        content_parts: list[str] = []
-        for chunk in stream:
-            if chunk.choices and chunk.choices[0].delta.content:
-                content_parts.append(chunk.choices[0].delta.content)
+            content_parts: list[str] = []
+            for chunk in stream:
+                if chunk.choices and chunk.choices[0].delta.content:
+                    content_parts.append(chunk.choices[0].delta.content)
 
-        response_text = "".join(content_parts)
-        return _parse_actions(response_text)
+            response_text = "".join(content_parts)
+        except Exception as e:
+            return [{"action": "chat", "reply": f"API 调用出错: {e}"}]
+
+        actions = _parse_actions(response_text)
+        if actions:
+            return actions
+
+        if response_text.strip():
+            return [{"action": "chat", "reply": response_text.strip()}]
+
+        return []
 
     def _gather_context(self) -> str:
         parts: list[str] = []

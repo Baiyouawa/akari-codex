@@ -235,7 +235,9 @@
       "session_id": "fleet-worker-05-1774323557-6f4e16",
       "project": "multi-agent-survey",
       "claimed_at": 1774323557.6210454,
-      "active": true
+      "active": false,
+      "released_at": 1774331266.4587567,
+      "release_reason": "stale_cleanup"
     },
     "claim-773746e0f726": {
       "task_id": "5ccbd8a700d04286",
@@ -261,7 +263,9 @@
       "session_id": "fleet-worker-08-1774323557-6363fa",
       "project": "multi-agent-survey",
       "claimed_at": 1774323557.6317267,
-      "active": true
+      "active": false,
+      "released_at": 1774331266.4587567,
+      "release_reason": "stale_cleanup"
     },
     "claim-a8bd4d041463": {
       "task_id": "256b3d29c8fe2b49",
@@ -321,6 +325,46 @@
       "session_id": "fleet-worker-30-1774325179-2b635e",
       "project": "multi-agent-survey",
       "claimed_at": 1774325179.801315,
+      "active": true
+    },
+    "claim-fa311f713c93": {
+      "task_id": "a22f031bfd2ad9b3",
+      "worker_id": "fleet-worker-01",
+      "session_id": "fleet-worker-01-1774331266-353920",
+      "project": "moe",
+      "claimed_at": 1774331266.4654312,
+      "active": true
+    },
+    "claim-563f4198d24b": {
+      "task_id": "7384f653b7ebdd0a",
+      "worker_id": "fleet-worker-02",
+      "session_id": "fleet-worker-02-1774331266-71d0d9",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774331266.5167053,
+      "active": true
+    },
+    "claim-1781fe2c4c9a": {
+      "task_id": "00b29b0713d795a8",
+      "worker_id": "fleet-worker-03",
+      "session_id": "fleet-worker-03-1774331266-6a5d48",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774331266.5187573,
+      "active": true
+    },
+    "claim-dec1cfd8a736": {
+      "task_id": "0da1f638d82176f6",
+      "worker_id": "fleet-worker-04",
+      "session_id": "fleet-worker-04-1774331266-8418c1",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774331266.5198293,
+      "active": true
+    },
+    "claim-b2ad4ae212aa": {
+      "task_id": "9fc7c4a4857bf09d",
+      "worker_id": "fleet-worker-05",
+      "session_id": "fleet-worker-05-1774331266-322edb",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774331266.5240471,
       "active": true
     }
   }
