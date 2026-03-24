@@ -1,4 +1,4 @@
-name: "Akari Command Listener"
+name: "Akari Bot"
 
 on:
   issue_comment:
@@ -12,13 +12,20 @@ permissions:
   contents: write
 
 jobs:
-  dispatch:
+  akari:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     if: >-
       contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association) &&
       !startsWith(github.event.comment.body, '✅') &&
       !startsWith(github.event.comment.body, '❌') &&
       github.event.comment.user.login != 'github-actions[bot]'
+
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
+      OPENAI_MODEL: ${{ secrets.OPENAI_MODEL }}
+
     steps:
       - name: React to acknowledge
         uses: actions/github-script@v7
@@ -31,26 +38,163 @@ jobs:
               content: 'eyes'
             });
 
-      - name: Dispatch execution
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Save command to file
         uses: actions/github-script@v7
         with:
           script: |
+            const fs = require('fs');
             const body = context.payload.comment.body || '';
-            const user = context.payload.comment.user.login;
-            const isIssue = context.eventName === 'issue_comment';
-            const number = isIssue
-              ? context.payload.issue.number
-              : context.payload.discussion.number;
+            fs.writeFileSync('/tmp/akari-command.txt', body.trim());
+            console.log('Command:', body.trim().substring(0, 100));
 
-            await github.rest.repos.createDispatchEvent({
+      - name: Execute command via gateway (with retry)
+        id: run
+        env:
+          AKARI_USER: ${{ github.event.comment.user.login }}
+        run: |
+          AKARI_COMMAND=$(cat /tmp/akari-command.txt)
+          MAX_RETRIES=3
+          RETRY_DELAY=15
+          ATTEMPT=0
+          EXIT_CODE=1
+
+          echo "Command: $AKARI_COMMAND"
+          echo "User: $AKARI_USER"
+
+          while [ $ATTEMPT -lt $MAX_RETRIES ]; do
+            ATTEMPT=$((ATTEMPT + 1))
+            echo "=== Attempt $ATTEMPT / $MAX_RETRIES ==="
+
+            set +e
+            RESULT=$(python -m runner.gateway \
+              --source github \
+              --user "$AKARI_USER" \
+              --message "$AKARI_COMMAND" \
+              2>&1)
+            EXIT_CODE=$?
+            set -e
+
+            if [ $EXIT_CODE -eq 0 ]; then
+              break
+            fi
+
+            if echo "$RESULT" | grep -qi "no clients available\|503\|502\|rate.limit"; then
+              echo "API gateway busy, retrying in ${RETRY_DELAY}s..."
+              sleep $RETRY_DELAY
+              RETRY_DELAY=$((RETRY_DELAY * 2))
+            else
+              break
+            fi
+          done
+
+          echo "$RESULT" > /tmp/akari-result.txt
+
+          if [ $EXIT_CODE -ne 0 ]; then
+            echo "success=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "success=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Post result to issue
+        if: github.event_name == 'issue_comment'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const result = fs.readFileSync('/tmp/akari-result.txt', 'utf8').trim();
+            const command = fs.readFileSync('/tmp/akari-command.txt', 'utf8').trim();
+            const success = '${{ steps.run.outputs.success }}' === 'true';
+            const icon = success ? '✅' : '❌';
+            const user = context.payload.comment.user.login;
+
+            const body = [
+              `${icon} **Akari** — @${user}`,
+              '',
+              `> ${command.substring(0, 200)}`,
+              '',
+              result.substring(0, 3800),
+              '',
+              result.length > 3800 ? '\n---\n_结果过长，已截断。完整日志见 Actions。_' : '',
+            ].join('\n');
+
+            await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              event_type: 'akari-command',
-              client_payload: {
-                command: body.trim(),
-                user: user,
-                context_type: isIssue ? 'issue' : 'discussion',
-                context_number: String(number),
-                comment_id: String(context.payload.comment.id),
-              },
+              issue_number: context.payload.issue.number,
+              body: body,
             });
+
+      - name: Post result to discussion
+        if: github.event_name == 'discussion_comment'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const result = fs.readFileSync('/tmp/akari-result.txt', 'utf8').trim();
+            const command = fs.readFileSync('/tmp/akari-command.txt', 'utf8').trim();
+            const success = '${{ steps.run.outputs.success }}' === 'true';
+            const icon = success ? '✅' : '❌';
+            const user = context.payload.comment.user.login;
+
+            const body = [
+              `${icon} **Akari** — @${user}`,
+              '',
+              `> ${command.substring(0, 200)}`,
+              '',
+              result.substring(0, 3800),
+              '',
+              result.length > 3800 ? '\n---\n_结果过长，已截断。_' : '',
+            ].join('\n');
+
+            const number = context.payload.discussion.number;
+            const query = `
+              query($owner: String!, $repo: String!, $number: Int!) {
+                repository(owner: $owner, name: $repo) {
+                  discussion(number: $number) { id }
+                }
+              }`;
+            const resp = await github.graphql(query, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              number: number,
+            });
+
+            const mutation = `
+              mutation($id: ID!, $body: String!) {
+                addDiscussionComment(input: {discussionId: $id, body: $body}) {
+                  comment { id }
+                }
+              }`;
+            await github.graphql(mutation, {
+              id: resp.repository.discussion.id,
+              body: body,
+            });
+
+      - name: React with result status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const success = '${{ steps.run.outputs.success }}' === 'true';
+            try {
+              await github.rest.reactions.createForIssueComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: context.payload.comment.id,
+                content: success ? 'rocket' : 'confused',
+              });
+            } catch (e) {
+              console.log('Could not add reaction:', e.message);
+            }
