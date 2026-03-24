@@ -23,6 +23,7 @@
 - [ ] 分析 MoE 系统瓶颈与效率权衡 [zero-resource]
   Why: MoE 的价值不仅取决于参数规模，也取决于 dispatch、通信和并行策略是否真正带来吞吐收益。
   Done when: `projects/moe/analysis/` 下存在 systems 分析文档，覆盖至少 3 个系统层瓶颈或优化点，并给出来源。
+  Progress: 2026-03-24 repo-internal synthesis says training and inference should be treated as separate comparison axes for now, but the claim is not yet literature-backed because `projects/moe/literature/2026-03-24-moe-source-map.md` still lacks populated external sources and no systems analysis artifact exists yet.
 
 ## Phase 3: 结构化沉淀
 

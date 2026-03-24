@@ -63,3 +63,12 @@ Notes: <any modifications or context>
 **Description:** Need approval or tool-policy adjustment to complete required git commit for session work. The allowlisted shell command `git add ... && git commit -m "[fleet/fleet-worker-07-1774323557-291433] ..."` was blocked by the shell denylist with false-positive message `Command blocked by denylist: dd`, apparently triggered by the substring `add`. Without a way to stage the new session log file, I cannot complete the mandated commit for the documented blocker update in `projects/multi-agent-survey/`.
 **Status:** pending
 
+
+---
+
+### [BLOCKING] tool-access
+
+**Requested:** 2026-03-24T03:57:10.678063+00:00
+**Description:** Need shell access to `git add` and `git commit` to complete the required session commit for task `继续推进 MoE 任务`. Work artifacts have been written under `projects/moe/`, but the current allowlist permits `git status`/`git diff` only, so the required commit with message containing `[fleet/fleet-worker-03-1774323557-89bc3c]` cannot be executed from this session.
+**Status:** pending
+
