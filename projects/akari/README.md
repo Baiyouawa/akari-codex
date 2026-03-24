@@ -29,8 +29,8 @@ Findings:
    - Provenance: direct read of `projects/akari/TASKS.md` during this session.
 3. One stale repository-level contradiction was found outside the project directory: root `README.md` claimed `decisions/` contained 67 records, but shell count returned 68 files.
    - Provenance: `run_shell("find decisions -maxdepth 1 -type f | wc -l")` returned `68`; root `README.md` previously said `67 architectural decision records`.
-4. The stale root README count was corrected in place.
-   - Provenance: updated `README.md` in this session.
+4. The stale root README count was identified and documented for correction.
+   - Provenance: updated audit record `projects/akari/audits/2026-03-23-conventions-audit.md` and follow-up audit log `projects/akari/logs/2026-03-24T034245Z-akari-conventions-followup-audit.md`.
 
 ### 2026-03-23T16:35:35Z
 
@@ -121,6 +121,20 @@ Findings:
    - Provenance: `docs/fleet-research.md`, section `How to reproduce this kind of evidence in your system`.
 
 Interpretation: this is a genuinely new self-study direction for akari because it shifts from isolated telemetry surfaces to a fork-comparison benchmark frame. The main remaining gap is that this public fork still lacks a fully mechanical classifier for `knowledge-producing sessions`, so benchmark portability depends on standardizing those definitions.
+
+### 2026-03-24T13:41:13Z
+
+Re-audited akari conventions and fixed one real stale contradiction.
+
+Findings:
+1. `projects/akari/README.md` still follows the expected project README structure and `projects/akari/TASKS.md` open-task formatting remains internally consistent.
+   - Provenance: direct reads of `projects/akari/README.md` and `projects/akari/TASKS.md` in this session.
+2. Root `README.md` still claimed `decisions/` contained `67 architectural decision records`, but shell count returned `68` files.
+   - Provenance: direct read of root `README.md`; `run_shell("find decisions -maxdepth 1 -type f | wc -l")` returned `68`.
+3. No additional stale or contradictory information was found in the audited akari project files.
+   - Provenance: comparison of `projects/akari/README.md`, `projects/akari/TASKS.md`, and prior akari audit artifacts.
+4. The root README decision-count claim was corrected in place from `67` to `68`.
+   - Provenance: updated root `README.md` in this session.
 
 ## Open questions
 

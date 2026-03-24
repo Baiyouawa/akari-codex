@@ -470,6 +470,22 @@
       "project": "multi-agent-survey",
       "claimed_at": 1774359533.8845453,
       "active": true
+    },
+    "claim-e11c6c6b5e82": {
+      "task_id": "d9e547464b334220",
+      "worker_id": "枫-05",
+      "session_id": "枫-05-1774359774-9fbc4e",
+      "project": "moe",
+      "claimed_at": 1774359774.210512,
+      "active": true
+    },
+    "claim-eaaef2b3b002": {
+      "task_id": "01ec1609eedf59c4",
+      "worker_id": "花阳-06",
+      "session_id": "花阳-06-1774359774-423cd9",
+      "project": "moe",
+      "claimed_at": 1774359774.214425,
+      "active": true
     }
   }
 }

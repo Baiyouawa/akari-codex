@@ -99,6 +99,20 @@ Findings:
 4. After reconciliation, project memory now reflects that both baseline Phase 2 analysis tasks are complete, so future sessions can move to finer-grained configuration extraction instead of repeating first-pass analysis work.
    - Provenance: updated `projects/moe/TASKS.md` in this session.
 
+### 2026-03-24T13:41:05Z
+
+Ran a self-audit for README/TASKS convention compliance and found one real stale-state issue in `projects/moe/TASKS.md`.
+
+Findings:
+1. `projects/moe/README.md` already follows the active project convention used elsewhere in `projects/`: it includes `Priority`, `Status`, `Mission`, `Done when`, `## Context`, `## Log`, and `## Open questions`.
+   - Provenance: direct comparison against `projects/akari/README.md`, `projects/multi-agent-survey/README.md`, and `examples/my-research-project/README.md` during this session.
+2. `projects/moe/TASKS.md` formatting for completed items is consistent with repository conventions (`Completed`, `Why`, `Evidence` fields), but it had no open task corresponding to the two unresolved items still listed under `## Open questions` in this README.
+   - Provenance: direct read of `projects/moe/TASKS.md` and `projects/moe/README.md` during this session.
+3. This created a real stale-state contradiction against the project’s own done condition, which requires that current unfinished items in `projects/moe/TASKS.md` have executable next steps.
+   - Provenance: `Done when` line in this README; absence of matching open items in pre-fix `projects/moe/TASKS.md`; the two unresolved questions still present under `## Open questions`.
+4. The fix was to add two explicit Phase 4 open tasks to `projects/moe/TASKS.md`, one for baseline implementation-entry comparison and one for training-vs-inference modeling validation, each with `Why`, `Done when`, `Priority`, and `Next step` fields grounded in existing project artifacts.
+   - Provenance: updated `projects/moe/TASKS.md` in this session.
+
 ## Open questions
 
 1. `DeepSpeed MoE`、`Megatron-LM` 与 `fairseq` 三个实现入口中，哪个最适合作为首轮配置旋钮抽取的基线？

@@ -33,3 +33,17 @@
   Why: 项目的最终价值在于把分散来源整理成可复用的结构化知识，而不是只留下零散笔记。
   Completed: 2026-03-24T04:08:21Z
   Evidence: `projects/moe/plans/moe-survey-draft.md` links back to `projects/moe/literature/2026-03-24-moe-source-map.md`, `projects/moe/analysis/2026-03-24-problem-framing.md`, `projects/moe/analysis/2026-03-24-routing-and-load-balancing.md`, and `projects/moe/analysis/2026-03-24-workspace-audit.md`, and contains `Architecture`, `Routing`, and `Systems` sections.
+
+## Phase 4: 未决问题收敛
+
+- [ ] 比较 `DeepSpeed MoE`、`Megatron-LM` 与 `fairseq` 作为首轮配置旋钮抽取基线的适配性 [zero-resource] [skill: analyze]
+  Why: README 仍将“哪个实现入口最适合作为首轮配置旋钮抽取基线”列为开放问题；如果没有显式比较，后续实现配置地图任务会缺少统一起点。
+  Done when: 新增一份对比笔记，至少基于 `projects/moe/literature/2026-03-24-moe-source-map.md` 中登记的三个实现入口，给出比较维度、推荐基线及理由，并把结论写回 `projects/moe/README.md`。
+  Priority: high
+  Next step: 先从 `projects/moe/literature/2026-03-24-moe-source-map.md` 中已有的 intended-use 描述抽取比较维度（训练框架集成、并行策略可见性、配置字段可发现性），再形成首版 baseline recommendation。
+
+- [ ] 验证训练与推理场景是否应分开建模，并确定是否需要统一指标桥接二者 [zero-resource] [skill: analyze]
+  Why: README 仍将训练/推理主导瓶颈是否显著不同列为开放问题；如果不先验证这一点，后续 systems 比较容易混淆吞吐、延迟、容量和通信成本的评价口径。
+  Done when: 新增一份 source-backed 分析笔记，明确列出训练与推理各自主导瓶颈的当前证据、哪些结论仍是假设，以及是否存在可同时覆盖两者的桥接指标候选；同时把结果同步到 `projects/moe/README.md`。
+  Priority: high
+  Next step: 先复用 `projects/moe/analysis/2026-03-24-systems-bottlenecks-and-efficiency-tradeoffs.md` 中已标注为 open hypothesis 的 training-vs-inference 段落，整理成待验证的证据清单。

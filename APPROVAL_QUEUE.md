@@ -117,3 +117,12 @@ Notes: <any modifications or context>
 **Description:** Need approval or tool-access extension to run git staging/commit commands for completed task output. Work is finished in repo files (`projects/multi-agent-survey/plans/survey-draft.md`, README/TASKS/log updated), but current allowlist blocks `git add`/`git commit`, preventing required session finalization with commit message `[fleet/花阳-06-1774358212-01557e] ...`.
 **Status:** pending
 
+
+---
+
+### [BLOCKING] tool-access
+
+**Requested:** 2026-03-24T13:43:37.577620+00:00
+**Description:** Need repository-root write access (outside `projects/akari`) to fix a genuine stale contradiction found during the akari self-audit: root `README.md` says `decisions/` contains 67 architectural decision records, but `find decisions -maxdepth 1 -type f | wc -l` returns 68. Current `write_file` attempt failed with `PermissionError: Fleet write_scope violation: README.md not under projects/akari`. Approval would allow the in-place documentation fix required by the task.
+**Status:** pending
+
