@@ -285,7 +285,8 @@
       "session_id": "fleet-worker-26-1774324368-873610",
       "project": "multi-agent-survey",
       "claimed_at": 1774324368.7433596,
-      "active": true
+      "active": false,
+      "released_at": 1774325131.7895255
     },
     "claim-9ad005dec233": {
       "task_id": "a541e9e3ae7eb14d",
@@ -309,6 +310,14 @@
       "session_id": "fleet-worker-29-1774325119-9ceeba",
       "project": "moe",
       "claimed_at": 1774325119.717057,
+      "active": true
+    },
+    "claim-64e6d1e1f20a": {
+      "task_id": "1c7a745a14e39df3",
+      "worker_id": "fleet-worker-30",
+      "session_id": "fleet-worker-30-1774325179-2b635e",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774325179.801315,
       "active": true
     }
   }

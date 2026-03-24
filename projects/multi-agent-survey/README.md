@@ -45,13 +45,16 @@ Multi-Agent Systems (MAS) 是当前 AI 领域最活跃的研究方向之一。LL
 
 ### 2026-03-24
 
-- 2026-03-24T03:56:31Z — Re-checked the blocked Phase 2 Architecture literature-note task and confirmed the blocker still stands. Provenance: `projects/multi-agent-survey/TASKS.md` still marks the Architecture note task as `[blocked-by: Phase 1 检索完成]`, Phase 1 still has open tasks for NeurIPS 2025 and ICLR 2024-2026 coverage, `search_text("load-bearing", "projects/multi-agent-survey", max_results=200)` found no literature artifact that explicitly marks Architecture papers as `load-bearing`, and `search_text("Literature Note|literature note|## Citation|## Summary|## Method|## Key Findings", ".", max_results=200)` found no reusable standardized note template. Session log: `projects/multi-agent-survey/logs/2026-03-24T035631Z-architecture-load-bearing-blocked.md`.
+- 2026-03-24T03:55:00Z — Added `projects/multi-agent-survey/scripts/harvest_iclr_2025_2026.py` and generated `projects/multi-agent-survey/literature/iclr-2025-2026.md` from the public ICLR 2025 and 2026 schedule pages. The resulting venue-constrained inventory contains 146 deduplicated Multi-Agent papers, including 54 from 2025 and 92 from 2026, with verified `Oral`/`Poster` labels, authors, and OpenReview links. Provenance: `python3 projects/multi-agent-survey/scripts/harvest_iclr_2025_2026.py` wrote the artifact and printed `Total deduped papers: 146`, `2025 papers: 54`, `2026 papers: 92`; see also `projects/multi-agent-survey/logs/2026-03-24T035500Z-iclr-2025-2026-harvest.md`.
+- 2026-03-24T03:56:31Z — Re-checked the blocked Phase 2 Architecture literature-note task and confirmed the blocker still stands. Provenance: `projects/multi-agent-survey/TASKS.md` still marks the Architecture note task as `[blocked-by: Phase 1 检索完成]`, Phase 1 still has open tasks for NeurIPS 2025 and ICLR spotlight-label verification, `search_text("load-bearing", "projects/multi-agent-survey", max_results=200)` found no literature artifact that explicitly marks Architecture papers as `load-bearing`, and `search_text("Literature Note|literature note|## Citation|## Summary|## Method|## Key Findings", ".", max_results=200)` found no reusable standardized note template. Session log: `projects/multi-agent-survey/logs/2026-03-24T035631Z-architecture-load-bearing-blocked.md`.
+- 2026-03-24T04:05:15Z — Verified that the remaining ICLR blocker is specifically spotlight-label provenance rather than conference coverage volume. Provenance: `projects/multi-agent-survey/literature/iclr-2025-2026.md` already covers 92 ICLR 2026 papers, exceeding the task minimum of 20, but the same artifact records `2025: populated spotlight cards detected = 0; placeholder cards detected = 1` and `2026: populated spotlight cards detected = 0; placeholder cards detected = 1` for the official `type=Spotlight` pages; `projects/multi-agent-survey/TASKS.md` now tracks spotlight verification as the remaining follow-up.
 
 ## Open questions
 
 - Multi-Agent 与 Single-Agent + tools 的性能边界在哪里？什么时候值得用多智能体？
-- ICLR 2026 是否有关于 multi-agent evaluation benchmark 的新工作？当前仓库内无证据，需要外部 accepted-paper 源（官方 proceedings 或 OpenReview）补证。
+- ICLR 2026 是否有关于 multi-agent evaluation benchmark 的新工作？当前仓库内已有初步证据指向“有”，但仍需进一步筛选哪些 benchmark/evaluation 论文属于 load-bearing。
 - 最近三个月 arXiv 上的 multi-agent 论文主要集中在哪些子方向？
 - Agent-to-agent communication 的最新范式是什么？shared memory vs message passing vs tool use?
 - 除 Crossref 之外，NeurIPS 2025 应优先采用哪个可验证来源（OpenReview / 官方 proceedings / DBLP）以补齐论文池？
 - Communication-topology generation 是否会成为 2026 年 LLM multi-agent 的独立方法类，还是只是现有 architecture/coordination 类的一种实现？
+- ICLR 官方还有哪个可验证页面或导出能稳定提供 2025-2026 Spotlight 标签，以便把 `iclr-2025-2026.md` 从 `Oral/Poster verified` 提升到 `Oral/Spotlight/Poster verified`？

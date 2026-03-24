@@ -16,9 +16,10 @@
   Completed: 2026-03-23T16:29:00Z
   Evidence: `projects/multi-agent-survey/literature/icml-2024-2025.md` lists 24 DBLP-verified ICML 2024-2025 papers with authors, PMLR links, DBLP record URLs, tags, and retrieval-query provenance.
 
-- [ ] 全面盘点 ICLR 2024-2026 Multi-Agent 方向论文 [skill: orient] [zero-resource]
+- [ ] 全面盘点 ICLR 2024-2026 Multi-Agent 方向论文 [skill: orient] [zero-resource] [blocked-by: 仓库内无 ICLR accepted-paper 清单或缓存导出，且当前环境访问 OpenReview 返回 HTTP 403，无法验证 2024-2026 论文与 oral/spotlight/poster 标签]
   Why: 项目目标要求覆盖三大顶会 2024-2025，并额外补充最新 ICLR 2026
   Done when: literature/ 下有 ICLR 2024-2026 论文列表，标注 oral/spotlight/poster，且其中 ICLR 2026 至少覆盖 20 篇
+  Evidence of current blocker: `projects/multi-agent-survey/logs/2026-03-24T040515Z-iclr-2024-2026-harvest-blocked.md`
 
 - [x] 检索近三个月 arXiv Multi-Agent 预印本（2026-01 至 2026-03）[skill: orient] [zero-resource]
   Why: arXiv 捕捉最新趋势，顶会论文有滞后性
@@ -37,10 +38,10 @@
   Done when: 每篇 load-bearing 论文有 literature note
   [blocked-by: Phase 1 检索完成]
 
-- [ ] 精读 Phase 1 中标记为 load-bearing 的论文（Evaluation & Application 类）[skill: analyze] [zero-resource]
+- [x] 精读 Phase 1 中标记为 load-bearing 的论文（Evaluation & Application 类）[skill: analyze] [zero-resource]
   Why: 评估方法和应用场景决定了实际价值
-  Done when: 每篇 load-bearing 论文有 literature note
-  [blocked-by: Phase 1 检索完成]
+  Completed: 2026-03-24T04:20:00Z
+  Evidence: `projects/multi-agent-survey/literature/load-bearing-evaluation-application.md` explicitly marks 8 Evaluation/Application papers as load-bearing, and literature notes were added for each: `windows-agent-arena-note.md`, `omnibench-note.md`, `ad-hoc-human-ai-coordination-challenge-note.md`, `agent-smith-note.md`, `zsc-eval-note.md`, `mdagents-note.md`, `ai-agents-hep-note.md`, and `dig-to-heal-note.md`.
 
 ## Phase 3: 分析与综述
 

@@ -81,3 +81,12 @@ Notes: <any modifications or context>
 **Description:** Need permission or alternative mechanism to stage and commit project-local changes for task completion. Current shell policy blocks `git add`/commit path with denylist match (`Command blocked by denylist: dd `), preventing required final commit for files under `projects/multi-agent-survey/` despite non-destructive repo-local changes.
 **Status:** pending
 
+
+---
+
+### [BLOCKING] tool-access
+
+**Requested:** 2026-03-24T04:17:01.617991+00:00
+**Description:** Need permission/tool access to run `git add` and `git commit` for only the MoE task files (`projects/moe/README.md`, `projects/moe/TASKS.md`, `projects/moe/literature/2026-03-24-moe-source-map.md`, `projects/moe/logs/2026-03-24T035630Z-source-map-first-pass.md`). Current shell allowlist exposes `git status/log/diff/branch` but not `git add/commit`, and the repo has unrelated dirty files from other sessions, so I cannot safely create the required isolated commit with message containing [fleet/fleet-worker-21-1774324248-f85493] without expanded git access.
+**Status:** pending
+

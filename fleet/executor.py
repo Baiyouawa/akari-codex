@@ -172,6 +172,7 @@ def execute_fleet_worker(
 
         result.turns = session_result.turns
         result.total_tokens = session_result.token_usage.total_tokens
+        _save_fleet_session_log(opts, session_result, opts.repo_root)
 
         if session_result.success:
             _send_event("chatter", message=f"任务执行完毕，{result.turns}轮，提交中...")
@@ -231,6 +232,63 @@ def execute_fleet_worker(
             logger.exception("Failed to release claims for %s", opts.session_id)
 
     return result
+
+
+def _save_fleet_session_log(
+    opts: FleetExecutionOpts,
+    session_result: Any,
+    repo_root: Path,
+    *,
+    is_idle: bool = False,
+) -> None:
+    """Append this agent's work into a per-task session log file.
+
+    Multiple agents on the same task_id (or project) append to the same
+    JSON file.  Each entry is tagged with the worker/agent ID so reviews
+    can distinguish who did what.
+    """
+    import datetime
+    import json
+
+    logs_dir = repo_root / "logs" / "sessions"
+    logs_dir.mkdir(parents=True, exist_ok=True)
+
+    task_slug = (
+        opts.task.task_id.replace("/", "_").replace(" ", "-")[:60]
+        if opts.task.task_id
+        else "unknown"
+    )
+    log_path = logs_dir / f"fleet-{opts.task.project}-{task_slug}.jsonl"
+
+    wid = opts.session_id.rsplit("-", 2)[0] if "-" in opts.session_id else opts.session_id
+
+    entry = {
+        "agent_id": wid,
+        "session_id": opts.session_id,
+        "project": opts.task.project,
+        "task_id": opts.task.task_id,
+        "task_text": opts.task.text,
+        "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "model": "gpt-5.4",
+        "turns": session_result.turns,
+        "success": session_result.success,
+        "error": session_result.error,
+        "is_idle": is_idle,
+        "token_usage": {
+            "prompt_tokens": session_result.token_usage.prompt_tokens,
+            "completion_tokens": session_result.token_usage.completion_tokens,
+            "total_tokens": session_result.token_usage.total_tokens,
+        },
+        "tool_calls_count": len(session_result.tool_calls_log),
+        "deliverables": _extract_written_files(session_result.tool_calls_log),
+        "output_preview": (session_result.final_output or "")[:1000],
+    }
+
+    try:
+        with open(log_path, "a", encoding="utf-8") as f:
+            f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+    except Exception:
+        logger.warning("Failed to write session log to %s", log_path)
 
 
 def _extract_written_files(tool_calls_log: list[dict[str, Any]]) -> list[str]:
@@ -338,6 +396,7 @@ def execute_idle_worker(
 
         result.turns = session_result.turns
         result.total_tokens = session_result.token_usage.total_tokens
+        _save_fleet_session_log(idle_opts, session_result, repo_root, is_idle=True)
 
         if session_result.success:
             cwd = str(repo_root)

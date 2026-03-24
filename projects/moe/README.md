@@ -43,6 +43,20 @@ Findings:
 4. `projects/moe/TASKS.md` was updated so the open routing and systems tasks each point to concrete next sources rather than abstract future work.
    - Provenance: `projects/moe/TASKS.md` updated in this session.
 
+### 2026-03-24T04:08:21Z
+
+Assembled the first structured MoE survey draft from existing project artifacts.
+
+Findings:
+1. `projects/moe/plans/moe-survey-draft.md` now exists and organizes the current evidence base into `Architecture`, `Routing`, and `Systems` sections with explicit artifact back-links.
+   - Provenance: `projects/moe/plans/moe-survey-draft.md` written in this session.
+2. The draft’s routing section is the strongest-supported portion because it reuses the existing source-backed comparison in `projects/moe/analysis/2026-03-24-routing-and-load-balancing.md`.
+   - Provenance: `projects/moe/analysis/2026-03-24-routing-and-load-balancing.md`; `projects/moe/plans/moe-survey-draft.md`.
+3. The draft includes systems as a structured outline rather than a closed conclusion because the project still lacks a dedicated systems analysis artifact under `projects/moe/analysis/`.
+   - Provenance: `projects/moe/TASKS.md`; directory contents of `projects/moe/analysis/` observed in this session; `projects/moe/plans/moe-survey-draft.md`.
+4. The survey draft now gives future sessions a reusable synthesis layer above the source map and analysis notes, reducing the need to reassemble architecture / routing / systems context from scratch.
+   - Provenance: `projects/moe/plans/moe-survey-draft.md` and its `Artifact map`, section structure, and `Recommended next increments` section.
+
 ## Open questions
 
 1. 在当前来源地图中，哪三篇论文最适合优先抽取为 routing / load balancing 对比表？
