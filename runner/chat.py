@@ -23,6 +23,9 @@ from typing import Any
 
 from openai import OpenAI
 
+_API_MAX_RETRIES = 3
+_API_RETRY_DELAY = 3
+
 from .codex_session_runner import SessionRunner
 from .config import CodexConfig
 from .persona import (
@@ -82,6 +85,31 @@ class ChatBot:
         )
         self.repo_root = config.repo_home
         self.tool_executor = ToolExecutor(config)
+
+    # ── LLM 调用（带自动重试）──────────────────────────────────
+
+    def _stream_chat(self, messages: list[dict[str, Any]], **kwargs: Any) -> str:
+        """带自动重试的流式 LLM 调用，返回拼接后的文本。"""
+        last_err = None
+        for attempt in range(1, _API_MAX_RETRIES + 1):
+            try:
+                stream = self.client.chat.completions.create(
+                    model=self.config.model,
+                    messages=messages,
+                    stream=True,
+                    **kwargs,
+                )
+                parts: list[str] = []
+                for chunk in stream:
+                    if chunk.choices and chunk.choices[0].delta.content:
+                        parts.append(chunk.choices[0].delta.content)
+                return "".join(parts)
+            except Exception as e:
+                last_err = e
+                if attempt < _API_MAX_RETRIES:
+                    print(f"  [重试 {attempt}/{_API_MAX_RETRIES}] API 连接问题: {e}")
+                    time.sleep(_API_RETRY_DELAY * attempt)
+        raise last_err  # type: ignore[misc]
 
     # ── 核心入口 ──────────────────────────────────────────────
 
@@ -166,18 +194,7 @@ class ChatBot:
         ]
 
         try:
-            stream = self.client.chat.completions.create(
-                model=self.config.model,
-                messages=messages,
-                temperature=0,
-                max_tokens=2048,
-                stream=True,
-            )
-            parts: list[str] = []
-            for chunk in stream:
-                if chunk.choices and chunk.choices[0].delta.content:
-                    parts.append(chunk.choices[0].delta.content)
-            response_text = "".join(parts)
+            response_text = self._stream_chat(messages, temperature=0, max_tokens=2048)
         except Exception as e:
             return {"route": "chat", "reply": f"呜...API出了点问题: {e}"}
 
@@ -197,18 +214,7 @@ class ChatBot:
             {"role": "user", "content": user_message},
         ]
         try:
-            stream = self.client.chat.completions.create(
-                model=self.config.model,
-                messages=messages,
-                temperature=0.7,
-                max_tokens=2048,
-                stream=True,
-            )
-            parts: list[str] = []
-            for chunk in stream:
-                if chunk.choices and chunk.choices[0].delta.content:
-                    parts.append(chunk.choices[0].delta.content)
-            text = "".join(parts)
+            text = self._stream_chat(messages, temperature=0.7, max_tokens=2048)
             return text or f"{AGENT_NAME}好像脑子空白了...(｡•́︿•̀｡)"
         except Exception as e:
             return f"呜...{AGENT_NAME}连不上大脑了: {e}"
@@ -248,18 +254,7 @@ class ChatBot:
             )},
         ]
         try:
-            stream = self.client.chat.completions.create(
-                model=self.config.model,
-                messages=messages,
-                temperature=0.7,
-                max_tokens=2048,
-                stream=True,
-            )
-            parts: list[str] = []
-            for chunk in stream:
-                if chunk.choices and chunk.choices[0].delta.content:
-                    parts.append(chunk.choices[0].delta.content)
-            text = "".join(parts)
+            text = self._stream_chat(messages, temperature=0.7, max_tokens=2048)
             return text or combined_data
         except Exception as e:
             return f"小白查到了信息但脑子转不过来了...\n\n{combined_data}\n\n(错误: {e})"
@@ -277,18 +272,7 @@ class ChatBot:
         ]
 
         try:
-            stream = self.client.chat.completions.create(
-                model=self.config.model,
-                messages=messages,
-                temperature=0.5,
-                max_tokens=2048,
-                stream=True,
-            )
-            parts: list[str] = []
-            for chunk in stream:
-                if chunk.choices and chunk.choices[0].delta.content:
-                    parts.append(chunk.choices[0].delta.content)
-            wrapped = "".join(parts)
+            wrapped = self._stream_chat(messages, temperature=0.5, max_tokens=2048)
             return wrapped if wrapped else raw_result
         except Exception:
             return raw_result
@@ -305,19 +289,7 @@ class ChatBot:
             return
 
         try:
-            stream = self.client.chat.completions.create(
-                model=self.config.model,
-                messages=messages,
-                temperature=0,
-                max_tokens=1024,
-                stream=True,
-            )
-            parts: list[str] = []
-            for chunk in stream:
-                if chunk.choices and chunk.choices[0].delta.content:
-                    parts.append(chunk.choices[0].delta.content)
-            text = "".join(parts)
-
+            text = self._stream_chat(messages, temperature=0, max_tokens=1024)
             result = json.loads(text)
             summary = result.get("summary", "")
             facts = result.get("facts", [])
