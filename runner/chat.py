@@ -1,25 +1,22 @@
-"""Natural language chat interface for OpenAkari-Codex.
+"""小白交互终端 — 常驻角色 Agent。
 
-Replaces the upstream Slack Bot with a local interactive CLI.
-Users type natural language instructions; the system interprets intent,
-dispatches to the appropriate action, and returns results.
+小白是白侑（小侑）的专属 AI 助手，具有完整的记忆/反思体系、
+自然语言理解、多指令拆解和智能任务分发能力。
+
+所有入口（CLI / fleet console / GitHub / QQ）统一调用 ChatBot.process_message()，
+返回值始终是小白口吻的自然语言。
 
 Usage:
-    python -m runner.chat                      # interactive mode
-    python -m runner.chat "调研 multi-agent 论文"  # single command mode
-
-Architecture (mirrors upstream Slack chat):
-    User message → Coordinator (intent parsing via LLM) → Action dispatch
-    Actions: run_task, orient, lit_review, status, approve, help, etc.
+    python -m runner.chat                          # 交互模式
+    python -m runner.chat "看看现在什么状态"          # 单条命令模式
 """
 
 from __future__ import annotations
 
 import json
 import re
-import readline  # noqa: F401  — enables arrow keys in input()
+import readline  # noqa: F401
 import sys
-import textwrap
 import time
 from pathlib import Path
 from typing import Any
@@ -28,125 +25,53 @@ from openai import OpenAI
 
 from .codex_session_runner import SessionRunner
 from .config import CodexConfig
-
-COORDINATOR_SYSTEM_PROMPT = """\
-你是 OpenAkari-Codex 智能助手。用户会用自然语言跟你对话，你需要理解他们的意图并输出 JSON action 来驱动系统。
-
-## 核心原则
-- 像 ChatGPT 一样理解自然语言，不要求用户按固定格式输入
-- 遇到模糊指令，用最合理的方式推断意图，不轻易说"不懂"
-- 如果一条消息包含多个不同意图，拆解成多个 action
-
-## 输出格式
-如果只有一个意图，输出单个 JSON 对象。
-如果有多个意图，输出 JSON 数组，每个元素是一个 action。
-
-## 可用 Action
-
-{"action": "run_task", "task_description": "任务描述", "project": "项目名"}
-  → 用户想执行任务、做某件事、继续工作
-  → 例："开始执行"、"帮我写个报告"、"继续搞moe"、"跑一下"
-
-{"action": "orient", "project": "可选项目名"}
-  → 用户想看状态、进度、了解当前情况
-  → 例："看看状态"、"现在啥情况"、"有什么任务"、"进展如何"
-
-{"action": "lit_review", "topic": "主题", "project": "可选项目名", "scope": "范围"}
-  → 用户想调研论文、搜索文献、做综述
-  → 例："调研MoE"、"帮我找论文"、"搜一下最近的ICLR"
-
-{"action": "create_project", "name": "名称", "mission": "使命", "tasks": ["任务1", ...]}
-  → 用户想创建新项目
-  → 例："建个新项目研究XXX"、"新建一个关于YYY的课题"
-
-{"action": "create_task", "project": "项目名", "tasks": ["任务1", ...]}
-  → 用户想添加任务
-  → 例："加个任务"、"给moe项目添加一个调研任务"
-
-{"action": "approve", "item": "描述"}
-  → 用户想审批
-
-{"action": "help"}
-  → 用户想看帮助、不知道怎么用、打招呼
-  → 例："帮助"、"help"、"你好"、"你能做什么"、"怎么用"
-
-{"action": "fleet_start", "max_workers": 8}
-  → 用户想启动多Agent并行舰队
-  → 例："启动舰队"、"开始多Agent"、"并行跑起来"
-
-{"action": "fleet_status"}
-  → 用户想看舰队运行状态
-
-{"action": "fleet_stop"}
-  → 用户想停止舰队
-
-{"action": "chat", "reply": "你的回复"}
-  → 用户在闲聊、问问题、或说了一些不需要执行操作的话
-  → 用自然、友好的口吻回答，像一个靠谱的AI助手
-
-{"action": "clarify", "question": "你想确认的问题"}
-  → 仅在确实无法推断意图时使用，尽量少用
-
-## 多指令拆解示例
-
-用户: "看看状态，然后帮我调研一下MoE的最新进展"
-输出: [{"action": "orient"}, {"action": "lit_review", "topic": "MoE最新进展", "project": "moe"}]
-
-用户: "给moe加个任务：对比Top-K和Expert Choice路由，然后启动舰队跑起来"
-输出: [{"action": "create_task", "project": "moe", "tasks": ["对比Top-K和Expert Choice路由策略"]}, {"action": "fleet_start", "max_workers": 8}]
-
-## 规则
-- 输出纯 JSON，不要有任何前后解释文字
-- project 字段能推断就填，否则留空字符串
-- 用户说中文就中文回复，说英文就英文
-- 打招呼、寒暄用 chat action 友好回复
-- 不确定时宁可用 chat 友好回复，也不要冷冰冰地说"无法理解"
-"""
+from .persona import (
+    AGENT_NAME,
+    USER_NICKNAME,
+    XIAOBAI_ROUTER_PROMPT,
+    XIAOBAI_SYSTEM_PROMPT,
+    XIAOBAI_WRAP_PROMPT,
+    WELCOME_MESSAGE,
+    PROMPT_PREFIX,
+)
+from . import memory as mem
+from . import memo
+from .xiaobai_tools import XIAOBAI_TOOL_DEFINITIONS, execute_tool as _exec_tool
 
 
-def _parse_actions(text: str) -> list[dict[str, Any]]:
-    """Extract JSON action(s) from coordinator response.
+# ─── JSON 解析 ───────────────────────────────────────────────
 
-    Returns a list of action dicts. Handles both single object and array.
-    """
+def _parse_router_response(text: str) -> dict[str, Any] | None:
+    """解析路由模块的 JSON 输出。"""
     text = text.strip()
     if text.startswith("```"):
         text = re.sub(r"^```\w*\n?", "", text)
         text = re.sub(r"\n?```$", "", text)
         text = text.strip()
 
-    def _try_parse(s: str) -> list[dict[str, Any]] | None:
+    try:
+        obj = json.loads(text)
+        if isinstance(obj, dict) and "route" in obj:
+            return obj
+    except json.JSONDecodeError:
+        pass
+
+    match = re.search(r"\{[\s\S]*\}", text)
+    if match:
         try:
-            obj = json.loads(s)
-            if isinstance(obj, list):
-                return [a for a in obj if isinstance(a, dict) and "action" in a]
-            if isinstance(obj, dict) and "action" in obj:
-                return [obj]
+            obj = json.loads(match.group())
+            if isinstance(obj, dict) and "route" in obj:
+                return obj
         except json.JSONDecodeError:
             pass
-        return None
 
-    result = _try_parse(text)
-    if result:
-        return result
+    return None
 
-    arr_match = re.search(r"\[[\s\S]*\]", text)
-    if arr_match:
-        result = _try_parse(arr_match.group())
-        if result:
-            return result
 
-    obj_match = re.search(r"\{[^{}]+\}", text, re.DOTALL)
-    if obj_match:
-        result = _try_parse(obj_match.group())
-        if result:
-            return result
-
-    return []
-
+# ─── ChatBot ─────────────────────────────────────────────────
 
 class ChatBot:
-    """Interactive chat interface that dispatches natural language to actions."""
+    """小白主体。所有入口共享同一个实例。"""
 
     def __init__(self, config: CodexConfig):
         self.config = config
@@ -156,20 +81,82 @@ class ChatBot:
             timeout=config.timeout_seconds,
         )
         self.repo_root = config.repo_home
-        self.conversation: list[dict[str, str]] = []
 
-    def _call_coordinator(self, user_message: str) -> list[dict[str, Any]]:
+    # ── 核心入口 ──────────────────────────────────────────────
+
+    def process_message(self, message: str) -> str:
+        """统一入口：接收自然语言 → 返回小白口吻的回复。"""
+        print(f"  {AGENT_NAME}正在想...")
+
+        due = memo.check_due_reminders(self.repo_root)
+        due_notice = ""
+        if due:
+            notices = [f"「{r['content']}」" for r in due]
+            due_notice = f"（对了{USER_NICKNAME}，到时间啦~提醒你：{'、'.join(notices)}）\n\n"
+
+        try:
+            router_result = self._call_router(message)
+        except Exception as e:
+            reply = f"呜...{AGENT_NAME}的大脑好像出了点问题: {type(e).__name__}: {e}"
+            mem.save_turn(self.repo_root, message, reply)
+            return due_notice + reply
+
+        if not router_result:
+            reply = self._chat_with_tools(message)
+            mem.save_turn(self.repo_root, message, reply)
+            self._maybe_reflect()
+            return due_notice + reply
+
+        route = router_result.get("route", "chat")
+
+        if route == "chat":
+            reply = self._chat_with_tools(message)
+            mem.save_turn(self.repo_root, message, reply)
+            self._maybe_reflect()
+            return due_notice + reply
+
+        if route == "action":
+            actions = router_result.get("actions", [])
+            if not actions:
+                reply = f"欸？{AGENT_NAME}理解了你的意思，但好像没有具体要做的事情呢~"
+                mem.save_turn(self.repo_root, message, reply)
+                return due_notice + reply
+
+            raw_results: list[str] = []
+            action_names: list[str] = []
+            for action in actions:
+                action_type = action.get("action", "")
+                action_names.append(action_type)
+                print(f"  >> 执行: {action_type}")
+                result = self._dispatch(action)
+                raw_results.append(result)
+
+            combined = "\n\n---\n\n".join(raw_results)
+            reply = self._wrap_result(message, combined)
+            mem.save_turn(self.repo_root, message, reply, action_taken=",".join(action_names))
+            self._maybe_reflect()
+            return due_notice + reply
+
+        reply = router_result.get("reply", f"{AGENT_NAME}有点迷糊了~")
+        mem.save_turn(self.repo_root, message, reply)
+        return due_notice + reply
+
+    # ── 阶段一：意图路由 ──────────────────────────────────────
+
+    def _call_router(self, user_message: str) -> dict[str, Any] | None:
+        memory_context = mem.load_context(self.repo_root)
+        repo_context = self._gather_context()
+
+        system_parts = [XIAOBAI_ROUTER_PROMPT]
+        if memory_context:
+            system_parts.append(f"\n\n{memory_context}")
+        if repo_context:
+            system_parts.append(f"\n\n## 当前仓库状态\n{repo_context}")
+
         messages = [
-            {"role": "system", "content": COORDINATOR_SYSTEM_PROMPT},
+            {"role": "system", "content": "\n".join(system_parts)},
+            {"role": "user", "content": user_message},
         ]
-
-        context = self._gather_context()
-        messages.append({"role": "system", "content": f"当前仓库状态:\n{context}"})
-
-        for msg in self.conversation[-6:]:
-            messages.append(msg)
-
-        messages.append({"role": "user", "content": user_message})
 
         try:
             stream = self.client.chat.completions.create(
@@ -178,62 +165,175 @@ class ChatBot:
                 temperature=0,
                 max_tokens=2048,
                 stream=True,
-                stream_options={"include_usage": True},
             )
-
-            content_parts: list[str] = []
+            parts: list[str] = []
             for chunk in stream:
                 if chunk.choices and chunk.choices[0].delta.content:
-                    content_parts.append(chunk.choices[0].delta.content)
-
-            response_text = "".join(content_parts)
+                    parts.append(chunk.choices[0].delta.content)
+            response_text = "".join(parts)
         except Exception as e:
-            return [{"action": "chat", "reply": f"API 调用出错: {e}"}]
+            return {"route": "chat", "reply": f"呜...API出了点问题: {e}"}
 
-        actions = _parse_actions(response_text)
-        if actions:
-            return actions
+        return _parse_router_response(response_text)
 
-        if response_text.strip():
-            return [{"action": "chat", "reply": response_text.strip()}]
+    # ── 带工具的聊天 ──────────────────────────────────────────
 
-        return []
+    def _stream_with_tools(self, messages: list[dict[str, Any]]) -> tuple[str | None, list[dict]]:
+        """流式调用，返回 (文本内容, tool_calls列表)。兼容必须 stream=True 的 API。"""
+        stream = self.client.chat.completions.create(
+            model=self.config.model,
+            messages=messages,
+            tools=XIAOBAI_TOOL_DEFINITIONS,
+            tool_choice="auto",
+            temperature=0.7,
+            max_tokens=2048,
+            stream=True,
+        )
 
-    def _gather_context(self) -> str:
-        parts: list[str] = []
+        content_parts: list[str] = []
+        tool_calls_map: dict[int, dict] = {}
 
-        projects_dir = self.repo_root / "projects"
-        if projects_dir.is_dir():
-            project_list = []
-            for p in sorted(projects_dir.iterdir()):
-                if p.is_dir():
-                    readme = p / "README.md"
-                    tasks = p / "TASKS.md"
-                    open_count = 0
-                    if tasks.is_file():
-                        for line in tasks.read_text(errors="replace").splitlines():
-                            if line.strip().startswith("- [ ]"):
-                                open_count += 1
-                    status = "active" if open_count > 0 else "idle"
-                    project_list.append(f"  - {p.name}: {status}, {open_count} open tasks")
-            if project_list:
-                parts.append("Projects:\n" + "\n".join(project_list))
+        for chunk in stream:
+            if not chunk.choices:
+                continue
+            delta = chunk.choices[0].delta
 
-        tasks_file = self.repo_root / "tasks" / "TASKS.md"
-        if tasks_file.is_file():
-            content = tasks_file.read_text(errors="replace")
-            open_tasks = [l.strip() for l in content.splitlines() if l.strip().startswith("- [ ]")]
-            if open_tasks:
-                parts.append(f"Global tasks: {len(open_tasks)} open")
+            if delta.content:
+                content_parts.append(delta.content)
 
-        return "\n".join(parts) or "(empty repo)"
+            if delta.tool_calls:
+                for tc_delta in delta.tool_calls:
+                    idx = tc_delta.index
+                    if idx not in tool_calls_map:
+                        tool_calls_map[idx] = {
+                            "id": tc_delta.id or "",
+                            "type": "function",
+                            "function": {"name": "", "arguments": ""},
+                        }
+                    entry = tool_calls_map[idx]
+                    if tc_delta.id:
+                        entry["id"] = tc_delta.id
+                    if tc_delta.function:
+                        if tc_delta.function.name:
+                            entry["function"]["name"] = tc_delta.function.name
+                        if tc_delta.function.arguments:
+                            entry["function"]["arguments"] += tc_delta.function.arguments
 
-    def dispatch(self, action: dict[str, Any]) -> str:
-        """Execute the parsed action and return a human-readable result."""
+        content = "".join(content_parts) or None
+        tool_calls = [tool_calls_map[k] for k in sorted(tool_calls_map)]
+        return content, tool_calls
+
+    def _chat_with_tools(self, user_message: str, max_rounds: int = 5) -> str:
+        """小白聊天模式，支持 function calling（web_search / web_fetch / get_time / calculate）。"""
+        memory_context = mem.load_context(self.repo_root)
+        system = XIAOBAI_SYSTEM_PROMPT
+        if memory_context:
+            system += f"\n\n{memory_context}"
+
+        messages: list[dict[str, Any]] = [
+            {"role": "system", "content": system},
+            {"role": "user", "content": user_message},
+        ]
+
+        for _round in range(max_rounds):
+            try:
+                content, tool_calls = self._stream_with_tools(messages)
+            except Exception as e:
+                return f"呜...{AGENT_NAME}连不上大脑了: {e}"
+
+            if not tool_calls:
+                return content or f"{AGENT_NAME}好像脑子空白了...(｡•́︿•̀｡)"
+
+            assistant_msg: dict[str, Any] = {"role": "assistant", "content": content or ""}
+            assistant_msg["tool_calls"] = tool_calls
+            messages.append(assistant_msg)
+
+            for tc in tool_calls:
+                fn_name = tc["function"]["name"]
+                try:
+                    fn_args = json.loads(tc["function"]["arguments"])
+                except json.JSONDecodeError:
+                    fn_args = {}
+
+                print(f"  >> 工具调用: {fn_name}({fn_args})")
+                result = _exec_tool(fn_name, fn_args)
+                messages.append({
+                    "role": "tool",
+                    "tool_call_id": tc["id"],
+                    "content": result,
+                })
+
+        return f"{AGENT_NAME}想了很久但还是没搞定呢...(｡•́︿•̀｡)"
+
+    # ── 阶段二：结果润色 ──────────────────────────────────────
+
+    def _wrap_result(self, user_message: str, raw_result: str) -> str:
+        """把系统执行结果用小白的口吻重新包装。"""
+        if len(raw_result) < 50:
+            return raw_result
+
+        messages = [
+            {"role": "system", "content": XIAOBAI_WRAP_PROMPT},
+            {"role": "user", "content": f"{USER_NICKNAME}的原始请求: {user_message}\n\n系统执行结果:\n{raw_result[:3000]}"},
+        ]
+
+        try:
+            stream = self.client.chat.completions.create(
+                model=self.config.model,
+                messages=messages,
+                temperature=0.5,
+                max_tokens=2048,
+                stream=True,
+            )
+            parts: list[str] = []
+            for chunk in stream:
+                if chunk.choices and chunk.choices[0].delta.content:
+                    parts.append(chunk.choices[0].delta.content)
+            wrapped = "".join(parts)
+            return wrapped if wrapped else raw_result
+        except Exception:
+            return raw_result
+
+    # ── 反思 ──────────────────────────────────────────────────
+
+    def _maybe_reflect(self) -> None:
+        """条件触发记忆反思。"""
+        if not mem.should_reflect(self.repo_root):
+            return
+
+        messages = mem.build_reflect_messages(self.repo_root)
+        if not messages:
+            return
+
+        try:
+            stream = self.client.chat.completions.create(
+                model=self.config.model,
+                messages=messages,
+                temperature=0,
+                max_tokens=1024,
+                stream=True,
+            )
+            parts: list[str] = []
+            for chunk in stream:
+                if chunk.choices and chunk.choices[0].delta.content:
+                    parts.append(chunk.choices[0].delta.content)
+            text = "".join(parts)
+
+            result = json.loads(text)
+            summary = result.get("summary", "")
+            facts = result.get("facts", [])
+
+            if summary:
+                mem.save_reflection(self.repo_root, summary, facts)
+            for fact in facts:
+                mem.add_fact(self.repo_root, fact, source="reflect")
+        except Exception:
+            pass
+
+    # ── Action 分发 ───────────────────────────────────────────
+
+    def _dispatch(self, action: dict[str, Any]) -> str:
         action_type = action.get("action", "")
-
-        if action_type == "chat":
-            return action.get("reply", "你好！有什么可以帮你的？")
 
         handlers = {
             "run_task": self._handle_run_task,
@@ -243,17 +343,24 @@ class ChatBot:
             "create_task": self._handle_create_task,
             "approve": self._handle_approve,
             "help": self._handle_help,
-            "clarify": self._handle_clarify,
             "fleet_start": self._handle_fleet_start,
             "fleet_status": self._handle_fleet_status,
             "fleet_stop": self._handle_fleet_stop,
+            "fleet_report": self._handle_fleet_report,
+            "fleet_scale": self._handle_fleet_scale,
+            "fleet_tasks": self._handle_fleet_tasks,
+            "memo_add": self._handle_memo_add,
+            "memo_list": self._handle_memo_list,
+            "reminder_add": self._handle_reminder_add,
+            "reminder_list": self._handle_reminder_list,
         }
 
         handler = handlers.get(action_type)
         if not handler:
-            return f"未知的 action 类型: {action_type}"
-
+            return f"未知操作: {action_type}"
         return handler(action)
+
+    # ── Handlers ──────────────────────────────────────────────
 
     def _handle_run_task(self, action: dict) -> str:
         project = action.get("project", "")
@@ -265,49 +372,41 @@ class ChatBot:
             if candidate.is_file():
                 task_file = f"projects/{project}/TASKS.md"
 
-        print(f"\n  🔄 正在启动 session...")
-        print(f"  📋 任务: {task_desc}")
-        if task_file:
-            print(f"  📁 项目: {project}")
-
         runner = SessionRunner(self.config)
         result = runner.run(task_path=task_file)
 
         if result.success:
             return (
-                f"✅ Session 完成!\n"
+                f"任务完成!\n"
                 f"  任务: {result.task_id}\n"
                 f"  轮次: {result.turns}\n"
                 f"  Token: {result.token_usage.total_tokens}\n"
                 f"  耗时: {result.latency_seconds:.1f}s\n"
-                f"  输出预览: {result.final_output[:300]}..."
+                f"  输出: {result.final_output[:300]}..."
             )
-        else:
-            return f"❌ Session 失败: {result.error}"
+        return f"任务失败: {result.error}"
 
     def _handle_orient(self, action: dict) -> str:
-        project = action.get("project", "")
         runner = SessionRunner(self.config)
         state = runner.orient()
 
-        lines = ["📊 当前仓库状态:\n"]
-
-        lines.append(f"  Git: {state.get('git_status', 'unknown')}")
+        lines = ["当前仓库状态:\n"]
+        lines.append(f"  Git: {state.get('git_status', '未知')}")
 
         for tf in state.get("task_files", []):
             lines.append(f"  {tf['file']}: {tf['total_open']} 个待办任务")
             for t in tf.get("tasks_preview", [])[:3]:
-                lines.append(f"    • {t[5:70]}...")
+                lines.append(f"    - {t[5:70]}...")
 
         skills = state.get("skills", [])
-        lines.append(f"\n  Skills: {len(skills)} 个已加载")
+        lines.append(f"\n  技能: {len(skills)} 个已加载")
 
         recent = state.get("recent_logs", [])
         if recent:
-            lines.append(f"\n  最近 sessions:")
+            lines.append(f"\n  最近会话:")
             for log in recent[:3]:
-                status = "✅" if log.get("success") else "❌"
-                lines.append(f"    {status} {log.get('file', '')} — {log.get('task_id', '')}")
+                status = "成功" if log.get("success") else "失败"
+                lines.append(f"    [{status}] {log.get('file', '')} — {log.get('task_id', '')}")
 
         return "\n".join(lines)
 
@@ -316,20 +415,17 @@ class ChatBot:
         project = action.get("project", "")
         scope = action.get("scope", "")
 
-        task_content = f"# Literature Review Task\n\n"
-        task_content += f"**Topic:** {topic}\n"
+        task_content = f"# 文献调研任务\n\n"
+        task_content += f"**主题:** {topic}\n"
         if scope:
-            task_content += f"**Scope:** {scope}\n"
-        task_content += f"\n## Instructions\n\n"
-        task_content += f"Conduct a literature review on: {topic}\n"
-        if scope:
-            task_content += f"Focus on: {scope}\n"
+            task_content += f"**范围:** {scope}\n"
         task_content += (
-            f"\n1. Search for relevant papers\n"
-            f"2. Triage into load-bearing / contextual / incremental\n"
-            f"3. Write literature notes for load-bearing papers\n"
-            f"4. Identify research gaps\n"
-            f"5. Create follow-up tasks\n"
+            f"\n## 要求\n\n"
+            f"1. 搜索相关论文\n"
+            f"2. 按 load-bearing / contextual / incremental 分类\n"
+            f"3. 对重要论文写文献笔记\n"
+            f"4. 识别研究空白\n"
+            f"5. 创建后续任务\n"
         )
 
         target_dir = self.repo_root / "projects"
@@ -337,7 +433,7 @@ class ChatBot:
             target_dir = target_dir / project
         else:
             for d in sorted(target_dir.iterdir()):
-                if d.is_dir() and "agent" in d.name.lower():
+                if d.is_dir():
                     target_dir = d
                     project = d.name
                     break
@@ -346,24 +442,18 @@ class ChatBot:
         task_file.parent.mkdir(parents=True, exist_ok=True)
         task_file.write_text(task_content, encoding="utf-8")
 
-        print(f"\n  🔍 开始文献调研: {topic}")
-        print(f"  📁 项目: {project or '(auto)'}")
-        if scope:
-            print(f"  🎯 范围: {scope}")
-
         runner = SessionRunner(self.config)
         result = runner.run(task_path=str(task_file.relative_to(self.repo_root)))
 
         if result.success:
             return (
-                f"✅ 文献调研 session 完成!\n"
+                f"文献调研完成!\n"
                 f"  主题: {topic}\n"
                 f"  轮次: {result.turns}, Token: {result.token_usage.total_tokens}\n"
                 f"  耗时: {result.latency_seconds:.1f}s\n"
-                f"  请查看 projects/{project}/literature/ 下的调研产出"
+                f"  产出在 projects/{project}/literature/ 目录下"
             )
-        else:
-            return f"❌ 文献调研失败: {result.error}"
+        return f"文献调研失败: {result.error}"
 
     def _handle_create_project(self, action: dict) -> str:
         name = action.get("name", "new-project")
@@ -378,24 +468,19 @@ class ChatBot:
         (project_dir / "plans").mkdir(exist_ok=True)
 
         now = time.strftime("%Y-%m-%d")
-        readme = f"# {name}\n\nPriority: high\nStatus: active\nMission: {mission}\n\n## Log\n\n### {now}\n\nProject created.\n\n## Open questions\n\n(to be filled)\n"
+        readme = f"# {name}\n\nPriority: high\nStatus: active\nMission: {mission}\n\n## Log\n\n### {now}\n\n项目创建。\n"
         (project_dir / "README.md").write_text(readme, encoding="utf-8")
 
-        tasks_content = f"# {name} — Tasks\n\n"
+        tasks_content = f"# {name} — 任务列表\n\n"
         for t in tasks:
             tasks_content += f"- [ ] {t} [zero-resource]\n  Done when: TBD\n\n"
         (project_dir / "TASKS.md").write_text(tasks_content, encoding="utf-8")
 
-        budget = "resources:\n  llm_api_calls:\n    limit: 1000\n    unit: calls\n\ndeadline: 2026-06-01T00:00:00Z\n"
-        (project_dir / "budget.yaml").write_text(budget, encoding="utf-8")
-
         return (
-            f"✅ 项目已创建: projects/{slug}/\n"
+            f"项目已创建: projects/{slug}/\n"
             f"  README.md — 项目说明\n"
             f"  TASKS.md — {len(tasks)} 个任务\n"
-            f"  budget.yaml — 预算配置\n"
-            f"  literature/ analysis/ plans/ — 产出目录\n\n"
-            f"  现在你可以说「开始执行」来启动第一个 session"
+            f"  literature/ analysis/ plans/ — 产出目录"
         )
 
     def _handle_create_task(self, action: dict) -> str:
@@ -408,7 +493,7 @@ class ChatBot:
             tasks_file = self.repo_root / "tasks" / "TASKS.md"
 
         if not tasks_file.is_file():
-            return f"❌ 找不到任务文件: {tasks_file}"
+            return f"找不到任务文件: {tasks_file}"
 
         content = tasks_file.read_text(encoding="utf-8")
         new_tasks = ""
@@ -422,141 +507,244 @@ class ChatBot:
             content = content[:insert_point] + new_tasks + "\n" + content[insert_point:]
 
         tasks_file.write_text(content, encoding="utf-8")
-        return f"✅ 已添加 {len(tasks)} 个任务到 {tasks_file.relative_to(self.repo_root)}"
+        return f"已添加 {len(tasks)} 个任务到 {tasks_file.relative_to(self.repo_root)}"
 
     def _handle_approve(self, action: dict) -> str:
-        return "⚠️ 审批功能：请直接编辑 APPROVAL_QUEUE.md，将 pending 改为 approved"
+        return "审批功能：请直接编辑 APPROVAL_QUEUE.md"
 
     def _handle_help(self, _: dict) -> str:
-        return textwrap.dedent("""\
-        🤖 OpenAkari-Codex 交互指南
-
-        你可以用自然语言说任何指令，例如：
-
-        📋 任务执行:
-          "开始执行"                → 自动选一个任务并跑 session
-          "执行 multi-agent 项目"   → 跑指定项目的下一个任务
-
-        🔍 文献调研:
-          "调研 multi-agent 论文"                         → 启动文献调研
-          "搜索最近三个月 arXiv 上的 multi-agent 论文"     → 带范围的调研
-
-        📊 状态查看:
-          "看看现在的状态"          → 显示仓库状态、待办任务、最近日志
-          "有什么任务"              → 列出所有 open tasks
-
-        📁 项目管理:
-          "创建一个关于 XX 的调研项目" → 自动创建项目结构和任务
-          "给 XX 项目加个任务: ..."   → 往项目里添加任务
-
-        🚀 舰队管理 (Multi-Agent):
-          "启动舰队"               → 启动 fleet，默认 32 workers
-          "启动 8 个 worker"       → 启动指定数量的 fleet workers
-          "舰队状态"               → 查看当前 fleet 运行状态
-          "停止舰队"               → 优雅停止 fleet
-
-        ⏹ 退出:
-          "退出" / "exit" / "quit" / Ctrl+C
-        """)
-
-    def _handle_clarify(self, action: dict) -> str:
-        return f"🤔 {action.get('question', '你能说得更具体一些吗？')}"
+        return (
+            f"小白能帮{USER_NICKNAME}做这些事:\n\n"
+            f"  聊天 — 直接跟小白说话就好\n"
+            f"  看状态 — \"看看现在什么状态\"\n"
+            f"  调研 — \"帮我调研 MoE 最新进展\"\n"
+            f"  建项目 — \"创建一个关于XX的项目\"\n"
+            f"  加任务 — \"给moe项目加个任务\"\n"
+            f"  备忘 — \"记住：明天要交报告\"\n"
+            f"  提醒 — \"明天下午3点提醒我开会\"\n"
+            f"  舰队 — \"启动4个Agent跑任务\"\n"
+            f"  退出 — \"退出\" 或 Ctrl+C"
+        )
 
     def _handle_fleet_start(self, action: dict) -> str:
-        from fleet.scheduler import start_fleet, fleet_status as _fleet_status
+        from fleet.scheduler import start_fleet, fleet_status as _fleet_status, get_fleet_scheduler
         from fleet.config import FleetConfig
+        from dataclasses import replace as dc_replace
 
         max_workers = action.get("max_workers", None)
-        config = None
-        if max_workers:
-            from dataclasses import replace
-            config = replace(FleetConfig.from_env(), max_workers=int(max_workers))
+        project = action.get("project", "")
 
-        scheduler = start_fleet(
-            repo_root=self.repo_root,
-            fleet_config=config,
-            background=True,
+        existing = get_fleet_scheduler()
+        if existing and existing._running:
+            if project:
+                existing.add_project_filter(project)
+                pf = existing.config.project_filter
+                return f"舰队运行中，已加入项目筛选: {', '.join(sorted(pf))}"
+            active = existing.metrics.get_active_count()
+            done = existing.metrics._total_completed
+            return f"舰队已在运行 (正在工作: {active}, 已完成: {done})\n用「调整到N个Agent」调整数量，或「停止舰队」后重新启动"
+
+        fleet_config = FleetConfig.from_env()
+        n = int(max_workers) if max_workers else min(4, fleet_config.max_workers)
+        proj_filter = frozenset({project}) if project else frozenset()
+        fleet_config = dc_replace(
+            fleet_config,
+            max_workers=n,
+            project_filter=proj_filter,
+            idle_exploration_enabled=not bool(proj_filter),
         )
+
+        scope = f" (仅 {project})" if project else " (所有项目)"
+        start_fleet(repo_root=self.repo_root, fleet_config=fleet_config, background=True)
         time.sleep(1)
-        status = _fleet_status()
-        workers = max_workers or scheduler.config.max_workers
-        return (
-            f"🚀 Fleet 已启动! ({workers} workers)\n\n{status}\n\n"
-            f"说「舰队状态」查看实时状态，「停止舰队」停止"
-        )
+        return f"舰队已启动! {n} 个伙伴出发{scope}\n\n{_fleet_status()}"
 
     def _handle_fleet_status(self, _: dict) -> str:
-        from fleet.scheduler import fleet_status as _fleet_status
+        from fleet.scheduler import get_fleet_scheduler, fleet_status as _fleet_status
+        scheduler = get_fleet_scheduler()
+        if not scheduler or not scheduler._running:
+            return "舰队目前没有运行哦~ 说「启动舰队」就可以让伙伴们出发!"
+        if scheduler._dashboard:
+            return scheduler._dashboard.render_snapshot()
         return _fleet_status()
 
     def _handle_fleet_stop(self, _: dict) -> str:
-        from fleet.scheduler import stop_fleet
+        from fleet.scheduler import get_fleet_scheduler, stop_fleet
+        scheduler = get_fleet_scheduler()
+        if not scheduler or not scheduler._running:
+            return "舰队没有在运行哦~"
         return stop_fleet()
 
-    def process_message(self, message: str) -> str:
-        """Full pipeline: parse intent → dispatch → return result.
+    def _handle_fleet_report(self, _: dict) -> str:
+        from fleet.scheduler import get_fleet_scheduler
+        scheduler = get_fleet_scheduler()
+        if not scheduler or not scheduler._dashboard:
+            return "目前没有执行记录，先启动舰队跑任务吧~"
+        return scheduler._dashboard.render_report()
 
-        Supports multiple actions in a single message — each is executed
-        sequentially and results are concatenated.
-        """
-        self.conversation.append({"role": "user", "content": message})
+    def _handle_fleet_scale(self, action: dict) -> str:
+        from fleet.scheduler import get_fleet_scheduler
+        from dataclasses import replace as dc_replace
+        count = action.get("count", 0)
+        if not count:
+            return "请告诉小白要调整到几个Agent~"
+        n = int(count)
+        scheduler = get_fleet_scheduler()
+        if scheduler and scheduler._running:
+            scheduler.config = dc_replace(scheduler.config, max_workers=n)
+            scheduler.metrics._max_workers = n
+            return f"Worker 上限已调整为 {n} 个，下一轮 refill 生效~"
+        return f"舰队没有在运行。说「启动{n}个Agent」来启动吧~"
 
-        print("  🧠 正在理解你的意图...")
-        actions = self._call_coordinator(message)
+    def _handle_fleet_tasks(self, _: dict) -> str:
+        from fleet.task_scanner import scan_available_tasks
+        tasks = scan_available_tasks(self.repo_root)
+        fleet_tasks = [t for t in tasks if t.fleet_eligible and not t.blocked]
+        if not fleet_tasks:
+            return "目前没有可执行的任务哦~"
+        lines = [f"可执行任务 ({len(fleet_tasks)} 个):\n"]
+        for i, t in enumerate(fleet_tasks[:15], 1):
+            skill = f"[{t.skill_type.value}]" if t.skill_type else ""
+            lines.append(f"  {i:2d}. [{t.project}] {t.text[:60]} {skill}")
+        if len(fleet_tasks) > 15:
+            lines.append(f"  ... 还有 {len(fleet_tasks) - 15} 个")
+        return "\n".join(lines)
 
-        if not actions:
-            result = (
-                "👋 你好！我是 OpenAkari-Codex 智能助手。\n\n"
-                "你可以直接用自然语言跟我说话，比如：\n"
-                "  • 「看看现在什么状态」\n"
-                "  • 「帮我调研 MoE 最新进展」\n"
-                "  • 「创建一个关于 XX 的项目」\n"
-                "  • 「启动舰队并行跑任务」\n\n"
-                "随便说，我都能理解！"
+    def _handle_memo_add(self, action: dict) -> str:
+        content = action.get("content", "")
+        if not content:
+            return "备忘内容不能为空哦~"
+        memo_id = memo.add_memo(self.repo_root, content)
+        return f"已记录备忘 (ID: {memo_id}): {content}"
+
+    def _handle_memo_list(self, _: dict) -> str:
+        memos = memo.list_memos(self.repo_root)
+        return memo.format_memos(memos)
+
+    def _handle_reminder_add(self, action: dict) -> str:
+        content = action.get("content", "")
+        remind_time = action.get("time", "")
+        if not content:
+            return "提醒内容不能为空哦~"
+        reminder_id = memo.add_reminder(self.repo_root, content, remind_time)
+        return f"已设置提醒 (ID: {reminder_id}): {content} — {remind_time}"
+
+    def _handle_reminder_list(self, _: dict) -> str:
+        reminders = memo.list_reminders(self.repo_root)
+        return memo.format_reminders(reminders)
+
+    def _handle_clarify(self, action: dict) -> str:
+        return action.get("question", f"{USER_NICKNAME}能再说具体一点吗？")
+
+    # ── 上下文收集 ────────────────────────────────────────────
+
+    def _gather_context(self) -> str:
+        parts: list[str] = []
+
+        projects_dir = self.repo_root / "projects"
+        if projects_dir.is_dir():
+            project_list = []
+            for p in sorted(projects_dir.iterdir()):
+                if p.is_dir():
+                    tasks = p / "TASKS.md"
+                    open_count = 0
+                    if tasks.is_file():
+                        for line in tasks.read_text(errors="replace").splitlines():
+                            if line.strip().startswith("- [ ]"):
+                                open_count += 1
+                    status = "进行中" if open_count > 0 else "空闲"
+                    project_list.append(f"  - {p.name}: {status}, {open_count} 个待办")
+            if project_list:
+                parts.append("项目:\n" + "\n".join(project_list))
+
+        tasks_file = self.repo_root / "tasks" / "TASKS.md"
+        if tasks_file.is_file():
+            content = tasks_file.read_text(errors="replace")
+            open_tasks = [l.strip() for l in content.splitlines() if l.strip().startswith("- [ ]")]
+            if open_tasks:
+                parts.append(f"全局任务: {len(open_tasks)} 个待办")
+
+        return "\n".join(parts) or "(空仓库)"
+
+    # ── 动态 prompt ─────────────────────────────────────────────
+
+    def _build_prompt(self) -> str:
+        """根据舰队状态动态构建 prompt。"""
+        try:
+            from fleet.scheduler import get_fleet_scheduler
+            scheduler = get_fleet_scheduler()
+            if scheduler and scheduler._running:
+                active = scheduler.metrics.get_active_count()
+                done = scheduler.metrics._total_completed
+                if scheduler._dashboard and scheduler._dashboard.is_all_done() and done > 0:
+                    return f"{USER_NICKNAME} [舰队完成, {done}个任务]> "
+                if active > 0:
+                    return f"{USER_NICKNAME} [{active}名伙伴工作中]> "
+                return f"{USER_NICKNAME} [舰队待命]> "
+        except Exception:
+            pass
+        return PROMPT_PREFIX
+
+    def _print_startup_overview(self) -> None:
+        """启动时显示简要任务概览。"""
+        projects_dir = self.repo_root / "projects"
+        if not projects_dir.is_dir():
+            return
+        overview: list[str] = []
+        for p in sorted(projects_dir.iterdir()):
+            if not p.is_dir():
+                continue
+            tasks = p / "TASKS.md"
+            if not tasks.is_file():
+                continue
+            open_count = sum(
+                1 for line in tasks.read_text(errors="replace").splitlines()
+                if line.strip().startswith("- [ ]")
             )
-        elif len(actions) == 1:
-            action = actions[0]
-            action_type = action.get("action", "unknown")
-            print(f"  📌 识别到: {action_type}")
-            result = self.dispatch(action)
-        else:
-            parts: list[str] = []
-            for i, action in enumerate(actions, 1):
-                action_type = action.get("action", "unknown")
-                print(f"  📌 指令 {i}/{len(actions)}: {action_type}")
-                part = self.dispatch(action)
-                parts.append(f"**[{i}/{len(actions)}] {action_type}**\n{part}")
-            result = "\n\n---\n\n".join(parts)
+            if open_count > 0:
+                overview.append(f"  {p.name}: {open_count} 个待办")
+        if overview:
+            print(f"\n  当前项目任务:")
+            for line in overview:
+                print(line)
+            print()
 
-        self.conversation.append({"role": "assistant", "content": result})
-        return result
+    # ── 交互循环 ──────────────────────────────────────────────
 
     def run_interactive(self) -> None:
-        """Start the interactive chat loop."""
-        print("=" * 60)
-        print("  🤖 OpenAkari-Codex 交互终端")
-        print("  输入自然语言指令，系统会自动执行")
-        print("  输入「帮助」查看指令示例")
-        print("  输入「退出」或 Ctrl+C 退出")
-        print("=" * 60)
-        print()
+        print(WELCOME_MESSAGE)
+        self._print_startup_overview()
 
         while True:
             try:
-                user_input = input("你> ").strip()
+                prompt = self._build_prompt()
+                user_input = input(prompt).strip()
             except (EOFError, KeyboardInterrupt):
-                print("\n👋 再见!")
+                self._shutdown()
                 break
 
             if not user_input:
                 continue
 
             if user_input.lower() in ("退出", "exit", "quit", "q"):
-                print("👋 再见!")
+                self._shutdown()
                 break
 
             result = self.process_message(user_input)
             print(f"\n{result}\n")
+
+    def _shutdown(self) -> None:
+        """优雅退出：停止舰队并告别。"""
+        try:
+            from fleet.scheduler import get_fleet_scheduler, stop_fleet
+            scheduler = get_fleet_scheduler()
+            if scheduler and scheduler._running:
+                print(f"\n  {AGENT_NAME}正在让伙伴们收工...")
+                stop_fleet()
+                time.sleep(1)
+        except Exception:
+            pass
+        print(f"\n{AGENT_NAME}下线啦~ {USER_NICKNAME}再见! (≧▽≦)/")
 
 
 def main() -> None:

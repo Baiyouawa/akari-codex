@@ -22,10 +22,10 @@ class CodexConfig:
         "git status", "git log", "git diff", "git branch",
         "python", "python3", "node", "npm", "pip",
         "echo", "date", "which", "env",
+        "curl", "wget",
     )
     shell_denylist: tuple[str, ...] = (
         "rm -rf /", "mkfs", "dd ", "shutdown", "reboot",
-        "curl", "wget",  # network access needs explicit approval
     )
     write_scope: str | None = None  # fleet path partition (e.g. "projects/my-project")
 

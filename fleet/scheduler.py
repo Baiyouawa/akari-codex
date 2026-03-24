@@ -44,8 +44,10 @@ from .task_supply import check_fleet_supply_warning, scan_task_supply
 logger = logging.getLogger("fleet.scheduler")
 
 
-def _generate_worker_id(index: int) -> str:
-    return f"fleet-worker-{index:02d}"
+def _generate_worker_id(index: int, role: str = "default") -> str:
+    from runner.persona import get_agent_display_name
+    name = get_agent_display_name(role, index)
+    return f"{name}-{index:02d}"
 
 
 def _generate_session_id(worker_id: str) -> str:
@@ -92,10 +94,10 @@ class FleetScheduler:
         self._event_queue: Queue | None = None
         self._dashboard: DashboardRenderer | None = None
 
-    def _next_worker_id(self) -> str:
+    def _next_worker_id(self, role: str = "default") -> str:
         with self._worker_counter_lock:
             self._worker_counter += 1
-            return _generate_worker_id(self._worker_counter % self.config.max_workers)
+            return _generate_worker_id(self._worker_counter % self.config.max_workers, role)
 
     def start(self) -> None:
         """Start the fleet scheduler loop."""
@@ -220,10 +222,10 @@ class FleetScheduler:
         self._check_supply_warning()
 
     def _spawn_worker(self, task: FleetTask) -> None:
-        """Claim a task and spawn a fleet worker."""
-        worker_id = self._next_worker_id()
-        session_id = _generate_session_id(worker_id)
+        """认领任务并派遣工作Agent。"""
         worker_role = _infer_worker_role(task)
+        worker_id = self._next_worker_id(worker_role.value)
+        session_id = _generate_session_id(worker_id)
 
         claim_id = self.claims.try_claim(
             task_id=task.task_id,
@@ -293,7 +295,7 @@ class FleetScheduler:
 
         now = time.time()
         for topic in selected:
-            worker_id = self._next_worker_id()
+            worker_id = self._next_worker_id("idle")
             session_id = _generate_session_id(worker_id)
             prompt = build_idle_prompt(topic, session_id, self.repo_root)
 

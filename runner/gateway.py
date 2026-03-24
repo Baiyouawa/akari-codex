@@ -72,7 +72,9 @@ def _log_invocation(
     log_file = log_dir / "remote-invocations.jsonl"
 
     record = {
-        "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "timestamp": datetime.datetime.now(
+            datetime.timezone(datetime.timedelta(hours=8))
+        ).strftime("%Y-%m-%d %H:%M:%S"),
         "source": source,
         "user": user,
         "message": message,
@@ -108,6 +110,8 @@ def process_remote_message(
 
     cleaned = re.sub(r'^[/@]?[Aa][Kk][Aa][Rr][Ii][:\s]*', '', text.strip())
     cleaned = re.sub(r'^阿卡丽[:\s，,]*', '', cleaned).strip()
+    cleaned = re.sub(r'^小白[:\s，,]*', '', cleaned).strip()
+    cleaned = re.sub(r'^[Xx]iao\s*[Bb]ai[:\s]*', '', cleaned).strip()
     if not cleaned:
         cleaned = text.strip()
 

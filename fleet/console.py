@@ -1,12 +1,8 @@
-"""Unified interactive fleet console.
+"""Fleet console — 内部模块（已合并到 runner.chat）。
 
-Design: fleet runs silently in the background. The user is always at the
-interactive prompt and can type commands at any time.  Dashboard output
-is *only* shown when the user explicitly asks (status / report).
-
-Usage:
-    python3 -m fleet.console              # interactive
-    python3 -m fleet.console --workers 4  # start with 4 workers immediately
+统一入口: python -m runner.chat
+此模块保留 run_console / _handle_command 供内部调用，
+直接运行会自动转发到 runner.chat。
 """
 
 from __future__ import annotations
@@ -39,7 +35,8 @@ def _print_banner() -> None:
     w = _term_width()
     print()
     print(f"{'═' * w}")
-    print("  🚢 OpenAkari Fleet Console — Multi-Agent 控制台")
+    print("  🚢 小白舰队控制台 — 多Agent并行系统")
+    print(f"  小白和伙伴们随时待命！直接说话就好~")
     print(f"{'═' * w}")
 
 
@@ -274,45 +271,14 @@ def _handle_command(
             print("     输入 start 启动舰队来执行")
         return True
 
-    # ── fallback: natural language via ChatBot ───────────────────
+    # ── fallback: 直接走小白 process_message ───────────────────
     if bot is not None:
-        print("  🧠 正在理解你的意图...")
-        actions = bot._call_coordinator(cmd)
-        if not actions:
-            print("  👋 你好！直接用自然语言跟我说话就行，比如「看看状态」「帮我调研MoE」")
-            return True
-
-        for i, action in enumerate(actions):
-            action_type = action.get("action", "")
-            if len(actions) > 1:
-                print(f"  📌 指令 {i+1}/{len(actions)}: {action_type}")
-            else:
-                print(f"  📌 识别到: {action_type}")
-
-            if action_type in ("run_task", "lit_review"):
-                _dispatch_as_fleet_task(action, repo_root, config, bot)
-                continue
-
-            if action_type == "fleet_start":
-                _handle_command(
-                    f"start {action.get('max_workers', config.max_workers)}",
-                    repo_root, config, bot,
-                )
-                continue
-            if action_type == "fleet_status":
-                _handle_command("status", repo_root, config, bot)
-                continue
-            if action_type == "fleet_stop":
-                _handle_command("stop", repo_root, config, bot)
-                continue
-
-            result = bot.dispatch(action)
-            print(f"\n{result}\n")
-
+        result = bot.process_message(cmd)
+        print(f"\n{result}\n")
         return True
 
-    print(f"  ❓ 未知命令: {verb}")
-    print(f"  💡 输入 help 查看命令列表，或直接用中文下指令")
+    print(f"  未知命令: {verb}")
+    print(f"  输入 help 查看命令列表，或直接用中文说话~")
     return True
 
 
@@ -440,10 +406,10 @@ def run_console(
             print()
             scheduler = get_fleet_scheduler()
             if scheduler and scheduler._running:
-                print("  ⏳ 正在停止舰队...")
+                print("  小白正在停止舰队...")
                 stop_fleet()
                 time.sleep(1)
-            print("  👋 再见!")
+            print("  小白和伙伴们下线啦~ 小侑再见! (≧▽≦)/")
             break
 
         if not user_input:
@@ -455,30 +421,13 @@ def run_console(
 
 
 def main() -> None:
-    import argparse
-    parser = argparse.ArgumentParser(
-        description="OpenAkari Fleet Console — 交互式多 Agent 控制台",
-    )
-    parser.add_argument(
-        "--workers", "-w", type=int, default=None,
-        help="Worker 数量 (不指定则不自动启动)",
-    )
-    parser.add_argument(
-        "--repo", type=str, default=None,
-        help="仓库根目录 (default: OPENAKARI_HOME or cwd)",
-    )
-    parser.add_argument(
-        "--auto-start", action="store_true",
-        help="启动后立即开始执行任务",
-    )
-    args = parser.parse_args()
+    """入口已统一到 runner.chat（小白）。此处自动转发。"""
+    print()
+    print("  提示: 统一入口已改为 python -m runner.chat")
+    print("  正在自动转发...\n")
 
-    repo_root = Path(args.repo) if args.repo else None
-    run_console(
-        repo_root=repo_root,
-        max_workers=args.workers,
-        auto_start=args.auto_start or args.workers is not None,
-    )
+    from runner.chat import main as chat_main
+    chat_main()
 
 
 if __name__ == "__main__":
