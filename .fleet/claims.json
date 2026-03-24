@@ -486,7 +486,8 @@
       "session_id": "花阳-06-1774359774-423cd9",
       "project": "moe",
       "claimed_at": 1774359774.214425,
-      "active": true
+      "active": false,
+      "released_at": 1774360337.4425697
     }
   }
 }

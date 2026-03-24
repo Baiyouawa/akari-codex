@@ -36,13 +36,22 @@
 
 ## Phase 4: 未决问题收敛
 
-- [ ] 比较 `DeepSpeed MoE`、`Megatron-LM` 与 `fairseq` 作为首轮配置旋钮抽取基线的适配性 [zero-resource] [skill: analyze]
+- [x] 比较 `DeepSpeed MoE`、`Megatron-LM` 与 `fairseq` 作为首轮配置旋钮抽取基线的适配性 [zero-resource] [skill: analyze]
   Why: README 仍将“哪个实现入口最适合作为首轮配置旋钮抽取基线”列为开放问题；如果没有显式比较，后续实现配置地图任务会缺少统一起点。
   Done when: 新增一份对比笔记，至少基于 `projects/moe/literature/2026-03-24-moe-source-map.md` 中登记的三个实现入口，给出比较维度、推荐基线及理由，并把结论写回 `projects/moe/README.md`。
   Priority: high
-  Next step: 先从 `projects/moe/literature/2026-03-24-moe-source-map.md` 中已有的 intended-use 描述抽取比较维度（训练框架集成、并行策略可见性、配置字段可发现性），再形成首版 baseline recommendation。
+  Completed: 2026-03-24T13:43:47Z
+  Evidence: `projects/moe/analysis/2026-03-24-implementation-baseline-comparison.md` compares `DeepSpeed MoE`, `Megatron-LM`, and `fairseq` along the dimensions already named in this task’s prior next step — training-framework integration, parallel-strategy visibility, and configuration-field discoverability — and recommends `DeepSpeed MoE` as the first baseline because the source map already positions it for extracting `capacity factor`, `auxiliary loss`, `expert parallelism`, and `token dispatch`; `projects/moe/README.md` records the conclusion and follow-on ordering.
 
 - [x] 验证训练与推理场景是否应分开建模，并确定是否需要统一指标桥接二者 [zero-resource] [skill: analyze]
   Completed: 2026-03-24T13:43:44Z
   Why: README 仍将训练/推理主导瓶颈是否显著不同列为开放问题；如果不先验证这一点，后续 systems 比较容易混淆吞吐、延迟、容量和通信成本的评价口径。
   Evidence: `projects/moe/analysis/2026-03-24-training-vs-inference-modeling.md` separates current evidence from still-open hypotheses, concludes that training and inference should be modeled as separate comparison axes, and proposes four bridge-metric candidates — dispatch complexity, expert utilization/load skew, overflow or unused-capacity rate, and communication-to-compute exposure; `projects/moe/README.md` logs the same conclusion and removes this item from `## Open questions`; `projects/moe/logs/2026-03-24T134344Z-fleet-花阳-06-1774359774-423cd9-training-vs-inference-modeling.md` records the session verification.
+
+## Phase 5: 后续实现抽取
+
+- [ ] 以 `DeepSpeed MoE` 为首轮基线抽取共有配置旋钮，并决定 `Megatron-LM` 的并行组合差异应如何并入配置矩阵 [zero-resource] [skill: analyze]
+  Why: 当前 README 的唯一剩余开放问题已经从“选谁做基线”收敛为“在选定 `DeepSpeed MoE` 之后，如何表示 `Megatron-LM` 的 parallel composition 增量”；如果不把这个下一步显式写入任务列表，README 与 TASKS 会再次失配。
+  Done when: 新增一份配置抽取笔记，至少以 `DeepSpeed MoE` 为基线列出首版共有字段骨架（含 `capacity factor`、`auxiliary loss`、`expert parallelism`、`token dispatch` 四类），并明确 `Megatron-LM` 的并行组合差异应作为独立补充表还是统一矩阵列来表示；同时把结论同步到 `projects/moe/README.md`。
+  Priority: high
+  Next step: 先从 `projects/moe/analysis/2026-03-24-implementation-baseline-comparison.md` 已确认的四类 `DeepSpeed MoE` 基线字段出发，整理出首版字段骨架，再决定 `parallel composition` 的表示位置。
