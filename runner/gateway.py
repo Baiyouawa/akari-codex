@@ -4,8 +4,8 @@ Bridges external channels (GitHub, QQ, etc.) to the existing ChatBot
 without modifying any core runner code.
 
 Usage:
-    python -m runner.gateway --source github --user "alice" --message "调研 multi-agent"
-    python -m runner.gateway --source qq     --user "12345" --message "查看状态"
+    python -m runner.gateway --source github    --user "alice" --message "调研 multi-agent"
+    python -m runner.gateway --source qq-onebot --user "12345" --message "查看状态"
 """
 
 from __future__ import annotations
