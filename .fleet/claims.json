@@ -423,7 +423,8 @@
       "session_id": "枫-05-1774358212-ebc490",
       "project": "multi-agent-survey",
       "claimed_at": 1774358212.2339375,
-      "active": true
+      "active": false,
+      "released_at": 1774359096.1689787
     },
     "claim-0a06157e14d2": {
       "task_id": "0da1f638d82176f6",
@@ -431,7 +432,8 @@
       "session_id": "花阳-06-1774358212-01557e",
       "project": "multi-agent-survey",
       "claimed_at": 1774358212.2400477,
-      "active": true
+      "active": false,
+      "released_at": 1774359108.963826
     },
     "claim-30397f9b3aa1": {
       "task_id": "a541e9e3ae7eb14d",
@@ -441,6 +443,14 @@
       "claimed_at": 1774358662.7940018,
       "active": false,
       "released_at": 1774359040.6221018
+    },
+    "claim-fe2fd6b690ba": {
+      "task_id": "9fc7c4a4857bf09d",
+      "worker_id": "智乃-02",
+      "session_id": "智乃-02-1774359143-ef5b1d",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774359143.4008136,
+      "active": true
     }
   }
 }
