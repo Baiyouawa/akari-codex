@@ -127,6 +127,20 @@ Findings:
 4. The current bridge-metric candidates are dispatch complexity, expert utilization/load skew, overflow or unused-capacity rate, and communication-to-compute exposure; these are candidates rather than settled standards within the present source base.
    - Provenance: `projects/moe/analysis/2026-03-24-training-vs-inference-modeling.md`, section `Bridge metric candidates`.
 
+### 2026-03-24T13:43:47Z
+
+Compared `DeepSpeed MoE`, `Megatron-LM`, and `fairseq` as first-pass implementation-baseline candidates and resolved the baseline recommendation in favor of `DeepSpeed MoE`.
+
+Findings:
+1. `DeepSpeed MoE` is the strongest first baseline for configuration-knob extraction because the source map already defines it as the training-framework implementation entry for extracting `capacity factor`, `auxiliary loss`, `expert parallelism`, and `token dispatch`.
+   - Provenance: `projects/moe/literature/2026-03-24-moe-source-map.md`, `DeepSpeed MoE` row; `projects/moe/analysis/2026-03-24-implementation-baseline-comparison.md`.
+2. `Megatron-LM` is better treated as a second-pass source because the current repo positions it primarily for studying MoE composition with tensor / pipeline / expert parallelism, which is more useful for systems expansion than for first-pass shared knob enumeration.
+   - Provenance: `projects/moe/literature/2026-03-24-moe-source-map.md`, `Megatron-LM` row; `projects/moe/plans/moe-survey-draft.md`, section `3.3 Systems source roles in the current source map`; `projects/moe/analysis/2026-03-24-implementation-baseline-comparison.md`.
+3. `fairseq` remains useful as a research-oriented comparison source for training scripts, `router loss` settings, and experiment configuration expression, but the current repo does not position it as the main entry for dispatch or expert-parallel knob extraction.
+   - Provenance: `projects/moe/literature/2026-03-24-moe-source-map.md`, `Fairseq examples / MoE` row; `projects/moe/analysis/2026-03-24-implementation-baseline-comparison.md`.
+4. The recommended extraction order is now explicit: start from `DeepSpeed MoE` for the shared configuration skeleton, then use `Megatron-LM` to add parallel-composition differences, and finally use `fairseq` to compare router-loss and script-level expression choices.
+   - Provenance: `projects/moe/analysis/2026-03-24-implementation-baseline-comparison.md`.
+
 ## Open questions
 
-1. `DeepSpeed MoE`、`Megatron-LM` 与 `fairseq` 三个实现入口中，哪个最适合作为首轮配置旋钮抽取的基线？
+1. 在以 `DeepSpeed MoE` 建完首版共有配置表之后，`Megatron-LM` 的并行组合差异应追加为独立补充表，还是直接并入统一配置矩阵的 `parallel composition` 列？
