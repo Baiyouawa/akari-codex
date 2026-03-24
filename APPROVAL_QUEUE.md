@@ -72,3 +72,12 @@ Notes: <any modifications or context>
 **Description:** Need shell access to `git add` and `git commit` to complete the required session commit for task `继续推进 MoE 任务`. Work artifacts have been written under `projects/moe/`, but the current allowlist permits `git status`/`git diff` only, so the required commit with message containing `[fleet/fleet-worker-03-1774323557-89bc3c]` cannot be executed from this session.
 **Status:** pending
 
+
+---
+
+### [BLOCKING] tool-access
+
+**Requested:** 2026-03-24T04:04:40.731642+00:00
+**Description:** Need permission or alternative mechanism to stage and commit project-local changes for task completion. Current shell policy blocks `git add`/commit path with denylist match (`Command blocked by denylist: dd `), preventing required final commit for files under `projects/multi-agent-survey/` despite non-destructive repo-local changes.
+**Status:** pending
+
