@@ -13,6 +13,7 @@
 - [ ] 建立 MoE 首版来源地图 [zero-resource]
   Why: 后续任何文献或实现分析都需要统一的来源入口，避免 session 间重复从零开始找材料。
   Done when: `projects/moe/literature/2026-03-24-moe-source-map.md` 至少补充 8 个带来源与用途说明的条目，覆盖论文 / 开源实现 / 工程参考中的至少 2 类。
+  Progress: 2026-03-24 repo-internal investigation confirmed the paper bucket is still empty; current project files only establish that the first-round core set must cover Transformer-era MoE architecture, routing/load-balancing, and systems/scaling questions, so external literature research is required before naming actual foundational papers.
 
 ## Phase 2: 机制分析
 

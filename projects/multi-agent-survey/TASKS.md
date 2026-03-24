@@ -27,10 +27,10 @@
 
 ## Phase 2: 精读与 Literature Notes
 
-- [ ] 精读 Phase 1 中标记为 load-bearing 的论文（Architecture 类）[skill: analyze] [zero-resource]
+- [ ] 精读 Phase 1 中标记为 load-bearing 的论文（Architecture 类）[skill: analyze] [zero-resource] [blocked-by: Phase 1 尚未完成，且仓库内仍无 artifact 明确标记哪些 Architecture 论文属于 load-bearing，也无标准 literature-note 模板]
   Why: 框架设计是 multi-agent 最核心的子方向
   Done when: 每篇 load-bearing 论文有标准格式的 literature note 文件
-  [blocked-by: Phase 1 检索完成]
+  Evidence of current blocker: `projects/multi-agent-survey/logs/2026-03-24T035631Z-architecture-load-bearing-blocked.md`
 
 - [ ] 精读 Phase 1 中标记为 load-bearing 的论文（Coordination & Communication 类）[skill: analyze] [zero-resource]
   Why: 协作与通信是区分 multi-agent 与 single-agent 的关键
