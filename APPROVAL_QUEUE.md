@@ -99,3 +99,12 @@ Notes: <any modifications or context>
 **Description:** Need approval or alternate tool access to run git staging/commit for this completed MoE task. Repository policy requires ending session with a git commit, but `run_shell` blocks `git add`/`git commit` (current denylist reports `Command blocked by denylist: dd`). Work is already written under `projects/moe/` and verified; only staging/commit remains.
 **Status:** pending
 
+
+---
+
+### [BLOCKING] tool-access
+
+**Requested:** 2026-03-24T13:29:56.880615+00:00
+**Description:** Need approval or alternative tooling to stage files for commit. Standard `git add ... && git commit ...` was blocked by the shell denylist (`Command blocked by denylist: dd `), apparently because `git add` matches the denylist substring. The task is otherwise complete under `projects/moe/`, but I cannot create the required commit without a staging-capable path.
+**Status:** pending
+

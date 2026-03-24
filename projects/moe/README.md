@@ -85,6 +85,20 @@ Findings:
 4. After reconciliation, project memory now reflects that the systems baseline artifact exists, so future sessions can move to configuration extraction and finer-grained evidence rather than redoing the first-pass note.
    - Provenance: updated `projects/moe/TASKS.md`; `projects/moe/logs/2026-03-24T131744Z-fleet-智乃-02-1774358212-4f942d-systems-task-closeout.md`.
 
+### 2026-03-24T13:26:17Z
+
+Reconciled project state for the routing task after verifying that the required analysis artifact had already been completed in an earlier session.
+
+Findings:
+1. `projects/moe/analysis/2026-03-24-routing-and-load-balancing.md` already satisfies the assignment acceptance bar because it compares four mechanism families — top-k token-choice routing, top-1 token-choice routing, balanced assignment routing, and stability-oriented routing refinements — exceeding the minimum requirement of three.
+   - Provenance: direct read of `projects/moe/analysis/2026-03-24-routing-and-load-balancing.md` in this session.
+2. The routing note is source-backed within current repo scope because its `## Sources used` section cites Shazeer et al. 2017, GShard 2020, Switch Transformers 2021, BASE Layers 2021, ST-MoE 2022, Mixtral 2024, and Hugging Face SwitchTransformers documentation, all already registered in `projects/moe/literature/2026-03-24-moe-source-map.md`.
+   - Provenance: `projects/moe/analysis/2026-03-24-routing-and-load-balancing.md`; `projects/moe/literature/2026-03-24-moe-source-map.md`.
+3. Before this reconciliation, `projects/moe/TASKS.md` still listed the routing task as open despite the prior completion log `projects/moe/logs/2026-03-24T040504Z-routing-analysis.md` and the existing analysis artifact.
+   - Provenance: direct comparison among `projects/moe/TASKS.md`, `projects/moe/logs/2026-03-24T040504Z-routing-analysis.md`, and `projects/moe/analysis/2026-03-24-routing-and-load-balancing.md`.
+4. After reconciliation, project memory now reflects that both baseline Phase 2 analysis tasks are complete, so future sessions can move to finer-grained configuration extraction instead of repeating first-pass analysis work.
+   - Provenance: updated `projects/moe/TASKS.md` in this session.
+
 ## Open questions
 
 1. `DeepSpeed MoE`、`Megatron-LM` 与 `fairseq` 三个实现入口中，哪个最适合作为首轮配置旋钮抽取的基线？

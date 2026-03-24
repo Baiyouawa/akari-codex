@@ -33,10 +33,11 @@
   Done when: 每篇 load-bearing 论文有标准格式的 literature note 文件
   Evidence of current blocker: `projects/multi-agent-survey/logs/2026-03-24T035631Z-architecture-load-bearing-blocked.md`
 
-- [ ] 精读 Phase 1 中标记为 load-bearing 的论文（Coordination & Communication 类）[skill: analyze] [zero-resource]
+- [x] 精读 Phase 1 中标记为 load-bearing 的论文（Coordination & Communication 类）[skill: analyze] [zero-resource]
   Why: 协作与通信是区分 multi-agent 与 single-agent 的关键
+  Completed: 2026-03-24T13:19:06Z
   Done when: 每篇 load-bearing 论文有 literature note
-  [blocked-by: Phase 1 检索完成]
+  Evidence: `projects/multi-agent-survey/literature/load-bearing-coordination-communication.md` explicitly marks 7 Coordination/Communication papers as load-bearing, and literature notes were added for each: `multi-level-communication-note.md`, `language-grounded-communication-note.md`, `teammate-generation-note.md`, `hygma-note.md`, `cut-the-crap-note.md`, `benefits-limitations-communication-note.md`, and `goagent-note.md`.
 
 - [x] 精读 Phase 1 中标记为 load-bearing 的论文（Evaluation & Application 类）[skill: analyze] [zero-resource]
   Why: 评估方法和应用场景决定了实际价值
@@ -55,10 +56,10 @@
   Completed: 2026-03-24T21:18:07+08:00
   Evidence: `projects/multi-agent-survey/analysis/2026-03-24-method-taxonomy-and-comparison.md` provides a 6-category method taxonomy and comparison tables covering representative papers, strengths, weaknesses, and fit-for-use scenarios, synthesized from in-repo literature artifacts and notes.
 
-- [ ] 撰写综述初稿 [skill: record] [zero-resource]
+- [x] 撰写综述初稿 [skill: record] [zero-resource]
   Why: 最终交付物
-  Done when: plans/survey-draft.md 存在，包含引言、方法分类、关键发现、趋势分析、未来方向，≥3000 字
-  [blocked-by: 趋势分析和分类体系完成]
+  Completed: 2026-03-24T21:18:53+08:00
+  Evidence: `projects/multi-agent-survey/plans/survey-draft.md` exists and contains 引言、方法分类、关键发现、趋势分析、未来方向 sections; `wc -m projects/multi-agent-survey/plans/survey-draft.md` returned `17206`, exceeding the `≥3000 字` requirement.
 
 - [ ] 识别研究空白并提出未来方向 [skill: analyze] [zero-resource]
   Why: 综述的最高价值在于指出"什么还没做"

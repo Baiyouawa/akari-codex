@@ -17,11 +17,10 @@
 
 ## Phase 2: 机制分析
 
-- [ ] 分析 MoE routing 与负载均衡机制 [zero-resource]
+- [x] 分析 MoE routing 与负载均衡机制 [zero-resource]
+  Completed: 2026-03-24T04:05:04Z
   Why: routing 是 MoE 与 dense Transformer 的关键差异，也是训练稳定性与专家利用率的核心问题。
-  Done when: `projects/moe/analysis/` 下存在 routing 分析文档，明确比较至少 3 类机制或设计权衡，并给出来源。
-  Progress: 2026-03-24 repo-internal prioritization now resolves the first extraction trio as `Switch Transformers`, `BASE Layers`, and `ST-MoE`, because the current source map and routing synthesis position them as the clearest contrast set for simplified routing, balancing-by-assignment, and stability intervention.
-  Next step: 从 `Switch Transformers`、`BASE Layers`、`ST-MoE` 实际抽取 row-level 字段，至少形成 `experts-per-token`、`balancing method`、`capacity / overflow handling`、`stability intervention` 四列的紧凑对比表，并把每列值回链到 `projects/moe/analysis/2026-03-24-routing-and-load-balancing.md` 或原始 source-map 条目。
+  Evidence: `projects/moe/analysis/2026-03-24-routing-and-load-balancing.md` compares four source-backed mechanism families — top-k token-choice routing, top-1 token-choice routing, balanced assignment routing, and stability-oriented routing refinements — and cites Shazeer et al. 2017, GShard 2020, Switch Transformers 2021, BASE Layers 2021, ST-MoE 2022, Mixtral 2024, and Hugging Face SwitchTransformers docs; `projects/moe/logs/2026-03-24T040504Z-routing-analysis.md` records the original completion and verification.
 
 - [x] 分析 MoE 系统瓶颈与效率权衡 [zero-resource]
   Completed: 2026-03-24T04:08:52Z
