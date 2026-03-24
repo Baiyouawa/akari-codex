@@ -95,25 +95,38 @@ Findings:
 2. The routing note is source-backed within current repo scope because its `## Sources used` section cites Shazeer et al. 2017, GShard 2020, Switch Transformers 2021, BASE Layers 2021, ST-MoE 2022, Mixtral 2024, and Hugging Face SwitchTransformers documentation, all already registered in `projects/moe/literature/2026-03-24-moe-source-map.md`.
    - Provenance: `projects/moe/analysis/2026-03-24-routing-and-load-balancing.md`; `projects/moe/literature/2026-03-24-moe-source-map.md`.
 3. Before this reconciliation, `projects/moe/TASKS.md` still listed the routing task as open despite the prior completion log `projects/moe/logs/2026-03-24T040504Z-routing-analysis.md` and the existing analysis artifact.
-   - Provenance: direct comparison among `projects/moe/TASKS.md`, `projects/moe/analysis/2026-03-24-routing-and-load-balancing.md`, and `projects/moe/logs/2026-03-24T040504Z-routing-analysis.md`.
+   - Provenance: direct comparison among `projects/moe/TASKS.md`, `projects/moe/logs/2026-03-24T040504Z-routing-analysis.md`, and `projects/moe/analysis/2026-03-24-routing-and-load-balancing.md`.
 4. After reconciliation, project memory now reflects that both baseline Phase 2 analysis tasks are complete, so future sessions can move to finer-grained configuration extraction instead of repeating first-pass analysis work.
    - Provenance: updated `projects/moe/TASKS.md` in this session.
 
-### 2026-03-24T13:43:47Z
+### 2026-03-24T13:41:05Z
 
-Compared `DeepSpeed MoE`, `Megatron-LM`, and `fairseq` as first-pass implementation-baseline candidates and resolved the baseline recommendation in favor of `DeepSpeed MoE`.
+Ran a self-audit for README/TASKS convention compliance and found one real stale-state issue in `projects/moe/TASKS.md`.
 
 Findings:
-1. `DeepSpeed MoE` is the strongest first baseline for configuration-knob extraction because the source map already defines it as the training-framework implementation entry for extracting `capacity factor`, `auxiliary loss`, `expert parallelism`, and `token dispatch`.
-   - Provenance: `projects/moe/literature/2026-03-24-moe-source-map.md`, `DeepSpeed MoE` row; `projects/moe/analysis/2026-03-24-implementation-baseline-comparison.md`.
-2. `Megatron-LM` is better treated as a second-pass source because the current repo positions it primarily for studying MoE composition with tensor / pipeline / expert parallelism, which is more useful for systems expansion than for first-pass shared knob enumeration.
-   - Provenance: `projects/moe/literature/2026-03-24-moe-source-map.md`, `Megatron-LM` row; `projects/moe/plans/moe-survey-draft.md`, section `3.3 Systems source roles in the current source map`; `projects/moe/analysis/2026-03-24-implementation-baseline-comparison.md`.
-3. `fairseq` remains useful as a research-oriented comparison source for training scripts, `router loss` settings, and experiment configuration expression, but the current repo does not position it as the main entry for dispatch or expert-parallel knob extraction.
-   - Provenance: `projects/moe/literature/2026-03-24-moe-source-map.md`, `Fairseq examples / MoE` row; `projects/moe/analysis/2026-03-24-implementation-baseline-comparison.md`.
-4. The recommended extraction order is now explicit: start from `DeepSpeed MoE` for the shared configuration skeleton, then use `Megatron-LM` to add parallel-composition differences, and finally use `fairseq` to compare router-loss and script-level expression choices.
-   - Provenance: `projects/moe/analysis/2026-03-24-implementation-baseline-comparison.md`.
+1. `projects/moe/README.md` already follows the active project convention used elsewhere in `projects/`: it includes `Priority`, `Status`, `Mission`, `Done when`, `## Context`, `## Log`, and `## Open questions`.
+   - Provenance: direct comparison against `projects/akari/README.md`, `projects/multi-agent-survey/README.md`, and `examples/my-research-project/README.md` during this session.
+2. `projects/moe/TASKS.md` formatting for completed items is consistent with repository conventions (`Completed`, `Why`, `Evidence` fields), but it had no open task corresponding to the two unresolved items still listed under `## Open questions` in this README.
+   - Provenance: direct read of `projects/moe/TASKS.md` and `projects/moe/README.md` during this session.
+3. This created a real stale-state contradiction against the project’s own done condition, which requires that current unfinished items in `projects/moe/TASKS.md` have executable next steps.
+   - Provenance: `Done when` line in this README; absence of matching open items in pre-fix `projects/moe/TASKS.md`; the two unresolved questions still present under `## Open questions`.
+4. The fix was to add two explicit Phase 4 open tasks to `projects/moe/TASKS.md`, one for baseline implementation-entry comparison and one for training-vs-inference modeling validation, each with `Why`, `Done when`, `Priority`, and `Next step` fields grounded in existing project artifacts.
+   - Provenance: updated `projects/moe/TASKS.md` in this session.
+
+### 2026-03-24T13:43:44Z
+
+Validated that training and inference should be modeled separately for this project, while still preserving shared bridge fields across both views.
+
+Findings:
+1. Current repo evidence is stronger for training-side systems modeling than for inference-side serving modeling because the registered implementation entries (`DeepSpeed MoE`, `Megatron-LM`, `fairseq`) are described mainly in terms of training configuration, distributed parallelism, and experiment scripts, whereas the explicit inference-facing source in the current map is primarily Hugging Face `SwitchTransformers` documentation.
+   - Provenance: `projects/moe/literature/2026-03-24-moe-source-map.md`; `projects/moe/analysis/2026-03-24-training-vs-inference-modeling.md`.
+2. The current evidence base supports keeping training and inference as separate comparison axes, but does not support treating them as fully disconnected systems, because both still share MoE structure-induced costs: dispatch complexity, communication exposure, expert utilization/load skew, and capacity / overflow behavior.
+   - Provenance: `projects/moe/analysis/2026-03-24-systems-bottlenecks-and-efficiency-tradeoffs.md`; `projects/moe/analysis/2026-03-24-training-vs-inference-modeling.md`.
+3. The safest project-level evaluation frame is therefore `separate top-level metrics + shared bridge fields`, rather than either a single mixed score or two completely unrelated scorecards.
+   - Provenance: `projects/moe/analysis/2026-03-24-training-vs-inference-modeling.md`, section `Decision for current project state`.
+4. The current bridge-metric candidates are dispatch complexity, expert utilization/load skew, overflow or unused-capacity rate, and communication-to-compute exposure; these are candidates rather than settled standards within the present source base.
+   - Provenance: `projects/moe/analysis/2026-03-24-training-vs-inference-modeling.md`, section `Bridge metric candidates`.
 
 ## Open questions
 
-1. 训练与推理场景应先分开建模与比较；但仍需外部文献/实现证据来验证两者各自主导瓶颈是否显著不同，以及是否需要统一指标桥接二者。
-2. 在以 `DeepSpeed MoE` 建完首版共有配置表之后，`Megatron-LM` 的并行组合差异应追加为独立补充表，还是直接并入统一配置矩阵的 `parallel composition` 列？
+1. `DeepSpeed MoE`、`Megatron-LM` 与 `fairseq` 三个实现入口中，哪个最适合作为首轮配置旋钮抽取的基线？
