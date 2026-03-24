@@ -126,3 +126,12 @@ Notes: <any modifications or context>
 **Description:** Need repository-root write access (outside `projects/akari`) to fix a genuine stale contradiction found during the akari self-audit: root `README.md` says `decisions/` contains 67 architectural decision records, but `find decisions -maxdepth 1 -type f | wc -l` returns 68. Current `write_file` attempt failed with `PermissionError: Fleet write_scope violation: README.md not under projects/akari`. Approval would allow the in-place documentation fix required by the task.
 **Status:** pending
 
+
+---
+
+### [BLOCKING] tool-access
+
+**Requested:** 2026-03-24T14:07:33.210655+00:00
+**Description:** Need approval to run git staging/commit commands for this completed MoE task. File updates are done, but current shell allowlist blocks `git add` and `git commit`, while session protocol and fleet instructions require a commit with message including [fleet/岛村-01-1774360855-6ed6b7].
+**Status:** pending
+

@@ -50,8 +50,16 @@
 
 ## Phase 5: 后续实现抽取
 
-- [ ] 以 `DeepSpeed MoE` 为首轮基线抽取共有配置旋钮，并决定 `Megatron-LM` 的并行组合差异应如何并入配置矩阵 [zero-resource] [skill: analyze]
+- [x] 以 `DeepSpeed MoE` 为首轮基线抽取共有配置旋钮，并决定 `Megatron-LM` 的并行组合差异应如何并入配置矩阵 [zero-resource] [skill: analyze]
   Why: 当前 README 的唯一剩余开放问题已经从“选谁做基线”收敛为“在选定 `DeepSpeed MoE` 之后，如何表示 `Megatron-LM` 的 parallel composition 增量”；如果不把这个下一步显式写入任务列表，README 与 TASKS 会再次失配。
   Done when: 新增一份配置抽取笔记，至少以 `DeepSpeed MoE` 为基线列出首版共有字段骨架（含 `capacity factor`、`auxiliary loss`、`expert parallelism`、`token dispatch` 四类），并明确 `Megatron-LM` 的并行组合差异应作为独立补充表还是统一矩阵列来表示；同时把结论同步到 `projects/moe/README.md`。
   Priority: high
-  Next step: 先从 `projects/moe/analysis/2026-03-24-implementation-baseline-comparison.md` 已确认的四类 `DeepSpeed MoE` 基线字段出发，整理出首版字段骨架，再决定 `parallel composition` 的表示位置。
+  Completed: 2026-03-24T13:53:17Z
+  Evidence: `projects/moe/analysis/2026-03-24-deepspeed-baseline-config-skeleton.md` defines a first-pass shared matrix skeleton with at least seven columns — `implementation`, `capacity factor`, `auxiliary loss`, `expert parallelism`, `token dispatch`, `parallel composition`, and `evidence source` — and concludes that `Megatron-LM` parallel-composition differences should be represented inside the unified matrix as a `parallel composition` column rather than as a separate supplementary table; `projects/moe/README.md` records the same conclusion and updates the remaining open question accordingly.
+
+- [x] 规定 `parallel composition` 列的行内编码方式，以支持 `Megatron-LM` 与后续实现的稳定横向比较 [zero-resource] [skill: analyze]
+  Why: 当前项目已经决定把 `Megatron-LM` 的并行组合差异并入统一矩阵的 `parallel composition` 列，但该列若没有明确编码方式，后续 session 仍可能用自由文本重新引入不可比的表述漂移。
+  Done when: 新增一份短笔记，比较至少两种 `parallel composition` 列编码方案（如多标签短语、分层子字段、受限词表），明确推荐方案及理由，并把结论写回 `projects/moe/README.md` 与本任务文件。
+  Priority: high
+  Completed: 2026-03-24T14:02:11Z
+  Evidence: `projects/moe/analysis/2026-03-24-parallel-composition-encoding.md` compares three candidate schemes — multi-label phrases, layered subfields, and a constrained vocabulary with canonical order — and recommends keeping one matrix column while encoding values with the constrained vocabulary `{dp, tp, pp, ep}` in fixed order `dp+tp+pp+ep`; it also standardizes the placeholders `unspecified-baseline` and `unknown` for non-free-text missingness states. `projects/moe/README.md` records the same conclusion and closes the remaining open question.

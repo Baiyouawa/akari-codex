@@ -479,7 +479,8 @@
       "session_id": "枫-05-1774359774-9fbc4e",
       "project": "moe",
       "claimed_at": 1774359774.210512,
-      "active": true
+      "active": false,
+      "released_at": 1774360485.5677006
     },
     "claim-eaaef2b3b002": {
       "task_id": "01ec1609eedf59c4",
@@ -496,6 +497,24 @@
       "session_id": "果穗-07-1774360374-eaf532",
       "project": "moe",
       "claimed_at": 1774360374.98035,
+      "active": false,
+      "released_at": 1774360805.6522906
+    },
+    "claim-34c141510554": {
+      "task_id": "906d322af998fe70",
+      "worker_id": "侑-00",
+      "session_id": "侑-00-1774360675-4f6186",
+      "project": "moe",
+      "claimed_at": 1774360675.3636105,
+      "active": false,
+      "released_at": 1774360844.2403762
+    },
+    "claim-8ace045eb7cb": {
+      "task_id": "906d322af998fe70",
+      "worker_id": "岛村-01",
+      "session_id": "岛村-01-1774360855-6ed6b7",
+      "project": "moe",
+      "claimed_at": 1774360855.6005833,
       "active": true
     }
   }

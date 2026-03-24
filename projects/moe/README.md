@@ -141,6 +141,34 @@ Findings:
 4. The recommended extraction order is now explicit: start from `DeepSpeed MoE` for the shared configuration skeleton, then use `Megatron-LM` to add parallel-composition differences, and finally use `fairseq` to compare router-loss and script-level expression choices.
    - Provenance: `projects/moe/analysis/2026-03-24-implementation-baseline-comparison.md`.
 
+### 2026-03-24T13:53:17Z
+
+Defined the first-pass shared configuration-field skeleton from the `DeepSpeed MoE` baseline and resolved how `Megatron-LM` parallel-composition differences should be represented.
+
+Findings:
+1. The first-pass shared configuration matrix should contain at least seven columns: `implementation`, `capacity factor`, `auxiliary loss`, `expert parallelism`, `token dispatch`, `parallel composition`, and `evidence source`.
+   - Provenance: `projects/moe/analysis/2026-03-24-deepspeed-baseline-config-skeleton.md`.
+2. The four required MoE knob classes — `capacity factor`, `auxiliary loss`, `expert parallelism`, and `token dispatch` — belong in the shared skeleton because the source map already names all four as `DeepSpeed MoE` extraction targets, and the systems note ties three of them directly to active bottleneck families.
+   - Provenance: `projects/moe/literature/2026-03-24-moe-source-map.md`, `DeepSpeed MoE` row; `projects/moe/analysis/2026-03-24-systems-bottlenecks-and-efficiency-tradeoffs.md`; `projects/moe/analysis/2026-03-24-deepspeed-baseline-config-skeleton.md`.
+3. `Megatron-LM`’s main delta should be represented inside the unified matrix as a `parallel composition` column rather than as a separate supplementary table, because the current repo positions its added value as MoE composition with `tensor / pipeline / expert parallelism` within the same implementation-comparison problem.
+   - Provenance: `projects/moe/literature/2026-03-24-moe-source-map.md`, `Megatron-LM` row; `projects/moe/plans/moe-survey-draft.md`, section `3.3 Systems source roles in the current source map`; `projects/moe/analysis/2026-03-24-deepspeed-baseline-config-skeleton.md`.
+4. The next extraction pass should therefore fill the `DeepSpeed MoE` row first for the four shared knob classes, then add a `Megatron-LM` row with emphasis on the `parallel composition` column rather than splitting the comparison into two disconnected tables.
+   - Provenance: `projects/moe/analysis/2026-03-24-deepspeed-baseline-config-skeleton.md`.
+
+### 2026-03-24T14:02:11Z
+
+Standardized the row-level encoding rule for the unified `parallel composition` column and closed the remaining open question.
+
+Findings:
+1. `projects/moe/analysis/2026-03-24-parallel-composition-encoding.md` compares three candidate schemes for the `parallel composition` cell — multi-label phrases, layered subfields, and a constrained vocabulary with canonical order — against the task’s repo-internal criteria of comparability, drift resistance, and extraction cost.
+   - Provenance: `projects/moe/analysis/2026-03-24-parallel-composition-encoding.md`.
+2. The recommended scheme is to keep a single matrix column but encode values with a constrained vocabulary `{dp, tp, pp, ep}` in fixed order `dp+tp+pp+ep`, because that preserves the unified-matrix decision while reducing free-text drift more effectively than multi-label phrases and at lower schema cost than layered subfields.
+   - Provenance: `projects/moe/analysis/2026-03-24-parallel-composition-encoding.md`; decision target inherited from `projects/moe/analysis/2026-03-24-deepspeed-baseline-config-skeleton.md`.
+3. The note also fixes two non-free-text placeholders for row completeness: `unspecified-baseline` when the current artifact does not treat parallel composition as the implementation’s primary extracted delta, and `unknown` when evidence is insufficient to confirm any composition.
+   - Provenance: `projects/moe/analysis/2026-03-24-parallel-composition-encoding.md`, section `Canonical encoding rule for next sessions`.
+4. With this encoding rule in place, the README no longer has any unresolved question about how `Megatron-LM` parallel-composition differences should be represented inside the shared matrix; the next remaining work is direct implementation-level row extraction under the fixed encoding.
+   - Provenance: updated `projects/moe/README.md`; `projects/moe/TASKS.md`; `projects/moe/analysis/2026-03-24-parallel-composition-encoding.md`.
+
 ## Open questions
 
-1. 在以 `DeepSpeed MoE` 建完首版共有配置表之后，`Megatron-LM` 的并行组合差异应追加为独立补充表，还是直接并入统一配置矩阵的 `parallel composition` 列？
+None at the moment. Next work should proceed via implementation-level extraction under the fixed matrix schema rather than reopening schema design.
