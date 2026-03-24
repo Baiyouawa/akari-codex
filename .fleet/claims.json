@@ -249,7 +249,8 @@
       "session_id": "fleet-worker-07-1774323557-291433",
       "project": "multi-agent-survey",
       "claimed_at": 1774323557.6281023,
-      "active": true
+      "active": false,
+      "released_at": 1774324287.442478
     },
     "claim-8dd14109232b": {
       "task_id": "86da25910deb71d6",
