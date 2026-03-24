@@ -294,6 +294,22 @@
       "project": "moe",
       "claimed_at": 1774324789.2875924,
       "active": true
+    },
+    "claim-31c186c7e52c": {
+      "task_id": "a22f031bfd2ad9b3",
+      "worker_id": "fleet-worker-28",
+      "session_id": "fleet-worker-28-1774325119-abda60",
+      "project": "moe",
+      "claimed_at": 1774325119.7156866,
+      "active": true
+    },
+    "claim-83a61d91c917": {
+      "task_id": "3ae34235a51717dc",
+      "worker_id": "fleet-worker-29",
+      "session_id": "fleet-worker-29-1774325119-9ceeba",
+      "project": "moe",
+      "claimed_at": 1774325119.717057,
+      "active": true
     }
   }
 }
