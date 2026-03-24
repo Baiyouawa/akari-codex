@@ -106,6 +106,22 @@ This appears sufficient to support at least three kinds of self-study already de
 
 Further research needed: this answer is still based on a very small local sample. The next internal test is to check whether the same minimal bundle still supports self-study once session volume is much higher, especially whether session JSON + approval records + task/README deltas remain enough without also logging standardized touched-file lists or explicit outcome tags.
 
+### 2026-03-24T13:18:35Z
+
+Ran a horizon scan for new developments related to studying and improving the autonomous research system itself.
+
+Findings:
+1. `projects/akari/literature/` already covered remote-channel observability and scheduler evaluation telemetry, but not fleet-scale benchmark reporting.
+   - Provenance: `projects/akari/literature/2026-03-23-remote-channel-observability.md`; `projects/akari/literature/2026-03-23-scheduler-evaluation-telemetry.md`.
+2. `docs/fleet-research.md` now exposes a fleet-scale empirical benchmark surface with `5,303` sessions, `91.0% (4,825/5,303)` overall success, and `54.2% (2,876/5,303)` knowledge-producing sessions.
+   - Provenance: `docs/fleet-research.md`, section `Evidence: sustained autonomous operation`.
+3. The same document reports category-level output counts and an explicit-governance baseline of `12 / 1,529 = 0.0079` approval events per session for the week of `2026-03-02`.
+   - Provenance: `docs/fleet-research.md`, sections `Evidence: sustained autonomous operation` and `Evidence: scarce human intervention`; inline arithmetic `12 / 1529 = 0.007848...`, rounded to `0.0079`.
+4. The document's reproduction checklist identifies a candidate cross-fork benchmark bundle: success rate, knowledge-producing-session rate, output counts by category, and approval events per session.
+   - Provenance: `docs/fleet-research.md`, section `How to reproduce this kind of evidence in your system`.
+
+Interpretation: this is a genuinely new self-study direction for akari because it shifts from isolated telemetry surfaces to a fork-comparison benchmark frame. The main remaining gap is that this public fork still lacks a fully mechanical classifier for `knowledge-producing sessions`, so benchmark portability depends on standardizing those definitions.
+
 ## Open questions
 
 - Which self-improvement metrics are robust enough to compare across different forks or deployments of openakari?
