@@ -36,7 +36,7 @@ from .persona import (
 )
 from . import memory as mem
 from . import memo
-from .xiaobai_tools import XIAOBAI_TOOL_DEFINITIONS, execute_tool as _exec_tool
+from .tools import ToolExecutor
 
 
 # ─── JSON 解析 ───────────────────────────────────────────────
@@ -81,6 +81,7 @@ class ChatBot:
             timeout=config.timeout_seconds,
         )
         self.repo_root = config.repo_home
+        self.tool_executor = ToolExecutor(config)
 
     # ── 核心入口 ──────────────────────────────────────────────
 
@@ -102,7 +103,7 @@ class ChatBot:
             return due_notice + reply
 
         if not router_result:
-            reply = self._chat_with_tools(message)
+            reply = self._plain_chat(message)
             mem.save_turn(self.repo_root, message, reply)
             self._maybe_reflect()
             return due_notice + reply
@@ -110,8 +111,14 @@ class ChatBot:
         route = router_result.get("route", "chat")
 
         if route == "chat":
-            reply = self._chat_with_tools(message)
+            reply = self._plain_chat(message)
             mem.save_turn(self.repo_root, message, reply)
+            self._maybe_reflect()
+            return due_notice + reply
+
+        if route == "tool_use":
+            reply = self._handle_tool_use(message, router_result)
+            mem.save_turn(self.repo_root, message, reply, action_taken="tool_use")
             self._maybe_reflect()
             return due_notice + reply
 
@@ -176,55 +183,10 @@ class ChatBot:
 
         return _parse_router_response(response_text)
 
-    # ── 带工具的聊天 ──────────────────────────────────────────
+    # ── 纯文本聊天（不依赖 function calling）──────────────────
 
-    def _stream_with_tools(self, messages: list[dict[str, Any]]) -> tuple[str | None, list[dict]]:
-        """流式调用，返回 (文本内容, tool_calls列表)。兼容必须 stream=True 的 API。"""
-        stream = self.client.chat.completions.create(
-            model=self.config.model,
-            messages=messages,
-            tools=XIAOBAI_TOOL_DEFINITIONS,
-            tool_choice="auto",
-            temperature=0.7,
-            max_tokens=2048,
-            stream=True,
-        )
-
-        content_parts: list[str] = []
-        tool_calls_map: dict[int, dict] = {}
-
-        for chunk in stream:
-            if not chunk.choices:
-                continue
-            delta = chunk.choices[0].delta
-
-            if delta.content:
-                content_parts.append(delta.content)
-
-            if delta.tool_calls:
-                for tc_delta in delta.tool_calls:
-                    idx = tc_delta.index
-                    if idx not in tool_calls_map:
-                        tool_calls_map[idx] = {
-                            "id": tc_delta.id or "",
-                            "type": "function",
-                            "function": {"name": "", "arguments": ""},
-                        }
-                    entry = tool_calls_map[idx]
-                    if tc_delta.id:
-                        entry["id"] = tc_delta.id
-                    if tc_delta.function:
-                        if tc_delta.function.name:
-                            entry["function"]["name"] = tc_delta.function.name
-                        if tc_delta.function.arguments:
-                            entry["function"]["arguments"] += tc_delta.function.arguments
-
-        content = "".join(content_parts) or None
-        tool_calls = [tool_calls_map[k] for k in sorted(tool_calls_map)]
-        return content, tool_calls
-
-    def _chat_with_tools(self, user_message: str, max_rounds: int = 5) -> str:
-        """小白聊天模式，支持 function calling（web_search / web_fetch / get_time / calculate）。"""
+    def _plain_chat(self, user_message: str) -> str:
+        """小白纯文本聊天：system prompt + memory → 直接让 LLM 回答。"""
         memory_context = mem.load_context(self.repo_root)
         system = XIAOBAI_SYSTEM_PROMPT
         if memory_context:
@@ -234,36 +196,73 @@ class ChatBot:
             {"role": "system", "content": system},
             {"role": "user", "content": user_message},
         ]
+        try:
+            stream = self.client.chat.completions.create(
+                model=self.config.model,
+                messages=messages,
+                temperature=0.7,
+                max_tokens=2048,
+                stream=True,
+            )
+            parts: list[str] = []
+            for chunk in stream:
+                if chunk.choices and chunk.choices[0].delta.content:
+                    parts.append(chunk.choices[0].delta.content)
+            text = "".join(parts)
+            return text or f"{AGENT_NAME}好像脑子空白了...(｡•́︿•̀｡)"
+        except Exception as e:
+            return f"呜...{AGENT_NAME}连不上大脑了: {e}"
 
-        for _round in range(max_rounds):
-            try:
-                content, tool_calls = self._stream_with_tools(messages)
-            except Exception as e:
-                return f"呜...{AGENT_NAME}连不上大脑了: {e}"
+    # ── Skill 工具分发（替代 function calling）────────────────
 
-            if not tool_calls:
-                return content or f"{AGENT_NAME}好像脑子空白了...(｡•́︿•̀｡)"
+    def _handle_tool_use(self, user_message: str, router_result: dict[str, Any]) -> str:
+        """路由器识别到需要工具 → 直接 Python 执行 → 结果喂回 LLM 生成自然语言回答。
 
-            assistant_msg: dict[str, Any] = {"role": "assistant", "content": content or ""}
-            assistant_msg["tool_calls"] = tool_calls
-            messages.append(assistant_msg)
+        不依赖 API 的 function calling 能力，仅需两轮纯文本调用。
+        """
+        tools = router_result.get("tools", [])
+        if not tools:
+            return self._plain_chat(user_message)
 
-            for tc in tool_calls:
-                fn_name = tc["function"]["name"]
-                try:
-                    fn_args = json.loads(tc["function"]["arguments"])
-                except json.JSONDecodeError:
-                    fn_args = {}
+        tool_results: list[str] = []
+        for tool_spec in tools:
+            tool_name = tool_spec.get("tool", "")
+            tool_args = {k: v for k, v in tool_spec.items() if k != "tool"}
+            print(f"  >> 执行工具: {tool_name}({tool_args})")
+            result = self.tool_executor.execute(tool_name, tool_args)
+            tool_results.append(f"[{tool_name}] {result}")
 
-                print(f"  >> 工具调用: {fn_name}({fn_args})")
-                result = _exec_tool(fn_name, fn_args)
-                messages.append({
-                    "role": "tool",
-                    "tool_call_id": tc["id"],
-                    "content": result,
-                })
+        combined_data = "\n\n".join(tool_results)
 
-        return f"{AGENT_NAME}想了很久但还是没搞定呢...(｡•́︿•̀｡)"
+        memory_context = mem.load_context(self.repo_root)
+        system = XIAOBAI_SYSTEM_PROMPT
+        if memory_context:
+            system += f"\n\n{memory_context}"
+
+        messages: list[dict[str, Any]] = [
+            {"role": "system", "content": system},
+            {"role": "user", "content": (
+                f"{user_message}\n\n"
+                f"---\n以下是小白帮你查到的实时信息，请根据这些信息回答{USER_NICKNAME}的问题：\n\n"
+                f"{combined_data}"
+            )},
+        ]
+        try:
+            stream = self.client.chat.completions.create(
+                model=self.config.model,
+                messages=messages,
+                temperature=0.7,
+                max_tokens=2048,
+                stream=True,
+            )
+            parts: list[str] = []
+            for chunk in stream:
+                if chunk.choices and chunk.choices[0].delta.content:
+                    parts.append(chunk.choices[0].delta.content)
+            text = "".join(parts)
+            return text or combined_data
+        except Exception as e:
+            return f"小白查到了信息但脑子转不过来了...\n\n{combined_data}\n\n(错误: {e})"
 
     # ── 阶段二：结果润色 ──────────────────────────────────────
 

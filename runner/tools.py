@@ -9,18 +9,30 @@ Implements the tools the agent can call during a session:
   - git_status      Get current git status
   - log_decision    Write a decision record to decisions/
   - request_approval Queue an approval request
+  - web_search      Search the internet (DuckDuckGo)
+  - web_fetch       Fetch and extract text from a URL
+  - get_current_time Return current Beijing time
+  - calculate       Evaluate a math expression safely
 """
 
 from __future__ import annotations
 
 import datetime
 import json
+import math
 import os
+import re
 import subprocess
+import urllib.parse
+import urllib.request
 from pathlib import Path
 from typing import Any
 
 from .config import CodexConfig
+
+_BJ_TZ = datetime.timezone(datetime.timedelta(hours=8))
+_UA = "Mozilla/5.0 (compatible; XiaoBai/1.0)"
+_WEB_TIMEOUT = 15
 
 TOOL_DEFINITIONS: dict[str, dict[str, Any]] = {
     "read_file": {
@@ -133,6 +145,43 @@ TOOL_DEFINITIONS: dict[str, dict[str, Any]] = {
             "required": ["action_type", "description"],
         },
     },
+    "web_search": {
+        "description": "Search the internet via DuckDuckGo. Returns top results with titles and URLs.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "query": {"type": "string", "description": "Search keywords"},
+            },
+            "required": ["query"],
+        },
+    },
+    "web_fetch": {
+        "description": "Fetch a URL and return its text content (HTML tags stripped).",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "url": {"type": "string", "description": "URL to fetch"},
+            },
+            "required": ["url"],
+        },
+    },
+    "get_current_time": {
+        "description": "Get the current date and time in Beijing timezone (UTC+8).",
+        "parameters": {"type": "object", "properties": {}},
+    },
+    "calculate": {
+        "description": "Safely evaluate a mathematical expression (supports math module functions).",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "expression": {
+                    "type": "string",
+                    "description": "Math expression, e.g. '2**10', 'sqrt(144)', 'log(100)'",
+                },
+            },
+            "required": ["expression"],
+        },
+    },
 }
 
 
@@ -151,6 +200,10 @@ class ToolExecutor:
             "git_status": self._git_status,
             "log_decision": self._log_decision,
             "request_approval": self._request_approval,
+            "web_search": self._web_search,
+            "web_fetch": self._web_fetch,
+            "get_current_time": self._get_current_time,
+            "calculate": self._calculate,
         }
 
     def execute(self, tool_name: str, args: dict[str, Any]) -> str:
@@ -380,3 +433,96 @@ class ToolExecutor:
             "urgency": urgency,
             "message": "Action blocked pending approval" if urgency == "blocking" else "Queued for review",
         })
+
+    # ── Web / utility tools ──────────────────────────────────
+
+    def _web_search(self, query: str) -> str:
+        try:
+            encoded = urllib.parse.urlencode({"q": query, "kl": "cn-zh"})
+            url = f"https://lite.duckduckgo.com/lite/?{encoded}"
+            req = urllib.request.Request(url, headers={"User-Agent": _UA})
+            with urllib.request.urlopen(req, timeout=_WEB_TIMEOUT) as resp:
+                html = resp.read().decode("utf-8", errors="replace")
+
+            results = _extract_ddg_results(html)
+            if not results:
+                return f"搜索「{query}」没有找到结果。"
+            return f"搜索「{query}」的结果:\n\n" + "\n".join(results[:5])
+        except Exception as e:
+            return f"搜索失败: {type(e).__name__}: {e}"
+
+    def _web_fetch(self, url: str) -> str:
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": _UA})
+            with urllib.request.urlopen(req, timeout=_WEB_TIMEOUT) as resp:
+                ctype = resp.headers.get("Content-Type", "")
+                if "text" not in ctype and "json" not in ctype:
+                    return f"URL 返回的不是文本内容 (Content-Type: {ctype})"
+                raw = resp.read()
+                encoding = "utf-8"
+                m = re.search(r"charset=([^\s;]+)", ctype)
+                if m:
+                    encoding = m.group(1)
+                text = raw.decode(encoding, errors="replace")
+
+            text = re.sub(r"<script[^>]*>.*?</script>", "", text, flags=re.DOTALL)
+            text = re.sub(r"<style[^>]*>.*?</style>", "", text, flags=re.DOTALL)
+            text = re.sub(r"<[^>]+>", " ", text)
+            text = re.sub(r"\s+", " ", text).strip()
+
+            if len(text) > 3000:
+                text = text[:3000] + "... (已截断)"
+            return text or "(页面内容为空)"
+        except Exception as e:
+            return f"抓取失败: {type(e).__name__}: {e}"
+
+    def _get_current_time(self) -> str:
+        now = datetime.datetime.now(_BJ_TZ)
+        weekdays = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+        wd = weekdays[now.weekday()]
+        return f"现在是北京时间 {now.strftime('%Y年%m月%d日')} {wd} {now.strftime('%H:%M:%S')}"
+
+    def _calculate(self, expression: str) -> str:
+        allowed_names = {
+            k: v for k, v in math.__dict__.items()
+            if not k.startswith("_")
+        }
+        allowed_names.update({"abs": abs, "round": round, "min": min, "max": max})
+        try:
+            result = eval(expression, {"__builtins__": {}}, allowed_names)  # noqa: S307
+            return f"{expression} = {result}"
+        except Exception as e:
+            return f"计算错误: {e}"
+
+
+def _extract_ddg_results(html: str) -> list[str]:
+    """从 DuckDuckGo Lite HTML 中提取搜索结果。"""
+    results: list[str] = []
+
+    links = re.findall(
+        r'<a[^>]+href="([^"]+)"[^>]*>(.*?)</a>',
+        html, re.DOTALL,
+    )
+    for href, title in links:
+        clean_title = re.sub(r"<[^>]+>", "", title).strip()
+        if not clean_title:
+            continue
+        if "duckduckgo.com/l/" in href:
+            m = re.search(r"uddg=([^&]+)", href)
+            real_url = urllib.parse.unquote(m.group(1)) if m else href
+            results.append(f"- {clean_title}\n  {real_url}")
+        elif href.startswith("http") and "duckduckgo" not in href:
+            results.append(f"- {clean_title}\n  {href}")
+        if len(results) >= 8:
+            break
+
+    if not results:
+        text_blocks = re.findall(r"<td[^>]*>(.*?)</td>", html, re.DOTALL)
+        for block in text_blocks:
+            clean = re.sub(r"<[^>]+>", "", block).strip()
+            if len(clean) > 30:
+                results.append(f"- {clean[:200]}")
+                if len(results) >= 5:
+                    break
+
+    return results
