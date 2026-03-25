@@ -21,10 +21,12 @@
   Evidence: `projects/multi-agent-survey/logs/2026-03-25T21:49:44+08:00-structured-summaries-blocked.md`
 
 - [ ] 对全部论文进行主题归类与横向综述，形成研究脉络：协作规划、通信、博弈/对齐、工具使用、多智能体LLM系统、训练与评测等 [zero-resource]
-  Done when: TBD
+  Done when: 基于仓库内可验证文献清单输出一份带主题计数、代表论文与研究脉络的横向综述，并为计数提供脚本级 provenance
+  Evidence: `projects/multi-agent-survey/analysis/2026-03-25-theme-synthesis.md`; `projects/multi-agent-survey/scripts/classify_theme_synthesis.py`
 
-- [ ] 自由探索并提出5个最值得后续开展的研究课题方向；对每个方向给出问题定义、研究假设、方法设计、数据/benchmark、实验方案、评测指标、潜在风险与可行性分析 [zero-resource]
-  Done when: TBD
+- [x] 自由探索并提出5个最值得后续开展的研究课题方向；对每个方向给出问题定义、研究假设、方法设计、数据/benchmark、实验方案、评测指标、潜在风险与可行性分析 [zero-resource]
+  Completed: 2026-03-25T22:05:00+08:00
+  Evidence: `projects/multi-agent-survey/analysis/2026-03-25-future-research-directions.md`; `projects/multi-agent-survey/logs/2026-03-25T22:05:00+08:00-future-research-directions.md`
 
 - [ ] 汇总所有引用与下载信息，生成标准化参考文献表与论文下载清单，确保链接可追溯 [zero-resource]
   Done when: TBD
