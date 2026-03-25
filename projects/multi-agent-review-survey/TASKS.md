@@ -201,8 +201,10 @@
   Done when: `projects/multi-agent-review-survey/analysis/2026-03-26-final-top10-list-with-cn-abstract-entry.md` 完成 10 篇 canonical 论文的题目、年份、PDF 文件名/路径、入选理由与中文摘要入口汇总，并经本地 PDF 存在性/页数核验
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-final-top10-list-with-cn-abstract-entry.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md`
 
-- [ ] 重做 2024-2026 年 multi-agent 相关综述/survey 检索任务：必须先使用 web_search 检索候选论文不少于15篇，覆盖 multi-agent systems、LLM-based multi-agent systems、communication/collaboration/coordination surveys 等子方向
-  Done when: TBD
+- [x] 重做 2024-2026 年 multi-agent 相关综述/survey 检索任务：必须先使用 web_search 检索候选论文不少于15篇，覆盖 multi-agent systems、LLM-based multi-agent systems、communication/collaboration/coordination surveys 等子方向
+  Completed: 2026-03-26T02:35:05+08:00
+  Done when: 先执行 web_search，再形成不少于15篇候选池，并给出子方向覆盖与本地 PDF 刷新证据
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-web-search-redo-2024-2026-survey-candidates-and-pdf-refresh.md`; `projects/multi-agent-review-survey/logs/2026-03-26T02:35:05+08:00-fleet-理世-06-1774463292-3af478-web-search-redo-and-pdf-refresh.md`
 
 - [ ] 对每个候选用 web_fetch 抓取摘要页、arXiv页、期刊页或PDF首页信息，核验其是否明确自称 survey/review、年份是否在 2024-2026、主题是否与 multi-agent 直接相关
   Done when: TBD

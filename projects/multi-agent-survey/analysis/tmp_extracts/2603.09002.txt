@@ -1,0 +1,674 @@
+
+--- PAGE 1 ---
+Security Considerations for Multi-agent Systems*
+* A Crew Scaler (501c3 pending org)’s response to NIST RFI 2026-00206
+1st Tam Nguyen
+Founder, CTO @ Crew Scaler
+US Federal Employee
+t@crewscaler.org
+ORCID 0000-0002-8577-8342
+2nd Moses Ndebugre
+Senior Researcher @ Crew Scaler
+North Carolina A&T State University
+myndebugre@aggies.ncat.edu
+ORCID 0000-0002-6941-6675
+3rd Dheeraj Arremsetty
+Advisory Board Member @ Crew Scaler
+AI Technical Solution Architect
+dheeraj.arremsetty@gmail.com
+ORCID 0009-0001-5654-6286
+Abstract—Multi-agent artificial intelligence systems or MAS
+are systems of autonomous agents that exercise delegated tool au-
+thority, share persistent memory, and coordinate via inter-agent
+communication. MAS introduces qualitatively distinct security
+vulnerabilities from those documented for singular AI models.
+Existing security and governance frameworks were not designed
+for these emerging attack surfaces. This study systematically
+characterizes the threat landscape of MAS and quantitatively
+evaluates 16 security frameworks for AI against it. A four-
+phase methodology is proposed: constructing a deep technical
+knowledge base of production multi-agent architectures; con-
+ducting generative AI-assisted threat modeling scoped to MAS
+cybersecurity risks and validated by domain experts; structuring
+survey plans at individual-threat granularity; and scoring each
+framework on a three-point scale against the cybersecurity
+risks. The risks were organized into 193 distinct main threat
+items across nine risk categories. The expected minimal average
+score is 2. No reviewed framework achieves majority coverage
+of any single category. Non-Determinism (mean score 1.231
+across all 16 frameworks) and Data Leakage (1.340) are the
+most under-addressed domains. The OW ASP Agentic Security
+Initiative leads overall at 65.3% coverage and in the design
+phase; the CDAO Generative AI Responsible AI Toolkit leads
+in development and operational coverage. These results provide
+the first empirical cross-framework comparison for MAS security
+and offer evidence-based guidance for framework selection.
+Index Terms—agentic AI security, multi-agent systems, threat
+taxonomy, security frameworks, AI risk management
+I. INTRODUCTION
+AI systems are crossing a critical threshold. Modern
+agentic AI systems exercise delegated authority over tools,
+databases, external APIs, and coordinating peer agents, au-
+tonomously planning and executing multi-step tasks with
+minimal human intervention [1]. Enterprise deployments have
+moved from experimentation to infrastructure such as agents
+that schedule cloud operations, write and execute code,
+manage financial workflows, and orchestrate one another at
+production scale [2]. This delegation of autonomous action
+introduces a class of security concern that differs from those
+governing traditional software systems.
+The security community has responded with a growing
+body of frameworks. NIST’s AI Risk Management Frame-
+work [3] and its adversarial machine learning companion
+Corresponding author. Direct all inquiries to Tam Nguyen at
+t@crewscaler.org.
+AI 100-2e2025 [4] establish governance structures and threat
+taxonomies for AI systems broadly. MITRE ATLAS [5]
+catalogs adversary tactics and techniques against AI-enabled
+systems, modeled after the ATT&CK framework. The OW ASP
+Agentic Security Initiative [6], ATFAA-SHIELD [7], and the
+CDAO Generative AI Responsible AI Toolkit [8] represent
+more recent, agent-oriented efforts. Together, these and thir-
+teen additional frameworks constitute the practitioner’s current
+reference landscape for agentic AI security.
+Yet a fundamental gap persists. Most existing frameworks
+share security assumptions suited to traditional systems: de-
+terministic control flow, bounded trust boundaries, stateless
+execution, and identifiable adversarial inputs. None of these
+hold for MAS. When autonomous agents share persistent
+memory, propagate tool authorization across delegation chains,
+and influence one another’s reasoning through shared context,
+the security surface becomes behavioral and emergent rather
+than structural and bounded. Policy-level remote code execu-
+tion through tool coupling, latent memory poisoning via shared
+vector databases, self-replicating prompt worms propagat-
+ing through inter-agent communication, and non-deterministic
+planning divergence as an assurance gap represent attack
+patterns for which few established countermeasure catalog
+exists in any currently reviewed framework [9]. Practitioners
+also lack empirical, cross-framework coverage data to guide
+security architecture decisions.
+We present a systematic four-phase study: construction
+of a deep technical knowledge base spanning the full archi-
+tectural surface of production MAS; generative AI-assisted
+threat modeling scoped explicitly to threats qualitatively dis-
+tinct from single-agent risks, validated by NVIDIA-certified
+agentic AI professional; structured survey planning at indi-
+vidual risk granularity; and quantitative scoring of sixteen
+security frameworks against the resulting risk taxonomy. The
+risk taxonomy comprises 193 distinct main items across
+nine risk categories: Agent-Tool Coupling, Data Leakage,
+Injection, Identity and Provenance, Memory Poisoning, Non-
+Determinism, Trust Exploitation, Timing and Monitoring, and
+Workflow Architecture. Scoring each framework against every
+item on a three-point scale yields the first empirical cross-
+framework comparison for MAS security.
+The specific contributions of this work are:
+arXiv:2603.09002v1  [cs.CR]  9 Mar 2026
+
+--- PAGE 2 ---
+•A taxonomy of 193 agentic AI security threats across
+nine categories, systematically derived from production
+multi-agent architectures and explicitly scoped to threats
+qualitatively distinct from those affecting singular, state-
+less AI systems.
+•A quantitative comparative analysis of sixteen security
+and governance frameworks, producing per-category cov-
+erage scores, lifecycle phase rankings across design,
+development, and operational phases, composite maturity
+scores, and identification of five threat items receiving no
+coverage from any reviewed framework.
+•Evidence-based framework selection guidance:
+OW ASP ASI leads overall at 65.3% coverage and
+dominates the design phase; CDAO GenAI leads in
+development and operational coverage; ATFAA-SHIELD
+provides the highest architectural specificity among
+non-OW ASP frameworks.
+•A forward-looking characterization of how agentic AI
+threats mature from theoretical construction through
+proof-of-concept demonstration to active exploitation,
+informing practitioner prioritization and identifying di-
+rections where future framework development is most
+urgently needed.
+Section II describes the four-phase methodology. Sec-
+tion III catalogs the threat taxonomy. Section IV analyzes
+how individual threats evolve over time. Section V surveys
+the sixteen frameworks. Section VI presents the quantitative
+coverage analysis.
+II. METHOD
+The methodology proceeded in four sequential phases
+designed to be systematic and exhaustive with respect to the
+threat landscape specific to production-grade multi-agent AI
+systems.
+Phase 1 — System knowledge base construction.The
+foundation of this work is a comprehensive technical de-
+scription of modern agentic AI systems, developed across 86
+chapters organized into ten thematic parts: agent fundamentals;
+framework and tool integration; evaluation and optimization;
+production deployment and scaling; advanced reasoning and
+decision making; retrieval-augmented generation; the NVIDIA
+NeMo framework; reliability and cost management; safety
+and governance; and human-in-the-loop integration. The ma-
+terial addresses concrete architectures in substantial depth.
+At the component level, this includes graph-based stateful
+orchestration, function calling mechanics, multi-agent com-
+munication protocols (REST, gRPC, and agent cards), vector
+database integration, and NeMo Guardrails rail types. At the
+system level, it addresses ReAct reasoning cycles, hierarchical
+planning, hybrid RAG with knowledge graphs, RLHF-based
+alignment, and approval-workflow design for human oversight.
+Multi-agent-specific phenomena receive particular attention:
+emergent behavior in swarm configurations, Nash equilibrium
+dynamics in competitive agent settings, cross-agent memory
+sharing, federated orchestration, and the interaction of non-
+determinism with safety assurance. The resulting knowledge
+base spans thousands of pages and served as the primary
+substrate for subsequent threat analysis.
+Phase 2 — Generative AI-assisted threat modeling.Rather
+than relying solely on expert judgment or existing taxonomies,
+the second phase employed generative AI to conduct system-
+atic threat modeling against the system descriptions produced
+in Phase 1. For each structural component, integration bound-
+ary, and operational pattern described in the knowledge base,
+targeted prompts directed the model to reason adversarially
+about potential security threats, risks, and vulnerabilities.
+Critically, prompts required the model to articulate why each
+identified threat is qualitatively distinct from risks already
+documented for singular, stateless AI systems, preventing
+conflation with findings already addressed by NIST publi-
+cations such as AI 100-2e2025, the AI Risk Management
+Framework, SP 800-218A, and related work. This constraint
+also ensured that multi-agent-emergent risks—those arising
+specifically from agent coordination, shared state, delegated
+authority, and distributed tool access—received distinct treat-
+ment rather than being subsumed under known single-agent
+attack patterns. The first-pass analysis yielded approximately
+1,700 candidate threats organized across twelve risk domains,
+covering concerns such as policy-level remote code execu-
+tion through tool coupling, data leakage via large-context
+probabilistic recall, memory poisoning and latent backdoor
+activation, non-determinism as an assurance gap, telemetry
+blind spots in cognitive behavior, multi-agent trust exploitation
+and self-replicating prompt malware, and workflow attacks tar-
+geting RAG pipelines and plugin ecosystems. To validate the
+plausibility and technical accuracy of these outputs, an initial
+expert review was conducted by an NVIDIA-certified profes-
+sional in agentic AI systems. This first review round assessed
+whether the identified threats were technically grounded, cor-
+rectly scoped to multi-agent configurations, and sufficiently
+distinct from single-agent or traditional software risks. Threats
+found to be redundant, mischaracterized, or outside scope
+were either revised or removed, while the reviewer’s domain
+expertise informed refinements to threat descriptions that had
+been articulated imprecisely by the model.
+Phase 3 — Threat-level survey planning.The third phase
+operationalized the Phase 2 output into a structured survey
+plan. For each of the approximately 1,700 identified threats,
+a tailored search string was constructed and relevance criteria
+were defined in terms of applicability to production multi-
+agent deployments, novelty relative to the existing literature,
+and empirical or theoretical grounding. Granularity was main-
+tained at the individual threat level rather than the category
+level, a deliberate design choice to avoid the imprecision
+endemic to broader survey scoping. The plan further classified
+threats along a maturity axis: those already operationalized in
+the wild, those supported by theoretical argument or proof-of-
+concept demonstration, and those identified as emergent risks
+warranting forward-looking treatment.
+Phase 4 — Survey execution with temporal and continuous
+analysis.The fourth phase, currently underway, executes the
+survey plans from Phase 3 for each individual threat. Execution
+
+--- PAGE 3 ---
+couples conventional literature search with continuous survey-
+ing to track future developments, reflecting the rapid pace
+at which the agentic AI threat landscape evolves. Temporal
+analysis further examines how individual threats mature over
+time—from theoretical construction through proof-of-concept
+demonstration to active exploitation—providing a develop-
+mental arc rather than a static snapshot. The findings presented
+in the following section reflect the completed outputs of
+Phases 1 through 3 and early results from Phase 4, constituting
+a rigorous but necessarily evolving characterization of the
+threat landscape for AI agent systems.
+III. SECURITYTHREATS, RISKS,ANDVULNERABILITIES
+AFFECTINGAI AGENTSYSTEMS
+A. Agent–tool coupling as “policy-level remote code execu-
+tion”
+Agentic AI distinguishes vulnerabilities in underlying tools
+from vulnerabilities in agentpolicythat orchestrates them. At-
+tackers controlling model decisions can indirectly commandeer
+powerful tools without exploiting code-level flaws.
+Distinct threats include:Tool-mediated compromise
+where successful prompt or observation injection enables
+agents to browse malicious sites, download and run code, mod-
+ify configurations, or reconfigure SaaS systems. This achieves
+practical ”RCE” via high-privilege tools despite no classical
+RCE vulnerability existing.Thought-and observation-level
+attackswhere attackers perturb internal reasoning or tool-
+selection steps while keeping final natural-language answers
+benign. Output-focused guards detect nothing suspicious while
+underlying systems face compromise.
+This ”policy-level RCE” differs qualitatively from manip-
+ulating fixed, deterministic control-flow graphs.
+1) RATC 1 - UI/UX Abstraction and Visibility Gaps:
+RATC 1 1 - Approval Workflow Risk Calibration Failure
+Through Tool Abstraction. Approval UIs present tool in-
+vocations through abstraction layers that simplify complex
+operations into human-readable descriptions. masking true risk
+levels. When ”Update customer record” hides direct SQL
+modifications to production databases, humans approve based
+on benign abstractions rather than actual risks. Multi-agent
+systems amplify this. For example, approval UIs show Agent
+A’s high-level intent while hiding that Agent B invokes pay-
+ment APIs, Agent C modifies financial databases, and Agent
+D triggers notifications—each with distinct failure modes.
+The structured presentation collapses dangerous multi-tool
+sequences into single approval buttons.
+RATC 1 2 - Progressive Disclosure Concealment of Tool
+Chain Complexity. Progressive disclosure patterns hide tech-
+nical details in expandable sections. creating visibility gaps
+where users approve without understanding complete tool in-
+vocation chains. In multi-agent systems, tool chains span agent
+boundaries and no single view presents complete execution
+graphs. For example, Agent A shows some tools, Agent B
+shows others, but UIs may not display the combined sequence
+when Agent A’s workflow triggers Agent B’s downstream
+workflow.
+RATC 1 3 - Tool Visibility Gaps Across Multiple UI
+Paradigms. Tool visibility issues span multiple UI patterns:
+inline suggestions execute tools invisibly without surfacing
+what runs or data accessed; chat interfaces display tool outputs
+as conversational messages without clearly indicating which
+tools executed; multimodal workflows hide tool chains behind
+natural language operations. In multi-agent systems. different
+agents’ tool outputs appear through different UI channels; hu-
+mans assembling a complete picture cannot see the integrated
+tool coupling.
+RATC 1 4 - Insufficient Tool Risk Differentiation in
+Multi-Agent Dashboards. Multi-agent dashboards display ac-
+tivities from multiple agents without differentiating tool invo-
+cations by risk level. treating file reads, database writes, API
+calls, and system commands with equivalent visual weight.
+Multi-agent dashboards aggregate agents with heterogeneous
+tool access such as some invoke only safe read-only tools,
+others execute privileged system commands, but unified pre-
+sentation obscures security boundaries where attackers trigger
+dangerous executions camouflaged as normal activity.
+RATC 1 5 - Context-Driven Tool Selection Without User
+Awareness. Context awareness features enable agents to auto-
+matically invoke tools based on conversation history and ses-
+sion state. creating policy-level RCE risks when users remain
+unaware of certain context-triggered executions. Multi-agent
+architectures amplify this risk because context propagates
+across agent boundaries. A tool-selection agent may invoke
+high-risk tools based on context established by earlier agents.
+Users beginning with low-risk queries may inadvertently en-
+able high-risk invocations through contextual drift without UI
+indication.
+RATC 1 6 - Trace Visualization Abstraction Concealing
+Tool Chain Complexity. Trace visualization creates hierarchi-
+cal drill-down to reveal nested operations. but attackers may
+weaponize this abstraction to hide malicious execution com-
+plexity. Multi-agent tools executing across agent boundaries
+become vulnerable because no single expanded view displays
+complete tool chains—each agent’s expansion shows only its
+own subset.
+2) RATC 2 - Approval Workflow and User Attention Vul-
+nerabilities:RATC 2 1 - Approval Fatigue Enabling Policy
+Bypass Through Multiple Contexts. Approval UIs routing
+excessive decisions to humans create approval fatigue. where
+reviewers approve without inspection because volume makes
+thorough review impractical. Multi-agent systems are uniquely
+vulnerable because distributed architectures generate exponen-
+tially more requests than singular agents. Attackers exploit
+fatigue by timing dangerous invocations during high-volume
+periods when users approve without inspection.
+RATC 2 2 - Keyboard Shortcut Hijacking in Approval
+Workflows. UI manipulation causes unintended approvals
+through keyboard shortcut exploitation when browser ex-
+tensions. injected JavaScript, or focus manipulation capture
+keystroke events. Attackers inject hidden dialogs and exploit
+auto-advance muscle memory. Multi-agent contexts amplify
+risk when approval decisions influence trust in other agents.
+
+--- PAGE 4 ---
+RATC 2 3 - Time-Based Default Exploit for Critical De-
+cisions. Exploitation of approval timeouts forces unauthorized
+action execution by triggering approvals when legitimate re-
+viewers are unavailable. Attackers strategically submit high-
+risk requests during coverage gaps or flood approval queues to
+overwhelm reviewers. Multi-agent systems amplify risk when
+agents coordinate routing across reviewers. each assuming
+others catch problems.
+3) RATC 3 - Tool Overload, Parameter Handling, and
+Selection Errors:RATC 3 1 - Tool Overload Privilege Es-
+calation and Degradation Across Architectures. Multi-agent
+architectures with agents possessing different tool access lev-
+els or excessive tool counts create privilege escalation and
+selection degradation. Single-agent tool overload degrades
+performance with high tool selection error rates. In hierarchical
+delegation. attackers exploit cognitive overload to manipulate
+agents into executing privileged operations on behalf of other
+agents. Tool selection degradation cascades through delegation
+chains amplifying failures.
+RATC 3 2 - Tool Argument Injection and Parameter Ex-
+traction Errors. Tool calling argument errors become remote
+code execution vectors through argument injection across
+trust boundaries. When one agent constructs arguments from
+untrusted data and passes them to another agent for ex-
+ecution. probabilistic LLM generation enables attackers to
+inject malicious payloads as parameter values. Multi-agent
+architectures separate construction from execution, eliminat-
+ing single-agent self-validation, and downstream agents lack
+critical upstream security context. Parameter extraction errors
+compound through chained calls enabling amplification.
+RATC 3 3 - Tool Visibility Gaps in Inline Suggestion Pat-
+terns. Inline suggestion UIs display recommendations directly
+within workflows while executing tools invisibly. without
+surfacing what runs or what data they access. This creates
+policy-level RCE where tools execute from passive actions
+rather than explicit requests. Multi-agent systems amplify risk
+through distributed suggestion pipelines where each agent
+invokes tools invisibly and UIs present only final suggestions
+while concealing the distributed tool graphs generating them.
+RATC 3 4 - Tool Provenance Obscuration in Chat In-
+terface Tool Outputs. Chat interfaces display tool outputs as
+conversational messages without clearly indicating which tools
+executed. what parameters they received, or what privileges
+they used. Multi-agent chat interfaces obscure provenance
+further because outputs aggregate multiple agents’ invocations,
+with conversational presentation completely hiding which
+agent invoked which tools.
+4) RATC 4 - Confidence Manipulation and Tool Autho-
+rization:RATC 4 1 - Confidence Threshold Manipulation
+Attack. Adversarial prompt injection artificially inflates agent
+confidence scores to bypass approval gates where confidence-
+based gating determines automation levels. Multi-agent sys-
+tems face danger when agents trust confidence scores from
+other agents without validation. creating cascading failures.
+Confidence score inflation through majority voting occurs
+when all sampled reasoning paths converge on an answer due
+to manipulated input.
+RATC 4 2 - Tool Authorization Scope Confusion Across
+Agent Specializations. Agent authorization grants differ across
+specializations. In multi-agent systems. attackers compromise
+intermediate coordination agents that access multiple tool do-
+mains, enabling privilege escalation through an intermediary.
+Precondition validation bypass occurs when one agent verifies
+prerequisites but downstream agents assume verification is
+complete and skip rechecking, creating transitive trust where
+tools execute without verified prerequisites.
+5) RATC 6 - Tool Metadata Poisoning Across Registries
+and Discovery:RATC 6 1 - Centralized Tool Registry Poi-
+soning. Multi-agent systems sharing centralized tool registries
+face metadata poisoning attacks where compromising the
+registry enables manipulation of how all agents understand and
+invoke tools. Single-agent systems with embedded definitions
+limit poisoning while multi-agent shared registries create sin-
+gle semantic control points where changes affect all agents
+simultaneously. Vector database metadata poisoning causes
+semantic search to retrieve wrong tools; few-shot parameter
+examples in tool descriptions can embed malicious instructions
+appearing in agent context.
+RATC 6 2 - Framework-Specific Tool Selection Poi-
+soning. Framework architectures determine how agents se-
+lect tools. Attackers exploit framework-specific tool selection
+mechanisms by poisoning the decision context agents evaluate.
+Single-framework systems present one attack surface while
+multi-agent orchestrations across frameworks create multiple
+distinct surfaces scaling with the number of framework inter-
+action pairs.
+RATC 6 3 - Framework Abstraction Leakage Enabling
+Hidden Tool Chain Exploitation. Frameworks abstract tool
+invocation complexity. but this creates blind spots in multi-
+agent systems where tool chains become implicit rather than
+explicit. Multi-agent systems stack abstractions from multiple
+frameworks, creating multiple layers where policy-level RCE
+executes beneath different abstraction levels, making oversight
+inconsistent across the pipeline.
+6) RATC 8 - Advanced Tool Invocation Patterns and Infer-
+ence:RATC 8 1 - Tool Chain Exploitation Through Multi-
+Agent Replanning Loops. Dynamic replanning in Plan-and-
+Execute systems creates attack surfaces for iterative tool chain
+exploitation. Attackers induce controlled failures triggering
+replanning in other agents. progressively chaining innocuous
+tools into dangerous sequences. Single-agent replanning is
+bounded while multi-agent replanning creates cross-agent state
+accumulation without global consistency checks, with interac-
+tion pairs scaling quadratically in the number of agents.
+RATC 8 2 - Tool Result Injection and Observation Ma-
+nipulation. ReAct pattern’s explicit observation format be-
+comes attack vector in multi-agent systems where one agent’s
+tool outputs become another agent’s observations. Attackers
+inject malicious content formatted as tool results appearing
+legitimate. causing downstream agents to act on poisoned
+observations. Single agents validate their own outputs while
+multi-agent chains may trust upstream observations without re-
+
+--- PAGE 5 ---
+validation, and streaming attacks enable progressive escalation
+injection that compounds across orchestration layers.
+RATC 8 3 - Tool Schema Variation and Cross-Framework
+Boundaries. Different frameworks define tool schemas dif-
+ferently. and multi-agent systems mixing frameworks face
+schema translation layers where tool definitions transform.
+Attackers craft tool definitions exploiting transformation gaps
+where a parameter valid in one framework triggers silently-
+caught errors in another. Single-framework systems present
+one schema interface while multi-agent cross-framework or-
+chestration creates transformation boundaries scaling with
+framework interaction pairs.
+7) RATC 9 - Web and Multimodal Tool Exploitation:
+RATC 9 1 - Web Agent Tool Vulnerabilities. Web agents use
+specialized scraping tools to extract content from websites.
+Adversaries inject instructions into web content disguised as
+legitimate operational guidance. When multi-agent systems
+coordinate web scraping. injected instructions propagate as
+legitimate guidance across the pipeline. Web agents interacting
+with forms can encounter hidden fields containing instructions,
+and navigation logging tools can be manipulated to record
+incomplete audit trails.
+RATC 9 2 - Multimodal Retrieval and Vision Process-
+ing Vulnerabilities. Policy-level RCE in multimodal systems
+occurs when agents retrieve and execute tools based on
+poisoned multimodal content. In multi-agent RAG where
+retrieval agents select documents and synthesis agents in-
+voke tools. attackers poison multimodal content to ensure
+retrieval of malicious material. Vision model output laundering
+through multi-step processing causes malicious vision outputs
+to gain legitimacy through sequential agent processing. Cross-
+modal tool parameter injection enables attacks where multiple
+modalities contribute parameter segments without sanitization
+boundaries.
+8) RATC 10 - Efficiency Optimization and Resource Con-
+straints:RATC 10 1 - Token Allocation and Context Window
+Tuning. Working memory must allocate tokens across tool
+descriptions. prior tool results, and reasoning traces. In multi-
+agent systems, upstream agents operating under tight token
+budgets generate incomplete tool descriptions or truncated
+reasoning justifications, and downstream agents inherit these
+abbreviated descriptions selecting tools based on incomplete
+specifications. Attackers exploit by forcing upstream agents
+into constrained contexts that truncate safety-critical descrip-
+tions.
+RATC 10 2 - Iteration Budget and Temperature Tuning
+Trade-offs. Iteration budgets vary per agent specialization.
+Attackers craft tool sequences requiring many iterations suc-
+ceeding against high-budget agents but failing against con-
+strained ones. Temperature tuning exploits separate actual
+accuracy from confidence visibility; model selection diversity
+creates policy inconsistency where identical policy-level RCE
+succeeds against some models but fails against others.
+9) RATC 11 - Tool Execution Infrastructure and Orches-
+tration:RATC 11 1 - Service Orchestration and Discovery
+Attacks. API gateways implement tool routing policies select-
+ing which backend tool service processes requests. Attackers
+manipulate routing policies to redirect tool calls to attacker-
+controlled services or deprecated versions with vulnerabilities.
+In multi-agent microservices. the AI gateway layer centralizes
+tool selection logic—compromising routing enables intercept-
+ing all downstream tool calls across all agent services. Tool
+definitions propagating through service registries enable fleet-
+wide compromise when registries are poisoned.
+RATC 11 2 - Kubernetes and Container Orchestration
+Attacks. Container security contexts can be modified enabling
+privilege escalation. In multi-agent deployments. a single
+policy change affects all agent containers simultaneously.
+Persistent V olume Claims and sidecar proxies create addi-
+tional vectors where compromised configurations or proxies
+intercept tool calls across the fleet. Init containers establishing
+configurations before agent startup can inject malicious tool
+definitions affecting all subsequent operations.
+10) RATC 12 - Distributed and Hardware-Level Attacks:
+RATC 12 1 - Tensor Parallelism Communication Intercep-
+tion. Tensor parallelism distributes model computation across
+GPUs requiring inter-GPU communication. unencrypted by
+default. Tool-calling policy decisions computed on one GPU
+can be corrupted before reaching others. Single-agent tensor
+parallelism has one policy path while multi-agent systems
+where multiple agents’ policy computations flow through
+shared infrastructure enable compromising GPU communica-
+tion to hijack multiple agents’ tool selections simultaneously.
+RATC 12 2 - KV Cache and Quantization Attacks. Multi-
+user inference on shared GPUs with KV cache optimization
+enables one user’s agent to poison another’s cache with
+fabricated attention values. creating systematic bias toward
+specific tools. Attackers can also poison quantization calibra-
+tion datasets with malicious tool calls, biasing thresholds so
+downstream agents receive quantized outputs where parame-
+ters are corrupted toward attacker-optimized patterns.
+11) RATC 14 - Reasoning and Planning Vulnerabilities:
+RATC 14 1 - Chain-of-Thought Reasoning Quality Issues.
+Tool selection is vulnerable to intra-step correctness failures
+where agents make unsupported leaps. Poisoned reasoning
+traces can embed justifications for dangerous tool sequences
+that appear independently sound. and tool selection bias
+embedded in shared reasoning chains propagates attacker
+preferences to other agents through shared memory.
+RATC 14 2 - Self-Consistency and Majority V oting Vul-
+nerabilities. Tool calling parameter injection through sam-
+pling path divergence exploits Self-Consistency where differ-
+ent paths arrive at different parameters. When all sampled
+paths converge on dangerous tools due to manipulated input.
+confidence artificially appears high. Quality-weighted voting
+in RASC can be exploited by manipulating assessment metrics
+to elevate scores for reasoning paths selecting dangerous tools.
+RATC 14 3 - Hierarchical and Tree-Based Planning Vul-
+nerabilities. Hierarchical task network planning creates tool
+visibility fragmentation where high-level planning lacks tool
+awareness and tool-level execution lacks strategic context.
+
+--- PAGE 6 ---
+12) RATC 15 - Episodic Memory and Learning:
+RATC 15 1 - Episodic Memory and Trajectory Poisoning.
+Episodes stored with action records document which tools
+solved similar problems. Attackers poison episodes record-
+ing malicious sequences as ”successful resolutions,” causing
+agents retrieving episodes to replicate malicious chains. Multi-
+agent tool coordination through shared episodic memory en-
+ables one agent’s compromise to propagate as learned policy
+affecting all agents. Trajectory abstraction converts poisoned
+episodes into dangerous procedural workflows.
+13) RATC 16 - Semantic Memory and RAG:RATC 16 1
+- RAG Pipeline and Knowledge Base Poisoning. Seman-
+tic memory retrieval retrieves documents that agents use as
+context for tool selection. Attackers poisoning knowledge
+bases embed tool-invocation instructions in retrieved content.
+Knowledge graph relationship poisoning causes unsafe tool
+combinations to appear recommended; query rewriting instruc-
+tion injection affects all agents’ transformations. Knowledge
+base staleness causes agents to retrieve obsolete documentation
+invoking tools with obsolete formats.
+14) RATC 17 - Utility Functions and Decision Logic:
+RATC 17 1 - Utility-Weighted Tool Selection Poisoning.
+Expected utility calculation vulnerabilities exploit outcome
+assumption injection where false assumptions cause agents
+to miscalculate tool utility. Sequential expected utility mis-
+calculation occurs when intermediates misrepresent available
+future options. Trade-off weight manipulation poisons multi-
+objective utility functions balancing competing objectives.
+15) RATC 18 - Rule-Based and Knowledge-Engineered
+Systems:RATC 18 1 - Rule-Based Tool Authorization By-
+pass. Rule-based authorization systems with specificity hierar-
+chies enable attackers injecting more-specific rules overriding
+safety rules. Forward chaining rule chain exploitation enables
+injecting facts triggering chains resulting in tool authorization.
+Certainty factor manipulation exploits how rules trust high-
+confidence facts bypassing risk assessment. Lexicographic
+heuristic objective reordering exploits sequential prioritization
+where rule injection reorders objectives causing wrong tool
+selections.
+16) RATC 19 - Learning and Reinforcement Learning:
+RATC 19 1 - Reinforcement Learning Tool Selection Poison-
+ing. Learned tool selection policy hijacking exploits reward
+poisoning where attackers train agents selecting malicious
+tools through reward signals. Multi-agent RL with shared
+replay buffers enables poisoned transitions affecting all agents’
+learned Q-values. Curriculum learning poisoning injects ma-
+licious intermediate tasks; imitation learning trajectory poi-
+soning corrupts expert demonstrations. Actor-critic cross-agent
+critic poisoning provides false value estimates. and proximal
+policy optimization trust region manipulation enables attackers
+to iteratively converge agent policies toward dangerous attrac-
+tors.
+17) RATC 21 - Parallel Retrieval Race Conditions in
+Multi-Agent Query Decomposition Systems:Parallel retrieval
+races occur when concurrent sub-queries retrieve from incon-
+sistent database states. Shared indexes cause deduplication
+races where agents simultaneously mark documents as seen,
+producing duplicates or incorrect deduplication. Timeout-
+triggered cancellations cascade across agents, overwhelming
+shared connection pools and causing fleet-wide retrieval out-
+ages. Multi-stage caching creates temporal inconsistency: per-
+stage TTLs expire at different times, causing queries to mix
+results from different knowledge states. Multi-agent cache
+sharing with network propagation delays causes agents to
+serve inconsistent results across the fleet. Container supply
+chain vulnerabilities through registry compromise enable fleet-
+wide poisoning during automated deployment. Centralized
+inference infrastructure creates single points of failure where
+authorization bypass, cache conflicts, and tensor parallelism
+failures affect all dependent agents simultaneously.
+18) RATC 22 - Multi-Stage Pipeline Result Caching
+Race Enabling Multi-Agent Consistency Failures:Multi-stage
+pipeline caching creates race conditions where each stage’s
+TTL expires independently, producing temporal windows
+where queries return inconsistent results mixing stale and fresh
+data from different pipeline stages. Event-based cache invali-
+dation propagates sequentially across the agent fleet, causing
+agents to serve data from different knowledge states for
+minutes at a time. Shared caching infrastructure creates write
+races, hash collision attack surfaces where adversaries craft
+colliding queries to poison cache entries affecting all agents,
+and warming inconsistency where only a subset of agents
+benefit from pre-warmed caches. Centralized model serving
+containers distributed through registries introduce supply chain
+attack vectors—registry credential compromise, typosquatting,
+digest collision bypass, and GitOps automation enable fleet-
+wide backdoor deployment. Tensor parallelism communication
+between GPUs can be poisoned through multi-tenant col-
+location with insufficient memory isolation, corrupting syn-
+chronized activations affecting all forward passes. Profiling
+telemetry exposes fleet-wide dependency maps, cache patterns,
+and cost breakdowns that enable targeted DoS and budget
+exhaustion attacks against the highest-value bottlenecks.
+19) RATC 27 - MIG Instance Co-Location Creating
+Shared Physical GPU Failure Propagation Across Multi-Agent
+Deployments:Multi-Instance GPU (MIG) partitions GPUs
+into up to seven hardware-isolated instances with dedicated
+memory and compute. MIG provides hard isolation: one
+instance cannot degrade another’s performance. However, MIG
+logical isolation operates atop shared physical GPU hardware
+creating hidden dependencies. For example, power regula-
+tors, thermal management, PCIe interface, GPU firmware are
+shared. Power delivery failure, thermal throttling, PCIe error,
+or firmware hang affects all co-located instances. Firmware
+vulnerabilities can enable cross-partition memory access that
+breaks isolation fleet-wide despite MIG partitioning. The
+shared GPU driver stack means a single driver bug triggered
+by any tenant’s CUDA operation can cause fleet-wide outage
+affecting all customers simultaneously.
+20) RATC 29 - Shared Workflow State Version Conflict
+Amplification Through Concurrent Write Flooding Creating
+Retry Storm Cascades:Production multi-agent workflows im-

@@ -1,0 +1,266 @@
+
+--- PAGE 1 ---
+From Static Templates to Dynamic Runtime Graphs:
+A Survey of Workflow Optimization for LLM Agents
+Ling Yue yuel2@rpi.edu
+Department of Computer Science, Rensselaer Polytechnic Institute, Troy, NY 12180 USA
+Kushal Raj Bhandari bhandk@rpi.edu
+Department of Computer Science, Rensselaer Polytechnic Institute, Troy, NY 12180 USA
+Ching-Yun Ko cyko@ibm.com
+IBM Research, Yorktown Heights, NY 10598 USA
+Dhaval Patel pateldha@us.ibm.com
+IBM Research, Yorktown Heights, NY 10598 USA
+Shuxin Lin shuxin.lin@ibm.com
+IBM Research, Yorktown Heights, NY 10598 USA
+Nianjun Zhou jzhou@us.ibm.com
+IBM Research, Yorktown Heights, NY 10598 USA
+Jianxi Gao gaoj8@rpi.edu
+Department of Computer Science, Rensselaer Polytechnic Institute, Troy, NY 12180 USA
+Pin-Yu Chen∗ pin-yu.chen@ibm.com
+IBM Research, Yorktown Heights, NY 10598 USA
+Shaowu Pan∗ pans2@rpi.edu
+Department of Mechanical, Aerospace, and Nuclear Engineering, Rensselaer Polytechnic Institute, Troy, NY 12180
+USA
+Abstract
+Large language model (LLM)-based systems are becoming increasingly popular for solving
+tasks by constructing executable workflows that interleave LLM calls, information retrieval,
+tool use, code execution, memory updates, and verification. This survey reviews recent
+methods for designing and optimizing such workflows, which we treat as agentic compu-
+tation graphs (ACGs). We organize the literature based on when workflow structure is
+determined, where ‘structure’ refers to which components or agents are present, how they
+depend on each other, and how information flows between them. This lens distinguishes
+static methods, which fix a reusable workflow scaffold before deployment, from dynamic
+methods, which select, generate, or revise the workflow for a particular run before or dur-
+ing execution. We further organize prior work along three dimensions: when structure is
+determined, what part of the workflow is optimized, and which evaluation signals guide
+optimization (e.g., task metrics, verifier signals, preferences, or trace-derived feedback). We
+also distinguish reusable workflow templates, run-specific realized graphs, and execution
+traces, separating reusable design choices from the structures actually deployed in a given
+run and from realized runtime behavior. Finally, we outline a structure-aware evaluation
+perspective that complements downstream task metrics with graph-level properties, execu-
+tion cost, robustness, and structural variation across inputs. Our goal is to provide a clear
+vocabulary, a unified framework for positioning new methods, a more comparable view of
+existing body of literature, and a more reproducible evaluation standard for future work in
+workflow optimizations for LLM agents.
+∗Corresponding authors.
+/githubhttps://github.com/IBM/awesome-agentic-workflow-optimization.
+1
+arXiv:2603.22386v1  [cs.AI]  23 Mar 2026
+
+--- PAGE 2 ---
+Contents
+1 Introduction 4
+2 Conceptual Framework and Taxonomy 6
+2.1 Agentic computation graphs as executable workflows . . . . . . . . . . . . . . . . . . . . . . . 6
+2.2 Template, realized graph, and trace . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+2.3 A quality–cost view of workflow optimization . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+2.4 Structure determination . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+2.5 Comparison card . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+3 Static Optimization of Agent Workflows 10
+3.1 Offline template search over constrained design spaces . . . . . . . . . . . . . . . . . . . . . . 10
+3.2 Node-level optimization inside fixed scaffolds . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+3.3 Joint optimization of structure and local configuration . . . . . . . . . . . . . . . . . . . . . . 13
+3.4 Verifiability in static workflow optimization . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+4 Dynamic Optimization and Runtime Adaptation 13
+4.1 Selection and pruning as the lightest form of runtime adaptation . . . . . . . . . . . . . . . . 13
+4.2 Construct-then-execute: pre-execution workflow generation . . . . . . . . . . . . . . . . . . . 14
+4.3 In-execution editing: interleaving execution with structural change . . . . . . . . . . . . . . . 15
+5 Feedback Signals and Update Mechanisms 15
+5.1 Metric- and score-driven optimization . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+5.2 Verifier-driven optimization . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+5.3 Preference and ranking signals . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+5.4 Trace-derived textual feedback . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+5.5 Matching signals to algorithms . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+6 Evaluation and Reporting for Workflow Optimization 17
+6.1 Treating the workflow as a first-class output . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+6.2 Effectiveness, efficiency, robustness, and graph-level properties . . . . . . . . . . . . . . . . . . 18
+6.3 A minimum reporting protocol . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+7 Synthesis: Design Trade-offs and Practical Guidance 18
+7.1 When static is enough . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+7.2 When select beats generate, and when edit is unavoidable . . . . . . . . . . . . . . . . . . . . 19
+7.3 When graph optimization matters more than prompt tuning . . . . . . . . . . . . . . . . . . . 20
+7.4 Where verifiers pay off most . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+2
+
+--- PAGE 3 ---
+7.5 Baselines, hybrids, and a practical recipe . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+8 Open Problems and Future Directions 21
+9 Conclusion 21
+A Appendix 29
+A.1 Supporting Tables . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+A.2 Literature Classification Convention . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+Survey Structure
+This survey moves from concepts to methods, evaluation, and future directions.
+•Sec. 2introduces the conceptual framework and taxonomy.
+•Secs. 3 and 4review static and dynamic workflow optimization methods.
+•Sec. 5organizes these methods by feedback signals and update mechanisms.
+•Secs. 6 and 7discuss evaluation, reporting, and design trade-offs.
+•Sec. 8highlights open problems and future directions.
+Glossary
+Agentic computation graph (ACG)our unify-
+ing abstraction for an executable LLM-centered work-
+flow. Nodes perform atomic actions such as LLM
+calls, information retrieval, tool use, validation, or
+message passing. Edges encode control, data, or com-
+munication dependencies.
+ACG template (¯G)reusable executable specifi-
+cation(V,E,Φ,Σ,A).
+Realized graph (Grun)workflow structure actu-
+ally used for a particular run.
+Execution trace (τ)sequence of states, actions,
+observations, and costs produced by executingGrun.
+Workflowan executable organization of multiple
+steps for solving a task.
+Workflow structurewhich components or agents
+arepresent, howtheydependononeanother, andhow
+information flows between them.
+Topologythe communication pattern among
+agents or modules.
+Graph determination time (GDT)when
+structure is decided:offline,pre-execution, orin-
+execution.
+Graph plasticity mode (GPM)how much
+structure can change at inference time:none,select,
+generate, oredit.
+Node parameters (Φ)prompts, role descrip-
+tions, tool schemas, model choices, decoding settings,
+verifier settings, and memory policies.
+Structurevariablestopology, schedulingorrout-
+ing policy, activation choices, and admissible edit ac-
+tions.
+Scope tagscore: directly optimizes reusable
+templates or executable realized graphs.adjacent:
+changes the effective workflow through routing, team
+selection, pruning, or communication sparsification.
+background: provides frameworks, datasets, or
+benchmarksthatshapeworkflowoptimizationoreval-
+uation.
+3
+
+--- PAGE 4 ---
+Figure 1: An overview of workflow optimization for LLM Agents.
+1 Introduction
+Large language model (LLM) systems are evolving beyond simple chatbots that generate responses to single
+prompts. Instead, they are increasingly being integrated into executable workflows that coordinate multiple
+actions over time. By workflow, we mean an executable organization of multiple steps, such as LLM calls,
+tool use, information retrieval, code execution, memory updates, and verification, to accomplish a task.
+In practice, a system may need to decompose a task, call tools, retrieve documents, execute code, update
+memory, verify intermediate results, and recover from failures. For example, a coding assistant may retrieve
+relevant files, propose edits, run tests, and use a verifier to decide whether to revise or stop. In multi-agent
+systems (MAS), these actions may be distributed across multiple specialized agents that communicate over
+a defined communication pattern, which specifies how agents are connected and how messages flow between
+them. What matters in practice is not only the quality of each individual model call, but also the overall
+workflow structure that determines what is called, when it is called, and how information flows between calls.
+Here, the workflow structure refers to the components or agents present, how they depend on each other,
+and how information flows between them. Once an agentic system is represented as a graph, one can reason
+about topology, communication density, scheduling, verification placement, and cost. These design choices
+often affect both effectiveness and efficiency (Zhang et al., 2025e; Zhou et al., 2025; Li et al., 2025a). A weak
+scaffold can sometimes be rescued by better prompts, but it can also be improved by adding a verifier, such
+as a unit-test stage or a schema checker, pruning redundant communication, changing a manager–worker
+hierarchy, or replacing a fixed, one-size-fits-all pipeline with run-specific generation. However, improvements
+in agent capability often come with hidden structural costs, such as excessive depth, fragile control flow, and
+high communication overhead.
+In this survey, we useworkflowin a broad structural sense. Under this view, both fixed pipelines and more
+autonomous agentic systems can be studied as executable organizations of nodes, dependencies, and control
+decisions. The difference is how much of the structure is fixed before deployment versus determined for a
+particular run or revised during execution. We use the termagentic computation graph(ACG) as a unifying
+abstraction for executable LLM-centered workflows. The term brings together work scattered across different
+names in the literature: workflows, pipelines, orchestration graphs, communication graphs, plans, and code-
+4
+
+--- PAGE 5 ---
+defined agent systems. Our goal is not to impose new terminology for its own sake, but to make structure
+itself the primary object of comparison.
+A growing body of work now treats workflow design as an optimization problem. Some works search for
+reusable templates offline (Zhang et al., 2025e; Hu et al., 2025a; Zhou et al., 2025). Others optimize prompts,
+demonstrations, or collaboration behavior within a fixed scaffold (Khattab et al., 2023; Yang et al., 2023;
+Guo et al., 2023; Zehle et al., 2025; Agrawal et al., 2025; Chen et al., 2025). A third group generates,
+selects, or edits the workflow used for a particular run before or during execution (Li et al., 2025b; Zhang
+et al., 2025d; Li et al., 2025a; Gao et al., 2025a; Wang et al., 2026b;c). This distinction matters because
+these methods optimize different artifacts: reusable templates, local behavior inside a fixed scaffold, or the
+realized workflow structure used for a given run. Across these lines of work, the central question is no longer
+only what capability an agent has, but also what workflow structure should be used, when that structure
+should be determined, and how it should be optimized under quality–cost trade-offs.
+To the best of our knowledge, existing surveys focused on workflow and infrastructure are limited to the
+ecosystem of agent systems, engineering abstractions, and orchestration frameworks (Yu et al., 2025; Li et al.,
+2024a). Other surveys focused on the workflow planning phase emphasize decomposition, reflection, memory,
+and external modules as ingredients in agent planning (Huang et al., 2024). Tool-learning surveys focus on
+retrieving, selecting, and invoking tools (Xu et al., 2025b). Multi-agent surveys organize the literature by
+collaboration mechanisms, communication protocols, and application domains (Chen et al., 2024b; Tran
+et al., 2025; Zhang et al., 2025f; V et al., 2026). Broader optimization surveys cover many ways to improve
+LLM agents, often through the lens of parameter-driven versus parameter-free methods (Du et al., 2026;
+Yue et al., 2026). While these surveys provide important foundations, the design of the workflow structure
+is usually taken as given rather than treated as the primary optimization target. In most papers, graph
+construction is implied as code, a communication pattern, or a planner–executor loop, rather than being
+treated as a first-class optimization object to be searched, generated, edited, or evaluated.
+Existing surveys mostly cover adjacent slices of the agent literature rather than workflow optimization itself.
+Table 1 positions our survey within that broader landscape and clarifies the specific gap it fills. To make the
+boundary of this survey explicit, we summarize the scope below.
+Survey Scope
+This survey studies workflow optimization for LLM-centered agentic systems, where workflow structure
+determines how LLM calls, retrieval, tool use, code execution, memory, and verification are composed.
+•Static workflow optimization:improves a reusable template offline, including scaffold search,
+topology design, and node-level optimization inside a fixed structure.
+•Dynamic workflow optimization:determines part of the realized graph at inference time through
+subgraph selection, pre-execution generation, or in-execution editing.
+Our primary scope is methods that treat workflow structure itself as the optimization target. We
+exclude planning-only or tool-use-only papers unless they directly alter workflow structure or provide
+workflow-relevant evaluation assets. Throughout the paper, we use three scope tags:corefor methods
+that directly optimize reusable templates or executable realized graphs,adjacentfor routing, team
+selection, and pruning methods that change the effective workflow, andbackgroundfor frameworks,
+datasets, and benchmarks that materially shape workflow optimization or evaluation.
+To ground this survey in a focused yet broad evidence base, we compiled an inventory of 77 in-scope works,
+including 39corepapers, 7adjacentpapers, and 31backgroundresources. Separately, because eval-
+uation is itself a major part of this literature, we organize 27 workflow-relevant evaluation assets, including
+20 benchmark or environment papers and 7 dataset, training-corpus, or validator resources. The surveyed
+materials span archival arXiv preprints, peer-reviewed conference and workshop papers from major ML and
+NLP venues, open-source frameworks, and benchmark or dataset resources that define much of the current
+state of practice. A work is included if at least one of the following holds: it optimizes a reusable workflow
+template, generates, selects, or edits a realized graph for a specific run, studies communication topology or
+5
+
+--- PAGE 6 ---
+routing structure as an optimization variable, provides infrastructure that strongly shapes this design space,
+or contributes a benchmark or dataset used specifically to assess workflow generation or agent execution.
+The goal is a structured, in-scope synthesis of a fast-moving literature.
+Contributions
+This survey makes the following contributions:
+•Workflow-centered formulation:We introduce a workflow-centered view of LLM agent systems as
+agentic computation graphs (ACGs) and distinguish reusable templates, run-specific realized graphs,
+and execution traces. This separation clarifies whether a method optimizes reusable design, per-run
+structure, or realized runtime behavior.
+•Taxonomy of structure determination:We propose a taxonomy organized by when work-
+flow structure is determined, refined by graph determination time (GDT) and graph plasticity
+mode (GPM) to compare fixed-template optimization, pre-execution generation or selection, and
+in-execution editing under a common lens. This taxonomy helps resolve gray cases such as offline-
+trained workflow generators and runtime subgraph selection.
+•Cross-cutting synthesis:We synthesize the literature along three orthogonal axes—optimization
+target (node, graph, or joint), evidence source (metric, verifier, preference, or trace), and update
+mechanism—to explain what part of the workflow each method changes, what evidence authorizes
+those changes, and how quality–cost trade-offs are managed.
+•Evaluation protocol:We organize workflow-relevant evaluation assets and propose a minimum
+reporting protocol that separates downstream task performance from graph properties, execution
+cost, robustness, and structural variation across inputs, thereby making workflow evaluation more
+comparable and reproducible.
+2 Conceptual Framework and Taxonomy
+Thissectionintroducesthedistinctionsthatorganizetherestofthesurvey: reusabletemplatesversusrealized
+graphs, node-level versus graph-level optimization, and static versus dynamic structure determination. Box 1
+provides a compact reference for the main terms and notation used below.
+2.1 Agentic computation graphs as executable workflows
+Anagentic computation graph(ACG) is our unifying abstraction for an executable LLM-centered workflow.
+Nodes perform atomic actions such as LLM calls, information retrieval, tool use, validation, or message
+passing. Edges encode control, data, or communication dependencies.
+Typical nodes include LLM calls, information retrieval, code execution, database access, tool invocation,
+validation, memory updates, and message-passing steps between specialized agents. In multi-agent systems
+(MAS), the same abstraction covers role allocation and communication topology: agents correspond to
+LLM-driven nodes with distinct prompts, tools, or models, and their messages appear as graph edges.
+A convenient way to describe an LLM-centered node is to use the tuple⟨Instruction, Context, Tools,
+Model/Decoding⟩, which is general enough to cover both single-agent modular pipelines and multi-agent
+systems with heterogeneous capabilities. Beyond nodes and edges, many workflows also include a scheduler
+or router that decides which node executes next, which nodes can run in parallel, when to terminate, and
+whether replanning is allowed.
+Different papers realize this abstraction differently. Some use code-defined workflows, where graph structure
+is implicit in control flow. Others use a domain-specific language (DSL), JSON, YAML, or a plain-text work-
+flow specification, which is often easier to generate or edit but varies in how easily it can be validated. Still
+others use explicit graph intermediate representations (IRs) with typed operators or constrained schemas,
+6

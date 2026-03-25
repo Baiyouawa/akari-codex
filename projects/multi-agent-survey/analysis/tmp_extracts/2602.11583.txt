@@ -1,0 +1,269 @@
+
+--- PAGE 1 ---
+The Five Ws of Multi-Agent Communication: Who Talks
+to Whom, When, What, and Why
+A Survey from MARL to Emergent Language and LLMs
+Jingdi Chen∗ jingdic@arizona.edu
+University of Arizona
+Tucson, AZ 85719
+Hanqing Yanghanqing3@andrew.cmu.edu
+Carnegie Mellon University
+Pittsburgh, PA 15213
+Zongjun Liu msnliu@arizona.edu
+University of Arizona
+Tucson, AZ 85719
+Carlee Joe-Wongcjoewong@andrew.cmu.edu
+Carnegie Mellon University
+Pittsburgh, PA 15213
+Abstract
+Multi-agent sequential decision-making underpins many real-world systems, from au-
+tonomous vehicles and robotics to collaborative AI assistants. In dynamic and partially
+observable environments, effective communication is essential for reducing uncertainty and
+enablingcoordination. Althoughresearchonmulti-agentcommunication(MA-Comm)spans
+diverse paradigms, we organize this survey explicitly around theFive Ws of communica-
+tion: who communicates with whom, what is communicated, when communication occurs,
+and why communication is beneficial. This lens provides a coherent structure for synthe-
+sizing diverse approaches and exposing shared design principles across paradigms. Within
+Multi-Agent Reinforcement Learning (MARL), early work relied on hand-designed or im-
+plicit communication protocols, followed by trainable, end-to-end mechanisms optimized for
+reward and control. While effective, these approaches often yield task-specific and weakly in-
+terpretable communication, motivating research onEmergent Language (EL), where agents
+develop more structured or symbolic protocols through interaction. EL methods, however,
+still face challenges in grounding, generalization, and scalability, which have driven recent
+interest inlarge language models (LLMs)as a means to leverage natural language priors
+for reasoning, planning, and coordination in open-ended multi-agent settings. This progres-
+sion motivates our survey: we analyze how communication paradigms evolve in response
+to the limitations of earlier approaches and how MARL, EL, and LLM-based systems ad-
+dress complementary aspects of multi-agent communication. This paper provides a unified
+survey of MA-Comm across MARL, EL, and LLM-based multi-agent systems. Organized
+around theFive Ws, we examine how different paradigms motivate, structure, and opera-
+tionalize communication, reveal cross-paradigm trade-offs, and identify open challenges in
+communication, coordination, and learning. By offering systematic comparisons and design-
+oriented insights, this survey helps the community extract effective communication design
+patterns and supports the development of hybrid systems that combine learning, language,
+and control to meet diverse task, scalability, and interpretability requirements.
+∗This work was done during Jingdi Chen’s postdoctoral research at Carnegie Mellon University.
+1
+arXiv:2602.11583v1  [cs.AI]  12 Feb 2026
+
+--- PAGE 2 ---
+Contents
+1 Introduction 4
+1.1 Evolution of Multi-Agent Communication Learning . . . . . . . . . . . . . . . . . . . . . . . . 5
+1.2 The Need for a Dedicated Survey . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+2 Foundations of Agent Communication 8
+2.1 Foundations of Communication as Action . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+2.2 From Speech Acts to Learned Message Actions . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+3 Related Work: Surveying the Three Dimensions of Multi-Agent Communication 10
+3.1 Surveys on Communication in MARL . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+3.2 Surveys on Emergent Communication . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+3.3 Surveys on LLM-Based Communication . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+4 Methodology and Scope of the Survey 13
+4.1 Search Strategy and Temporal Scope . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+4.2 Inclusion and Exclusion Criteria . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+4.3 Coverage Across Domains and Selection for Detailed Discussion . . . . . . . . . . . . . . . . . 14
+4.4 Limitations of Scope . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+5 Communication in Multi-Agent Reinforcement Learning 14
+5.1 Background of MARL-Comm . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+5.2 Overview and Taxonomy of MARL-Comm . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+5.3 Who, Whom and What to Communicate: Information and Recipient Selection . . . . . . . . 19
+5.3.1 Relevance Filtering of Messages and Recipients . . . . . . . . . . . . . . . . . . . . . . 19
+5.3.2 Redundancy Reduction via Targeted Communication . . . . . . . . . . . . . . . . . . . 21
+5.3.3 Compression and Encoding via Message Weighting . . . . . . . . . . . . . . . . . . . . 23
+5.4 When to Communicate: Timing and Adaptation under Constraints . . . . . . . . . . . . . . . 26
+5.4.1 Learning When to Communicate under Constraints . . . . . . . . . . . . . . . . . . . 26
+5.4.2 Timing of Message Integration . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 28
+5.5 Why and How to Communicate: Purpose-Driven Protocol Design . . . . . . . . . . . . . . . . 30
+5.5.1 Training Frameworks for Communication Learning . . . . . . . . . . . . . . . . . . . . 31
+5.5.2 Communication Objectives and Control Shaping . . . . . . . . . . . . . . . . . . . . . 36
+5.5.3 Why and How Communication Formats Matter . . . . . . . . . . . . . . . . . . . . . . 40
+5.6 Discussions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 44
+5.6.1 Who Communicates with Whom and What Is Shared . . . . . . . . . . . . . . . . . . 46
+5.6.2 When Communication Is Necessary . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 46
+5.6.3 Why Communication Helps and How It Is Used . . . . . . . . . . . . . . . . . . . . . . 46
+2
+
+--- PAGE 3 ---
+5.7 Bridge: From MARL-Comm to Emergent Language . . . . . . . . . . . . . . . . . . . . . . . 46
+6 Emergent Language in Multi-agent Systems 47
+6.1 Background and Foundations of Emergent Language . . . . . . . . . . . . . . . . . . . . . . . 50
+6.2 Overview and Taxonomy of Emergent Language . . . . . . . . . . . . . . . . . . . . . . . . . 51
+6.3 Who, Whom and What to Communicate: Preliminary Considerations . . . . . . . . . . . . . 53
+6.3.1 Population Size and Communicative Roles . . . . . . . . . . . . . . . . . . . . . . . . . 53
+6.3.2 Cooperation Level and Recipient Selection . . . . . . . . . . . . . . . . . . . . . . . . . 54
+6.3.3 Architectural Mechanisms for Encoding What is Communicated . . . . . . . . . . . . 55
+6.3.4 Multi-Step Interaction and Dialog Structure . . . . . . . . . . . . . . . . . . . . . . . . 56
+6.3.5 Vocabulary Size and Message Structure . . . . . . . . . . . . . . . . . . . . . . . . . . 56
+6.3.6 Message Structure and Compositionality Toward Human-Like Language . . . . . . . . 57
+6.3.7 Metrics for Evaluating What Is Communicated . . . . . . . . . . . . . . . . . . . . . . 58
+6.3.8 Discussion: Who–Whom–What in Emergent Language . . . . . . . . . . . . . . . . . . 59
+6.4 When and Where to Communicate: Experimental Environments . . . . . . . . . . . . . . . . 62
+6.4.1 Standardized Toolkits for Controlling Interaction Timing and Topology . . . . . . . . 63
+6.4.2 One-Shot and Iterative Communication . . . . . . . . . . . . . . . . . . . . . . . . . . 63
+6.4.3 Grounded and Embodied Environments . . . . . . . . . . . . . . . . . . . . . . . . . . 64
+6.4.4 Discussion: When and Where Communication Occurs . . . . . . . . . . . . . . . . . . 65
+6.5 Why and How to Communicate: Motivations and Mechanisms . . . . . . . . . . . . . . . . . 66
+6.5.1 Motivations for Emergent Communication . . . . . . . . . . . . . . . . . . . . . . . . . 66
+6.5.2 Interpretability and Structured Protocols . . . . . . . . . . . . . . . . . . . . . . . . . 67
+6.5.3 Robustness and Generalization . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 67
+6.5.4 Discussion: Why and How Communication Emerges . . . . . . . . . . . . . . . . . . . 68
+6.6 Discussions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 69
+6.6.1 Who Communicates with Whom and What Is Shared . . . . . . . . . . . . . . . . . . 69
+6.6.2 When and Where Agents Communicate . . . . . . . . . . . . . . . . . . . . . . . . . . 70
+6.6.3 Why Communication Emerges and How It Is Learned . . . . . . . . . . . . . . . . . . 70
+6.7 Bridge: From MARL-Comm and Emergent Language to LLM-Based Communication . . . . . 70
+7 LLM-Powered Multi-Agent Communication 71
+7.1 Background and Foundations of LLMs and LLM Agents . . . . . . . . . . . . . . . . . . . . . 74
+7.1.1 Large Language Models (LLMs) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 74
+7.1.2 LLM Agent . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 74
+7.2 Who, Whom, and What to Communicate . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 74
+7.2.1 Communication Topology and Interaction Structure . . . . . . . . . . . . . . . . . . . 75
+7.2.2 Agent Configurations and Communication Capabilities . . . . . . . . . . . . . . . . . . 80
+3
+
+--- PAGE 4 ---
+7.2.3 Message Design and Communicative Content . . . . . . . . . . . . . . . . . . . . . . . 82
+7.2.4 Framework-Level Design of Communication Structure . . . . . . . . . . . . . . . . . . 82
+7.3 When and Where LLM Agents Communicate . . . . . . . . . . . . . . . . . . . . . . . . . . . 85
+7.3.1 Motivations for Communication Timing . . . . . . . . . . . . . . . . . . . . . . . . . . 85
+7.3.2 Environmental Triggers and Context . . . . . . . . . . . . . . . . . . . . . . . . . . . . 88
+7.3.3 Evaluation Settings for Communication . . . . . . . . . . . . . . . . . . . . . . . . . . 91
+7.4 Why and How LLM Agents Communicate . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 94
+7.4.1 Structure of Communication . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 94
+7.4.2 Why to Communicate: Static and Dynamic Communication Protocols . . . . . . . . . 97
+7.5 Discussions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 100
+7.5.1 Who Communicates with Whom and What Is Shared . . . . . . . . . . . . . . . . . . 100
+7.5.2 When and Where Communication Is Necessary . . . . . . . . . . . . . . . . . . . . . . 100
+7.5.3 Why Communication Is Used and How It Is Implemented . . . . . . . . . . . . . . . . 100
+7.6 Bridge: LLM-Grounded MARL and Its Limitations . . . . . . . . . . . . . . . . . . . . . . . . 101
+7.6.1 Why and How Communication Emerges in LLM–MARL Hybrid Systems . . . . . . . 102
+7.6.2 Comparative Pattern Across Hybrid Systems . . . . . . . . . . . . . . . . . . . . . . . 104
+7.6.3 LLM Limitations in MARL Settings . . . . . . . . . . . . . . . . . . . . . . . . . . . . 106
+7.6.4 LLM Limitations from a Decentralized Control Perspective . . . . . . . . . . . . . . . 108
+8 Discussion, Open Problems, and Future Directions 109
+8.1 Discussions on Multi-agent Communications . . . . . . . . . . . . . . . . . . . . . . . . . . . . 109
+8.2 Beyond ML: Epistemic Perspectives on Agent Communication . . . . . . . . . . . . . . . . . 113
+8.3 Perspectives on Future Directions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 114
+8.3.1 Future Research on Theoretical Guarantees . . . . . . . . . . . . . . . . . . . . . . . . 114
+8.3.2 Future Research on Algorithm Developments . . . . . . . . . . . . . . . . . . . . . . . 115
+8.3.3 Future Works on Benchmarking . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 117
+8.3.4 Future Research on Human-Centric Multi-Agent Communication . . . . . . . . . . . . 118
+9 Conclusion 120
+1 Introduction
+Multi-agent decision-making plays a critical role in a wide range of real-world applications, including
+robotics Gu et al. (2016); Zhang et al. (2015), such as navigation Candido & Hutchinson (2011) and ma-
+nipulation Pajarinen & Kyrki (2017); autonomous systems Talpaert et al. (2019), including autonomous
+driving Wang et al. (2019a); and planning under uncertainty Wang et al. (2019b); Cheng et al. (2018). In
+these settings, multiple agents must act independently while interacting with both the environment and one
+another. Depending on the task, agents may cooperate to achieve shared objectives, compete over limited
+resources, or engage in mixed-motive interactions that involve both collaboration and competition. A central
+challenge in these systems is uncertainty, which can arise from multiple sources: limited or partial observ-
+ability of the global state or of other agents’ intentions, as well as inherent stochasticity in environment
+4
+
+--- PAGE 5 ---
+dynamics. Effective multi-agent systems must therefore address problems of coordination, decentralized
+control, and decision-making under uncertainty, often in real time and with limited communication.
+To address these challenges, reinforcement learning (RL) has been widely explored as a framework for
+training agents to make sequential decisions through trial and error. Deep Reinforcement Learning (DRL),
+in particular, has been extensively studied in both simulated Mnih et al. (2013); Lillicrap et al. (2015)
+and real-world Gu et al. (2016); Zhang et al. (2015); Qureshi et al. (2017); Meng et al. (2019) scenarios.
+While many DRL algorithms assume fully observable environments modeled as Markov Decision Processes
+(MDPs) Lample & Chaplot (2016); Schulman et al. (2015); Pipattanasomporn et al. (2009); Li et al. (2002),
+real-world multi-agent systems often involve Partially Observable Markov Decision Processes (POMDPs),
+where each agent has only a limited view of the system state. In such cases, inter-agent communication can
+help mitigate partial observability by allowing agents to exchange information and build a more complete
+representation of the environment Chen et al. (2024b). As a result, an important research direction in MARL
+focuses on designing effective communication strategies to improve decision-making in complex environments.
+Effective communication is a core capability in multi-agent systems, particularly in scenarios requiring co-
+ordination, negotiation, or competition among autonomous agents. In MARL, agents must make decisions
+based on local observations while interacting with others in partially observable and often stochastic environ-
+ments. Communication enables agents to exchange task-relevant information, such as observations, goals,
+intentions, or strategies, which helps them align actions, resolve uncertainty, and coordinate more effectively.
+While this is critical in fully cooperative settings like multi-robot collaboration Li et al. (2002) or smart
+grid control Pipattanasomporn et al. (2009), communication also plays a nuanced but important role in
+competitive and mixed-motive scenarios. For example, in adversarial games like StarCraft Samvelyan et al.
+(2019) or Dota Berner et al. (2019), agents may engage in strategic signaling, misinformation, or negotiation
+to manipulate opponents or form temporary alliances. In such cases, communication becomes not just a
+tool for cooperation, but also a mechanism for influencing, deceiving, or adapting to others’ behaviors in
+strategic interactions.
+To move beyond manually designed protocols, recent research has focused onlearned communication,
+where agents develop communication strategies through interaction. A widely used approach involves en-
+abling gradient flow between agents during training, allowing them to optimize both message content and
+timing based on task performance. This line of work offers a scalable and flexible alternative to hand-
+crafted rules, enabling agents to discover efficient and adaptive messaging schemes tailored to their goals
+and environmental dynamics, whether cooperative, competitive, or somewhere in between.
+1.1 Evolution of Multi-Agent Communication Learning
+Communication in MARLResearch on learning multi-agent communication has evolved significantly,
+mirroring broader advances in artificial intelligence and multi-agent systems.Initial effortsin this area
+focused on enabling communication inMARLto enhance coordination under partial observability. Early
+studies addressed foundational questions such aswho should communicateandwhat information should be
+sharedPaulos et al. (2019); Lowe et al. (2017); Foerster et al. (2016a); Sukhbaatar et al. (2016); Jiang & Lu
+(2018); Das et al. (2018); Rangwala & Williams (2020). Many of these early approaches employedCentralized
+Training with Decentralized Execution, where a centralized coordinator facilitates communication during
+training while agents act independently during execution. For example,CommNetSukhbaatar et al. (2016)
+andIC3NetSinghetal.(2018)aggregatehiddenstatesacrossagentstoproducesharedrepresentations. Later
+methodsintroducedmoreflexiblemechanisms, suchasattention-basedmessageroutinginTarMACDasetal.
+(2018) and graph-structured message propagation inDICGLi et al. (2020), allowing agents to dynamically
+select communication partners. While these models often rely on centralized components during training,
+they still support decentralized execution, preserving scalability and autonomy in deployment. While these
+neural architectures enabled learned communication, they oftenlacked interpretability, as deep neural
+networks generate complex messages that are difficult to analyze Brown et al. (2020); LeCun et al. (2015).
+Moreover, most approaches assumed agents could exchangecontinuous, real-valued messages, ignoring
+thepractical constraintsof real-world communication networks, which typically rely on discrete and
+bandwidth-limited transmissions Foerster et al. (2016a); Lowe et al. (2017); Mordatch & Abbeel (2018);
+5
+
+--- PAGE 6 ---
+Freed et al. (2020b;a). Theselimitationsmotivated research intoEmergent Discrete Communication,
+where agents develop structured, interpretable protocols for exchanging information.
+WhileMARLhas made substantial strides in learning communication protocols within RL frameworks,
+alternative approaches for enabling agent cooperation have increasingly drawn attention. One such direction
+isEmergent Language (EL), which studies how agents can develop structured communication protocols
+through repeated interaction. This line of work provides insights into how meaningful communication can
+emergeorganically in cooperative settings, without requiring pre-defined languages or protocols Lazaridou
+& Baroni (2020); Li et al. (2022). This shift was motivated by several limitations of traditional MARL-
+based communication: (1) Although end-to-end learned communication can be highly effective for task
+optimization, it often produces continuous, opaque message representations that are difficult to interpret,
+verify, or reuse across tasks and agent populations. (2) Moreover, MARL communication protocols are
+typically tightly coupled to specific environments and reward structures, making them brittle under changes
+in agent composition, task semantics, or deployment conditions. These challenges motivated researchers to
+study communication itself as a learning outcome inELresearch, rather than merely an internal signal
+optimized for reward inMARLsettings.
+Communication in ELLearned communication in EL has been a promising avenue for improving inter-
+pretability and structure in multi-agent systems. To move beyond opaque continuous message spaces, early
+research explored how agents could develop discrete communication protocols through interaction—using
+one-hot messages Chaabouni et al. (2019); Kottur et al. (2017); Havrylov & Titov (2017); Lazaridou et al.
+(2016); Lee et al. (2017), binary signals Foerster et al. (2016a), or other constrained message formats Eccles
+etal.(2019). Theseeffortsmadeagentcommunicationmoreinterpretabletohumans, butoftenrevealedcoor-
+dination challenges, such as zero-shot failures where independently trained agents could not understand each
+other’s learned protocols Hu et al. (2020b). To address this, researchers have begun to design environments
+and training methods that encourage more robust, generalizable, and human-aligned communication Bullard
+et al. (2021; 2020). While many of these efforts originate in the context of MARL, their implications extend
+to multi-agent decision-making more broadly, including settings beyond traditional reinforcement learning.
+For example, some works have aimed to align emergent communication with natural language Lee et al.
+(2019); Lowe et al. (2020), while others integrate pre-trained language models to introduce linguistic priors
+and promote structured, interpretable coordination Lazaridou et al. (2020); Tucker et al. (2021). These
+developments reflecta growing trendtoward bridging learned communication protocols with human lan-
+guage to support not only efficient coordination in MARL, but also broaderagent collaboration and
+human-AI interaction.
+More recently,Large Language Models (LLMs)have emerged as a natural next step in this trajectory.
+By leveraging strong language understanding, reasoning capabilities, and extensive world knowledge acquired
+from large-scale pretraining, LLMs provide a new foundation for multi-agent communication.Unlike tra-
+ditional MARL or EL agents, LLM-based systems can communicate directly in natural language, infer
+shared goals, and adapt to novel tasks and teammates with minimal additional training Yang et al. (2025).
+This capability makes LLMs particularly attractive for settings that require flexible coordination, zero-shot
+generalization, and interaction with humans.
+Communication in LLMsThe rise of LLMs has introduced a new paradigm for multi-agent communi-
+cation, expanding beyond traditional MARL frameworks. Unlike communication in MARL, where agents
+develop protocols from scratch through reinforcement learning, LLM-based agents leverage pre-trained lin-
+guistic knowledge to engage in structured, natural language-based exchanges and decision-making Du et al.
+(2023); Liang et al. (2023); Wang et al. (2023c). This is distinct from EL research, where the focus is
+on how agents develop communication protocols in task-driven settings without any pre-existing linguistic
+knowledge. Recent work has proposed a range of communication architectures for LLM-based multi-agent
+systems, including direct messaging, chain-of-thought interactions, hierarchical structures, and graph-based
+exchanges Zhang et al. (2023c); Du et al. (2023); Qian et al. (2023); Hong et al. (2023); Holt et al.; Wu
+et al. (2023b); Jiang et al. (2023); Chan et al. (2023); Qian et al. (2024b); Zhuge et al. (2024b). These
+frameworks enable agents tocollaborate, debate, plan, and reasonacross diverse environments while
+offering scalability and adaptability across tasks. A key distinction is that EL research investigates how
+6
