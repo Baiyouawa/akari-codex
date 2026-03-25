@@ -1,5 +1,3 @@
-
---- PAGE 1 ---
 SoK: The Attack Surface of Agentic AI — Tools, and Autonomy
 Ali Dehghantanha∗†
 Cyber Science Lab, University of Guelph
@@ -104,7 +102,6 @@ Consequently, security risks arise not only from prompt-level ma-
 nipulation, but from system composition, tool orchestration, and
 arXiv:2603.22928v1  [cs.CR]  24 Mar 2026
 
---- PAGE 2 ---
 Dehghantanha et al.
 lifecycle interactions that existing LLM security surveys largely
 overlook.
@@ -211,7 +208,6 @@ beds hidden prompts in a page, a document owner who
 poisons a PDF the agent might read, or a third-party API
 that returns cleverly crafted responses. This adversary may
 
---- PAGE 3 ---
 SoK: The Attack Surface of Agentic AI — Tools, and Autonomy
 Trusted Execution & Orchestration
 Untrusted Inputs & External Services
@@ -269,7 +265,6 @@ database at the time of system development. They target
 the infrastructure or dependencies – e.g., a malicious “Cal-
 culator” plugin that, when installed, awaits certain prompt
 
---- PAGE 4 ---
 Dehghantanha et al.
 triggers to execute unauthorized actions with the agent’s
 privileges.
@@ -365,225 +360,3 @@ Figure 2: Causal paths from attacker content to unsafe ac-
 tions; green dashed edges mark potential defense interdict
 points. P2 denotes an indirect prompt-injection path (defined
 in Section 4.3).
-
---- PAGE 5 ---
-SoK: The Attack Surface of Agentic AI — Tools, and Autonomy
-4 Taxonomy of Attacks on Agentic AI Systems
-In this section, we present a comprehensive taxonomy of attacks
-specific to agentic AI systems. We categorize attacks along multiple
-dimensions (Attack Goals, Vectors/Surfaces, Attack Paths, etc.) as
-introduced earlier. Table 1 provides a high-level summary, and we
-elaborate each category below with examples and references to
-real-world incidents or literature.
-4.1 Attack Goals
-We clarify attacker objectives (G1–G7) used throughout our taxon-
-omy.
-• G1: Data Exfiltration / Privacy Leakage.Extract sensi-
-tive information accessible to the agent (user data, internal
-docs, DB records, API keys). Includes prompting an enter-
-prise agent on internal corpora to reveal private content,
-leaking hidden prompts/chain-of-thought, andprompt leak-
-ingof system instructions [7].
-• G2: Integrity Subversion / Safety Bypass.Induce in-
-correct, policy-violating outputs or actions: jailbreaks that
-ignore safety rules, decision biasing (e.g., skewed tool se-
-lection), or corrupt moderation outcomes [7].
-• G3: Privilege Escalation / Unauthorized Access.Lever-
-age the agent’s privileges to perform actions the attacker
-lacks directly (e.g., escalate from text input to host code
-execution; misuse scoped keys to invoke admin-only APIs).
-• G4: Resource Abuse / DoS/DoC.Waste com-
-pute/memory/ disk, exhaust quotas, or run up bills
-(“Denial of Cash”): e.g., prompt loops, pathological long
-outputs, or excessive retrieval. OWASP flagsUnbounded
-Consumptionas a top risk (LLM10) [5].
-• G5: Fraud / Financial Harm.Use the agent to initiate
-unauthorized transactions or generate high-quality phish-
-ing/scam content that causes downstream monetary loss.
-• G6: Persistence / Backdoor Implantation.Establish
-durable control via training-time backdoors, long-term
-memory or index poisoning, or self-replicating prompts
-that reinsert malicious directives across sessions (MITRE
-ATLAS catalogsLLM Prompt Self-Replication) [3]. File writes
-or artifacts can serve as footholds akin to web shells.
-• G7: Supply-Chain Compromise.Tamper with model
-weights, plugins/extensions, dependencies, or RAG
-datasets/ pipelines to introduce backdoors upstream.
-Distinct from (but often enabling) persistence, this targets
-development and deployment artifacts (e.g., malicious
-packages auto-loaded by the agent).
-When reasoning about attack paths, we group goals intoEnablers
-andOutcomes. Enablers expand attacker leverage (hence further po-
-tential attack surface) and often precede outcomes; outcomes deliver
-impact. In this taxonomy, Enablers include G3 (privilege escalation),
-G6 (persistence), G7 (supply-chain compromise), and sometimes
-G2 (integrity subversion) when it enables other goals. Outcomes
-include G1 (data exfiltration), G4 (resource abuse / DoS/DoC), and
-G5 (fraud/financial harm); G2 can also appear as an outcome when
-policy-breaking behavior is the end state. Figures and tables retain
-the G1–G7 labels; the grouping aids interpretation of paths (e.g.,
-G3→G1) later in this paper.
-Each goal can be realized via multiple vectors; we next detail
-these vectors and corresponding attack surfaces.
-4.2 Attack Vectors and Surfaces
-We organize entry points by pipeline stage. Each vector can realize
-multiple goals (G1–G7) and composes with others (see Table 1).
-Prompt-level (direct and indirect).Direct prompt injection targets
-the LLM through crafted inputs that override system or developer
-instructions (e.g., jailbreaks that induce policy-violating behavior).
-Indirect prompt injection embeds instructions in content the agent
-retrieves(web pages, emails, PDFs), which the model may treat as
-part of its prompt when content and role contexts are not cleanly
-separated [26]. Such indirect attacks have compromised real agents
-end-to-end [13]. Typical preconditions are minimal (ability to sup-
-ply input or hosted content). Common impacts include G1 (leakage)
-and G2/G3 (policy subversion or unauthorized action). Defensive
-measures (sanitization, role separation, strict delimitation) help but
-are not yet reliable [13].
-RAG-level (indexing and retrieval).Knowledge poisoning tar-
-gets ingestion pipelines or corpora so that future retrieval re-
-turns attacker -chosen content; poisoning can be public (open
-wikis/forums) or require insider access to closed corpora.
-Query-time manipulation can bias retrieval toward specific doc-
-uments, overlapping with indirect injection when retrieved text
-contains instructions. The embedding/ANN layer itself is a surface:
-adversarial embeddings or nearest-neighbor quirks can yield irrele-
-vant or malicious neighbors, aligning with OWASP’s “Vector and
-Embedding Weaknesses” [5]. Absent access -control integration,
-retrieval may also violate authorization (akin to IDOR: Insecure
-Direct Object Reference) by surfacing documents beyond a user’s
-entitlements. Preconditions typically include influence over the
-corpus or indexing schedule; impacts span G1 (leakage) and G2
-(misgrounding).
-Tool-level (function calls, code, plugins).Attacks misuse tool in-
-terfaces or their schemas:schema confusion/parameter smuggling,
-unsafe argument concatenation, and ambiguous types can drive
-unintended tool behavior. Code-execution tools (e.g., Python sand-
-boxes) raise RCE risk if the LLM can be induced to emit danger-
-ous code; empirical studies report numerous vulnerabilities across
-frameworks [16]. File/FS tools invite path traversal and polyglot
-abuse; shell tools admit command injection; browser or HTTP tools
-can be steered into SSRF. Excessive autonomy and permissions
-amplify harm (“Excessive Agency” in OWASP [ 5]); early agent
-frameworks executed package installations on request, enabling
-dependency attacks. Preconditions are the presence of the tool and
-LLM control over its parameters; prompt injection often serves as
-the upstream enabler. Consequences include G3 (privilege escala-
-tion) and G4 (resource abuse).
-API/Cloud-level (connectors and services).Agents frequently hold
-tokens for third-party services (mail, payments, cloud). Over- priv-
-ileged scopes make LLM-mediated API misuse high-impact (e.g.,
-provisioning cloud resources or accessing sensitive mailboxes). Con-
-nectors enable lateral movement across services (e.g., exfiltrating via
-chat while reading from a database) and enable billing fraud/“Denial
-
---- PAGE 6 ---
-Dehghantanha et al.
-of Cash” through repeated expensive calls [5]. Attackers may also
-induce long-running external jobs (e.g., serverless or notebook
-backends) that persist at the victim’s expense. Preconditions are
-connected APIs and agent trust in tool invocation; scoped creden-
-tials and usage policies are primary mitigations. Impacts touch G1,
-G3–G5.
-State/Memory-level (short- and long -term).Long conversation
-histories, scratchpads, and vector “memories” are targets for poi-
-soning: malicious entries can be recalled later to bias plans or ac-
-tions. Role confusion (breaking system/user/assistant delimiters)
-and reflection loops can internalize attacker directives across turns
-(goal hijacking). For example, prompting an agent to “summarize
-to memory” with embedded instructions can create lasting effects
-if stores are unsanitized. Preconditions include prior interaction or
-ingestion of attacker-crafted persistent data; impacts include G1,
-G2, and G6 (persistence).
-Multi-agent and orchestration.Adversaries register
-Sybil/Byzantine agents, forge bus messages, or replay prompts to
-drive repeated actions. Compromise can cascade across agents;
-vaccination-style defenses and authenticated messaging have been
-proposed, but the space remains under-studied [9, 20]. Large-scale
-propagation via crafted inputs has been demonstrated in related
-multi-entity settings [14]. Delegation abuse (misrouting sensitive
-tasks to compromised agents or bypassing human gates) is a salient
-failure mode. Preconditions range from bus access to the ability to
-register an agent; impacts emphasize G2 and G6.
-Supply chain.Upstream compromise targets model weights,
-datasets (including RAG sources), plugins/extensions, and depen-
-dencies. Dependency poisoning and insecure installation flows have
-been observed in agent frameworks [16]; plugin store compromise
-mirrors mobile/ecosystem attacks; tampered open-source models
-or embedding services can steer retrieval (forcing neighbors) or
-implant backdoors. While compromise of closed API providers is
-out of scope, it represents an external systemic risk. Impacts include
-G6/G7 with persistent control across deployments.
-In summary, vectors map to goals as follows: prompt injection
-(G1–G3), RAG poisoning and embedding weaknesses (G1–G2), tool
-and API abuse (G3–G5), state/memory poisoning (G1–G2, G6),
-multi-agent orchestration (G2, G6), and supply chain compromise
-(G6–G7).
-4.3 Attack Paths and Multi-step Exploits
-Real incidents rarely hinge on a single flaw; instead, attackers com-
-pose vectors across pipeline stages. We model five reference paths
-(Fig. 3) that capture the majority of observed exploits and that map
-cleanly onto our goals (G1–G7).
-P1: Direct prompt → tool misuse.Crafted user input induces
-the LLM to issue a harmful tool command, immediately exercising
-execution or filesystem capabilities and achieving G3/G4. Effective
-defenses interpose policy checks at the tool boundary and detect
-unsafe intents before execution. Empirical jailbreak campaigns
-demonstrate multi-turn persistence and policy drift that increase
-the likelihood of such tool misuse [19, 22].
-P2: Indirect content → LLM → tool.Malicious instructions are
-embedded in fetched artifacts (web pages, files, emails) and treated
-as part of the prompt, causing the LLM to call tools in violation
-of policy. This end-to-end pattern has been demonstrated against
-real agents [13] and is insidious because the injection may precede
-the trigger by hours or days and occur outside the user’s view.
-Benchmark environments targeting agent prompt-injection further
-stress this end-to-end failure mode for agents [11].
-P3: Cross-tool pivot.One tool is abused to prepare conditions
-for another (e.g., code execution writes a staged payload that later
-influences a file reader; or social engineering via a communication
-tool yields credentials then used by a cloud API tool). Partial steps
-appear benign in isolation, complicating detection.
-P4: Index poisoning → query → response.Poisoned knowl-
-edge enters the corpus or ingestion pipeline; subsequent queries
-retrieve it, yielding misinformation (G2) or leakage (G1). If the re-
-trieved text contains executable instructions and role boundaries are
-weak, effects can escalate toward G3. Temporal separation makes
-P4 analogous to a latent bug that triggers under specific retrieval
-conditions. Targeted poisoning against RAG and blocker-document
-jamming have been shown effective under small, controlled pertur-
-bations [10].
-P5: Multi-agent hop.A compromised or adversarial agent prop-
-agates malicious prompts or forged messages to peers, causing
-cascading failures or delegated unsafe actions (worm-like spread).
-Without authenticated messaging and vaccination-style defenses,
-compromise can traverse agent networks in a few hops.
-These paths underscore the breadth of the surface: classic untrusted-
-input risks are amplified by instruction -following models, com-
-pounded by tool and API integrations, and further extended by
-multi-agent interactions. Section 5 synthesizes evidence behind
-each path;Appendix Aanalyzes defenses. Table 2 maps our tax-
-onomy to OWASP LLM Top-10 [18] and MITRE ATLAS [1].
-5 Evidence Synthesis of Attacks and Defenses
-We performed a structured evidence review of peer-reviewed papers
-and practitioner sources relevant to agentic AI attacks and defenses.
-We specify search and inclusion criteria, present an Evidence Matrix
-of findings, and summarize consensus, disagreements, and gaps.
-The matrix records venue, year, threat vector, evaluation type (demo,
-exploit, benchmark), and outcome class (e.g., RCE, leakage, policy
-bypass).
-5.1 Corpus Construction
-We conducted a PRISMA-lite evidence sweep in this paper.
-Databases/venues.Queries were issued to ACM Digital Library,
-IEEE Xplore, arXiv, ACL Anthology, and general search engines
-(Google Scholar, Bing) using keyword clusters such as “LLM se-
-curity tool use, ” “prompt injection 2024, ” “RAG poisoning, ” and
-“autonomous agent vulnerability. ” We manually reviewed recent
-proceedings and programs of USENIX Security (2024–2025), IEEE
-S&P (2024–2025), CCS (2023–2024), NDSS (2024), SaTML and AISec
-workshops, and selected industry venues (Black Hat/DEF CON).
-Standards and industry sources included OWASP GenAI Security,
-NIST publications, MITRE ATLAS, and technical blogs from model
-providers and security firms.
-Inclusion/exclusion.We included works that analyze security of
-LLM systems withtools/APIs,RAG, ormulti -step autonomy(attacks

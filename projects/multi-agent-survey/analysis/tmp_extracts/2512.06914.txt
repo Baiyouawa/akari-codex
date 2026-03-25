@@ -1,0 +1,203 @@
+SOK: TRUST-AUTHORIZATIONMISMATCH INLLM AGENT
+INTERACTIONS
+Guanquan Shi
+shiguanquan@buaa.edu.cn
+Haohua Du*
+duhaohua@buaa.edu.cn
+Zhiqiang Wang
+sa21221041@mail.ustc.edu.cn
+Xiaoyu Liang
+xiaoyuliang@buaa.edu.cn
+Weiwenpei Liu
+liuweiwenpei@buaa.edu.cn
+Song Bian
+sbian@buaa.edu.cn
+Zhenyu Guan
+guanzhenyu@buaa.edu.cn
+ABSTRACT
+Abstract Large Language Models (LLMs) are evolving into autonomous agents capable of executing
+complex workflows via standardized protocols (e.g., MCP). However, this paradigm shifts con-
+trol from deterministic code to probabilistic inference, creating a fundamental Trust-Authorization
+Mismatch: static permissions are structurally decoupled from the agent’s fluctuating runtime trustwor-
+thiness. In this Systematization of Knowledge (SoK), we survey more than 200 representative papers
+to categorize the emerging landscape of agent security. We propose the Belief-Intention-Permission
+(B-I-P) framework as a unifying formal lens. By decomposing agent execution into three distinct
+stages—Belief Formation, Intent Generation, and Permission Grant—we demonstrate that diverse
+threats, from prompt injection to tool poisoning, share a common root cause: the desynchronization
+between dynamic trust states and static authorization boundaries. Using the B-I-P lens, we system-
+atically map existing attacks and defenses and identify critical gaps where current mechanisms fail
+to bridge this mismatch. Finally, we outline a research agenda for shifting from static Role-Based
+Access Control (RBAC) to dynamic, risk-adaptive authorization.
+KeywordsAI agent·trustworthiness·security
+1 Introduction
+LLMs are transcending their roles as passive information retrieval engines to become autonomous agents capable of
+executing complex workflows in digital and physical environments [1]. Through standardized protocols such as the
+Model Context Protocol (MCP) [2], these agents now have the ability to plan tasks, invoke external tools, and manipulate
+system resources. As illustrated in Fig. 1, this evolution fundamentally shifts the locus of control from deterministic
+code paths—manually crafted and statically verifiable—to probabilistic, natural language-driven decision models.
+While this paradigm shift unlocks immense utility, it destabilizes the foundational assumptions of modern system
+security: that software behavior is predictable and that privileges granted at authentication remain valid throughout
+execution [3].
+Specifically, incumbent security architectures rely on pre-defined policy evaluation [4]. Systems typically perform
+a one-time entitlement check upon authentication, binding a fixed set of privileges to an agent’s identity. This
+model assumes that an authenticated entity will strictly adhere to defined business logic. However, LLM agents defy
+this assumption. Governed by stochastic sampling rather than deterministic logic, an agent’s runtime behavior is
+highly context-dependent. According to Rice’s Theorem [5], we analyze that verifying whether a Turing-complete
+agent’s semantic behavior satisfies a non-trivial security property for arbitrary inputs is undecidable before runtime.
+Consequently, static access control mechanisms are structurally incapable of governing probabilistic agent behaviors.
+We term this structural misalignment theTrustworthiness-Authorization Mismatch. It represents a systemic failure
+arXiv:2512.06914v2  [cs.CR]  9 Feb 2026
+
+SoK: Trust-Authorization Mismatch in LLM Agent Interactions
+User
+(a) Traditional System
+ACL
+Input
+Databases
+Code
+Request
+(b) Agent System
+LLM
+Files
+Databases
+ Files
+System Boundary
+System Boundary
+Unlimited
+Access
+External Tool
+Web Service
+Prompt Template
+Agent
+User
+Query
+Result
+Query
+Result
+External Tool
+Web Service
+Invocation
+Figure 1: The Comparison of the Traditional Security Model and AI Trustworthy Model.
+state in which the static execution permissions granted to an agent become dangerously decoupled from the agent’s
+fluctuating trustworthiness at runtime. In this state, a compromised or hallucinating agent retains high-privilege access
+(Authorization) even when its internal belief state or immediate intent (Trustworthiness) has been corrupted.
+Despite the escalating threat landscape, the academic community’s understanding of this domain remains fragmented.
+Existing taxonomies often focus on listing specific attack vectors, such as “Jailbreaking" or “Prompt Injection," without
+explaining the underlying structural failures that allow these attacks to generalize across different modalities and
+protocols. Without a unified framework to analyze the agent’s decision lifecycle, defenses remain reactive and isolated.
+This Systematization of Knowledge (SoK) provides a unifying formal lens for agent interaction security. We argue that
+addressing the security of autonomous agents requires shifting from a “vulnerability-patch" mindset to a “lifecycle-state"
+perspective. To this end, we formalize the Belief-Intention-Permission (B-I-P) framework. This framework decomposes
+the opaque "black box" of agent execution into three observable stages: (1) Belief Formation, where the agent constructs
+a probabilistic view of the world from inputs; (2) Intent Generation, where beliefs are synthesized into provisional
+plans; and (3) Permission Grant, where plans encounter the hard boundary of system authorization.
+By grounding our analysis in the B-I-P framework, we shift from a phenomenological account of attacks to a mechanistic
+understanding of failure. We surveyed 87 representative papers (screened from 248 candidates) across AI and systems
+security venues. We demonstrate that disparate incidents—from indirect prompt injection in RAG systems to tool
+poisoning in MCP servers—share a common root cause: the desynchronization between the agent’s dynamic trust state
+and the system’s static authorization boundaries.
+Scope and Threat Model.We focus strictly onruntime interaction securityfor agentic systems. We exclude training-
+time poisoning unless it directly manifests as a runtime decision vulnerability. Our threat model assumes a highly
+capable adversary who can manipulate user prompts, external retrieval content (RAG), and protocol metadata, targeting
+the integrity and availability of theB→I→Pdecision chain.
+To summarize, our contributions are:
+• A Unifying Formal Lens (The B-I-P Framework): We introduce the Belief-Intention-Permission framework
+to model the agentic lifecycle. We propose theSafety Margin Ratio (SMR)as a governing invariant, defining
+security not as a static property but as a dynamic state in which the system’s Trust Capacity must strictly
+dominate the Risk Load of the intended action (T(B, I)> R(P)).
+2
+
+SoK: Trust-Authorization Mismatch in LLM Agent Interactions
+• Systematization of Attacks & Defenses: We provide a comprehensive mapping of existing literature onto
+the B-I-P lifecycle. Unlike prior surveys that categorize work by attack modality (e.g., “Image Attacks"), we
+classify work by its chain-breaking mechanism—distinguishing, for instance, between defenses that verify
+Data Provenance in Stage 1 and those that enforce Context-Aware Isolation in Stage 3.
+• Gap Analysis & Research Agenda: Our systematization reveals that current defenses are skewed towards the
+early stages (Belief/Intent) while neglecting the critical bottleneck of Authorization. We outline a concrete
+research agenda to move beyond static Role-Based Access Control (RBAC) toward Belief-Aware Access
+Control (BAAC), advocating for authorization mechanisms that can dynamically modulate permissions based
+on the agent’s real-time cognitive uncertainty and data provenance.
+2 Problem Overview & Scope
+This section characterizes the fundamental conflict between stochastic agent workflows and traditional permission
+grants, proving that neither static nor context-aware models offer sufficient security guarantees in non-deterministic
+environments.
+We adopt a minimal agent vocabulary consistent with our later formalization: anagentmaintains internal state, perceives
+its environment through inputs and tool/agent returns, formsintentionsto act, and issues actions that are eitherpermitted
+or denied by the host system [ 6]. In intent-driven workflows, users express goals in natural language; the agent
+decomposes goals into subtasks, invokes external capabilities (tools/APIs/agents) [ 7], and integrates results into a
+coherent response.
+2.1 Overview of Agent
+We adopt a minimal agent vocabulary consistent with our later formalization: anagentmaintains internal state, perceives
+its environment through inputs and tool/agent returns, formsintentionsto act, and issues actions that are eitherpermitted
+or denied by the host system [ 6]. In intent-driven workflows, users express goals in natural language; the agent
+decomposes goals into subtasks, invokes external capabilities (tools/APIs/agents) [ 7], and integrates results into a
+coherent response. This operational loop—frombelief(about the world) tointention(plans) topermission(what the
+system allows) toaction—is the substrate for our mismatch analysis in Sec. 3.
+User
+User Query
+Result
+Agent B
+MCP Server A
+ MCP Server B
+Initial Request
+Tool Invocation
+Tool List
+Tool Invocation
+Tool Returns
+Agent Card
+Request
+Response Tool Returns
+Agent A
+MCP
+ A2A
+Figure 2: MCP protocol and A2A protocol workflow.
+Interaction Protocols (MCP/A2A) and Boundaries. Standardized protocols provide the communication fabric for
+agent ecosystems. An interaction typically proceeds in three stages (cf. Fig.2):
+1. Capability discovery.Agents advertise or retrieve metadata describing callable functions and constraints
+(e.g., MCP tool descriptors; A2A agent cards). This establishesprovenanceand delineatesauthorization
+boundaries.
+3
+
+SoK: Trust-Authorization Mismatch in LLM Agent Interactions
+Agent A
+Agent B
+ Agent C
+Agent D
+Agent A
+Agent B
+ Agent D
+ Agent C
+Joint Mode Hierarchical Mode
+Figure 3: MAS Coordination Strategies.
+2. Invocation and execution.The initiator supplies parameters and context; calls may nest or cascade to
+downstream tools/agents. Transports (JSON-RPC, HTTP, etc.) preserve call–return semantics.
+3. Result propagation.Targets return structured outputs (Results/Messages/Artifacts) synchronously or asyn-
+chronously; these outputs update the agent’s belief state and may trigger further planning.
+Trust/permission boundaries and instrumentation points.To make protocols actionable for security engineering, we
+annotate the sequence with: (i)source labelingandintegrity tagsat ingress (where sanitizers and anomaly detectors
+operate), (ii)belief attributionat the planner (for quarantine/taint propagation), (iii)policy guardsat permission checks
+(static/dynamic authorization, belief-aware ABAC/TBAC), and (iv)secure loggingat each transition (for auditability
+and post-hoc reconstruction). These are the concretechain-breakingcontrol points revisited in Sec. 5.
+Multi-Agent Systems (MAS). Multi-agent systems [8] coordinate peers or hierarchies to achieve complex objectives
+(Fig. 3). Joint modes share state and coordinate as equals; hierarchical modes decompose tasks to sub-agents and
+aggregate results. MAS improves coverage and specialization but amplifiespropagation risk: faulty or adversarial
+returns can cascade across agents, increasing the need for provenance, isolation, and belief-aware authorization.
+2.2 Models in Cybersecurity and AI
+Traditional Cybersecurity Model. Traditional security draws on the CIA triad, TCB minimization, and the Principle
+of Least Privilege (PoLP) [9]. Historically,authorizationwas often treated as a proxy fortrust: once authenticated and
+authorized, entities were expected to behave predictably inside the perimeter. Agentic settings violate this assumption:
+adaptive reasoning and tool-driven actions mean that what an entity isallowedto do may diverge from what itshould
+do, creating a gap our SoK makes explicit.
+Trustworthy AI Model.Trustworthy AI emphasizes alignment, safety, and robustness (e.g., reducing hallucinations
+and harmful behavior) [10]. These efforts largely addressbehavioral trustwithin a single model. When aligned models
+become agents that call tools and delegate, the tension with system-level authorization becomes salient: behavior may
+be “aligned” yet still produce unsafeactionsunder ambiguous goals and over-broad permissions. This motivates our
+unifying lens in Sec. 3, where beliefs, intentions, and permissions are explicitly reasoned about.
+2.3 The Undecidability of Agent Behavior
+Unlike traditional software, which executes compiled, deterministic code paths, an LLM Agent executes a dynamic
+“program” synthesized at runtime from natural language prompts. This execution flow generally follows a tripartite
+cycle, as shown in Fig. 5:
+1.Intention:The agent perceives external inputs to deduce semantic intent.
+2.Plan:The agent formulates a sequence of steps (Chain of Thought) to satisfy the intent.
+3.Permission:The agent invokes tools or APIs to execute the plan, subject to authorization checks.
+4
