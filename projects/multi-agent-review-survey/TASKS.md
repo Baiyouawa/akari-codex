@@ -1,12 +1,14 @@
 # multi-agent-review-survey — 任务列表
 
-- [ ] 检索 2024-2026 年 multi-agent 相关综述/survey 论文，自主筛选最相关的 10 篇（使用 web_search 搜索 arXiv、Google Scholar、OpenReview、Semantic Scholar）
+- [x] 检索 2024-2026 年 multi-agent 相关综述/survey 论文，自主筛选最相关的 10 篇（使用 web_search 搜索 arXiv、Google Scholar、OpenReview、Semantic Scholar）
   Done when: 确认 10 篇综述的题目、年份、来源链接，写入项目文档
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-pdf-links-and-download-record.md`
 
-- [ ] 为每篇入选综述确认可访问的 PDF 直链，并用 curl/wget 下载到 literature 文件夹中
+- [x] 为每篇入选综述确认可访问的 PDF 直链，并用 curl/wget 下载到 literature 文件夹中
   Done when: literature/ 中有 10 个可打开的 PDF 文件，命名规范
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-pdf-links-and-download-record.md`
 
-- [ ] 验证 literature 文件夹中的 10 个 PDF 是否可正常打开、文件不为空、命名无冲突 [blocked-by: projects/multi-agent-review-survey/literature/ 当前文件总数=0、PDF数=0，缺少待核验的10个PDF；见 analysis/2026-03-26-literature-pdf-verification.md]
+- [ ] 验证 literature 文件夹中的 10 个 PDF 是否可正常打开、文件不为空、命名无冲突
   Done when: 每个文件验证通过并记录验证结果
 
 - [ ] 记录每篇论文的元数据（题目、作者、年份、来源、PDF 路径）并汇总到项目文档中
@@ -57,3 +59,83 @@
 - [ ] 对已下载文件进行互相 review：检查 PDF 是否可打开、标题是否匹配、是否为目标论文，并整理每篇论文的基础信息供后续中文解读使用
   Done when: TBD
 
+- [x] 为当前已下载并核验通过的 5 篇 multi-agent 相关综述/综述型论文记录元数据（题目、作者、年份、来源、PDF 路径）并汇总到项目文档中
+  Done when: `analysis/2026-03-26-five-paper-metadata.md` 包含 5 篇论文元数据，且每个 `PDF 路径` 均与 `literature/` 中实际文件一致
+
+- [ ] 检索近年最新的 multi-agent 相关综述/survey 候选论文，优先 2024-2026，给出题目、年份、链接与入选理由
+  Done when: TBD
+
+- [ ] 对候选论文逐篇核验是否属于真正的综述/survey，而不是普通方法论文；若不合格则替换，直到凑齐 10 篇
+  Done when: TBD
+
+- [ ] 为每篇入选论文查找可下载 PDF，并将 PDF 保存到 projects/multi-agent-review-survey/literature/
+  Done when: TBD
+
+- [ ] 对已下载文件做交叉 review：检查文件是否可打开、标题是否匹配、是否重复、总数是否达到 10 篇；不达标就继续补齐
+  Done when: TBD
+
+- [ ] 核查 projects/multi-agent-review-survey/literature/ 中现有 PDF，补齐到 10 篇“最新且明确属于 multi-agent 综述/survey”的论文，并记录每篇的题目、年份、链接、是否正式综述、PDF 路径
+  Done when: TBD
+
+- [ ] 对 10 篇综述逐篇精读，抽取统一结构信息：研究问题、分类框架、核心观点、方法谱系、数据集/benchmark、评测维度、主要结论、局限性、未来方向
+  Done when: TBD
+
+- [ ] 对每篇论文做证据链核验：至少核对摘要、引言、结论与 survey/review 定位表述，避免把普通论文误判为综述；如遇边界论文，写明保留或剔除理由
+  Done when: TBD
+
+- [ ] 对 10 篇综述做横向对比，整理共识、分歧、重复主题、空白问题、时间演化趋势，形成适合快速浏览的中文总览
+  Done when: TBD
+
+- [ ] 撰写一个中文 Markdown 文档，帮助人快速了解这 10 篇综述；文档需包含：执行摘要、10 篇逐篇精读卡片、横向对比表、关键趋势、局限与机会
+  Done when: TBD
+
+- [ ] 基于 10 篇综述的空白点与未来方向，提出 10 个后续可做的详细 idea；每个 idea 需包含：问题定义、为什么值得做、与现有综述的关系、可行方法、数据/benchmark、评测指标、预期难点、最小可执行原型
+  Done when: TBD
+
+- [ ] 对生成的 10 个 idea 做去重与优先级排序，标注短期可做/中期可做/高风险高收益，并给出推荐的前 3 个起步方向
+  Done when: TBD
+
+- [ ] 对最终 Markdown 文档做互相 review，检查完整性、中文表达质量、事实一致性、可追溯引用与 PDF 对应关系；若发现偷懒式 blocked 或只尝试单一路径，按 PUA 标准打回重做
+  Done when: TBD
+
+- [ ] 把最终文档保存到项目内，文件名明确，例如 projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md，并在文档开头给出论文清单与 PDF 对应关系
+  Done when: TBD
+
+- [ ] 纠正任务口径：废弃或降级所有仅要求‘5个idea’的旧任务，统一以‘10篇综述精读 + 10个详细idea’为最终目标继续执行
+  Done when: TBD
+
+- [ ] 盘点并核验 literature 文件夹现有 PDF：确认每篇是否为 2024-2026 年、是否明确属于综述/survey、是否与 multi-agent 高相关；不足则继续补齐到准确 10 篇
+  Done when: TBD
+
+- [ ] 对最终 10 篇论文逐篇精读，按统一模板抽取：研究问题、分类框架、关键方法脉络、涉及数据集/benchmark、评测维度、主要结论、局限性、作者给出的未来方向
+  Done when: TBD
+
+- [ ] 产出中文 Markdown 主报告，文件保存为 projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md；内容必须包含：执行摘要、10篇逐篇解读、横向对比表、趋势总结、研究空白
+  Done when: TBD
+
+- [ ] 基于 10 篇综述的共同空白与差异，提出 10 个详细 research idea；每个 idea 必须包含：题目、背景动机、核心问题、创新点、方法设计、实验方案、数据/benchmark、评价指标、风险点、最小可行原型
+  Done when: TBD
+
+- [ ] 安排交叉 review：一名 Agent 写逐篇解读，另一名 Agent 复核事实与引用；再由第三名 Agent 专门检查 10 个 idea 是否重复、是否真的来源于综述中的空白与未来方向
+  Done when: TBD
+
+- [ ] 若任何 Agent 报 blocked，先审查其是否使用 web_search/web_fetch/本地文件核验等手段；未穷尽方法即 blocked 的视为伪阻塞，直接按 PUA 标准打回重做并要求切换方案
+  Done when: TBD
+
+- [ ] 完成后整理最终清单：10篇论文题目、年份、PDF文件名/路径、入选理由、中文摘要入口，确保文档与 literature 文件夹一一对应
+  Done when: TBD
+
+- [ ] 重做 2024-2026 年 multi-agent 相关综述/survey 检索任务：必须先使用 web_search 检索候选论文不少于15篇，覆盖 multi-agent systems、LLM-based multi-agent systems、communication/collaboration/coordination surveys 等子方向
+  Done when: TBD
+
+- [ ] 对每个候选用 web_fetch 抓取摘要页、arXiv页、期刊页或PDF首页信息，核验其是否明确自称 survey/review、年份是否在 2024-2026、主题是否与 multi-agent 直接相关
+  Done when: TBD
+
+- [ ] 输出最终入选10篇与剔除名单，给出每篇入选/剔除理由，并标注来源链接、PDF链接、年份、survey证据句
+  Done when: TBD
+
+- [ ] 若再次报 blocked，必须写明至少3种已尝试方法及各自结果；未使用 web_search/web_fetch 不得报 blocked
+  Done when: TBD
+
+- [ ] 安排另一名 Agent 复核沙弥香-01 的新结果，检查是否存在把普通论文误当综述、把旧论文误当最新、或证据链不完整的问题
+  Done when: TBD
