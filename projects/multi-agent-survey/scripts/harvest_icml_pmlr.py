@@ -5,12 +5,6 @@ Provenance:
 - ICML 2023: https://proceedings.mlr.press/v202/
 - ICML 2024: https://proceedings.mlr.press/v235/
 - ICML 2025: https://proceedings.mlr.press/v267/
-
-Method:
-- Parse each proceedings page's `div.paper` blocks.
-- Extract title, authors, proceedings/abs page, PDF link, and OpenReview link.
-- Keep titles that match explicit multi-agent cues.
-- Emit a markdown inventory for the repository.
 """
 
 from __future__ import annotations
@@ -18,20 +12,13 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable
 
 import requests
 from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "literature" / "icml-2023-2025.md"
-
-YEAR_TO_VOLUME = {
-    2023: 202,
-    2024: 235,
-    2025: 267,
-}
-
+YEAR_TO_VOLUME = {2023: 202, 2024: 235, 2025: 267}
 USER_AGENT = "Mozilla/5.0 (OpenAkari-Codex research agent)"
 
 INCLUSION_PATTERNS = [
@@ -42,10 +29,7 @@ INCLUSION_PATTERNS = [
     re.compile(r"\bagents?['’]?\s+room\b", re.I),
     re.compile(r"\bmulti-llm-agents?\b", re.I),
 ]
-
-EXCLUSION_PATTERNS = [
-    re.compile(r"\bsingle-agent\b", re.I),
-]
+EXCLUSION_PATTERNS = [re.compile(r"\bsingle-agent\b", re.I)]
 
 
 @dataclass
@@ -53,7 +37,7 @@ class Paper:
     year: int
     title: str
     authors: str
-    proceedings_page: str
+    proceedings_page: str | None
     pdf_url: str | None
     openreview_url: str | None
     tags: list[str]
@@ -79,11 +63,11 @@ def infer_tags(title: str) -> list[str]:
         tags.append("Communication")
     if any(k in t for k in ["cooperation", "cooperative", "coordination", "self-play", "team", "teams"]):
         tags.append("Coordination")
-    if any(k in t for k in ["reinforcement learning", "markov", "policy", "value factorization", "stochastic game"]):
+    if any(k in t for k in ["reinforcement learning", "policy", "value", "stochastic game", "marl"]):
         tags.append("Theory/MARL")
     if any(k in t for k in ["traffic", "robot", "robotics", "gui", "medical", "science", "pathology", "search", "visual", "document", "travel"]):
         tags.append("Application")
-    if any(k in t for k in ["framework", "system", "systems", "collaboration", "design", "topologies", "topology", "llm", "agentic"]):
+    if any(k in t for k in ["framework", "system", "systems", "collaboration", "design", "topolog", "llm", "agentic"]):
         tags.append("Architecture")
     return tags or ["Architecture"]
 
@@ -95,38 +79,27 @@ def fetch(year: int, volume: int) -> list[Paper]:
     soup = BeautifulSoup(response.text, "html.parser")
     papers: list[Paper] = []
     for block in soup.select("div.paper"):
-        title_link = block.select_one("p.title a")
-        authors_node = block.select_one("p.authors")
-        if not title_link or not authors_node:
+        title_node = block.select_one("p.title")
+        authors_node = block.select_one("span.authors")
+        if not title_node or not authors_node:
             continue
-        title = normalize_ws(title_link.get_text(" ", strip=True))
+        title = normalize_ws(title_node.get_text(" ", strip=True))
         if not include_title(title):
             continue
         authors = normalize_ws(authors_node.get_text(" ", strip=True))
-        proceedings_page = title_link.get("href")
+        proceedings_page = None
         pdf_url = None
         openreview_url = None
-        for link in block.select("a[href]"):
+        for link in block.select("p.links a[href]"):
             href = link.get("href")
             label = normalize_ws(link.get_text(" ", strip=True)).lower()
-            if href and href.endswith(".pdf"):
-                pdf_url = href
-            if href and "openreview.net" in href:
-                openreview_url = href
             if label == "abs":
                 proceedings_page = href
-        papers.append(
-            Paper(
-                year=year,
-                title=title,
-                authors=authors,
-                proceedings_page=proceedings_page,
-                pdf_url=pdf_url,
-                openreview_url=openreview_url,
-                tags=infer_tags(title),
-                source_url=url,
-            )
-        )
+            elif "pdf" in label:
+                pdf_url = href
+            elif "openreview" in label or (href and "openreview.net" in href):
+                openreview_url = href
+        papers.append(Paper(year, title, authors, proceedings_page, pdf_url, openreview_url, infer_tags(title), url))
     papers.sort(key=lambda p: p.title.lower())
     return papers
 
@@ -166,7 +139,7 @@ def build_markdown(all_papers: dict[int, list[Paper]]) -> str:
             lines.append(f"{idx}. **{paper.title}**")
             lines.append(f"   - Authors: {paper.authors}")
             lines.append(f"   - Year: {paper.year}")
-            lines.append(f"   - Proceedings page: {paper.proceedings_page}")
+            lines.append(f"   - Proceedings page: {paper.proceedings_page or 'Not exposed on page card'}")
             lines.append(f"   - PDF: {paper.pdf_url or 'Not exposed on page card'}")
             lines.append(f"   - OpenReview: {paper.openreview_url or 'Not exposed on page card'}")
             lines.append(f"   - Tags: {', '.join(paper.tags)}")
@@ -177,11 +150,11 @@ def build_markdown(all_papers: dict[int, list[Paper]]) -> str:
     lines.append("1. PMLR proceedings pages are sufficient to recover venue-verified ICML paper title, authors, proceedings page, PDF, and usually OpenReview metadata without paid APIs.")
     lines.append("   - Provenance: each listed entry comes from one of the three PMLR volume pages above, whose `div.paper` cards expose `abs`, `Download PDF`, and `OpenReview` links.")
     lines.append("")
-    lines.append("2. The harvested ICML set is much smaller than the earlier ICLR title-screened set because this artifact uses stricter explicit multi-agent title cues rather than broader collaboration/communication heuristics.")
+    lines.append("2. This ICML artifact is intentionally conservative: it captures papers with explicit multi-agent wording in the title, which makes it suitable as a high-precision base list but likely under-recalls implicit collaboration papers.")
     lines.append("   - Provenance: inclusion rule documented above in this file and implemented in `projects/multi-agent-survey/scripts/harvest_icml_pmlr.py`.")
     lines.append("")
-    lines.append("3. The ICML virtual site is not required for this task because the PMLR proceedings page already serves as a conference/proceedings page and exposes downloadable PDFs and OpenReview links in the same card.")
-    lines.append("   - Provenance: direct HTML inspection in this session showed `div.paper` cards like `Data Structures for Density Estimation ... [ abs ][ Download PDF ][ OpenReview ]` on `https://proceedings.mlr.press/v202/`.")
+    lines.append("3. The PMLR `abs` page can serve as the required conference/proceedings page for the task, while OpenReview remains separately recorded when available.")
+    lines.append("   - Provenance: direct HTML inspection in this session showed `div.paper` cards like `... [ abs ][ Download PDF ][ OpenReview ]` on `https://proceedings.mlr.press/v202/`.")
     lines.append("")
     return "\n".join(lines)
 

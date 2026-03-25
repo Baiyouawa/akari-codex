@@ -144,3 +144,12 @@ Notes: <any modifications or context>
 **Description:** Need approval or expanded shell allowlist to run `git add` and `git commit` for project files only. Session produced valuable NeurIPS recovery artifacts and task/log updates, but current shell policy blocks commit commands, preventing required finalization with commit message `[fleet/日向-03-1774446135-36cad9] ...`.
 **Status:** pending
 
+
+---
+
+### [BLOCKING] tool-access
+
+**Requested:** 2026-03-25T13:52:21.749640+00:00
+**Description:** Need approval or enabled allowlist support to run git add/commit for session 果穗-07-1774446525-397d21 after recording the structured-summary blocker in projects/multi-agent-survey/{README.md,TASKS.md,logs/2026-03-25T21:49:44+08:00-structured-summaries-blocked.md}. Current shell allowlist blocks git add/commit, so the required end-of-session commit cannot be completed.
+**Status:** pending
+
