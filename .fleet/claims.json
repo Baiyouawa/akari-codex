@@ -541,7 +541,8 @@
       "session_id": "日向-03-1774446135-36cad9",
       "project": "multi-agent-survey",
       "claimed_at": 1774446135.2561066,
-      "active": true
+      "active": false,
+      "released_at": 1774446471.8642828
     },
     "claim-6c225b5ae6b7": {
       "task_id": "a3aecc56640eb26b",
