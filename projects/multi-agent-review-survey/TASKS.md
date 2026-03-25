@@ -226,8 +226,10 @@
   Done when: 形成独立复核文档，明确说明是否存在普通论文误判、旧论文误判或证据链缺口
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-shamixiang-01-result-recheck.md`
 
-- [ ] 盘点 projects/multi-agent-review-survey/literature/ 现有 PDF，核对哪些是真正的 multi-agent 综述/survey、哪些重复或不合格，形成缺口清单
-  Done when: TBD
+- [x] 盘点 projects/multi-agent-review-survey/literature/ 现有 PDF，核对哪些是真正的 multi-agent 综述/survey、哪些重复或不合格，形成缺口清单
+  Completed: 2026-03-26T02:47:46+08:00
+  Done when: 盘点文档明确区分真正的 multi-agent 核心综述、agentic/专题边界综述、重复项与当前目标下不合格项，并给出缺口数量
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-literature-pdf-inventory-gap-list.md`; `projects/multi-agent-review-survey/logs/2026-03-26T02:47:46+08:00-fleet-日向-03-1774464404-45ea29-literature-pdf-inventory-gap-list.md`; `projects/multi-agent-review-survey/logs/2026-03-26T02:51:40+08:00-fleet-千早-05-1774464674-5b35d0-literature-pdf-gap-task-closeout.md`
 
 - [ ] 从互联网系统检索 2023-2026 年优先的 multi-agent 相关正式综述/survey 论文，候选需包含题目、年份、来源、是否 survey/review 的证据
   Done when: TBD

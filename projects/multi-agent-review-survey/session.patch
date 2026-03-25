@@ -1,0 +1,29 @@
+diff --git a/projects/multi-agent-review-survey/README.md b/projects/multi-agent-review-survey/README.md
+index 250cca3..833201d 100644
+--- a/projects/multi-agent-review-survey/README.md
++++ b/projects/multi-agent-review-survey/README.md
+@@ -69,6 +69,7 @@ Mission: 小侑要求组织 Agent 集群开展一项新的综述调研任务：
+ - 2026-03-26T02:42:04+08:00 — 灯里-00-1774464073-88e1f5 对 assignment 对应的“重做 2024-2026 检索任务”主条目做最终状态收口：复核 `analysis/2026-03-26-web-search-redo-2024-2026-survey-candidates-and-pdf-refresh.md`、`analysis/2026-03-26-web-fetch-candidate-validation.md` 与 `analysis/2026-03-26-final-selected-10-and-exclusion-list.md`，确认主任务所需的三段证据链——`web_search` 候选池、`web_fetch` 候选核验、最终入选/剔除名单——均已落盘；随后将 `TASKS.md` 中该主任务标记完成，并补记 closeout 日志，确保 README / TASKS / analysis / logs 四处状态一致。证据：`projects/multi-agent-review-survey/TASKS.md`；`projects/multi-agent-review-survey/analysis/2026-03-26-web-search-redo-2024-2026-survey-candidates-and-pdf-refresh.md`；`projects/multi-agent-review-survey/analysis/2026-03-26-web-fetch-candidate-validation.md`；`projects/multi-agent-review-survey/analysis/2026-03-26-final-selected-10-and-exclusion-list.md`；`projects/multi-agent-review-survey/logs/2026-03-26T02:42:04+08:00-fleet-灯里-00-1774464073-88e1f5-redo-web-search-task-closeout.md`。
+ 
+ - 2026-03-26T02:47:46+08:00 — 日向-03-1774464404-45ea29 盘点 `projects/multi-agent-review-survey/literature/` 当前 `20` 个 PDF，并通过本地 `python3 + pypdf + sha256` 核验确认目录内存在 `1` 组同内容重复文件（两份 `2602.11583`，SHA256 同为 `5c8a6a3368056ff0bb0c36d1a432e68d6a358e4ecbeabeae2565b94146ee8fdc`）；同时结合既有 survey 身份核验工件，将目录内文件区分为 multi-agent 核心综述、agentic/专题边界综述与重复项，形成缺口清单：按严格口径当前仅有 `8-9` 篇真正的 multi-agent 核心综述，距离“10 篇高相关核心综述”仍差 `1-2` 篇。证据：`projects/multi-agent-review-survey/analysis/2026-03-26-literature-pdf-inventory-gap-list.md`；`projects/multi-agent-review-survey/logs/2026-03-26T02:47:46+08:00-fleet-日向-03-1774464404-45ea29-literature-pdf-inventory-gap-list.md`。
++- 2026-03-26T02:51:40+08:00 — 千早-05-1774464674-5b35d0 复核上述 `literature/` 缺口清单任务对应的落盘状态；重新执行本地 `python3 + pypdf + sha256` 校验，确认当前 `pdf_count = 20`、`readable_count = 20`、`duplicate_groups = 1`，且重复组仍为两份 `2602.11583`。据此将 `TASKS.md` 中尚未关闭的同名任务标记完成，并补记本次 closeout 日志，确保 README / TASKS / analysis / logs 四处状态一致。证据：`projects/multi-agent-review-survey/analysis/2026-03-26-literature-pdf-inventory-gap-list.md`；`projects/multi-agent-review-survey/logs/2026-03-26T02:51:40+08:00-fleet-千早-05-1774464674-5b35d0-literature-pdf-gap-task-closeout.md`。
+ 
+ ## Open questions
+ 
+diff --git a/projects/multi-agent-review-survey/TASKS.md b/projects/multi-agent-review-survey/TASKS.md
+index c0a13e7..878b000 100644
+--- a/projects/multi-agent-review-survey/TASKS.md
++++ b/projects/multi-agent-review-survey/TASKS.md
+@@ -226,8 +226,10 @@
+   Done when: 形成独立复核文档，明确说明是否存在普通论文误判、旧论文误判或证据链缺口
+   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-shamixiang-01-result-recheck.md`
+ 
+-- [ ] 盘点 projects/multi-agent-review-survey/literature/ 现有 PDF，核对哪些是真正的 multi-agent 综述/survey、哪些重复或不合格，形成缺口清单
+-  Done when: TBD
++- [x] 盘点 projects/multi-agent-review-survey/literature/ 现有 PDF，核对哪些是真正的 multi-agent 综述/survey、哪些重复或不合格，形成缺口清单
++  Completed: 2026-03-26T02:47:46+08:00
++  Done when: 盘点文档明确区分真正的 multi-agent 核心综述、agentic/专题边界综述、重复项与当前目标下不合格项，并给出缺口数量
++  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-literature-pdf-inventory-gap-list.md`; `projects/multi-agent-review-survey/logs/2026-03-26T02:47:46+08:00-fleet-日向-03-1774464404-45ea29-literature-pdf-inventory-gap-list.md`; `projects/multi-agent-review-survey/logs/2026-03-26T02:51:40+08:00-fleet-千早-05-1774464674-5b35d0-literature-pdf-gap-task-closeout.md`
+ 
+ - [ ] 从互联网系统检索 2023-2026 年优先的 multi-agent 相关正式综述/survey 论文，候选需包含题目、年份、来源、是否 survey/review 的证据
+   Done when: TBD
