@@ -207,3 +207,12 @@ Notes: <any modifications or context>
 **Description:** Need allowlisted git staging/commit command to finish required session protocol for completed task. Work is already written in projects/multi-agent-review-survey/{TASKS.md,README.md,logs/2026-03-26T00:56:42+08:00-fleet-千早-05-1774457762-a2bc7b-literature-pdf-verification-recheck.md}, but current shell allowlist blocks `git add`/`git commit`, preventing the mandatory commit with message `[fleet/千早-05-1774457762-a2bc7b] ...`.
 **Status:** pending
 
+
+---
+
+### [BLOCKING] tool-access
+
+**Requested:** 2026-03-25T18:30:32.107173+00:00
+**Description:** `git add` for required session commit is being falsely blocked by the shell denylist (`dd ` substring match). Need approval or allowlist correction so this session can stage and commit the audited files required by protocol. Intended commit message: `[fleet/文乃-04-1774462781-971acb] audit blocked agents for pseudo-blocking`.
+**Status:** pending
+
