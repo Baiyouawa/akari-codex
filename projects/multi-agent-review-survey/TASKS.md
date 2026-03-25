@@ -48,10 +48,8 @@
   Done when: 逐篇给出 survey 判定依据，并形成按新近程度与相关性排序的 top 10
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-candidate-survey-judgment-and-top10.md`
 
-- [x] 为最终确定的10篇论文查找可下载的 PDF 链接，并下载保存到 multi-agent-review-survey/literature 文件夹
-  Completed: 2026-03-26T01:25:23+08:00
-  Done when: canonical 10 篇论文均具备可追溯来源记录与本地 PDF 文件，并再次验证可读
-  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-pdf-links-and-download-record.md`; `projects/multi-agent-review-survey/logs/2026-03-26T01:25:23+08:00-fleet-柑奈-10-1774459476-b04305-pdf-download-task-closeout.md`
+- [ ] 为最终确定的10篇论文查找可下载的 PDF 链接，并下载保存到 multi-agent-review-survey/literature 文件夹
+  Done when: TBD
 
 - [x] 对已下载论文进行交叉复核：检查题目、年份、survey属性、PDF可读性与文件是否落盘完整
   Completed: 2026-03-26T01:10:24+08:00
@@ -63,26 +61,26 @@
   Done when: `projects/multi-agent-review-survey/analysis/2026-03-26-basic-info-for-10-papers.md` 完成 10 篇 canonical reading set 的基础信息汇总
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-basic-info-for-10-papers.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-literature-pdf-verification.md`
 
-- [ ] 使用 web_search/web_fetch 检索 2024-2026 年 multi-agent systems / LLM agents / cooperative agents 相关综述或 survey，整理不少于 15 篇候选，附标题、年份、来源 URL
-  Done when: TBD
+- [x] 使用 web_search/web_fetch 检索 2024-2026 年 multi-agent systems / LLM agents / cooperative agents 相关综述或 survey，整理不少于 15 篇候选，附标题、年份、来源 URL
+  Completed: 2026-03-26T01:24:26+08:00
+  Done when: 至少 15 篇候选以标题、年份、来源 URL 形式落盘到项目文档，并具备 web_search/web_fetch 证据链
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-web-search-15-survey-candidates-refresh.md`; `projects/multi-agent-review-survey/logs/2026-03-26T01:24:26+08:00-fleet-千早-05-1774459025-ee93cb-web-search-15-survey-candidates.md`
 
 - [x] 从候选中筛出最新且真正属于综述/survey 的 10 篇，给出判断依据，并为每篇确认主页与 PDF 直链；必要时交叉检查 arXiv、OpenReview、出版社页面
   Completed: 2026-03-26T01:21:48+08:00
   Done when: 10 篇论文均有逐篇 survey 判定依据、主页/来源页与 PDF 直链，并在项目文档中可追溯
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-candidate-survey-judgment-and-top10.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-pdf-links-and-download-record.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-canonical-ten-cross-verification.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-top10-survey-selection-closeout.md`
 
-- [x] 检索 2024-2026 年最新的 multi-agent 相关综述/survey 论文，初筛候选论文并记录来源链接、年份、标题与摘要
-  Completed: 2026-03-26T01:23:42+08:00
-  Done when: 候选论文记录来源链接、年份、标题与摘要，并写入项目文档
-  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-2024-2026-multi-agent-survey-candidate-screening-with-abstracts.md`; `projects/multi-agent-review-survey/logs/2026-03-26T01:23:42+08:00-fleet-沙弥香-09-1774459295-5067c4-candidate-screening-with-abstracts.md`
-
-- [ ] 核验候选论文是否真正属于综述/survey，判断是否足够新，并去重后确定 10 篇最终名单
+- [ ] 检索 2024-2026 年最新的 multi-agent 相关综述/survey 论文，初筛候选论文并记录来源链接、年份、标题与摘要
   Done when: TBD
 
-- [x] 为最终确定的 10 篇论文查找可下载 PDF 链接，下载到项目目录 multi-agent-review-survey/literature 文件夹
-  Completed: 2026-03-26T01:32:43+08:00
-  Done when: canonical 10 篇论文均具备可追溯来源页/PDF 链接记录，且本地 literature/ 文件存在并可读
-  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-pdf-links-and-download-record.md`; `projects/multi-agent-review-survey/logs/2026-03-26T01:32:43+08:00-fleet-灯里-00-1774459926-977851-pdf-download-task-closeout.md`
+- [x] 核验候选论文是否真正属于综述/survey，判断是否足够新，并去重后确定 10 篇最终名单
+  Completed: 2026-03-26T01:29:07+08:00
+  Done when: 候选逐篇完成 survey 属性、时间窗与去重审计，并锁定 canonical 10 篇最终名单
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-final-top10-verification-audit.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-candidate-survey-judgment-and-top10.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`
+
+- [ ] 为最终确定的 10 篇论文查找可下载 PDF 链接，下载到项目目录 multi-agent-review-survey/literature 文件夹
+  Done when: TBD
 
 - [ ] 对已下载文件进行互相 review：检查 PDF 是否可打开、标题是否匹配、是否为目标论文，并整理每篇论文的基础信息供后续中文解读使用
   Done when: TBD

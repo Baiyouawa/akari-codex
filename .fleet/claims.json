@@ -1715,7 +1715,8 @@
       "session_id": "灯里-00-1774459926-977851",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774459926.7627144,
-      "active": true
+      "active": false,
+      "released_at": 1774460061.317669
     },
     "claim-835e7916bd81": {
       "task_id": "ccb375ad67cb4c00",
@@ -1723,6 +1724,14 @@
       "session_id": "沙弥香-01-1774459986-2ac45e",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774459986.877724,
+      "active": true
+    },
+    "claim-b1172b7bcc58": {
+      "task_id": "4a7ebfefa0a5c997",
+      "worker_id": "柑奈-02",
+      "session_id": "柑奈-02-1774460107-7cb095",
+      "project": "multi-agent-review-survey",
+      "claimed_at": 1774460107.079706,
       "active": true
     }
   }
