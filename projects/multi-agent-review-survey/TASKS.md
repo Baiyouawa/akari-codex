@@ -48,8 +48,10 @@
   Done when: 逐篇给出 survey 判定依据，并形成按新近程度与相关性排序的 top 10
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-candidate-survey-judgment-and-top10.md`
 
-- [ ] 为最终确定的10篇论文查找可下载的 PDF 链接，并下载保存到 multi-agent-review-survey/literature 文件夹
-  Done when: TBD
+- [x] 为最终确定的10篇论文查找可下载的 PDF 链接，并下载保存到 multi-agent-review-survey/literature 文件夹
+  Completed: 2026-03-26T01:36:07+08:00
+  Done when: canonical 10 篇均具备可追溯 PDF 链接记录，且对应 PDF 已落盘到 `projects/multi-agent-review-survey/literature/`
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-pdf-links-and-download-record.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/logs/2026-03-26T01:36:07+08:00-fleet-柑奈-02-1774460107-7cb095-download-task-revalidation.md`
 
 - [x] 对已下载论文进行交叉复核：检查题目、年份、survey属性、PDF可读性与文件是否落盘完整
   Completed: 2026-03-26T01:10:24+08:00
@@ -79,8 +81,10 @@
   Done when: 候选逐篇完成 survey 属性、时间窗与去重审计，并锁定 canonical 10 篇最终名单
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-final-top10-verification-audit.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-candidate-survey-judgment-and-top10.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`
 
-- [ ] 为最终确定的 10 篇论文查找可下载 PDF 链接，下载到项目目录 multi-agent-review-survey/literature 文件夹
-  Done when: TBD
+- [x] 为最终确定的 10 篇论文查找可下载 PDF 链接，下载到项目目录 multi-agent-review-survey/literature 文件夹
+  Completed: 2026-03-26T01:36:07+08:00
+  Done when: canonical 10 篇均具备可追溯 PDF 链接记录，且对应 PDF 已落盘到 `projects/multi-agent-review-survey/literature/`
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-pdf-links-and-download-record.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/logs/2026-03-26T01:36:07+08:00-fleet-柑奈-02-1774460107-7cb095-download-task-revalidation.md`
 
 - [ ] 对已下载文件进行互相 review：检查 PDF 是否可打开、标题是否匹配、是否为目标论文，并整理每篇论文的基础信息供后续中文解读使用
   Done when: TBD
