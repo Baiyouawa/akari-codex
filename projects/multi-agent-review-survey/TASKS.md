@@ -8,8 +8,10 @@
   Done when: literature/ 中有 10 个可打开的 PDF 文件，命名规范
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-pdf-links-and-download-record.md`
 
-- [ ] 验证 literature 文件夹中的 10 个 PDF 是否可正常打开、文件不为空、命名无冲突
+- [x] 验证 literature 文件夹中的 10 个 PDF 是否可正常打开、文件不为空、命名无冲突
+  Completed: 2026-03-26T00:56:42+08:00
   Done when: 每个文件验证通过并记录验证结果
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-literature-pdf-verification.md`; `projects/multi-agent-review-survey/logs/2026-03-26T00:56:42+08:00-fleet-千早-05-1774457762-a2bc7b-literature-pdf-verification-recheck.md`
 
 - [x] 记录每篇论文的元数据（题目、作者、年份、来源、PDF 路径）并汇总到项目文档中
   Completed: 2026-03-26T00:52:11+08:00
@@ -21,8 +23,10 @@
   Done when: 10 篇结构化中文笔记完成
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`; `projects/multi-agent-review-survey/logs/2026-03-26T00:16:17+08:00-fleet-结衣-03-1774454544-65f537-ten-survey-deep-reading.md`
 
-- [ ] 综合 10 篇综述撰写中文 Markdown 报告，包含横向比较与研究空白总结
+- [x] 综合 10 篇综述撰写中文 Markdown 报告，包含横向比较与研究空白总结
+  Completed: 2026-03-26T00:52:23+08:00
   Done when: 报告文件完成，包含逐篇详述和横向分析
+  Evidence: `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-synthesis-report.md`; `projects/multi-agent-review-survey/logs/2026-03-26T00:52:23+08:00-fleet-结衣-03-1774457492-789106-survey-report.md`
 
 - [x] 基于 10 篇综述提出 5 个可做的研究 idea，每个 idea 包含问题动机、核心假设、方法设计、评测方案
   Completed: 2026-03-26T00:16:17+08:00
@@ -34,8 +38,10 @@
   Done when: review 记录完成，质量问题已修正
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-cross-review-record.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-synthesis-report.md`
 
-- [ ] 检索并筛选最新的 multi-agent 相关综述/survey 论文，优先近年高相关结果，初步候选不少于15篇
-  Done when: TBD
+- [x] 检索并筛选最新的 multi-agent 相关综述/survey 论文，优先近年高相关结果，初步候选不少于15篇
+  Completed: 2026-03-26T01:06:05+08:00
+  Done when: 初步候选不少于 15 篇，并写入项目文档
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-latest-multi-agent-survey-candidates.md`; `projects/multi-agent-review-survey/logs/2026-03-26T01:06:05+08:00-fleet-沙弥香-09-1774458273-48dea2-latest-survey-candidates-closeout.md`
 
 - [x] 对候选论文逐篇判断是否属于真正的综述/survey，并按新近程度与相关性筛到10篇
   Completed: 2026-03-26T01:00:51+08:00
