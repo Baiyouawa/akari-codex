@@ -261,7 +261,7 @@ def _handle_command(
                 print(f"  💡 可用项目: {', '.join(available)}")
             return True
         content = tasks_file.read_text(encoding="utf-8")
-        new_entry = f"\n- [ ] {task_desc} [zero-resource]\n  Done when: TBD\n"
+        new_entry = f"\n- [ ] {task_desc}\n  Done when: TBD\n"
         tasks_file.write_text(content + new_entry, encoding="utf-8")
         print(f"  ✅ 任务已添加到 projects/{project}/TASKS.md")
         scheduler = get_fleet_scheduler()
@@ -321,7 +321,7 @@ def _dispatch_as_fleet_task(
         return True
 
     content = tasks_file.read_text(encoding="utf-8")
-    new_entry = f"\n- [ ] {task_text} [zero-resource]\n  Done when: TBD\n"
+    new_entry = f"\n- [ ] {task_text}\n  Done when: TBD\n"
     tasks_file.write_text(content + new_entry, encoding="utf-8")
     print(f"  ✅ 任务已写入 projects/{project}/TASKS.md")
 

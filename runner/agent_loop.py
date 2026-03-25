@@ -724,7 +724,7 @@ class AgentLoop:
             t = t.strip()
             if not t or t in existing_content:
                 continue
-            new_entries += f"- [ ] {t} [zero-resource]\n  Done when: TBD\n\n"
+            new_entries += f"- [ ] {t}\n  Done when: TBD\n\n"
 
         if new_entries:
             tasks_file.write_text(
@@ -757,7 +757,7 @@ class AgentLoop:
 
         tasks_content = f"# {name} — 任务列表\n\n"
         for t in tasks:
-            tasks_content += f"- [ ] {t} [zero-resource]\n  Done when: TBD\n\n"
+            tasks_content += f"- [ ] {t}\n  Done when: TBD\n\n"
         (project_dir / "TASKS.md").write_text(tasks_content, encoding="utf-8")
 
         return (
@@ -783,7 +783,7 @@ class AgentLoop:
         content = tasks_file.read_text(encoding="utf-8")
         new_tasks = ""
         for t in tasks:
-            new_tasks += f"\n- [ ] {t} [zero-resource]\n  Done when: TBD\n"
+            new_tasks += f"\n- [ ] {t}\n  Done when: TBD\n"
 
         insert_point = content.find("## Completed")
         if insert_point == -1:
