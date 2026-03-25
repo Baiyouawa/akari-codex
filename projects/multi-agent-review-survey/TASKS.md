@@ -37,8 +37,10 @@
 - [ ] 检索并筛选最新的 multi-agent 相关综述/survey 论文，优先近年高相关结果，初步候选不少于15篇
   Done when: TBD
 
-- [ ] 对候选论文逐篇判断是否属于真正的综述/survey，并按新近程度与相关性筛到10篇
-  Done when: TBD
+- [x] 对候选论文逐篇判断是否属于真正的综述/survey，并按新近程度与相关性筛到10篇
+  Completed: 2026-03-26T01:00:51+08:00
+  Done when: 逐篇给出 survey 判定依据，并形成按新近程度与相关性排序的 top 10
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-candidate-survey-judgment-and-top10.md`
 
 - [ ] 为最终确定的10篇论文查找可下载的 PDF 链接，并下载保存到 multi-agent-review-survey/literature 文件夹
   Done when: TBD
