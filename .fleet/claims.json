@@ -1958,7 +1958,8 @@
       "session_id": "日向-03-1774462751-3a39bf",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774462751.4277394,
-      "active": true
+      "active": false,
+      "released_at": 1774463044.6666038
     },
     "claim-7a29160985d3": {
       "task_id": "61c9aec1db163d77",
@@ -1966,6 +1967,14 @@
       "session_id": "文乃-04-1774462781-971acb",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774462781.4851305,
+      "active": true
+    },
+    "claim-35a9b68774df": {
+      "task_id": "2012ce4a08863f08",
+      "worker_id": "千早-05",
+      "session_id": "千早-05-1774463081-d98617",
+      "project": "multi-agent-review-survey",
+      "claimed_at": 1774463081.9603274,
       "active": true
     }
   }
