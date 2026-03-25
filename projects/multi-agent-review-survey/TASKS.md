@@ -109,11 +109,15 @@
   Done when: canonical 10 篇均具备可追溯 PDF 链接记录，且对应 PDF 已保存到 `projects/multi-agent-review-survey/literature/`
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-pdf-links-and-download-record.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/logs/2026-03-26T01:44:55+08:00-fleet-沙弥香-09-1774460647-ec3ac4-download-task-closeout.md`
 
-- [ ] 对已下载文件做交叉 review：检查文件是否可打开、标题是否匹配、是否重复、总数是否达到 10 篇；不达标就继续补齐
-  Done when: TBD
+- [x] 对已下载文件做交叉 review：检查文件是否可打开、标题是否匹配、是否重复、总数是否达到 10 篇；不达标就继续补齐
+  Completed: 2026-03-26T01:52:17+08:00
+  Done when: 已下载文件的交叉 review 结果落盘，确认 canonical 10 篇可打开、标题匹配、无重复，且目录总数达到 10 篇
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-downloaded-files-cross-review-revalidation.md`; `projects/multi-agent-review-survey/logs/2026-03-26T01:52:17+08:00-fleet-柑奈-10-1774460858-1973c8-downloaded-files-cross-review.md`
 
-- [ ] 核查 projects/multi-agent-review-survey/literature/ 中现有 PDF，补齐到 10 篇“最新且明确属于 multi-agent 综述/survey”的论文，并记录每篇的题目、年份、链接、是否正式综述、PDF 路径
-  Done when: TBD
+- [x] 核查 projects/multi-agent-review-survey/literature/ 中现有 PDF，补齐到 10 篇“最新且明确属于 multi-agent 综述/survey”的论文，并记录每篇的题目、年份、链接、是否正式综述、PDF 路径
+  Completed: 2026-03-26T01:49:08+08:00
+  Done when: canonical 10 篇均在 `literature/` 中落盘，且题目、年份、来源链接、正式综述判定、PDF 路径已统一写入项目文档
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-literature-top10-inventory-closeout.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-final-top10-verification-audit.md`
 
 - [x] 对 10 篇综述逐篇精读，抽取统一结构信息：研究问题、分类框架、核心观点、方法谱系、数据集/benchmark、评测维度、主要结论、局限性、未来方向
   Completed: 2026-03-26T00:16:17+08:00
