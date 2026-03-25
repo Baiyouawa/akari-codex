@@ -42,8 +42,9 @@
 - [ ] 基于5篇综述提出5个可做的研究 idea，并为每个 idea 写出具体方法设计、可行性与潜在贡献 [zero-resource] [blocked-by: 缺少前置综述比较与研究空白综合。]
   Done when: 形成5个结构完整、来源可追溯的研究 idea。
 
-- [ ] 若任一论文缺失、下载失败或信息不全，立即报告阻塞详情：哪个Agent卡住、卡点与缺失资料 [zero-resource]
-  Done when: TBD
+- [x] 若任一论文缺失、下载失败或信息不全，立即报告阻塞详情：哪个Agent卡住、卡点与缺失资料 [zero-resource]
+  Completed: 2026-03-25T23:32:11+08:00
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-25-blocker-rollup.md`; `projects/multi-agent-review-survey/logs/2026-03-25T23:32:11+08:00-fleet-岛村-01-1774452693-235d22-blocker-rollup.md`
 
 - [ ] 将 multi-agent 相关最新综述的检索范围从5篇扩展到10篇，确保时间新、相关性强且尽量覆盖不同子方向 [zero-resource] [blocked-by: 当前仓库既没有已确认的5篇综述基线，也没有本地候选综述题录/来源快照/PDF/笔记库可用于 provenance-backed 的 10 篇筛选；详见 `projects/multi-agent-review-survey/logs/2026-03-25T23:32:28+08:00-fleet-智乃-02-1774452693-e956e9-ten-survey-expansion-blocked.md`]
   Done when: 仓库内先补齐已确认的5篇综述清单，或补齐可追溯的 recent multi-agent 综述候选库，再据此筛出时间新、相关性强且覆盖不同子方向的10篇综述。
@@ -59,3 +60,16 @@
 
 - [ ] 检查原任务中的 idea 部分是否需要根据10篇综述重新提炼，如无额外指示则先保持输出5个高质量 idea 并用10篇综述作为依据 [zero-resource] [blocked-by: 缺少基于10篇综述的横向比较与研究空白综合。]
   Done when: 明确 idea 输出口径，并完成基于10篇综述证据的 idea 校正或重提炼。
+
+- [ ] 检索 multi-agent 相关最新 10 篇综述论文，优先 arXiv、OpenReview、期刊官网与会议官方页面，确认题目、年份、来源与 PDF 链接 [zero-resource]
+  Done when: TBD
+
+- [ ] 将确认后的 10 篇综述论文 PDF 下载到项目 literature 文件夹中，确保文件可打开且命名规范 [zero-resource]
+  Done when: TBD
+
+- [ ] 记录每篇论文的元数据（题目、作者、年份、来源、PDF 路径）并汇总到项目文档中 [zero-resource]
+  Done when: TBD
+
+- [ ] 若下载受阻或缺失 PDF，第一时间汇报具体卡住的 Agent、阻塞点与缺失资料 [zero-resource]
+  Done when: TBD
+
