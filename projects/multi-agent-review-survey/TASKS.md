@@ -151,11 +151,15 @@
   Done when: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-idea-dedup-and-priority.md` 完成 10 个 idea 的去重、优先级排序、短中期/高风险分类与 Top 3 起步建议
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-idea-dedup-and-priority.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-detailed-ideas.md`
 
-- [ ] 对最终 Markdown 文档做互相 review，检查完整性、中文表达质量、事实一致性、可追溯引用与 PDF 对应关系；若发现偷懒式 blocked 或只尝试单一路径，按 PUA 标准打回重做
-  Done when: TBD
+- [x] 对最终 Markdown 文档做互相 review，检查完整性、中文表达质量、事实一致性、可追溯引用与 PDF 对应关系；若发现偷懒式 blocked 或只尝试单一路径，按 PUA 标准打回重做
+  Completed: 2026-03-26T02:06:54+08:00
+  Done when: 最终 Markdown 文档通过结构完整性、事实一致性、可追溯引用与 PDF 对应关系复核，并写入项目文档
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-final-markdown-review.md`; `projects/multi-agent-review-survey/logs/2026-03-26T02:06:54+08:00-fleet-沙弥香-09-1774461970-47dba1-final-markdown-review-and-closeout.md`
 
-- [ ] 把最终文档保存到项目内，文件名明确，例如 projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md，并在文档开头给出论文清单与 PDF 对应关系
-  Done when: TBD
+- [x] 把最终文档保存到项目内，文件名明确，例如 projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md，并在文档开头给出论文清单与 PDF 对应关系
+  Completed: 2026-03-26T02:06:54+08:00
+  Done when: 最终文档已落盘到项目内，且文档开头给出论文清单与 PDF 对应关系
+  Evidence: `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-final-markdown-review.md`; `projects/multi-agent-review-survey/logs/2026-03-26T02:06:54+08:00-fleet-沙弥香-09-1774461970-47dba1-final-markdown-review-and-closeout.md`
 
 - [ ] 纠正任务口径：废弃或降级所有仅要求‘5个idea’的旧任务，统一以‘10篇综述精读 + 10个详细idea’为最终目标继续执行
   Done when: TBD
