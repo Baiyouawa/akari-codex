@@ -2247,7 +2247,8 @@
       "session_id": "结衣-11-1774466266-97093c",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774466266.9042761,
-      "active": true
+      "active": false,
+      "released_at": 1774466631.9105387
     },
     "claim-b6bd052f7112": {
       "task_id": "b0e0cd4e249f9e28",
@@ -2255,7 +2256,8 @@
       "session_id": "侑-00-1774466296-d4f058",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774466296.958338,
-      "active": true
+      "active": false,
+      "released_at": 1774466634.9357357
     },
     "claim-6adea8cd16c7": {
       "task_id": "524b63c65d4fe9f4",
