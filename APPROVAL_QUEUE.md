@@ -162,3 +162,12 @@ Notes: <any modifications or context>
 **Description:** Need approval or workaround for shell allowlist/denylist issue to complete required git commit. `run_shell` blocks commands containing `git add` because the denylist matches the substring `dd `. Without staging, I cannot commit the new multi-agent-survey artifacts required by the task.
 **Status:** pending
 
+
+---
+
+### [BLOCKING] tool-access
+
+**Requested:** 2026-03-25T14:29:58.611092+00:00
+**Description:** Need approval or alternative for staging files because allowlisted shell invocation of `git add` is blocked by the denylist substring `dd `. Current session completed a provenance-backed blocker update for projects/multi-agent-survey, but cannot create the required git commit with message [fleet/由希奈-04-1774448699-7f7886] until staging is possible.
+**Status:** pending
+
