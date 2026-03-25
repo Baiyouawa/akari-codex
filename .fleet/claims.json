@@ -2003,6 +2003,15 @@
       "session_id": "灯里-08-1774463502-020f26",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774463502.6275485,
+      "active": false,
+      "released_at": 1774463696.5146742
+    },
+    "claim-2d417226f824": {
+      "task_id": "63b091d8bf232a23",
+      "worker_id": "沙弥香-09",
+      "session_id": "沙弥香-09-1774463682-927656",
+      "project": "multi-agent-review-survey",
+      "claimed_at": 1774463682.9248018,
       "active": true
     }
   }
