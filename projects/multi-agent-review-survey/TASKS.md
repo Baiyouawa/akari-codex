@@ -152,14 +152,14 @@
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-idea-dedup-and-priority.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-detailed-ideas.md`
 
 - [x] 对最终 Markdown 文档做互相 review，检查完整性、中文表达质量、事实一致性、可追溯引用与 PDF 对应关系；若发现偷懒式 blocked 或只尝试单一路径，按 PUA 标准打回重做
-  Completed: 2026-03-26T02:06:54+08:00
+  Completed: 2026-03-26T02:07:07+08:00
   Done when: 最终 Markdown 文档通过结构完整性、事实一致性、可追溯引用与 PDF 对应关系复核，并写入项目文档
-  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-final-markdown-review.md`; `projects/multi-agent-review-survey/logs/2026-03-26T02:06:54+08:00-fleet-沙弥香-09-1774461970-47dba1-final-markdown-review-and-closeout.md`
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-final-markdown-cross-review.md`; `projects/multi-agent-review-survey/logs/2026-03-26T02:07:07+08:00-fleet-灯里-08-1774461940-b59ce3-final-markdown-cross-review.md`
 
 - [x] 把最终文档保存到项目内，文件名明确，例如 projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md，并在文档开头给出论文清单与 PDF 对应关系
-  Completed: 2026-03-26T02:06:54+08:00
+  Completed: 2026-03-26T02:07:07+08:00
   Done when: 最终文档已落盘到项目内，且文档开头给出论文清单与 PDF 对应关系
-  Evidence: `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-final-markdown-review.md`; `projects/multi-agent-review-survey/logs/2026-03-26T02:06:54+08:00-fleet-沙弥香-09-1774461970-47dba1-final-markdown-review-and-closeout.md`
+  Evidence: `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-final-markdown-cross-review.md`; `projects/multi-agent-review-survey/logs/2026-03-26T02:07:07+08:00-fleet-灯里-08-1774461940-b59ce3-final-markdown-cross-review.md`
 
 - [ ] 纠正任务口径：废弃或降级所有仅要求‘5个idea’的旧任务，统一以‘10篇综述精读 + 10个详细idea’为最终目标继续执行
   Done when: TBD
@@ -167,8 +167,10 @@
 - [ ] 盘点并核验 literature 文件夹现有 PDF：确认每篇是否为 2024-2026 年、是否明确属于综述/survey、是否与 multi-agent 高相关；不足则继续补齐到准确 10 篇
   Done when: TBD
 
-- [ ] 对最终 10 篇论文逐篇精读，按统一模板抽取：研究问题、分类框架、关键方法脉络、涉及数据集/benchmark、评测维度、主要结论、局限性、作者给出的未来方向
-  Done when: TBD
+- [x] 对最终 10 篇论文逐篇精读，按统一模板抽取：研究问题、分类框架、关键方法脉络、涉及数据集/benchmark、评测维度、主要结论、局限性、作者给出的未来方向
+  Completed: 2026-03-26T02:12:23+08:00
+  Done when: canonical 10 篇均已按统一模板完成结构化精读，并与主报告和元数据清单保持一致
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-structured-reading-task-closeout.md`; `projects/multi-agent-review-survey/logs/2026-03-26T02:12:23+08:00-fleet-灯里-00-1774462300-c5384e-structured-reading-task-closeout.md`
 
 - [ ] 产出中文 Markdown 主报告，文件保存为 projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md；内容必须包含：执行摘要、10篇逐篇解读、横向对比表、趋势总结、研究空白
   Done when: TBD
