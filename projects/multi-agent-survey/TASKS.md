@@ -34,3 +34,19 @@
 
 - [ ] 撰写一篇完整的 LaTeX 综述论文，采用 KDD 风格结构，包含摘要、引言、相关工作、分类综述、逐方向分析、未来课题设计、结论与参考文献 [zero-resource]
   Done when: TBD
+
+- [ ] 调研近三年 ICLR 上与 multi-agent 相关的论文，整理每篇论文的 Motivation、创新点、方法论、下载链接与简要综述 [zero-resource] [blocked-by: 当前仓库缺少 ICLR 2024 inventory，且 2025-2026 仅有标题/作者/链接级 metadata，没有摘要、全文摘录或已验证笔记来支持逐篇 Motivation/创新点/方法论综述；详见 `projects/multi-agent-survey/logs/2026-03-25T22:09:50+08:00-iclr-per-paper-summaries-blocked-islandmura.md`]
+  Done when: 仓库内补齐 ICLR 2024/2025/2026 纳入论文的可追溯内容来源（至少摘要、全文摘录或已验证笔记）后，为每篇论文补齐 Motivation、创新点、方法论、下载链接与简要综述
+  Evidence: `projects/multi-agent-survey/literature/2026-03-25-iclr-high-relevance-2025-2026.md`; `projects/multi-agent-survey/logs/2026-03-25T22:09:50+08:00-iclr-per-paper-summaries-blocked-islandmura.md`
+
+- [ ] 调研近三年 ICML 上与 multi-agent 相关的论文，整理每篇论文的 Motivation、创新点、方法论、下载链接与简要综述 [zero-resource]
+  Done when: TBD
+
+- [ ] 调研近三年 NeurIPS 上与 multi-agent 相关的论文，整理每篇论文的 Motivation、创新点、方法论、下载链接与简要综述 [zero-resource]
+  Done when: TBD
+
+- [ ] 调研最近三个月 OpenReview 上 ICML 2026 的 multi-agent 相关论文，整理每篇论文的 Motivation、创新点、方法论、下载链接与简要综述 [zero-resource]
+  Done when: TBD
+
+- [ ] 综合全部调研结果，提出 5 个最适合继续开展的研究课题方向，并为每个方向给出详细方法设计与切入建议 [zero-resource]
+  Done when: TBD
