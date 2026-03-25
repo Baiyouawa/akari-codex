@@ -246,14 +246,18 @@
   Done when: canonical 10 篇对应 PDF 已在 `projects/multi-agent-review-survey/literature/` 落盘，且经本地 `python3 + pypdf.PdfReader` 核验 10/10 可打开、文件头为 `%PDF-`、命名无冲突、目录总数不少于 10
   Evidence: `projects/multi-agent-review-survey/logs/2026-03-26T03:05:10+08:00-fleet-柑奈-02-1774465485-c6cce9-download-final-confirmed-pdfs-closeout.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-pdf-links-and-download-record.md`
 
-- [ ] 为每篇已确认综述提取摘要、研究问题、分类框架、核心结论、局限性和可延展方向，整理成后续中文 Markdown 精读的结构化笔记
-  Done when: TBD
+- [x] 为每篇已确认综述提取摘要、研究问题、分类框架、核心结论、局限性和可延展方向，整理成后续中文 Markdown 精读的结构化笔记
+  Completed: 2026-03-26T03:09:07+08:00
+  Done when: `projects/multi-agent-review-survey/analysis/2026-03-26-confirmed-ten-survey-structured-notes-for-cn-markdown.md` 覆盖 canonical 10 篇已确认综述，且每篇均包含 `摘要`、`研究问题`、`分类框架`、`核心结论`、`局限性`、`可延展方向` 六个字段
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-confirmed-ten-survey-structured-notes-for-cn-markdown.md`; `projects/multi-agent-review-survey/logs/2026-03-26T03:09:07+08:00-fleet-由希奈-04-1774465696-1e2151-structured-notes-closeout.md`
 
 - [ ] 基于这 10 篇综述归纳 10 个后续可开展的详细 research/execution ideas，记录每个 idea 的动机、切入点、预期产出和依赖条件
   Done when: TBD
 
-- [ ] 盘点并确认项目中目标 10 篇 multi-agent 相关综述论文的最终清单，补齐题目、年份、链接与引用信息，若缺失则联网检索验证。
-  Done when: TBD
+- [x] 盘点并确认项目中目标 10 篇 multi-agent 相关综述论文的最终清单，补齐题目、年份、链接与引用信息，若缺失则联网检索验证。
+  Completed: 2026-03-26T03:08:56+08:00
+  Done when: `projects/multi-agent-review-survey/analysis/2026-03-26-final-top10-list-with-cn-abstract-entry.md` 与 `projects/multi-agent-review-survey/analysis/2026-03-26-final-selected-10-and-exclusion-list.md` 共同覆盖 canonical 10 篇的题目、年份、来源/PDF 链接、入选理由与引用入口，并与 `literature/` 实际 PDF 一一对应
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-final-top10-list-with-cn-abstract-entry.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-final-selected-10-and-exclusion-list.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/logs/2026-03-26T03:08:56+08:00-fleet-枫-05-1774465696-18492c-final-top10-list-reconciliation.md`
 
 - [ ] 对这 10 篇综述逐篇精读，提炼中文总结：研究问题、分类框架、核心观点、代表方法、数据集/benchmark、优缺点、局限与启发。
   Done when: TBD
