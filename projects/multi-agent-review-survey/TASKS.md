@@ -256,8 +256,10 @@
   Done when: 项目内已有 10 个 ideas 的主文档与去重排序文档，且可将每个 idea 的动机、切入点、预期产出和依赖条件回链到字段化证据
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-detailed-ideas.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-idea-dedup-and-priority.md`; `projects/multi-agent-review-survey/logs/2026-03-26T03:06:55+08:00-fleet-日向-03-1774465575-348aea-idea-assignment-closeout.md`
 
-- [ ] 盘点并确认项目中目标 10 篇 multi-agent 相关综述论文的最终清单，补齐题目、年份、链接与引用信息，若缺失则联网检索验证。
-  Done when: TBD
+- [x] 盘点并确认项目中目标 10 篇 multi-agent 相关综述论文的最终清单，补齐题目、年份、链接与引用信息，若缺失则联网检索验证。
+  Completed: 2026-03-26T03:14:18+08:00
+  Done when: canonical 10 篇最终清单已在项目文档中补齐题目、年份、来源链接、PDF 链接与引用入口，并经本地 PDF 存在性/页数复核
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-final-top10-list-with-cn-abstract-entry.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-final-selected-10-and-exclusion-list.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/logs/2026-03-26T03:14:18+08:00-fleet-侑-08-1774465996-f31c04-final-top10-list-closeout.md`
 
 - [ ] 对这 10 篇综述逐篇精读，提炼中文总结：研究问题、分类框架、核心观点、代表方法、数据集/benchmark、优缺点、局限与启发。
   Done when: TBD
