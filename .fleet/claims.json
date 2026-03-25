@@ -1869,7 +1869,8 @@
       "session_id": "枫-05-1774461549-e6b16c",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774461549.4727542,
-      "active": true
+      "active": false,
+      "released_at": 1774461905.5450542
     },
     "claim-724bf3f9d2cf": {
       "task_id": "eebc43b5a547e4de",
