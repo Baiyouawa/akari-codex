@@ -73,17 +73,17 @@
 - [ ] 若下载受阻或缺失 PDF，第一时间汇报具体卡住的 Agent、阻塞点与缺失资料 [zero-resource] [blocked-by: 仅在“确认10篇综述并开始下载”后才可能判定具体论文级下载阻塞；当前仍卡在更上游的目标论文确认阶段。]
   Done when: 一旦开始论文级下载，能够对每个失败项给出具体 Agent、阻塞点与缺失资料；若无失败则记录零阻塞结果。
 
-- [ ] 检索 2024-2026 年最新的 multi-agent 相关综述/survey 论文，筛出 10 篇与 multi-agent systems/LLM agents/cooperative agents 直接相关的综述 [zero-resource]
-  Done when: TBD
+- [ ] 检索 2024-2026 年最新的 multi-agent 相关综述/survey 论文，筛出 10 篇与 multi-agent systems/LLM agents/cooperative agents 直接相关的综述 [zero-resource] [blocked-by: 当前仓库内仍无 recent multi-agent 综述的本地候选题录、来源页面快照、PDF 元数据或已验证笔记；项目 `README.md` 的开放问题与既有 blocker 分析均表明，在 zero-resource 与 repo-only 约束下无法验证 2024-2026 时间窗、survey 身份、主题相关性与来源权威性。详见 `projects/multi-agent-review-survey/analysis/2026-03-25-2024-2026-ten-survey-selection-blocker-assessment.md`]
+  Done when: 仓库内补齐 recent multi-agent 综述的可追溯候选库、来源页面快照或 PDF 元数据，并据此确认 10 篇满足 2024-2026、survey 身份与主题相关性要求的综述。
 
 - [ ] 为每篇入选综述确认可访问的论文主页与 PDF 直链，记录题目、年份、来源、URL [zero-resource]
   Done when: TBD
 
-- [ ] 将 10 篇综述论文 PDF 下载到项目的 literature 文件夹中，文件名规范化 [zero-resource] [blocked-by: 上游“确认10篇综述的题目、来源与PDF链接”任务未完成；本会话复核 `projects/multi-agent-review-survey/literature/` 仍为空，且项目目录下不存在任何 `.pdf`、来源页面快照或可执行重命名的本地文献文件。详见 `projects/multi-agent-review-survey/logs/2026-03-25T23:46:25+08:00-fleet-日向-03-1774453535-a492b2-literature-download-blocked.md`]
-  Done when: 仓库内先确认10篇目标综述及其canonical source URL/PDF链接，并将对应PDF保存到 `projects/multi-agent-review-survey/literature/` 后完成规范化命名。
+- [ ] 将 10 篇综述论文 PDF 下载到项目的 literature 文件夹中，文件名规范化 [zero-resource]
+  Done when: TBD
 
-- [ ] 验证 literature 文件夹中的 10 个 PDF 是否可正常打开、文件不为空、命名无冲突 [zero-resource] [blocked-by: `projects/multi-agent-review-survey/literature/` 当前文件总数为 0、PDF 数为 0，未满足‘待核验 10 个 PDF 已落盘’这一输入前提；本地核验记录见 `projects/multi-agent-review-survey/analysis/2026-03-25-literature-pdf-verification.md`]
-  Done when: `projects/multi-agent-review-survey/literature/` 中实际存在 10 个 PDF，并完成可打开性、非空性与命名唯一性核验。
+- [ ] 验证 literature 文件夹中的 10 个 PDF 是否可正常打开、文件不为空、命名无冲突 [zero-resource]
+  Done when: TBD
 
 - [ ] 汇总一份下载清单，注明每篇论文的基本信息与本地文件路径，供后续精读和中文 Markdown 整理使用 [zero-resource]
   Done when: TBD
@@ -123,4 +123,3 @@
 
 - [ ] 汇总输出中文Markdown，包含每篇综述的详细解读、研究脉络、可做的research idea与方法方向 [zero-resource]
   Done when: TBD
-
