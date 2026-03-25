@@ -51,8 +51,10 @@
 - [ ] 为最终确定的10篇论文查找可下载的 PDF 链接，并下载保存到 multi-agent-review-survey/literature 文件夹
   Done when: TBD
 
-- [ ] 对已下载论文进行交叉复核：检查题目、年份、survey属性、PDF可读性与文件是否落盘完整
-  Done when: TBD
+- [x] 对已下载论文进行交叉复核：检查题目、年份、survey属性、PDF可读性与文件是否落盘完整
+  Completed: 2026-03-26T01:10:24+08:00
+  Done when: canonical 10 篇论文均完成题目、年份、survey 属性、PDF 可读性与落盘完整性复核，并写入项目文档
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-canonical-ten-cross-verification.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-literature-pdf-verification.md`
 
 - [x] 汇总10篇论文的基础信息，准备后续中文解读整理
   Completed: 2026-03-26T01:11:19+08:00
