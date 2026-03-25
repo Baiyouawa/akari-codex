@@ -59,8 +59,9 @@
   Done when: 仓库内补齐 ICLR 2024/2025/2026 纳入论文清单，并为每篇提供可追溯摘要、全文摘录或已验证笔记，再据此整理 Motivation、创新点、方法论与下载链接
   Evidence: `projects/multi-agent-survey/literature/2026-03-25-iclr-high-relevance-2025-2026.md`; `projects/multi-agent-survey/logs/2026-03-25T22:16:29+08:00-fleet-结衣-03-1774448153-cf924a-iclr-per-paper-methodology-blocked.md`
 
-- [ ] 调研近三年 ICML 的 multi-agent 相关论文，逐篇整理 Motivation、创新点、方法论，并收集论文下载链接 [zero-resource]
-  Done when: TBD
+- [ ] 调研近三年 ICML 的 multi-agent 相关论文，逐篇整理 Motivation、创新点、方法论，并收集论文下载链接 [zero-resource] [blocked-by: 当前仓库仅有 `projects/multi-agent-survey/literature/icml-2023-2025.md` 的 83 篇标题/作者/链接级 metadata，缺少可支撑逐篇 Motivation、创新点与方法论整理的摘要、全文摘录或已验证笔记；详见 `projects/multi-agent-survey/logs/2026-03-25T22:20:58+08:00-fleet-枫-05-1774448424-fe99a5-icml-per-paper-methodology-blocked.md`]
+  Done when: 仓库内为 ICML 2023-2025 纳入论文补齐可追溯摘要、全文摘录或已验证笔记，并据此逐篇整理 Motivation、创新点、方法论与下载链接
+  Evidence: `projects/multi-agent-survey/literature/icml-2023-2025.md`; `projects/multi-agent-survey/logs/2026-03-25T22:20:58+08:00-fleet-枫-05-1774448424-fe99a5-icml-per-paper-methodology-blocked.md`
 
 - [ ] 调研近三年 NeurIPS 的 multi-agent 相关论文，逐篇整理 Motivation、创新点、方法论，并收集论文下载链接 [zero-resource]
   Done when: TBD
@@ -79,8 +80,9 @@
 - [ ] 调研近三年 ICLR 的 multi-agent 相关论文，筛选并整理每篇论文的 Motivation、创新点、方法论、论文下载链接与简要综述 [zero-resource]
   Done when: TBD
 
-- [ ] 调研近三年 ICML 的 multi-agent 相关论文，筛选并整理每篇论文的 Motivation、创新点、方法论、论文下载链接与简要综述 [zero-resource]
-  Done when: TBD
+- [ ] 调研近三年 ICML 的 multi-agent 相关论文，筛选并整理每篇论文的 Motivation、创新点、方法论、论文下载链接与简要综述 [zero-resource] [blocked-by: 当前仓库仅有 `projects/multi-agent-survey/literature/icml-2023-2025.md` 的 83 篇标题/作者/链接级 metadata，缺少可支撑逐篇 Motivation、创新点、方法论与简要综述的摘要、全文摘录或已验证笔记；详见 `projects/multi-agent-survey/logs/2026-03-25T22:31:51+08:00-fleet-侑-08-1774449059-91011e-icml-per-paper-review-blocked.md`]
+  Done when: 仓库内为 ICML 2023-2025 纳入论文补齐可追溯摘要、全文摘录或已验证笔记，并据此筛选整理每篇论文的 Motivation、创新点、方法论、论文下载链接与简要综述
+  Evidence: `projects/multi-agent-survey/literature/icml-2023-2025.md`; `projects/multi-agent-survey/logs/2026-03-25T22:31:51+08:00-fleet-侑-08-1774449059-91011e-icml-per-paper-review-blocked.md`
 
 - [ ] 调研近三年 NeurIPS 的 multi-agent 相关论文，筛选并整理每篇论文的 Motivation、创新点、方法论、论文下载链接与简要综述 [zero-resource]
   Done when: TBD
