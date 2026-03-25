@@ -70,6 +70,6 @@
 - [ ] 记录每篇论文的元数据（题目、作者、年份、来源、PDF 路径）并汇总到项目文档中 [zero-resource]
   Done when: TBD
 
-- [ ] 若下载受阻或缺失 PDF，第一时间汇报具体卡住的 Agent、阻塞点与缺失资料 [zero-resource]
-  Done when: TBD
-
+- [x] 若下载受阻或缺失 PDF，第一时间汇报具体卡住的 Agent、阻塞点与缺失资料 [zero-resource]
+  Completed: 2026-03-25T23:39:25+08:00
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-25-blocker-rollup.md`; `projects/multi-agent-review-survey/logs/2026-03-25T23:39:25+08:00-fleet-侑-00-1774453114-41a8f4-download-pdf-blocker-report.md`

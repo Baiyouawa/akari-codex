@@ -1211,7 +1211,8 @@
       "session_id": "岛村-01-1774452693-235d22",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774452693.700569,
-      "active": true
+      "active": false,
+      "released_at": 1774453066.6942368
     },
     "claim-fd4edce7a5b7": {
       "task_id": "77e6bca380df3587",
@@ -1219,7 +1220,8 @@
       "session_id": "智乃-02-1774452693-e956e9",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774452693.7068522,
-      "active": true
+      "active": false,
+      "released_at": 1774453043.5436885
     },
     "claim-e4ddd08c705a": {
       "task_id": "c7c05a45cbdeb806",
@@ -1227,7 +1229,8 @@
       "session_id": "日向-03-1774452723-ecc7b8",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774452723.7722456,
-      "active": true
+      "active": false,
+      "released_at": 1774453054.2011197
     },
     "claim-a6a37090068e": {
       "task_id": "86b93c23f8480a55",
@@ -1237,6 +1240,38 @@
       "claimed_at": 1774452783.870624,
       "active": false,
       "released_at": 1774452927.8408673
+    },
+    "claim-f9208e563de8": {
+      "task_id": "2b944ecc741a997d",
+      "worker_id": "沙弥香-01",
+      "session_id": "沙弥香-01-1774453054-cdbef9",
+      "project": "multi-agent-review-survey",
+      "claimed_at": 1774453054.254923,
+      "active": true
+    },
+    "claim-80ce5aa7ad38": {
+      "task_id": "20be5ab13134c8e4",
+      "worker_id": "柑奈-02",
+      "session_id": "柑奈-02-1774453084-0d04e9",
+      "project": "multi-agent-review-survey",
+      "claimed_at": 1774453084.2996027,
+      "active": true
+    },
+    "claim-9775e52b347a": {
+      "task_id": "2f1c6b0982d95f4e",
+      "worker_id": "结衣-03",
+      "session_id": "结衣-03-1774453084-0124c4",
+      "project": "multi-agent-review-survey",
+      "claimed_at": 1774453084.3052974,
+      "active": true
+    },
+    "claim-a0dbee343b9a": {
+      "task_id": "8fe12ea9fce39fa8",
+      "worker_id": "侑-00",
+      "session_id": "侑-00-1774453114-41a8f4",
+      "project": "multi-agent-review-survey",
+      "claimed_at": 1774453114.3609357,
+      "active": true
     }
   }
 }
