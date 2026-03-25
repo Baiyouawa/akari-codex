@@ -806,6 +806,8 @@ async def _run(config: OneBotConfig) -> None:
                         continue
 
         except (ConnectionError, OSError, ConnectionClosed) as e:
+            if 'blocked_poller' in dir():
+                blocked_poller.cancel()
             logger.warning("WebSocket 断开: %s — 5 秒后重连...", e)
             await asyncio.sleep(5)
         except Exception as e:
