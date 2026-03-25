@@ -88,6 +88,7 @@ class FleetScheduler:
         self._last_supply_warning_time = 0.0
         self._last_branch_cleanup_time = 0.0
         self._consecutive_failures = 0
+        self._last_failure_time = 0.0
         self._has_ever_launched = False
 
         self._manager: Manager | None = None
@@ -151,9 +152,12 @@ class FleetScheduler:
         self._draining = True
 
     def _shutdown(self) -> None:
+        global _scheduler_instance
+
         logger.info("Fleet shutting down, waiting for %d active workers...",
                      self.metrics.get_active_count())
         self._draining = True
+        self._running = False
 
         if self._pool:
             self._pool.shutdown(wait=True, cancel_futures=False)
@@ -167,6 +171,9 @@ class FleetScheduler:
             self._manager.shutdown()
             self._manager = None
 
+        if _scheduler_instance is self:
+            _scheduler_instance = None
+
         logger.info("Fleet scheduler stopped")
 
     def _tick(self) -> None:
@@ -177,11 +184,20 @@ class FleetScheduler:
             return
 
         if self._consecutive_failures >= self.config.max_consecutive_failures:
-            logger.warning(
-                "Circuit breaker: %d consecutive failures, skipping refill",
-                self._consecutive_failures,
+            cooldown = 60 * (1 + self._consecutive_failures - self.config.max_consecutive_failures)
+            elapsed_since_fail = time.time() - self._last_failure_time
+            if elapsed_since_fail < cooldown:
+                logger.warning(
+                    "Circuit breaker: %d consecutive failures, cooldown %.0fs remaining",
+                    self._consecutive_failures,
+                    cooldown - elapsed_since_fail,
+                )
+                return
+            logger.info(
+                "Circuit breaker cooldown expired (%.0fs), resetting and retrying",
+                elapsed_since_fail,
             )
-            return
+            self._consecutive_failures = 0
 
         available = scan_available_tasks(self.repo_root)
         claimed_ids = self.claims.get_claimed_task_ids()
@@ -360,6 +376,7 @@ class FleetScheduler:
                     self._consecutive_failures = 0
                 else:
                     self._consecutive_failures += 1
+                    self._last_failure_time = time.time()
                     logger.warning(
                         "Worker %s failed: %s (consecutive=%d)",
                         worker_id,
@@ -370,6 +387,7 @@ class FleetScheduler:
             except Exception as e:
                 logger.exception("Worker %s raised exception", worker_id)
                 self._consecutive_failures += 1
+                self._last_failure_time = time.time()
                 error_result = FleetWorkerResult(
                     task_id="unknown",
                     project="unknown",
@@ -457,8 +475,11 @@ def start_fleet(
     """
     global _scheduler_instance
 
-    if _scheduler_instance is not None and _scheduler_instance._running:
+    if _scheduler_instance is not None and _scheduler_instance._running and not _scheduler_instance._draining:
         return _scheduler_instance
+
+    if _scheduler_instance is not None and (_scheduler_instance._draining or not _scheduler_instance._running):
+        _scheduler_instance = None
 
     if repo_root is None:
         repo_root = Path(os.environ.get("OPENAKARI_HOME", str(Path.cwd())))
