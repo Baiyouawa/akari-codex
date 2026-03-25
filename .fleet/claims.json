@@ -1930,6 +1930,15 @@
       "session_id": "灯里-00-1774462300-c5384e",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774462300.678559,
+      "active": false,
+      "released_at": 1774462522.1617126
+    },
+    "claim-a32a87a30f81": {
+      "task_id": "5d1ad79f113b285b",
+      "worker_id": "沙弥香-01",
+      "session_id": "沙弥香-01-1774462571-e3c01b",
+      "project": "multi-agent-review-survey",
+      "claimed_at": 1774462571.1211925,
       "active": true
     }
   }
