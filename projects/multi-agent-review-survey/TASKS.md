@@ -45,18 +45,17 @@
 - [ ] 若任一论文缺失、下载失败或信息不全，立即报告阻塞详情：哪个Agent卡住、卡点与缺失资料 [zero-resource]
   Done when: TBD
 
-- [ ] 将 multi-agent 相关最新综述的检索范围从5篇扩展到10篇，确保时间新、相关性强且尽量覆盖不同子方向 [zero-resource]
-  Done when: TBD
+- [ ] 将 multi-agent 相关最新综述的检索范围从5篇扩展到10篇，确保时间新、相关性强且尽量覆盖不同子方向 [zero-resource] [blocked-by: 当前仓库既没有已确认的5篇综述基线，也没有本地候选综述题录/来源快照/PDF/笔记库可用于 provenance-backed 的 10 篇筛选；详见 `projects/multi-agent-review-survey/logs/2026-03-25T23:32:28+08:00-fleet-智乃-02-1774452693-e956e9-ten-survey-expansion-blocked.md`]
+  Done when: 仓库内先补齐已确认的5篇综述清单，或补齐可追溯的 recent multi-agent 综述候选库，再据此筛出时间新、相关性强且覆盖不同子方向的10篇综述。
 
-- [ ] 对新增的5篇综述完成来源核验，优先从 arXiv 或 OpenReview 获取原文并下载到本地 paper 目录 [zero-resource]
-  Done when: TBD
+- [ ] 对新增的5篇综述完成来源核验，优先从 arXiv 或 OpenReview 获取原文并下载到本地 paper 目录 [zero-resource] [blocked-by: 上游“扩展到10篇”任务未完成，且当前仓库没有新增5篇综述的已确认题录、来源页或 PDF 地址。]
+  Done when: 仓库内已确认新增5篇综述及其来源页面，并将原文/元数据保存到 `projects/multi-agent-review-survey/paper/`。
 
-- [ ] 对全部10篇综述逐篇精读，补充研究问题、方法框架、任务分类、评测设置、优缺点与未来方向 [zero-resource]
-  Done when: TBD
+- [ ] 对全部10篇综述逐篇精读，补充研究问题、方法框架、任务分类、评测设置、优缺点与未来方向 [zero-resource] [blocked-by: 缺少10篇已确认综述的本地全文、摘要摘录或已验证阅读笔记。]
+  Done when: 10篇综述均具备本地全文或等效可追溯阅读材料，并完成逐篇结构化笔记。
 
-- [ ] 更新最终中文 Markdown，将原来的5篇综述详述扩展为10篇综述详述 [zero-resource]
-  Done when: TBD
+- [ ] 更新最终中文 Markdown，将原来的5篇综述详述扩展为10篇综述详述 [zero-resource] [blocked-by: 前置的10篇综述筛选、下载与逐篇精读尚未完成。]
+  Done when: 基于10篇综述的结构化笔记产出更新后的中文 Markdown 总结文档。
 
-- [ ] 检查原任务中的 idea 部分是否需要根据10篇综述重新提炼，如无额外指示则先保持输出5个高质量 idea 并用10篇综述作为依据 [zero-resource]
-  Done when: TBD
-
+- [ ] 检查原任务中的 idea 部分是否需要根据10篇综述重新提炼，如无额外指示则先保持输出5个高质量 idea 并用10篇综述作为依据 [zero-resource] [blocked-by: 缺少基于10篇综述的横向比较与研究空白综合。]
+  Done when: 明确 idea 输出口径，并完成基于10篇综述证据的 idea 校正或重提炼。
