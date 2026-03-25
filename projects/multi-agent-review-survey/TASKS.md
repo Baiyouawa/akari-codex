@@ -201,11 +201,15 @@
   Done when: `projects/multi-agent-review-survey/analysis/2026-03-26-final-top10-list-with-cn-abstract-entry.md` 完成 10 篇 canonical 论文的题目、年份、PDF 文件名/路径、入选理由与中文摘要入口汇总，并经本地 PDF 存在性/页数核验
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-final-top10-list-with-cn-abstract-entry.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md`
 
-- [ ] 重做 2024-2026 年 multi-agent 相关综述/survey 检索任务：必须先使用 web_search 检索候选论文不少于15篇，覆盖 multi-agent systems、LLM-based multi-agent systems、communication/collaboration/coordination surveys 等子方向
-  Done when: TBD
+- [x] 重做 2024-2026 年 multi-agent 相关综述/survey 检索任务：必须先使用 web_search 检索候选论文不少于15篇，覆盖 multi-agent systems、LLM-based multi-agent systems、communication/collaboration/coordination surveys 等子方向
+  Completed: 2026-03-26T02:35:05+08:00
+  Done when: 至少 15 篇候选以 web_search 起始检索落盘，且显式覆盖 multi-agent systems、LLM-based multi-agent systems、communication、collaboration、coordination 等子方向
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-web-search-redo-2024-2026-survey-candidates-and-pdf-refresh.md`
 
-- [ ] 对每个候选用 web_fetch 抓取摘要页、arXiv页、期刊页或PDF首页信息，核验其是否明确自称 survey/review、年份是否在 2024-2026、主题是否与 multi-agent 直接相关
-  Done when: TBD
+- [x] 对每个候选用 web_fetch 抓取摘要页、arXiv页、期刊页或PDF首页信息，核验其是否明确自称 survey/review、年份是否在 2024-2026、主题是否与 multi-agent 直接相关
+  Completed: 2026-03-26T02:35:19+08:00
+  Done when: 候选核验文档逐篇记录来源页、年份、survey 证据和 multi-agent 相关性判断
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-web-fetch-candidate-validation.md`
 
 - [x] 输出最终入选10篇与剔除名单，给出每篇入选/剔除理由，并标注来源链接、PDF链接、年份、survey证据句
   Completed: 2026-03-26T02:36:49+08:00
