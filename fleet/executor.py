@@ -174,6 +174,12 @@ def execute_fleet_worker(
         result.total_tokens = session_result.token_usage.total_tokens
         _save_fleet_session_log(opts, session_result, opts.repo_root)
 
+        blocked, blocked_reason = _detect_blocked(
+            session_result, opts, opts.repo_root
+        )
+        result.blocked = blocked
+        result.blocked_reason = blocked_reason
+
         if session_result.success:
             _send_event("chatter", message=f"任务执行完毕，{result.turns}轮，提交中...")
             auto_commit_orphaned_files(cwd, opts.session_id)
@@ -186,21 +192,24 @@ def execute_fleet_worker(
 
             written = _extract_written_files(session_result.tool_calls_log)
             elapsed = time.time() - start_time
+
+            done_msg = "ok (blocked)" if blocked else "ok"
             _send_event(
-                "done", message="ok",
+                "done", message=done_msg,
                 deliverables=written,
                 total_tokens=result.total_tokens,
                 duration_seconds=elapsed,
             )
 
             logger.info(
-                "Worker %s completed task %s: turns=%d tokens=%d push=%s files=%d",
+                "Worker %s completed task %s: turns=%d tokens=%d push=%s files=%d%s",
                 opts.session_id,
                 opts.task.task_id[:8],
                 result.turns,
                 result.total_tokens,
                 result.push_result,
                 len(written),
+                f" BLOCKED: {blocked_reason[:80]}" if blocked else "",
             )
         else:
             result.error = session_result.error

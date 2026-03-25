@@ -108,6 +108,8 @@ class FleetWorkerResult:
     idle_exploration_type: str | None = None
     skill_type: SkillType | None = None
     worker_role: WorkerRole = WorkerRole.DEFAULT
+    blocked: bool = False
+    blocked_reason: str = ""
     push_result: str = ""  # pushed | branch-fallback | nothing-to-push | error
     head_before: str = ""
     head_after: str = ""
