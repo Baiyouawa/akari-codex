@@ -768,6 +768,8 @@ async def _run(config: OneBotConfig) -> None:
 
     logger.info("连接地址: %s", ws_url)
 
+    blocked_poller: asyncio.Task | None = None
+
     while True:
         try:
             async with ws_connect(
@@ -806,11 +808,13 @@ async def _run(config: OneBotConfig) -> None:
                         continue
 
         except (ConnectionError, OSError, ConnectionClosed) as e:
-            if 'blocked_poller' in dir():
+            if blocked_poller and not blocked_poller.done():
                 blocked_poller.cancel()
             logger.warning("WebSocket 断开: %s — 5 秒后重连...", e)
             await asyncio.sleep(5)
         except Exception as e:
+            if blocked_poller and not blocked_poller.done():
+                blocked_poller.cancel()
             logger.error("未知错误: %s — 10 秒后重连...", e)
             await asyncio.sleep(10)
 
