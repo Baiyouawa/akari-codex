@@ -166,8 +166,10 @@
   Done when: README / TASKS / session log 明确旧“5 ideas”口径已降级为历史中间产物，项目最终目标统一为“10 篇综述精读 + 10 个详细 idea”
   Evidence: `projects/multi-agent-review-survey/README.md`; `projects/multi-agent-review-survey/TASKS.md`; `projects/multi-agent-review-survey/logs/2026-03-26T02:08:58+08:00-fleet-智乃-10-1774462090-e5577c-scope-correction.md`
 
-- [ ] 盘点并核验 literature 文件夹现有 PDF：确认每篇是否为 2024-2026 年、是否明确属于综述/survey、是否与 multi-agent 高相关；不足则继续补齐到准确 10 篇
-  Done when: TBD
+- [x] 盘点并核验 literature 文件夹现有 PDF：确认每篇是否为 2024-2026 年、是否明确属于综述/survey、是否与 multi-agent 高相关；不足则继续补齐到准确 10 篇
+  Completed: 2026-03-26T02:10:57+08:00
+  Done when: 项目内已有 closeout 工件明确给出 canonical 10 篇的年份、survey 身份、相关性判定与 PDF 路径，并确认无需继续补齐
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-literature-pdf-audit-task-closeout.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-literature-top10-inventory-closeout.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-final-top10-verification-audit.md`; `projects/multi-agent-review-survey/logs/2026-03-26T02:10:57+08:00-fleet-日向-11-1774462120-ac611f-literature-pdf-audit-closeout.md`
 
 - [x] 对最终 10 篇论文逐篇精读，按统一模板抽取：研究问题、分类框架、关键方法脉络、涉及数据集/benchmark、评测维度、主要结论、局限性、作者给出的未来方向
   Completed: 2026-03-26T02:12:23+08:00
