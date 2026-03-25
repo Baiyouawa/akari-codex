@@ -259,8 +259,10 @@
   Done when: `projects/multi-agent-review-survey/analysis/2026-03-26-final-top10-list-with-cn-abstract-entry.md` 与 `projects/multi-agent-review-survey/analysis/2026-03-26-final-selected-10-and-exclusion-list.md` 共同覆盖 canonical 10 篇的题目、年份、来源/PDF 链接、入选理由与引用入口，并与 `literature/` 实际 PDF 一一对应
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-final-top10-list-with-cn-abstract-entry.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-final-selected-10-and-exclusion-list.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/logs/2026-03-26T03:08:56+08:00-fleet-枫-05-1774465696-18492c-final-top10-list-reconciliation.md`
 
-- [ ] 对这 10 篇综述逐篇精读，提炼中文总结：研究问题、分类框架、核心观点、代表方法、数据集/benchmark、优缺点、局限与启发。
-  Done when: TBD
+- [x] 对这 10 篇综述逐篇精读，提炼中文总结：研究问题、分类框架、核心观点、代表方法、数据集/benchmark、优缺点、局限与启发。
+  Completed: 2026-03-26T03:10:24+08:00
+  Done when: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md` 与 `projects/multi-agent-review-survey/analysis/2026-03-26-confirmed-ten-survey-structured-notes-for-cn-markdown.md` 共同覆盖 canonical 10 篇综述，且字段已包含研究问题、分类框架、核心观点/代表方法、数据集/benchmark、优缺点、局限与启发，并与中文主文档保持一致
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-confirmed-ten-survey-structured-notes-for-cn-markdown.md`; `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md`; `projects/multi-agent-review-survey/logs/2026-03-26T03:10:24+08:00-fleet-理世-06-1774465786-fde303-structured-reading-summary-closeout.md`
 
 - [ ] 交叉比对 10 篇综述之间的重合点与差异点，整理统一的 multi-agent survey 总体脉络，包括任务分类、协作机制、通信方式、评测维度与应用方向。
   Done when: TBD

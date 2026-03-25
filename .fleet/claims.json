@@ -2184,7 +2184,8 @@
       "session_id": "由希奈-04-1774465696-1e2151",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774465696.003183,
-      "active": true
+      "active": false,
+      "released_at": 1774465865.5567594
     },
     "claim-247f6bccbbf4": {
       "task_id": "c3ee9794314a8ce6",
@@ -2200,6 +2201,14 @@
       "session_id": "理世-06-1774465786-fde303",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774465786.1481595,
+      "active": true
+    },
+    "claim-e5ffe98de4db": {
+      "task_id": "637af226a878d111",
+      "worker_id": "绫-07",
+      "session_id": "绫-07-1774465906-581fd3",
+      "project": "multi-agent-review-survey",
+      "claimed_at": 1774465906.336448,
       "active": true
     }
   }
