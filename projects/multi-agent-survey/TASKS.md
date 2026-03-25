@@ -6,11 +6,12 @@
 - [ ] 检索并汇总近三年 ICML 会议所有与 multi-agent 相关论文，筛选高相关条目并整理论文标题、作者、年份、链接、PDF下载地址、OpenReview/会议页面 [zero-resource]
   Done when: TBD
 
-- [ ] 检索并汇总近三年 NeurIPS 会议所有与 multi-agent 相关论文，筛选高相关条目并整理论文标题、作者、年份、链接、PDF下载地址、OpenReview/会议页面 [zero-resource]
-  Done when: TBD
+- [ ] 检索并汇总近三年 NeurIPS 会议所有与 multi-agent 相关论文，筛选高相关条目并整理论文标题、作者、年份、链接、PDF下载地址、OpenReview/会议页面 [zero-resource] [blocked-by: 当前仓库仅恢复出 NeurIPS 2024 的 138 条 Crossref 候选池，2025 在既有快照中为 0 条，且缺少 2023、PDF、OpenReview/会议页面元数据]
+  Done when: 基于可追溯来源补齐 NeurIPS 2023/2024/2025 高相关条目，并为每条提供标题、作者、年份、链接、PDF下载地址、OpenReview/会议页面
+  Evidence: `projects/multi-agent-survey/analysis/2026-03-25-neurips-inventory-recovery-and-gap-assessment.md`
 
-- [ ] 检索最近三个月 OpenReview 上 ICML 2026 中与 multi-agent 相关的投稿/论文，整理标题、作者、提交时间、链接、PDF地址与主题归类 [blocked-by: missing local ICML 2026 OpenReview snapshot with provenance] [zero-resource]
-  Done when: 可从仓库内可核验来源恢复标题、作者、提交时间、链接、PDF地址与主题归类
+- [ ] 检索最近三个月 OpenReview 上 ICML 2026 中与 multi-agent 相关的投稿/论文，整理标题、作者、提交时间、链接、PDF地址与主题归类 [zero-resource]
+  Done when: TBD
 
 - [ ] 对每篇纳入论文撰写结构化总结，必须包含 Motivation、核心创新点、方法论/技术路线、任务设定、实验结论与局限 [zero-resource]
   Done when: TBD

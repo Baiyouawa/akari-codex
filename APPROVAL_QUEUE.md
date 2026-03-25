@@ -135,3 +135,12 @@ Notes: <any modifications or context>
 **Description:** Need approval to run git staging/commit commands for this completed MoE task. File updates are done, but current shell allowlist blocks `git add` and `git commit`, while session protocol and fleet instructions require a commit with message including [fleet/岛村-01-1774360855-6ed6b7].
 **Status:** pending
 
+
+---
+
+### [BLOCKING] tool-access
+
+**Requested:** 2026-03-25T13:47:22.611138+00:00
+**Description:** Need approval or expanded shell allowlist to run `git add` and `git commit` for project files only. Session produced valuable NeurIPS recovery artifacts and task/log updates, but current shell policy blocks commit commands, preventing required finalization with commit message `[fleet/日向-03-1774446135-36cad9] ...`.
+**Status:** pending
+
