@@ -33,7 +33,7 @@
 - [ ] 将确认后的5篇综述下载到本地 paper 目录，并记录来源链接与文件名映射 [zero-resource] [blocked-by: 上游“确认5篇综述”任务未完成；当前仓库内没有已确认论文标题、来源链接或 PDF 地址，无法生成可追溯下载与文件名映射。]
   Done when: 仓库内已有确认后的5篇综述及其来源链接，并已将对应文件保存到 `projects/multi-agent-review-survey/paper/`，同时记录来源链接与文件名映射。
 
-- [ ] 逐篇精读5篇综述，提取研究问题、分类框架、核心方法、数据集/基准、优缺点与未来方向 [zero-resource] [blocked-by: 缺少已确认并下载到仓库内的5篇综述全文或等效可追溯阅读材料。]
+- [ ] 逐篇精读5篇综述，提取研究问题、分类框架、核心方法、数据集/基准、优缺点与未来方向 [zero-resource] [blocked-by: 缺少已确认并下载到仓库内的5篇综述全文或等效可追溯阅读材料；本次复核仍确认仓库内无已筛定五篇综述与逐篇可读源。详见 `projects/multi-agent-review-survey/logs/2026-03-25T23:29:31+08:00-fleet-结衣-03-1774452423-785487-five-survey-deep-reading-blocked.md`。]
   Done when: 5篇综述均具备本地全文或可追溯阅读材料，并完成逐篇结构化笔记。
 
 - [ ] 汇总生成中文 Markdown 文档，分别详述5篇综述的内容与价值 [zero-resource] [blocked-by: 前置逐篇精读任务尚未完成。]
@@ -44,3 +44,19 @@
 
 - [ ] 若任一论文缺失、下载失败或信息不全，立即报告阻塞详情：哪个Agent卡住、卡点与缺失资料 [zero-resource]
   Done when: TBD
+
+- [ ] 将 multi-agent 相关最新综述的检索范围从5篇扩展到10篇，确保时间新、相关性强且尽量覆盖不同子方向 [zero-resource]
+  Done when: TBD
+
+- [ ] 对新增的5篇综述完成来源核验，优先从 arXiv 或 OpenReview 获取原文并下载到本地 paper 目录 [zero-resource]
+  Done when: TBD
+
+- [ ] 对全部10篇综述逐篇精读，补充研究问题、方法框架、任务分类、评测设置、优缺点与未来方向 [zero-resource]
+  Done when: TBD
+
+- [ ] 更新最终中文 Markdown，将原来的5篇综述详述扩展为10篇综述详述 [zero-resource]
+  Done when: TBD
+
+- [ ] 检查原任务中的 idea 部分是否需要根据10篇综述重新提炼，如无额外指示则先保持输出5个高质量 idea 并用10篇综述作为依据 [zero-resource]
+  Done when: TBD
+
