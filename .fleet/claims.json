@@ -2140,7 +2140,8 @@
       "session_id": "日向-11-1774465125-2107d6",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774465125.1284657,
-      "active": true
+      "active": false,
+      "released_at": 1774465746.2899284
     },
     "claim-65b49ef8dfa5": {
       "task_id": "e9a56153ba5e7160",
@@ -2191,6 +2192,14 @@
       "session_id": "枫-05-1774465696-18492c",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774465696.0134664,
+      "active": true
+    },
+    "claim-4a333b1403f8": {
+      "task_id": "47009c7c1fdf2f2f",
+      "worker_id": "理世-06",
+      "session_id": "理世-06-1774465786-fde303",
+      "project": "multi-agent-review-survey",
+      "claimed_at": 1774465786.1481595,
       "active": true
     }
   }
