@@ -1617,7 +1617,8 @@
       "session_id": "岛村-01-1774458634-983f86",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774458634.576285,
-      "active": true
+      "active": false,
+      "released_at": 1774458878.289561
     },
     "claim-279fe5182133": {
       "task_id": "4a7ebfefa0a5c997",
@@ -1633,6 +1634,23 @@
       "session_id": "日向-03-1774458754-eabae9",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774458754.7873302,
+      "active": false,
+      "released_at": 1774458978.7533576
+    },
+    "claim-679d9b9d3f0a": {
+      "task_id": "a2e780881b7b76fd",
+      "worker_id": "由希奈-04",
+      "session_id": "由希奈-04-1774458935-b2de36",
+      "project": "multi-agent-review-survey",
+      "claimed_at": 1774458935.0979912,
+      "active": true
+    },
+    "claim-aa71b1db0224": {
+      "task_id": "bdb6de51a238bcc7",
+      "worker_id": "千早-05",
+      "session_id": "千早-05-1774459025-ee93cb",
+      "project": "multi-agent-review-survey",
+      "claimed_at": 1774459025.2521675,
       "active": true
     }
   }
