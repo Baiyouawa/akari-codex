@@ -1951,7 +1951,8 @@
       "session_id": "柑奈-02-1774462721-f2ece3",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774462721.3690891,
-      "active": true
+      "active": false,
+      "released_at": 1774463455.0600684
     },
     "claim-4351399bc201": {
       "task_id": "f2a7f0e44b397f82",
@@ -1968,7 +1969,8 @@
       "session_id": "文乃-04-1774462781-971acb",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774462781.4851305,
-      "active": true
+      "active": false,
+      "released_at": 1774463464.3549697
     },
     "claim-35a9b68774df": {
       "task_id": "2012ce4a08863f08",
@@ -1984,6 +1986,22 @@
       "session_id": "理世-06-1774463292-3af478",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774463292.2846525,
+      "active": true
+    },
+    "claim-c5af03adb5de": {
+      "task_id": "d0b49ed2580d0de4",
+      "worker_id": "绫-07",
+      "session_id": "绫-07-1774463502-bcbd52",
+      "project": "multi-agent-review-survey",
+      "claimed_at": 1774463502.614539,
+      "active": true
+    },
+    "claim-7214d5d572d6": {
+      "task_id": "61c9aec1db163d77",
+      "worker_id": "灯里-08",
+      "session_id": "灯里-08-1774463502-020f26",
+      "project": "multi-agent-review-survey",
+      "claimed_at": 1774463502.6275485,
       "active": true
     }
   }

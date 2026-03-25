@@ -191,8 +191,10 @@
   Done when: 已存在主写逐篇解读、独立事实与引用复核、独立 idea 去重/来源性审查三段式交叉 review 证据链
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-cross-review-arrangement-closeout.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-final-markdown-cross-review.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-idea-dedup-and-priority.md`
 
-- [ ] 若任何 Agent 报 blocked，先审查其是否使用 web_search/web_fetch/本地文件核验等手段；未穷尽方法即 blocked 的视为伪阻塞，直接按 PUA 标准打回重做并要求切换方案
-  Done when: TBD
+- [x] 若任何 Agent 报 blocked，先审查其是否使用 web_search/web_fetch/本地文件核验等手段；未穷尽方法即 blocked 的视为伪阻塞，直接按 PUA 标准打回重做并要求切换方案
+  Completed: 2026-03-26T02:32:31+08:00
+  Done when: 已存在逐会话审计、伪阻塞/真实阻塞判定、统一打回要求，且 README / TASKS / logs 状态一致
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-blocked-agent-audit-and-pua-disposition.md`; `projects/multi-agent-review-survey/logs/2026-03-26T02:20:47+08:00-fleet-文乃-04-1774462781-971acb-blocked-agent-audit-and-pua-disposition.md`; `projects/multi-agent-review-survey/logs/2026-03-26T02:32:31+08:00-fleet-灯里-08-1774463502-020f26-blocked-audit-verification-closeout.md`
 
 - [x] 完成后整理最终清单：10篇论文题目、年份、PDF文件名/路径、入选理由、中文摘要入口，确保文档与 literature 文件夹一一对应
   Completed: 2026-03-26T02:25:27+08:00
