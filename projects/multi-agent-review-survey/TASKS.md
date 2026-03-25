@@ -94,11 +94,15 @@
 - [x] 为当前已下载并核验通过的 5 篇 multi-agent 相关综述/综述型论文记录元数据（题目、作者、年份、来源、PDF 路径）并汇总到项目文档中
   Done when: `analysis/2026-03-26-five-paper-metadata.md` 包含 5 篇论文元数据，且每个 `PDF 路径` 均与 `literature/` 中实际文件一致
 
-- [ ] 检索近年最新的 multi-agent 相关综述/survey 候选论文，优先 2024-2026，给出题目、年份、链接与入选理由
-  Done when: TBD
+- [x] 检索近年最新的 multi-agent 相关综述/survey 候选论文，优先 2024-2026，给出题目、年份、链接与入选理由
+  Completed: 2026-03-26T01:39:54+08:00
+  Done when: 候选短名单以题目、年份、链接与入选理由形式落盘到项目文档
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-latest-multi-agent-survey-candidates-shortlist.md`
 
-- [ ] 对候选论文逐篇核验是否属于真正的综述/survey，而不是普通方法论文；若不合格则替换，直到凑齐 10 篇
-  Done when: TBD
+- [x] 对候选论文逐篇核验是否属于真正的综述/survey，而不是普通方法论文；若不合格则替换，直到凑齐 10 篇
+  Completed: 2026-03-26T01:42:08+08:00
+  Done when: 候选逐篇完成 survey 属性核验，并在不合格时用合格候选替换，最终形成 canonical 10 篇名单
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-candidate-survey-judgment-and-top10.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-final-top10-verification-audit.md`; `projects/multi-agent-review-survey/logs/2026-03-26T01:42:08+08:00-fleet-灯里-08-1774460467-e28c8e-candidate-survey-verification-closeout.md`
 
 - [ ] 为每篇入选论文查找可下载 PDF，并将 PDF 保存到 projects/multi-agent-review-survey/literature/
   Done when: TBD
