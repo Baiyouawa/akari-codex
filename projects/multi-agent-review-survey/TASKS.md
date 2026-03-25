@@ -104,8 +104,10 @@
   Done when: 候选逐篇完成 survey 属性核验，并在不合格时用合格候选替换，最终形成 canonical 10 篇名单
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-candidate-survey-judgment-and-top10.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-final-top10-verification-audit.md`; `projects/multi-agent-review-survey/logs/2026-03-26T01:42:08+08:00-fleet-灯里-08-1774460467-e28c8e-candidate-survey-verification-closeout.md`
 
-- [ ] 为每篇入选论文查找可下载 PDF，并将 PDF 保存到 projects/multi-agent-review-survey/literature/
-  Done when: TBD
+- [x] 为每篇入选论文查找可下载 PDF，并将 PDF 保存到 projects/multi-agent-review-survey/literature/
+  Completed: 2026-03-26T01:44:55+08:00
+  Done when: canonical 10 篇均具备可追溯 PDF 链接记录，且对应 PDF 已保存到 `projects/multi-agent-review-survey/literature/`
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-pdf-links-and-download-record.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/logs/2026-03-26T01:44:55+08:00-fleet-沙弥香-09-1774460647-ec3ac4-download-task-closeout.md`
 
 - [ ] 对已下载文件做交叉 review：检查文件是否可打开、标题是否匹配、是否重复、总数是否达到 10 篇；不达标就继续补齐
   Done when: TBD
