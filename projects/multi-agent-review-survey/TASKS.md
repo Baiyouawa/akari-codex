@@ -28,10 +28,10 @@
   Done when: 报告文件完成，包含逐篇详述和横向分析
   Evidence: `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-synthesis-report.md`; `projects/multi-agent-review-survey/logs/2026-03-26T00:52:23+08:00-fleet-结衣-03-1774457492-789106-survey-report.md`
 
-- [x] 基于 10 篇综述提出 5 个可做的研究 idea，每个 idea 包含问题动机、核心假设、方法设计、评测方案
-  Completed: 2026-03-26T00:16:17+08:00
-  Done when: 5 个结构完整的 research idea 文档
-  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-research-ideas.md`; `projects/multi-agent-review-survey/logs/2026-03-26T00:16:17+08:00-fleet-结衣-03-1774454544-65f537-ten-survey-deep-reading.md`
+- [x] 旧口径归档：基于 10 篇综述提出 5 个可做的研究 idea，每个 idea 包含问题动机、核心假设、方法设计、评测方案
+  Completed: 2026-03-26T02:08:58+08:00
+  Done when: 旧“5 ideas”口径被明确降级为历史中间产物，不再作为最终交付标准
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-research-ideas.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-detailed-ideas.md`; `projects/multi-agent-review-survey/logs/2026-03-26T02:08:58+08:00-fleet-智乃-10-1774462090-e5577c-scope-correction.md`
 
 - [x] 对已下载论文进行交叉 review：至少一名 Agent 初审，另一名 Agent 复核质量
   Completed: 2026-03-26T00:40:55+08:00
@@ -161,8 +161,10 @@
   Done when: 最终文档已落盘到项目内，且文档开头给出论文清单与 PDF 对应关系
   Evidence: `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-final-markdown-cross-review.md`; `projects/multi-agent-review-survey/logs/2026-03-26T02:07:07+08:00-fleet-灯里-08-1774461940-b59ce3-final-markdown-cross-review.md`
 
-- [ ] 纠正任务口径：废弃或降级所有仅要求‘5个idea’的旧任务，统一以‘10篇综述精读 + 10个详细idea’为最终目标继续执行
-  Done when: TBD
+- [x] 纠正任务口径：废弃或降级所有仅要求‘5个idea’的旧任务，统一以‘10篇综述精读 + 10个详细idea’为最终目标继续执行
+  Completed: 2026-03-26T02:08:58+08:00
+  Done when: README / TASKS / session log 明确旧“5 ideas”口径已降级为历史中间产物，项目最终目标统一为“10 篇综述精读 + 10 个详细 idea”
+  Evidence: `projects/multi-agent-review-survey/README.md`; `projects/multi-agent-review-survey/TASKS.md`; `projects/multi-agent-review-survey/logs/2026-03-26T02:08:58+08:00-fleet-智乃-10-1774462090-e5577c-scope-correction.md`
 
 - [ ] 盘点并核验 literature 文件夹现有 PDF：确认每篇是否为 2024-2026 年、是否明确属于综述/survey、是否与 multi-agent 高相关；不足则继续补齐到准确 10 篇
   Done when: TBD
