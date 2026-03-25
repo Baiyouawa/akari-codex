@@ -1,29 +1,28 @@
 # multi-agent-review-survey — 任务列表
 
-- [ ] 检索近年与 multi-agent 相关的最新综述论文，优先覆盖 2024-2026，筛选最相关且具有代表性的 5 篇综述，记录来源链接（arXiv/OpenReview/出版社页面）与入选理由。 [zero-resource]
-  Done when: TBD
+- [ ] 检索近年与 multi-agent 相关的最新综述论文，优先覆盖 2024-2026，筛选最相关且具有代表性的 5 篇综述，记录来源链接（arXiv/OpenReview/出版社页面）与入选理由。 [zero-resource] [blocked-by: 当前项目 `literature/`、`analysis/`、`logs/` 在会话开始时为空，且仓库检索未发现可验证的 2024-2026 multi-agent 综述候选元数据/来源链接；在仅允许 `read_file` + `search_text` 的本地证据约束下，无法判定“最新五篇”及入选理由。详见 `projects/multi-agent-review-survey/analysis/2026-03-25-latest-review-selection-blocker-assessment.md`]
+  Done when: 仓库内补齐可追溯的候选综述元数据或来源页面快照，并据此完成 5 篇综述的筛选、来源记录与入选理由说明。
 
-- [ ] 将筛选出的 5 篇综述论文下载到本地 paper 目录，优先保存 PDF，并整理文件名、元数据与下载来源；若下载受阻，立即报告具体阻塞论文、来源与缺失资料。 [zero-resource]
-  Done when: TBD
+- [ ] 将筛选出的 5 篇综述论文下载到本地 paper 目录，优先保存 PDF，并整理文件名、元数据与下载来源；若下载受阻，立即报告具体阻塞论文、来源与缺失资料。 [zero-resource] [blocked-by: 上游“5 篇综述筛选”任务未完成，当前仓库内不存在已确认的目标论文清单与来源页面。]
+  Done when: 仓库内存在已确认的 5 篇目标综述及其来源页面，并将 PDF/元数据保存到本地 `paper/` 目录。
 
-- [ ] 对第 1 篇综述进行详读，提炼研究背景、问题定义、分类体系、核心方法脉络、实验/benchmark、局限性与未来方向，输出中文详细笔记。 [zero-resource]
-  Done when: TBD
+- [ ] 对第 1 篇综述进行详读，提炼研究背景、问题定义、分类体系、核心方法脉络、实验/benchmark、局限性与未来方向，输出中文详细笔记。 [zero-resource] [blocked-by: 目标综述尚未筛定，且仓库内没有该论文的 PDF、摘要摘录或已验证笔记。]
+  Done when: 第 1 篇综述已在仓库内具备可追溯全文或已验证阅读材料，并形成中文详细笔记。
 
-- [ ] 对第 2 篇综述进行详读，提炼研究背景、问题定义、分类体系、核心方法脉络、实验/benchmark、局限性与未来方向，输出中文详细笔记。 [zero-resource]
-  Done when: TBD
+- [ ] 对第 2 篇综述进行详读，提炼研究背景、问题定义、分类体系、核心方法脉络、实验/benchmark、局限性与未来方向，输出中文详细笔记。 [zero-resource] [blocked-by: 目标综述尚未筛定，且仓库内没有该论文的 PDF、摘要摘录或已验证笔记。]
+  Done when: 第 2 篇综述已在仓库内具备可追溯全文或已验证阅读材料，并形成中文详细笔记。
 
-- [ ] 对第 3 篇综述进行详读，提炼研究背景、问题定义、分类体系、核心方法脉络、实验/benchmark、局限性与未来方向，输出中文详细笔记。 [zero-resource]
-  Done when: TBD
+- [ ] 对第 3 篇综述进行详读，提炼研究背景、问题定义、分类体系、核心方法脉络、实验/benchmark、局限性与未来方向，输出中文详细笔记。 [zero-resource] [blocked-by: 目标综述尚未筛定，且仓库内没有该论文的 PDF、摘要摘录或已验证笔记。]
+  Done when: 第 3 篇综述已在仓库内具备可追溯全文或已验证阅读材料，并形成中文详细笔记。
 
-- [ ] 对第 4 篇综述进行详读，提炼研究背景、问题定义、分类体系、核心方法脉络、实验/benchmark、局限性与未来方向，输出中文详细笔记。 [zero-resource]
-  Done when: TBD
+- [ ] 对第 4 篇综述进行详读，提炼研究背景、问题定义、分类体系、核心方法脉络、实验/benchmark、局限性与未来方向，输出中文详细笔记。 [zero-resource] [blocked-by: 目标综述尚未筛定，且仓库内没有该论文的 PDF、摘要摘录或已验证笔记。]
+  Done when: 第 4 篇综述已在仓库内具备可追溯全文或已验证阅读材料，并形成中文详细笔记。
 
-- [ ] 对第 5 篇综述进行详读，提炼研究背景、问题定义、分类体系、核心方法脉络、实验/benchmark、局限性与未来方向，输出中文详细笔记。 [zero-resource]
-  Done when: TBD
+- [ ] 对第 5 篇综述进行详读，提炼研究背景、问题定义、分类体系、核心方法脉络、实验/benchmark、局限性与未来方向，输出中文详细笔记。 [zero-resource] [blocked-by: 目标综述尚未筛定，且仓库内没有该论文的 PDF、摘要摘录或已验证笔记。]
+  Done when: 第 5 篇综述已在仓库内具备可追溯全文或已验证阅读材料，并形成中文详细笔记。
 
-- [ ] 综合 5 篇综述，撰写一份中文 markdown 报告，包含：五篇综述分别的详细解读、横向比较、研究空白总结。 [zero-resource]
-  Done when: TBD
+- [ ] 综合 5 篇综述，撰写一份中文 markdown 报告，包含：五篇综述分别的详细解读、横向比较、研究空白总结。 [zero-resource] [blocked-by: 前置的 5 篇综述筛选、下载与逐篇详读任务均未完成。]
+  Done when: 5 篇综述的中文详细笔记全部完成，并整合为横向综述报告。
 
-- [ ] 基于 5 篇综述的共同空白与趋势，提出 5 个可做的研究 idea；每个 idea 需要写清问题动机、核心假设、方法设计、数据/benchmark、评测指标、潜在风险与预期贡献。 [zero-resource]
-  Done when: TBD
-
+- [ ] 基于 5 篇综述的共同空白与趋势，提出 5 个可做的研究 idea；每个 idea 需要写清问题动机、核心假设、方法设计、数据/benchmark、评测指标、潜在风险与预期贡献。 [zero-resource] [blocked-by: 缺少前置的 5 篇综述比较与研究空白总结。]
+  Done when: 基于已完成的 5 篇综述比较，产出 5 个结构完整的研究 idea。
