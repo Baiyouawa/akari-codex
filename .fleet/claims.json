@@ -1897,7 +1897,8 @@
       "session_id": "灯里-08-1774461940-b59ce3",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774461940.088805,
-      "active": true
+      "active": false,
+      "released_at": 1774462702.230596
     },
     "claim-da596da954f0": {
       "task_id": "1828bbf9df7e0f96",
