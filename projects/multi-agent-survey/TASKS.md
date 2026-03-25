@@ -68,8 +68,9 @@
   Done when: 仓库内补齐 NeurIPS 2023/2024/2025 纳入论文清单，并为每篇提供 PDF/OpenReview/会议页面元数据以及可追溯摘要、全文摘录或已验证笔记，再据此逐篇整理 Motivation、创新点、方法论与下载链接
   Evidence: `projects/multi-agent-survey/analysis/2026-03-25-neurips-inventory-recovery-and-gap-assessment.md`; `projects/multi-agent-survey/literature/neurips-2024-2025.md`; `projects/multi-agent-survey/logs/2026-03-25T22:41:32+08:00-fleet-枫-05-1774449660-faa7e8-neurips-per-paper-review-blocked.md`
 
-- [ ] 调研最近三个月 OpenReview 上 ICML 2026 的 multi-agent 相关论文，逐篇整理 Motivation、创新点、方法论，并收集论文下载链接 [zero-resource]
-  Done when: TBD
+- [ ] 调研最近三个月 OpenReview 上 ICML 2026 的 multi-agent 相关论文，逐篇整理 Motivation、创新点、方法论，并收集论文下载链接 [zero-resource] [blocked-by: 当前仓库仍缺少最近三个月 ICML 2026 OpenReview 投稿列表的本地快照/导出，且 `literature/` 与 `analysis/` 目录均未出现这些论文的摘要、全文摘录或已验证笔记；详见 `projects/multi-agent-survey/logs/2026-03-25T23:02:00+08:00-fleet-沙弥香-01-1774450892-0c51b9-icml-2026-openreview-per-paper-blocked.md`]
+  Done when: 仓库内补齐最近三个月 ICML 2026 OpenReview multi-agent 投稿清单，并为每篇提供可追溯摘要、全文摘录或已验证笔记，再据此逐篇整理 Motivation、创新点、方法论与下载链接
+  Evidence: `projects/multi-agent-survey/logs/2026-03-25T23:02:00+08:00-fleet-沙弥香-01-1774450892-0c51b9-icml-2026-openreview-per-paper-blocked.md`
 
 - [x] 基于上述论文提出 5 个最适合继续开展的研究课题/方向，并为每个方向给出详细方法设计 [zero-resource]
   Completed: 2026-03-25T22:44:14+08:00
@@ -79,42 +80,19 @@
   Completed: 2026-03-25T22:25:42+08:00
   Evidence: `projects/multi-agent-survey/paper/2026-03-25-kdd-style-multi-agent-survey.tex`; `projects/multi-agent-survey/analysis/2026-03-25-theme-synthesis.md`; `projects/multi-agent-survey/literature/2026-03-25-reference-table-and-download-manifest.md`; `projects/multi-agent-survey/analysis/2026-03-25-future-research-directions.md`; `projects/multi-agent-survey/logs/2026-03-25T22:25:42+08:00-fleet-结衣-03-1774448699-f66c79-final-survey-closeout.md`
 
-- [ ] 调研近三年 ICLR 的 multi-agent 相关论文，筛选并整理每篇论文的 Motivation、创新点、方法论、论文下载链接与简要综述 [zero-resource] [blocked-by: 当前仓库仅有 ICLR 2025-2026 metadata，缺少 ICLR 2024 inventory，且无摘要、全文摘录或已验证笔记支撑逐篇 Motivation/创新点/方法论与简要综述；详见 `projects/multi-agent-survey/logs/2026-03-25T22:35:22+08:00-fleet-岛村-01-1774449300-e674b9-iclr-per-paper-review-blocked.md`]
-  Done when: 仓库内补齐 ICLR 2024/2025/2026 纳入论文清单，并为每篇提供可追溯摘要、全文摘录或已验证笔记，再据此筛选整理每篇论文的 Motivation、创新点、方法论、论文下载链接与简要综述
-  Evidence: `projects/multi-agent-survey/literature/2026-03-25-iclr-high-relevance-2025-2026.md`; `projects/multi-agent-survey/logs/2026-03-25T22:35:22+08:00-fleet-岛村-01-1774449300-e674b9-iclr-per-paper-review-blocked.md`
-
-- [ ] 调研近三年 ICML 的 multi-agent 相关论文，筛选并整理每篇论文的 Motivation、创新点、方法论、论文下载链接与简要综述 [zero-resource] [blocked-by: 当前仓库仅有 `projects/multi-agent-survey/literature/icml-2023-2025.md` 的 83 篇标题/作者/链接级 metadata，缺少可支撑逐篇 Motivation、创新点、方法论与简要综述的摘要、全文摘录或已验证笔记；详见 `projects/multi-agent-survey/logs/2026-03-25T22:31:51+08:00-fleet-侑-08-1774449059-91011e-icml-per-paper-review-blocked.md`]
-  Done when: 仓库内为 ICML 2023-2025 纳入论文补齐可追溯摘要、全文摘录或已验证笔记，并据此筛选整理每篇论文的 Motivation、创新点、方法论、论文下载链接与简要综述
-  Evidence: `projects/multi-agent-survey/literature/icml-2023-2025.md`; `projects/multi-agent-survey/logs/2026-03-25T22:31:51+08:00-fleet-侑-08-1774449059-91011e-icml-per-paper-review-blocked.md`
-
-- [ ] 调研近三年 NeurIPS 的 multi-agent 相关论文，筛选并整理每篇论文的 Motivation、创新点、方法论、论文下载链接与简要综述 [zero-resource] [blocked-by: 当前仓库仅有 NeurIPS 2024 的 `138` 条候选记录、2025 为 `0`、且缺少 2023 覆盖；现有条目仅含标题级 metadata 与 DOI 链接，不含 PDF/OpenReview/会议页面、摘要、全文摘录或已验证笔记，无法在 provenance 约束下整理逐篇 Motivation、创新点、方法论、下载链接与简要综述；详见 `projects/multi-agent-survey/logs/2026-03-25T22:41:32+08:00-fleet-枫-05-1774449660-faa7e8-neurips-per-paper-review-blocked.md`]
-  Done when: 仓库内补齐 NeurIPS 2023/2024/2025 纳入论文清单，并为每篇提供 PDF/OpenReview/会议页面元数据以及可追溯摘要、全文摘录或已验证笔记，再据此筛选整理每篇论文的 Motivation、创新点、方法论、论文下载链接与简要综述
-  Evidence: `projects/multi-agent-survey/analysis/2026-03-25-neurips-inventory-recovery-and-gap-assessment.md`; `projects/multi-agent-survey/literature/neurips-2024-2025.md`; `projects/multi-agent-survey/logs/2026-03-25T22:41:32+08:00-fleet-枫-05-1774449660-faa7e8-neurips-per-paper-review-blocked.md`
-
-- [ ] 调研最近三个月 OpenReview 上 ICML 2026 的 multi-agent 相关论文，整理每篇论文的 Motivation、创新点、方法论、论文下载链接与简要综述 [zero-resource] [blocked-by: 当前仓库缺少最近三个月 ICML 2026 OpenReview 投稿列表的本地快照/导出，且缺少这些论文的摘要、全文摘录或已验证笔记；详见 `projects/multi-agent-survey/logs/2026-03-25T22:47:33+08:00-fleet-灯里-08-1774450021-b9068e-icml-2026-openreview-per-paper-review-blocked.md`]
-  Done when: 仓库内补齐最近三个月 ICML 2026 OpenReview multi-agent 投稿清单，并为每篇提供可追溯摘要、全文摘录或已验证笔记，再据此整理每篇论文的 Motivation、创新点、方法论、论文下载链接与简要综述
-  Evidence: `projects/multi-agent-survey/logs/2026-03-25T22:47:33+08:00-fleet-灯里-08-1774450021-b9068e-icml-2026-openreview-per-paper-review-blocked.md`
-
-- [x] 基于上述论文综述，提出 5 个最适合继续开展的研究课题/方向，并给出每个方向的详细方法设计 [zero-resource]
-  Completed: 2026-03-25T22:44:14+08:00
-  Evidence: `projects/multi-agent-survey/analysis/2026-03-25-future-research-directions.md`; `projects/multi-agent-survey/logs/2026-03-25T22:44:14+08:00-fleet-花阳-06-1774449810-e08dbd-research-directions-closeout.md`
-
-- [x] 汇总全部调研结果，形成最终综述报告 [zero-resource]
-  Completed: 2026-03-25T22:25:42+08:00
-  Evidence: `projects/multi-agent-survey/paper/2026-03-25-kdd-style-multi-agent-survey.tex`; `projects/multi-agent-survey/analysis/2026-03-25-theme-synthesis.md`; `projects/multi-agent-survey/literature/2026-03-25-reference-table-and-download-manifest.md`; `projects/multi-agent-survey/analysis/2026-03-25-future-research-directions.md`; `projects/multi-agent-survey/logs/2026-03-25T22:25:42+08:00-fleet-结衣-03-1774448699-f66c79-final-survey-closeout.md`
-
 - [ ] 调研近三年 ICLR 的 multi-agent 相关论文，整理每篇论文的 Motivation、创新点、方法论与获取方式 [zero-resource]
   Done when: TBD
 
-- [ ] 调研近三年 ICML 的 multi-agent 相关论文，整理每篇论文的 Motivation、创新点、方法论与获取方式 [zero-resource]
+- [ ] 调研近三年 ICML 的 multi-agent 相关论文，整理每篇论文的 Motivation、创新点、方法论与获取方式 [zero-resource] [blocked-by: 当前仓库仅有 `projects/multi-agent-survey/literature/icml-2023-2025.md` 的 83 篇标题/作者/链接级 metadata，可支撑获取方式字段中的 proceedings/PDF/OpenReview 链接，但缺少可支撑逐篇 Motivation、创新点与方法论整理的摘要、全文摘录或已验证笔记；详见 `projects/multi-agent-survey/logs/2026-03-25T22:57:37+08:00-fleet-果穗-07-1774450622-48e166-icml-per-paper-methodology-blocked.md`]
+  Done when: 仓库内为 ICML 2023-2025 纳入论文补齐可追溯摘要、全文摘录或已验证笔记，并据此逐篇整理 Motivation、创新点、方法论与获取方式
+  Evidence: `projects/multi-agent-survey/literature/icml-2023-2025.md`; `projects/multi-agent-survey/logs/2026-03-25T22:57:37+08:00-fleet-果穗-07-1774450622-48e166-icml-per-paper-methodology-blocked.md`
+
+- [ ] 调研近三年 NeurIPS 的 multi-agent 相关论文，整理每篇论文的 Motivation、创新点、方法论与获取方式 [zero-resource]
   Done when: TBD
 
-- [ ] 调研近三年 NeurIPS 的 multi-agent 相关论文，整理每篇论文的 Motivation、创新点、方法论与获取方式 [zero-resource] [blocked-by: 当前仓库仅有 NeurIPS 2024 的 `138` 条候选记录、2025 为 `0`、且缺少 2023 覆盖；现有条目仅含 `Authors`、DOI `Link`、`Tags`、`Retrieved via query`，不含摘要、全文摘录或已验证笔记，也缺少 PDF/OpenReview/会议页面等获取方式元数据；详见 `projects/multi-agent-survey/logs/2026-03-25T22:58:10+08:00-fleet-侑-08-1774450652-74a259-neurips-per-paper-methodology-blocked.md`]
-  Done when: 仓库内补齐 NeurIPS 2023/2024/2025 纳入论文清单，并为每篇提供可追溯摘要、全文摘录或已验证笔记以及 PDF/OpenReview/会议页面等获取方式元数据，再据此整理每篇论文的 Motivation、创新点、方法论与获取方式
-  Evidence: `projects/multi-agent-survey/analysis/2026-03-25-neurips-inventory-recovery-and-gap-assessment.md`; `projects/multi-agent-survey/literature/neurips-2024-2025.md`; `projects/multi-agent-survey/logs/2026-03-25T22:58:10+08:00-fleet-侑-08-1774450652-74a259-neurips-per-paper-methodology-blocked.md`
-
-- [ ] 调研近三个月 OpenReview 上 ICML 2026 的 multi-agent 相关论文，整理每篇论文的 Motivation、创新点、方法论与获取方式 [zero-resource]
-  Done when: TBD
+- [ ] 调研近三个月 OpenReview 上 ICML 2026 的 multi-agent 相关论文，整理每篇论文的 Motivation、创新点、方法论与获取方式 [zero-resource] [blocked-by: 当前仓库仍缺少最近三个月 ICML 2026 OpenReview 投稿列表的本地快照/导出，且 `literature/` 与 `analysis/` 目录均未出现这些论文的摘要、全文摘录或已验证笔记；详见 `projects/multi-agent-survey/logs/2026-03-25T23:02:00+08:00-fleet-沙弥香-01-1774450892-0c51b9-icml-2026-openreview-per-paper-blocked.md`]
+  Done when: 仓库内补齐最近三个月 ICML 2026 OpenReview multi-agent 投稿清单，并为每篇提供可追溯摘要、全文摘录或已验证笔记，再据此整理 Motivation、创新点、方法论与获取方式
+  Evidence: `projects/multi-agent-survey/logs/2026-03-25T23:02:00+08:00-fleet-沙弥香-01-1774450892-0c51b9-icml-2026-openreview-per-paper-blocked.md`
 
 - [ ] 基于全部调研结果撰写综述，并提出 5 个最适合继续做的课题方向及详细方法设计 [zero-resource]
   Done when: TBD
