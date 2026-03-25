@@ -234,13 +234,13 @@
 - [ ] 从互联网系统检索 2023-2026 年优先的 multi-agent 相关正式综述/survey 论文，候选需包含题目、年份、来源、是否 survey/review 的证据
   Done when: TBD
 
-- [ ] 对候选综述做交叉 review，剔除伪综述、教程、观点文、单篇方法总结和重复主题，最终确定 10 篇高质量综述清单
-  Done when: TBD
+- [x] 对候选综述做交叉 review，剔除伪综述、教程、观点文、单篇方法总结和重复主题，最终确定 10 篇高质量综述清单
+  Completed: 2026-03-26T02:53:21+08:00
+  Done when: 形成一份基于候选池、survey 身份核验、web_fetch 元信息核验与主题去重规则的高质量 Top 10，并写明剔除理由
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-high-quality-survey-top10-cross-review.md`
 
-- [x] 下载最终确认的综述 PDF 到 projects/multi-agent-review-survey/literature/，保证文件可打开、命名规范且总数达到 10 篇
-  Completed: 2026-03-26T02:55:18+08:00
-  Done when: canonical 10 篇综述 PDF 已落盘到 `projects/multi-agent-review-survey/literature/`，且本地复核确认 10/10 可打开、命名无冲突、目录 PDF 总数不少于 10
-  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-pdf-links-and-download-record.md`; `projects/multi-agent-review-survey/logs/2026-03-26T02:55:18+08:00-fleet-灯里-08-1774464884-da7688-download-final-confirmed-pdfs-closeout.md`
+- [ ] 下载最终确认的综述 PDF 到 projects/multi-agent-review-survey/literature/，保证文件可打开、命名规范且总数达到 10 篇
+  Done when: TBD
 
 - [ ] 为每篇已确认综述提取摘要、研究问题、分类框架、核心结论、局限性和可延展方向，整理成后续中文 Markdown 精读的结构化笔记
   Done when: TBD
