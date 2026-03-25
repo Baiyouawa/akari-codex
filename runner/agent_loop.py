@@ -625,6 +625,18 @@ class AgentLoop:
                     )
             if not snap.active_list and completed > 0:
                 lines.append("所有任务已完成。")
+
+            blocked_items = scheduler.drain_blocked_notifications()
+            if blocked_items:
+                lines.append(f"\n⚠️ 有 {len(blocked_items)} 个 Agent 遇到阻塞:")
+                for b in blocked_items:
+                    w = b.get("worker", "?")
+                    short_w = w.rsplit("-", 2)[0] if "-" in w else w
+                    lines.append(
+                        f"  {short_w}: {b.get('reason', '未知原因')[:150]}"
+                    )
+                lines.append("请告知主人定夺！")
+
             if scheduler._dashboard:
                 lines.append(f"\n--- Dashboard ---\n{scheduler._dashboard.render_snapshot()}")
             return "\n".join(lines)

@@ -743,6 +743,59 @@ async def _proactive_followup(ws, config: OneBotConfig) -> None:
         logger.info("Sent proactive message to owner")
 
 
+_BLOCKED_POLL_INTERVAL = 30  # seconds
+
+
+async def _poll_blocked_notifications(ws, config: OneBotConfig) -> None:
+    """Periodically check for blocked workers and notify the owner via QQ.
+
+    Runs as a background task alongside the main WebSocket listener.
+    When a fleet worker reports a blocked state, the scheduler collects it.
+    This function drains those notifications and sends them to the owner.
+    """
+    if not config.owner_qq:
+        return
+
+    while True:
+        await asyncio.sleep(_BLOCKED_POLL_INTERVAL)
+        try:
+            from fleet.scheduler import get_fleet_scheduler
+            scheduler = get_fleet_scheduler()
+            if not scheduler:
+                continue
+
+            items = scheduler.drain_blocked_notifications()
+            if not items:
+                continue
+
+            for item in items:
+                worker = item.get("worker", "?")
+                short_worker = worker.rsplit("-", 2)[0] if "-" in worker else worker
+                project = item.get("project", "?")
+                task_id = item.get("task_id", "?")[:12]
+                reason = item.get("reason", "未说明原因")
+
+                notice = (
+                    f"⚠️ Agent 遇到阻塞，需要你定夺！\n\n"
+                    f"Agent: {short_worker}\n"
+                    f"项目: {project}\n"
+                    f"任务: {task_id}\n"
+                    f"阻塞原因:\n{reason[:500]}\n\n"
+                    f"请告诉小白怎么处理~"
+                )
+                await _send_reply(
+                    ws, "private", int(config.owner_qq), None, notice
+                )
+                logger.info(
+                    "Sent blocked notification to owner: worker=%s task=%s",
+                    short_worker, task_id,
+                )
+        except asyncio.CancelledError:
+            return
+        except Exception:
+            logger.debug("Blocked poll error", exc_info=True)
+
+
 async def _run(config: OneBotConfig) -> None:
     """Main loop: connect to NapCat WebSocket and listen for messages."""
     logger.info("正在连接 NapCatQQ: %s", config.ws_url)
