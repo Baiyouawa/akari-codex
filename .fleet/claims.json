@@ -596,7 +596,8 @@
       "session_id": "侑-00-1774446675-505c27",
       "project": "multi-agent-survey",
       "claimed_at": 1774446675.9584653,
-      "active": true
+      "active": false,
+      "released_at": 1774446988.0307777
     },
     "claim-c5423b38f9b8": {
       "task_id": "a3aecc56640eb26b",
