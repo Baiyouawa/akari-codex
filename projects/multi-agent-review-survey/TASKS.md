@@ -61,15 +61,14 @@
 - [ ] 检查原任务中的 idea 部分是否需要根据10篇综述重新提炼，如无额外指示则先保持输出5个高质量 idea 并用10篇综述作为依据 [zero-resource] [blocked-by: 缺少基于10篇综述的横向比较与研究空白综合。]
   Done when: 明确 idea 输出口径，并完成基于10篇综述证据的 idea 校正或重提炼。
 
-- [ ] 检索 multi-agent 相关最新 10 篇综述论文，优先 arXiv、OpenReview、期刊官网与会议官方页面，确认题目、年份、来源与 PDF 链接 [zero-resource]
-  Done when: TBD
+- [ ] 检索 multi-agent 相关最新 10 篇综述论文，优先 arXiv、OpenReview、期刊官网与会议官方页面，确认题目、年份、来源与 PDF 链接 [zero-resource] [blocked-by: 当前仓库内仍无已确认的5篇综述基线、recent multi-agent 综述候选库、本地来源页面快照或 PDF 元数据；本会话复核 `projects/multi-agent-review-survey/` 目录仅见 blocker 分析与日志，无法在零资源约束下验证“最新10篇”的题目、年份、来源与 PDF 链接。详见 `projects/multi-agent-review-survey/logs/2026-03-25T23:38:17+08:00-fleet-沙弥香-01-1774453054-cdbef9-ten-survey-search-blocked.md`]
+  Done when: 仓库内补齐 recent multi-agent 综述的可追溯候选题录、来源页面快照或 PDF 元数据，并据此确认10篇综述的题目、年份、来源与 PDF 链接。
 
-- [ ] 将确认后的 10 篇综述论文 PDF 下载到项目 literature 文件夹中，确保文件可打开且命名规范 [zero-resource]
-  Done when: TBD
+- [ ] 将确认后的 10 篇综述论文 PDF 下载到项目 literature 文件夹中，确保文件可打开且命名规范 [zero-resource] [blocked-by: 上游“确认10篇综述及其来源/PDF 链接”任务未完成；当前仓库内没有可执行下载的已确认目标集合。]
+  Done when: 仓库内已有确认后的10篇综述及其 PDF 链接，并将对应 PDF 保存到 `projects/multi-agent-review-survey/literature/` 且文件可打开、命名规范。
 
-- [ ] 记录每篇论文的元数据（题目、作者、年份、来源、PDF 路径）并汇总到项目文档中 [zero-resource]
-  Done when: TBD
+- [ ] 记录每篇论文的元数据（题目、作者、年份、来源、PDF 路径）并汇总到项目文档中 [zero-resource] [blocked-by: 缺少已确认并下载到仓库内的10篇综述及其来源/PDF 路径；本会话复核 `projects/multi-agent-review-survey/` 目录仍无 `paper/` 目录、无本地 PDF 文件，且新增证据见 `projects/multi-agent-review-survey/logs/2026-03-25T23:39:14+08:00-fleet-结衣-03-1774453084-0124c4-review-metadata-blocked.md`。]
+  Done when: 10篇综述均已在仓库内具备题目、作者、年份、来源与 PDF 路径，并汇总到项目文档。
 
-- [x] 若下载受阻或缺失 PDF，第一时间汇报具体卡住的 Agent、阻塞点与缺失资料 [zero-resource]
-  Completed: 2026-03-25T23:39:25+08:00
-  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-25-blocker-rollup.md`; `projects/multi-agent-review-survey/logs/2026-03-25T23:39:25+08:00-fleet-侑-00-1774453114-41a8f4-download-pdf-blocker-report.md`
+- [ ] 若下载受阻或缺失 PDF，第一时间汇报具体卡住的 Agent、阻塞点与缺失资料 [zero-resource] [blocked-by: 仅在“确认10篇综述并开始下载”后才可能判定具体论文级下载阻塞；当前仍卡在更上游的目标论文确认阶段。]
+  Done when: 一旦开始论文级下载，能够对每个失败项给出具体 Agent、阻塞点与缺失资料；若无失败则记录零阻塞结果。
