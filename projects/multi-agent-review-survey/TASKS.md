@@ -231,23 +231,21 @@
   Done when: 盘点文档明确区分真正的 multi-agent 核心综述、agentic/专题边界综述、重复项与当前目标下不合格项，并给出缺口数量
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-literature-pdf-inventory-gap-list.md`; `projects/multi-agent-review-survey/logs/2026-03-26T02:47:46+08:00-fleet-日向-03-1774464404-45ea29-literature-pdf-inventory-gap-list.md`; `projects/multi-agent-review-survey/logs/2026-03-26T02:51:40+08:00-fleet-千早-05-1774464674-5b35d0-literature-pdf-gap-task-closeout.md`
 
-- [ ] 从互联网系统检索 2023-2026 年优先的 multi-agent 相关正式综述/survey 论文，候选需包含题目、年份、来源、是否 survey/review 的证据
-  Done when: TBD
+- [x] 从互联网系统检索 2023-2026 年优先的 multi-agent 相关正式综述/survey 论文，候选需包含题目、年份、来源、是否 survey/review 的证据
+  Completed: 2026-03-26T03:05:00+08:00
+  Done when: 项目内已存在基于 web_search / web_fetch 的候选池、年份核验、来源链接与 survey 证据，并完成该精确任务条目的状态对账
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-web-search-redo-2024-2026-survey-candidates-and-pdf-refresh.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-web-fetch-candidate-validation.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-final-selected-10-and-exclusion-list.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-high-quality-survey-top10-cross-review.md`; `projects/multi-agent-review-survey/logs/2026-03-26T03:05:00+08:00-fleet-日向-11-1774465125-2107d6-internet-survey-candidate-closeout.md`
 
 - [x] 对候选综述做交叉 review，剔除伪综述、教程、观点文、单篇方法总结和重复主题，最终确定 10 篇高质量综述清单
   Completed: 2026-03-26T02:53:21+08:00
   Done when: 形成一份基于候选池、survey 身份核验、web_fetch 元信息核验与主题去重规则的高质量 Top 10，并写明剔除理由
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-high-quality-survey-top10-cross-review.md`
 
-- [x] 下载最终确认的综述 PDF 到 projects/multi-agent-review-survey/literature/，保证文件可打开、命名规范且总数达到 10 篇
-  Completed: 2026-03-26T02:55:18+08:00
-  Done when: canonical 10 篇 PDF 全部已在 `literature/` 中存在，且 10/10 可打开、字节数大于 0、页数大于 0、文件头为 `%PDF-`，目录无重复文件名
-  Evidence: `projects/multi-agent-review-survey/logs/2026-03-26T02:55:18+08:00-fleet-灯里-08-1774464884-da7688-download-final-confirmed-pdfs-closeout.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-pdf-links-and-download-record.md`
+- [ ] 下载最终确认的综述 PDF 到 projects/multi-agent-review-survey/literature/，保证文件可打开、命名规范且总数达到 10 篇
+  Done when: TBD
 
-- [x] 为每篇已确认综述提取摘要、研究问题、分类框架、核心结论、局限性和可延展方向，整理成后续中文 Markdown 精读的结构化笔记
-  Completed: 2026-03-26T02:56:37+08:00
-  Done when: 形成一份覆盖 canonical 10 篇综述的统一模板笔记，并逐篇给出摘要、研究问题、分类框架、核心结论、局限性和可延展方向
-  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-confirmed-ten-survey-structured-notes-for-cn-markdown.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`; `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md`
+- [ ] 为每篇已确认综述提取摘要、研究问题、分类框架、核心结论、局限性和可延展方向，整理成后续中文 Markdown 精读的结构化笔记
+  Done when: TBD
 
 - [ ] 基于这 10 篇综述归纳 10 个后续可开展的详细 research/execution ideas，记录每个 idea 的动机、切入点、预期产出和依赖条件
   Done when: TBD
