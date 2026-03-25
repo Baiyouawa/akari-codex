@@ -71,13 +71,13 @@
   Done when: 10 篇论文均有逐篇 survey 判定依据、主页/来源页与 PDF 直链，并在项目文档中可追溯
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-candidate-survey-judgment-and-top10.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-pdf-links-and-download-record.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-canonical-ten-cross-verification.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-top10-survey-selection-closeout.md`
 
-- [ ] 检索 2024-2026 年最新的 multi-agent 相关综述/survey 论文，初筛候选论文并记录来源链接、年份、标题与摘要
-  Done when: TBD
+- [x] 检索 2024-2026 年最新的 multi-agent 相关综述/survey 论文，初筛候选论文并记录来源链接、年份、标题与摘要
+  Completed: 2026-03-26T01:23:42+08:00
+  Done when: 候选论文记录来源链接、年份、标题与摘要，并写入项目文档
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-2024-2026-multi-agent-survey-candidate-screening-with-abstracts.md`; `projects/multi-agent-review-survey/logs/2026-03-26T01:23:42+08:00-fleet-沙弥香-09-1774459295-5067c4-candidate-screening-with-abstracts.md`
 
-- [x] 核验候选论文是否真正属于综述/survey，判断是否足够新，并去重后确定 10 篇最终名单
-  Completed: 2026-03-26T01:29:07+08:00
-  Done when: 候选论文均给出综述属性与新近性判断，去重后锁定可追溯的最终 10 篇 canonical 名单
-  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-final-top10-verification-audit.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-candidate-survey-judgment-and-top10.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`
+- [ ] 核验候选论文是否真正属于综述/survey，判断是否足够新，并去重后确定 10 篇最终名单
+  Done when: TBD
 
 - [ ] 为最终确定的 10 篇论文查找可下载 PDF 链接，下载到项目目录 multi-agent-review-survey/literature 文件夹
   Done when: TBD
