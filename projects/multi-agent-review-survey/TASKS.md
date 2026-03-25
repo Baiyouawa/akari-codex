@@ -240,12 +240,14 @@
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-high-quality-survey-top10-cross-review.md`
 
 - [x] 下载最终确认的综述 PDF 到 projects/multi-agent-review-survey/literature/，保证文件可打开、命名规范且总数达到 10 篇
-  Completed: 2026-03-26T03:00:35+08:00
-  Done when: canonical 10 篇对应 PDF 已全部落盘于 `projects/multi-agent-review-survey/literature/`，且逐文件验证可打开、非空、命名无冲突，目录总数不少于 10 篇
-  Evidence: `projects/multi-agent-review-survey/logs/2026-03-26T03:00:35+08:00-fleet-灯里-00-1774465185-56c498-download-final-confirmed-pdfs-closeout.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-pdf-links-and-download-record.md`
+  Completed: 2026-03-26T02:55:18+08:00
+  Done when: canonical 10 篇 PDF 全部已在 `literature/` 中存在，且 10/10 可打开、字节数大于 0、页数大于 0、文件头为 `%PDF-`，目录无重复文件名
+  Evidence: `projects/multi-agent-review-survey/logs/2026-03-26T02:55:18+08:00-fleet-灯里-08-1774464884-da7688-download-final-confirmed-pdfs-closeout.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-pdf-links-and-download-record.md`
 
-- [ ] 为每篇已确认综述提取摘要、研究问题、分类框架、核心结论、局限性和可延展方向，整理成后续中文 Markdown 精读的结构化笔记
-  Done when: TBD
+- [x] 为每篇已确认综述提取摘要、研究问题、分类框架、核心结论、局限性和可延展方向，整理成后续中文 Markdown 精读的结构化笔记
+  Completed: 2026-03-26T02:56:37+08:00
+  Done when: 形成一份覆盖 canonical 10 篇综述的统一模板笔记，并逐篇给出摘要、研究问题、分类框架、核心结论、局限性和可延展方向
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-confirmed-ten-survey-structured-notes-for-cn-markdown.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`; `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md`
 
 - [ ] 基于这 10 篇综述归纳 10 个后续可开展的详细 research/execution ideas，记录每个 idea 的动机、切入点、预期产出和依赖条件
   Done when: TBD
