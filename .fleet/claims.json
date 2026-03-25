@@ -1273,7 +1273,8 @@
       "session_id": "侑-00-1774453114-41a8f4",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774453114.3609357,
-      "active": true
+      "active": false,
+      "released_at": 1774453404.9790652
     }
   }
 }
