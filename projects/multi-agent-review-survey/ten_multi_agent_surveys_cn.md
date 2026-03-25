@@ -9,7 +9,7 @@
 - Quick overview: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-quick-overview.md`
 - Cross-review evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-cross-review-record.md`
 
-> 说明：本文不新增未经核验的论文事实，只把项目内已经 cross-review 对齐过的 10 篇综述，整理成更适合快速浏览的中文 Markdown。年份分布、页数、PDF 路径、题目与作者均以 `analysis/2026-03-26-ten-paper-metadata.md` 为准；逐篇判断与 benchmark/主题摘要以 `analysis/2026-03-26-ten-survey-structured-reading-notes.md` 为准。
+> 说明：本文不新增未经核验的论文事实，只把项目内已经 cross-review 对齐过的 10 篇综述，整理成更适合快速浏览的中文 Markdown。年份分布、页数、PDF 路径、题目与作者均以 `analysis/2026-03-26-ten-paper-metadata.md` 与 `analysis/2026-03-26-basic-info-for-10-papers.md` 为准；逐篇判断与 benchmark/主题摘要以 `analysis/2026-03-26-ten-survey-structured-reading-notes.md` 为准。
 
 ---
 
@@ -19,7 +19,7 @@
 |---|---|---:|---|---|
 | 1 | Guo 2024 | 2024 | 通用总览 | `projects/multi-agent-review-survey/literature/2024-guo-et-al-large-language-model-based-multi-agents-a-survey-of-progress-and-challenges-arxiv-2402.01680.pdf` |
 | 2 | Aratchige & Ilmini 2025 | 2025 | 技术底座 | `projects/multi-agent-review-survey/literature/2025-aratchige-ilmini-llms-working-in-harmony-a-survey-on-the-technological-aspects-of-building-effective-llm-based-multi-agent-systems-arxiv-2504.01963.pdf` |
-| 3 | Chen et al. 2025 | 2025 | 应用前沿 | `projects/multi-agent-review-survey/literature/2025-chen-et-al-a-survey-on-llm-based-multi-agent-system-recent-advances-and-new-frontiers-in-application-arxiv-2412.17481.pdf` |
+| 3 | Chen et al. 2024 | 2024 | 应用前沿 | `projects/multi-agent-review-survey/literature/2025-chen-et-al-a-survey-on-llm-based-multi-agent-system-recent-advances-and-new-frontiers-in-application-arxiv-2412.17481.pdf` |
 | 4 | Tran et al. 2025 | 2025 | 协作机制 | `projects/multi-agent-review-survey/literature/2025-tran-et-al-multi-agent-collaboration-mechanisms-a-survey-of-llms-arxiv-2501.06322.pdf` |
 | 5 | Wu et al. 2025 | 2025 | 自动驾驶垂直场景 | `projects/multi-agent-review-survey/literature/2025-wu-et-al-multi-agent-autonomous-driving-systems-with-large-language-models-a-survey-of-recent-advances-arxiv-2502.16804.pdf` |
 | 6 | Yan et al. 2025 | 2025 | 通信中心视角 | `projects/multi-agent-review-survey/literature/2025-yan-et-al-beyond-self-talk-a-communication-centric-survey-of-llm-based-multi-agent-systems-arxiv-2502.14321.pdf` |
@@ -50,8 +50,8 @@
 ### 数量核验
 - canonical reading set：10 篇。  
   Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`
-- 年份分布：2024 年 1 篇，2025 年 5 篇，2026 年 4 篇。  
-  Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md` 中 `year_counts = Counter({'2025': 5, '2026': 4, '2024': 1})`
+- 年份分布：2024 年 2 篇，2025 年 4 篇，2026 年 4 篇。  
+  Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-basic-info-for-10-papers.md` 中逐行年份统计：Guo 2024、Chen 2024、Aratchige 2025、Tran 2025、Wu 2025、Yan 2025、Xu 2026、Yue 2026、Chen 2026、Wang 2026。
 - 总页数：340 页。  
   Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-basic-info-for-10-papers.md` 中 inline arithmetic `15 + 12 + 13 + 35 + 18 + 16 + 42 + 31 + 143 + 15 = 340`
 
@@ -79,7 +79,7 @@
 - **适合谁先读**：想自己实现或改造 agent 系统的人。
 - **Provenance**：`projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`
 
-### 卡片 3：Chen et al. 2025
+### 卡片 3：Chen et al. 2024
 - **定位**：应用前沿导向综述。
 - **核心问题**：LLM-MAS 目前已经扩展到哪些复杂任务、仿真场景与评测前沿？
 - **怎么分**：复杂任务求解、特定场景仿真、生成式 agent 评估，并补充 core components 与 interactions。
@@ -159,7 +159,7 @@
 |---|---|---|---|---|
 | Guo 2024 | 通用总览 | 给出组件-应用-挑战总图谱 | multi-agent 全景是什么 | 对 2026 新主题覆盖不足 |
 | Aratchige 2025 | 技术底座 | 把 architecture / memory / planning 提到核心位置 | 怎样搭一个有效 MAS | 应用面较窄 |
-| Chen 2025 | 应用前沿 | 从复杂任务/仿真/评测看系统扩张 | 这些系统能拿来做什么 | 机制拆分不够细 |
+| Chen 2024 | 应用前沿 | 从复杂任务/仿真/评测看系统扩张 | 这些系统能拿来做什么 | 机制拆分不够细 |
 | Tran 2025 | 协作机制 | cooperation / competition / structure taxonomy | 多 agent 怎样组织协作关系 | 工具与 workflow 讨论较弱 |
 | Wu 2025 | 垂直场景 | 展示高风险真实约束下的多主体协作 | 自动驾驶等真实系统怎么落地 | 泛化到通用场景有限 |
 | Yan 2025 | 通信中心视角 | communication taxonomy | communication 为什么是核心变量 | 其他系统因素覆盖较少 |
@@ -234,7 +234,7 @@ Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-r
 优先顺序：Tran 2025 → Yan 2025 → Chen 2026。
 
 ### 如果你想做场景与应用
-优先顺序：Chen 2025 → Wu 2025 → Wang 2026。
+优先顺序：Chen 2024 → Wu 2025 → Wang 2026。
 
 Provenance: 阅读顺序综合自 `projects/multi-agent-review-survey/analysis/2026-03-26-basic-info-for-10-papers.md` 与各篇 structured notes 的主题定位。
 
