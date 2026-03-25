@@ -237,8 +237,10 @@
 - [ ] 对候选综述做交叉 review，剔除伪综述、教程、观点文、单篇方法总结和重复主题，最终确定 10 篇高质量综述清单
   Done when: TBD
 
-- [ ] 下载最终确认的综述 PDF 到 projects/multi-agent-review-survey/literature/，保证文件可打开、命名规范且总数达到 10 篇
-  Done when: TBD
+- [x] 下载最终确认的综述 PDF 到 projects/multi-agent-review-survey/literature/，保证文件可打开、命名规范且总数达到 10 篇
+  Completed: 2026-03-26T02:55:18+08:00
+  Done when: canonical 10 篇综述 PDF 已落盘到 `projects/multi-agent-review-survey/literature/`，且本地复核确认 10/10 可打开、命名无冲突、目录 PDF 总数不少于 10
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-pdf-links-and-download-record.md`; `projects/multi-agent-review-survey/logs/2026-03-26T02:55:18+08:00-fleet-灯里-08-1774464884-da7688-download-final-confirmed-pdfs-closeout.md`
 
 - [ ] 为每篇已确认综述提取摘要、研究问题、分类框架、核心结论、局限性和可延展方向，整理成后续中文 Markdown 精读的结构化笔记
   Done when: TBD
