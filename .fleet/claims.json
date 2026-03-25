@@ -1308,7 +1308,8 @@
       "session_id": "灯里-00-1774453535-02b046",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774453535.150743,
-      "active": true
+      "active": false,
+      "released_at": 1774453815.3260202
     }
   }
 }
