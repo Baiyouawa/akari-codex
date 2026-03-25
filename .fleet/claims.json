@@ -2022,7 +2022,8 @@
       "session_id": "柑奈-10-1774463743-cd518b",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774463743.0250263,
-      "active": true
+      "active": false,
+      "released_at": 1774464209.1537895
     },
     "claim-727340034cdb": {
       "task_id": "5f2d32ea9f97584d",
