@@ -190,12 +190,15 @@ class ChatBot:
     # ── 硬编码人设指令匹配（绕过 LLM 路由，避免被安全层拒绝）──
 
     _PERSONA_PATTERNS = [
+        re.compile(r"(?:对|给|跟)\s*(\d{5,12})\s*(?:用户)?(?:扮演|设定?人设|角色扮演|进行如下|如下要求|回复|聊天)[：:\s]*(.+)", re.DOTALL),
         re.compile(r"对\s*(\S+?)\s*扮演\s*(.+)", re.DOTALL),
         re.compile(r"跟\s*(\S+?)\s*聊天时?(?:你是|扮演|身份[是为])\s*(.+)", re.DOTALL),
         re.compile(r"(?:给|对)\s*(\S+?)\s*(?:设定?|换|用)(?:人设|身份|角色)[是为:：]?\s*(.+)", re.DOTALL),
         re.compile(r"(?:现在)?(?:需要你)?对\s*(\S+?)\s*(?:这个用户)?(?:进行)?(?:如下要求的)?(?:回复|聊天)[：:]?\s*(.+)", re.DOTALL),
         re.compile(r"(?:在)?(?:跟|和|与)\s*(\S+?)\s*(?:的)?(?:对话|私聊|聊天)(?:里|中|时)?(?:你[是叫]|身份[是为])\s*(.+)", re.DOTALL),
     ]
+
+    _QQ_NUMBER_RE = re.compile(r"(\d{5,12})")
 
     def _try_hardcoded_persona_cmd(self, message: str) -> str | None:
         msg = message.strip()
@@ -205,6 +208,9 @@ class ChatBot:
                 target = m.group(1).strip()
                 persona = m.group(2).strip()
                 if target and persona and len(persona) > 2:
+                    qq_match = self._QQ_NUMBER_RE.search(target)
+                    if qq_match:
+                        target = qq_match.group(1)
                     set_persona_override(target, persona)
                     print(f"  >> [硬匹配] set_persona: {target} → {persona[:50]}...")
                     return f"收到！小白跟 {target} 聊天时会完全按这个来~"

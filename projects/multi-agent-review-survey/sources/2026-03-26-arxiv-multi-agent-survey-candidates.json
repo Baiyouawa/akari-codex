@@ -1,0 +1,1574 @@
+{
+  "generated_by": "projects/multi-agent-review-survey/sources/gather_arxiv_multi_agent_survey_candidates.py",
+  "queries": [
+    "(all:\"multi-agent\" OR all:\"multi agent\") AND (ti:survey OR abs:survey OR ti:review OR abs:review)",
+    "(all:\"LLM-based multi-agent\" OR all:\"multi-agent systems\") AND (ti:survey OR abs:survey OR ti:review OR abs:review)",
+    "(all:\"agentic AI\" OR all:\"LLM agents\") AND (ti:survey OR abs:survey OR ti:review OR abs:review)",
+    "(all:communication OR all:collaboration OR all:coordination) AND (all:\"multi-agent\" OR all:\"LLM agents\") AND (ti:survey OR abs:survey OR ti:review OR abs:review)"
+  ],
+  "candidate_count": 100,
+  "candidates": [
+    {
+      "title": "SoK: The Attack Surface of Agentic AI -- Tools, and Autonomy",
+      "summary": "Recent AI systems combine large language models with tools, external knowledge via retrieval-augmented generation (RAG), and even autonomous multi-agent decision loops. This agentic AI paradigm greatly expands capabilities - but also vastly enlarges the attack surface. In this systematization, we map out the trust boundaries and security risks of agentic LLM-based systems. We develop a comprehensive taxonomy of attacks spanning prompt-level injections, knowledge-base poisoning, tool/plug-in exploits, and multi-agent emergent threats. Through a detailed literature review, we synthesize evidence from 2023-2025, including more than 20 peer-reviewed and archival studies, industry reports, and standards. We find that agentic systems introduce new vectors for indirect prompt injection, code execution exploits, RAG index poisoning, and cross-agent manipulation that go beyond traditional AI threats. We define attacker models and threat scenarios, and propose metrics (e.g., Unsafe Action Rate, Privilege Escalation Distance) to evaluate security posture. Our survey examines defenses such as input sanitization, retrieval filters, sandboxes, access control, and \"AI guardrails,\" assessing their effectiveness and pointing out the areas where protection is still lacking. To assist practitioners, we outline defensive controls and provide a phased security checklist for deploying agentic AI (covering design-time hardening, runtime monitoring, and incident response). Finally, we outline open research challenges in secure autonomous AI (robust tool APIs, verifiable agent behavior, supply-chain safeguards) and discuss ethical and responsible disclosure practices. We systematize recent findings to help researchers and engineers understand and mitigate security risks in agentic AI.",
+      "published": "2026-03-24T08:21:51Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.22928v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.22928v1.pdf",
+      "authors": [
+        "Ali Dehghantanha",
+        "Sajad Homayoun"
+      ]
+    },
+    {
+      "title": "Early Discoveries of Algorithmist I: Promise of Provable Algorithm Synthesis at Scale",
+      "summary": "Designing algorithms with provable guarantees that also work well in practice remains difficult, requiring both mathematical reasoning and careful implementation. Existing approaches that bridge worst-case theory and empirical performance, such as beyond-worst-case analysis and data-driven algorithm selection, typically assume prior distributional knowledge or restrict attention to a fixed pool of algorithms. Recent progress in LLMs suggests a new possibility: provable algorithm synthesis on the fly. To study this, we built Algorithmist, an autonomous researcher agent on top of GitHub Copilot that runs a multi-agent research-and-review loop, with separate stages for idea generation, algorithm and proof development, proof-guided implementation, and review of proofs, code, and their alignment. We evaluate Algorithmist on research-level tasks in private data analysis and clustering. When asked to design practical methods that jointly satisfy privacy, approximation, and interpretability requirements, it produced provably sound and empirically effective algorithms, together with research-style writeups and audited implementations. It also found improved algorithms in some settings, explained principled barriers in others, and uncovered a subtle proof bug in prior published work. More broadly, our results suggest a new paradigm in which LLM systems generate research-paper-quality algorithmic artifacts tailored to each dataset and deployment setting. They also point to a proof-first code-synthesis paradigm, in which code is developed alongside a structured natural-language proof intermediate representation and kept aligned with it throughout synthesis.",
+      "published": "2026-03-23T04:06:55Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.22363v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.22363v1.pdf",
+      "authors": [
+        "Janardhan Kulkarni"
+      ]
+    },
+    {
+      "title": "Cross-Context Verification: Hierarchical Detection of Benchmark Contamination through Session-Isolated Analysis",
+      "summary": "LLM coding benchmarks face a credibility crisis: widespread solution leakage and test quality issues undermine SWE-bench Verified, while existing detection methods--paraphrase consistency, n-gram overlap, perplexity analysis--never directly observe whether a model reasons or recalls. Meanwhile, simply repeating verification degrades accuracy: multi-turn review generates false positives faster than it discovers true errors, suggesting that structural approaches are needed. We introduce Cross-Context Verification (CCV), a black-box method that solves the same benchmark problem in N independent sessions and measures solution diversity, combined with the Hierarchical Cross-Context Architecture (HCCA), a multi-agent analysis framework that prevents confirmation bias through intentional information restriction across specialized analytical roles. On 9 SWE-bench Verified problems (45 trials, Claude Opus 4.6, temperature 0), CCV achieves perfect separation between contaminated and genuine reasoning (Mann-Whitney U=0, p approx 0.012, r = 1.0). Key findings: (1) contamination is binary--models either recall perfectly or not at all; (2) reasoning absence is a perfect discriminator; (3) 33% of prior contamination labels are false positives; (4) HCCA's independent analysis structure discovers contamination-flaw composite cases that single-analyst approaches miss. A pilot experiment extending HCCA to multi-stage verification (Worker to Verifier to Director) yields a negative result--100% sycophantic confirmation--providing further evidence that information restriction, not structural complexity, is the key mechanism. We release all code and data.",
+      "published": "2026-03-23T00:18:34Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.21454v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.21454v1.pdf",
+      "authors": [
+        "Tae-Eun Song"
+      ]
+    },
+    {
+      "title": "Position: Multi-Agent Algorithmic Care Systems Demand Contestability for Trustworthy AI",
+      "summary": "Multi-agent systems (MAS) are increasingly used in healthcare to support complex decision-making through collaboration among specialized agents. Because these systems act as collective decision-makers, they raise challenges for trust, accountability, and human oversight. Existing approaches to trustworthy AI largely rely on explainability, but explainability alone is insufficient in multi-agent settings, as it does not enable care partners to challenge or correct system outputs. To address this limitation, Contestable AI (CAI) characterizes systems that support effective human challenge throughout the decision-making lifecycle by providing transparency, structured opportunities for intervention, and mechanisms for review, correction, or override. This position paper argues that contestability is a necessary design requirement for trustworthy multi-agent algorithmic care systems. We identify key limitations in current MAS and Explainable AI (XAI) research and present a human-in-the-loop framework that integrates structured argumentation and role-based contestation to preserve human agency, clinical responsibility, and trust in high-stakes care contexts.",
+      "published": "2026-03-21T01:47:26Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.20595v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.20595v1.pdf",
+      "authors": [
+        "Truong Thanh Hung Nguyen",
+        "Hélène Fournier",
+        "Piper Jackson",
+        "Makoto Itoh",
+        "Shannon Freeman",
+        "Rene Richard",
+        "Hung Cao"
+      ]
+    },
+    {
+      "title": "AI Agents Can Already Autonomously Perform Experimental High Energy Physics",
+      "summary": "Large language model-based AI agents are now able to autonomously execute substantial portions of a high energy physics (HEP) analysis pipeline with minimal expert-curated input. Given access to a HEP dataset, an execution framework, and a corpus of prior experimental literature, we find that Claude Code succeeds in automating all stages of a typical analysis: event selection, background estimation, uncertainty quantification, statistical inference, and paper drafting. We argue that the experimental HEP community is underestimating the current capabilities of these systems, and that most proposed agentic workflows are too narrowly scoped or scaffolded to specific analysis structures. We present a proof-of-concept framework, Just Furnish Context (JFC), that integrates autonomous analysis agents with literature-based knowledge retrieval and multi-agent review, and show that this is sufficient to plan, execute, and document a credible high energy physics analysis. We demonstrate this by conducting analyses on open data from ALEPH, DELPHI, and CMS to perform electroweak, QCD, and Higgs boson measurements. Rather than replacing physicists, these tools promise to offload the repetitive technical burden of analysis code development, freeing researchers to focus on physics insight, truly novel method development, and rigorous validation. Given these developments, we advocate for new strategies for how the community trains students, organizes analysis efforts, and allocates human expertise.",
+      "published": "2026-03-20T17:55:27Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.20179v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.20179v1.pdf",
+      "authors": [
+        "Eric A. Moreno",
+        "Samuel Bright-Thonney",
+        "Andrzej Novak",
+        "Dolores Garcia",
+        "Philip Harris"
+      ]
+    },
+    {
+      "title": "Memory poisoning and secure multi-agent systems",
+      "summary": "Memory poisoning attacks for Agentic AI and multi-agent systems (MAS) have recently caught attention. It is partially due to the fact that Large Language Models (LLMs) facilitate the construction and deployment of agents. Different memory systems are being used nowadays in this context, including semantic, episodic, and short-term memory. This distinction between the different types of memory systems focuses mostly on their duration but also on their origin and their localization. It ranges from the short-term memory originated at the user's end localized in the different agents to the long-term consolidated memory localized in well established knowledge databases. In this paper, we first present the main types of memory systems, we then discuss the feasibility of memory poisoning attacks in these different types of memory systems, and we propose mitigation strategies. We review the already existing security solutions to mitigate some of the alleged attacks, and we discuss adapted solutions based on cryptography. We propose to implement local inference based on private knowledge retrieval as an example of mitigation strategy for memory poisoning for semantic memory. We also emphasize actual risks in relation to interactions between agents, which can cause memory poisoning. These latter risks are not so much studied in the literature and are difficult to formalize and solve. Thus, we contribute to the construction of agents that are secure by design.",
+      "published": "2026-03-20T14:27:46Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.20357v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.20357v1.pdf",
+      "authors": [
+        "Vicenç Torra",
+        "Maria Bras-Amorós"
+      ]
+    },
+    {
+      "title": "OS-Themis: A Scalable Critic Framework for Generalist GUI Rewards",
+      "summary": "Reinforcement Learning (RL) has the potential to improve the robustness of GUI agents in stochastic environments, yet training is highly sensitive to the quality of the reward function. Existing reward approaches struggle to achieve both scalability and performance. To address this, we propose OS-Themis, a scalable and accurate multi-agent critic framework. Unlike a single judge, OS-Themis decomposes trajectories into verifiable milestones to isolate critical evidence for decision making and employs a review mechanism to strictly audit the evidence chain before making the final verdict. To facilitate evaluation, we further introduce OmniGUIRewardBench (OGRBench), a holistic cross-platform benchmark for GUI outcome rewards, where all evaluated models achieve their best performance under OS-Themis. Extensive experiments on AndroidWorld show that OS-Themis yields a 10.3% improvement when used to support online RL training, and a 6.9% gain when used for trajectory validation and filtering in the self-training loop, highlighting its potential to drive agent evolution.",
+      "published": "2026-03-19T17:47:47Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.19191v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.19191v1.pdf",
+      "authors": [
+        "Zehao Li",
+        "Zhenyu Wu",
+        "Yibo Zhao",
+        "Bowen Yang",
+        "Jingjing Xie",
+        "Zhaoyang Liu",
+        "Zhoumianze Liu",
+        "Kaiming Jin",
+        "Jianze Liang",
+        "Zonglin Li",
+        "Feng Wu",
+        "Bowen Zhou",
+        "Zun Wang",
+        "Zichen Ding"
+      ]
+    },
+    {
+      "title": "Multimodal Model for Computational Pathology:Representation Learning and Image Compression",
+      "summary": "Whole slide imaging (WSI) has transformed digital pathology by enabling computational analysis of gigapixel histopathology images. Recent foundation model advances have accelerated progress in computational pathology, facilitating joint reasoning across pathology images, clinical reports, and structured data. Despite this progress, challenges remain: the extreme resolution of WSIs creates computational hurdles for visual learning; limited expert annotations constrain supervised approaches; integrating multimodal information while preserving biological interpretability remains difficult; and the opacity of modeling ultra-long visual sequences hinders clinical transparency. This review comprehensively surveys recent advances in multimodal computational pathology. We systematically analyze four research directions: (1) self-supervised representation learning and structure-aware token compression for WSIs; (2) multimodal data generation and augmentation; (3) parameter-efficient adaptation and reasoning-enhanced few-shot learning; and (4) multi-agent collaborative reasoning for trustworthy diagnosis. We specifically examine how token compression enables cross-scale modeling and how multi-agent mechanisms simulate a pathologist's \"Chain of Thought\" across magnifications to achieve uncertainty-aware evidence fusion. Finally, we discuss open challenges and argue that future progress depends on unified multimodal frameworks integrating high-resolution visual data with clinical and biomedical knowledge to support interpretable and safe AI-assisted diagnosis.",
+      "published": "2026-03-19T09:24:44Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.18660v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.18660v1.pdf",
+      "authors": [
+        "Peihang Wu",
+        "Zehong Chen",
+        "Lijian Xu"
+      ]
+    },
+    {
+      "title": "EDM-ARS: A Domain-Specific Multi-Agent System for Automated Educational Data Mining Research",
+      "summary": "In this technical report, we present the Educational Data Mining Automated Research System (EDM-ARS), a domain-specific multi-agent pipeline that automates end-to-end educational data mining (EDM) research. We conceptualize EDM-ARS as a general framework for domain-aware automated research pipelines, where educational expertise is embedded into each stage of the research lifecycle. As a first instantiation of this framework, we focus on predictive modeling tasks. Within this scope, EDM-ARS orchestrates five specialized LLM-powered agents (ProblemFormulator, DataEngineer, Analyst, Critic, and Writer) through a state-machine coordinator that supports revision loops, checkpoint-based recovery, and sandboxed code execution. Given a research prompt and a dataset, EDM-ARS produces a complete LaTeX manuscript with real Semantic Scholar citations, validated machine learning analyses, and automated methodological peer review. We also provide a detailed description of the system architecture, the three-tier data registry design that encodes educational domain expertise, the specification of each agent, the inter-agent communication protocol, and mechanisms for error-handling and self-correction. Finally, we discuss current limitations, including single-dataset scope and formulaic paper output, and outline a phased roadmap toward causal inference, transfer learning, psychometric, and multi-dataset generalization. EDM-ARS is released as an open-source project to support the educational research community.",
+      "published": "2026-03-18T20:45:45Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.18273v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.18273v1.pdf",
+      "authors": [
+        "Chenguang Pan",
+        "Zhou Zhang",
+        "Weixuan Xiao",
+        "Chengyuan Yao"
+      ]
+    },
+    {
+      "title": "A Multi-Agent System for Building-Age Cohort Mapping to Support Urban Energy Planning",
+      "summary": "Determining the age distribution of the urban building stock is crucial for sustainable municipal heat planning and upgrade prioritization. However, existing approaches often rely on datasets gathered via sensors or remote sensing techniques, leaving inconsistencies and gaps in data. We present a multi-agent LLM system comprising three key agents, the Zensus agent, the OSM agent, and the Monument agent, that fuse data from heterogeneous sources. A data orchestrator and harmonizer geocodes and deduplicates building imprints. Using this fused ground truth, we introduce BuildingAgeCNN, a satellite-only classifier based on a ConvNeXt backbone augmented with a Feature Pyramid Network (FPN), CoordConv spatial channels, and Squeeze-and-Excitation (SE) blocks. Under spatial cross validation, BuildingAgeCNN attains an overall accuracy of 90.69% but a modest macro-F1 of 67.25%, reflecting strong class imbalance and persistent confusions between adjacent historical cohorts. To mitigate risk for planning applications, the address-to prediction pipeline includes calibrated confidence estimates and flags low-confidence cases for manual review. This multi-agent LLM system not only assists in gathering structured data but also helps energy demand planners optimize district-heating networks and target low-carbon sustainable energy systems.",
+      "published": "2026-03-18T11:46:54Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.17626v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.17626v1.pdf",
+      "authors": [
+        "Kundan Thota",
+        "Thorsten Schlachter",
+        "Veit Hagenmeyer"
+      ]
+    },
+    {
+      "title": "RepoReviewer: A Local-First Multi-Agent Architecture for Repository-Level Code Review",
+      "summary": "Repository-level code review requires reasoning over project structure, repository context, and file-level implementation details. Existing automated review workflows often collapse these tasks into a single pass, which can reduce relevance, increase duplication, and weaken prioritization. We present RepoReviewer, a local-first multi-agent system for automated GitHub repository review with a Python CLI, FastAPI API, LangGraph orchestration layer, and Next.js user interface. RepoReviewer decomposes review into repository acquisition, context synthesis, file-level analysis, finding prioritization, and summary generation. We describe the system design, implementation tradeoffs, developer-facing interfaces, and practical failure modes. Rather than claiming benchmark superiority, we frame RepoReviewer as a technical systems contribution: a pragmatic architecture for repository-level automated review, accompanied by reusable evaluation and reporting infrastructure for future empirical study.",
+      "published": "2026-03-17T04:17:51Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.16107v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.16107v1.pdf",
+      "authors": [
+        "Peng Zhang"
+      ]
+    },
+    {
+      "title": "ResearchPilot: A Local-First Multi-Agent System for Literature Synthesis and Related Work Drafting",
+      "summary": "ResearchPilot is an open-source, self-hostable multi-agent system for literature-review assistance. Given a natural-language research question, it retrieves papers from Semantic Scholar and arXiv, extracts structured findings from paper abstracts, synthesizes cross-paper patterns, and drafts a citation-aware related-work section. The system combines FastAPI, Next.js, DSPy, SQLite, and Qdrant in a local-first architecture that supports bring-your-own-key model access and remote-or-local embeddings. This paper describes the system design, typed agent interfaces, persistence and history-search mechanisms, and the engineering tradeoffs involved in building a transparent research assistant. Rather than claiming algorithmic novelty, we present ResearchPilot as a systems contribution and evaluate it through automated tests and end-to-end local runs. We discuss limitations including external API rate limits, abstract-only extraction, incomplete corpus coverage, and the lack of citation verification.",
+      "published": "2026-03-15T22:02:59Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.14629v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.14629v1.pdf",
+      "authors": [
+        "Peng Zhang"
+      ]
+    },
+    {
+      "title": "DRCY: Agentic Hardware Design Reviews",
+      "summary": "Hardware design errors discovered after fabrication require costly physical respins that can delay products by months. Existing electronic design automation (EDA) tools enforce structural connectivity rules. However, they cannot verify that connections are \\emph{semantically} correct with respect to component datasheets. For example, that a symbol's pinout matches the manufacturer's specification, or that a voltage regulator's feedback resistors produce the intended output. We present DRCY, the first production-ready multi-agent LLM system that automates first-pass schematic connection review by autonomously fetching component datasheets, performing pin-by-pin analysis against extracted specifications, and posting findings as inline comments on design reviews. DRCY is deployed in production on AllSpice Hub, a collaborative hardware design platform, where it runs as a CI/CD action triggered on design review submissions. DRCY is used regularly by major hardware companies for use-cases ranging from multi-agent vehicle design to space exploration. We describe DRCY's five-agent pipeline architecture, its agentic datasheet retrieval system with self-evaluation, and its multi-run consensus mechanism for improving reliability on safety-critical analyses",
+      "published": "2026-03-13T15:37:58Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.15672v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.15672v1.pdf",
+      "authors": [
+        "Kyle Dumont",
+        "Nicholas Herbert",
+        "Hayder Tirmazi",
+        "Shrikanth Upadhayaya"
+      ]
+    },
+    {
+      "title": "Multi-Agent Reinforcement Learning for UAV-Based Chemical Plume Source Localization",
+      "summary": "Undocumented orphaned wells pose significant health and environmental risks to nearby communities by releasing toxic gases and contaminating water sources, with methane emissions being a primary concern. Traditional survey methods such as magnetometry often fail to detect older wells effectively. In contrast, aerial in-situ sensing using unmanned aerial vehicles (UAVs) offers a promising alternative for methane emission detection and source localization. This study presents a robust and efficient framework based on a multi-agent deep reinforcement learning (MARL) algorithm for the chemical plume source localization (CPSL) problem. The proposed approach leverages virtual anchor nodes to coordinate UAV navigation, enabling collaborative sensing of gas concentrations and wind velocities through onboard and shared measurements. Source identification is achieved by analyzing the historical trajectory of anchor node placements within the plume. Comparative evaluations against the fluxotaxis method demonstrate that the MARL framework achieves superior performance in both localization accuracy and operational efficiency.",
+      "published": "2026-03-12T06:15:17Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.11582v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.11582v1.pdf",
+      "authors": [
+        "Zhirun Li",
+        "Derek Hollenbeck",
+        "Ruikun Wu",
+        "Michelle Sherman",
+        "Sihua Shao",
+        "Xiang Sun",
+        "Mostafa Hassanalian"
+      ]
+    },
+    {
+      "title": "UltrasoundAgents: Hierarchical Multi-Agent Evidence-Chain Reasoning for Breast Ultrasound Diagnosis",
+      "summary": "Breast ultrasound diagnosis typically proceeds from global lesion localization to local sign assessment and then evidence integration to assign a BI-RADS category and determine benignity or malignancy. Many existing methods rely on end-to-end prediction or provide only weakly grounded evidence, which can miss fine-grained lesion cues and limit auditability and clinical review. To align with the clinical workflow and improve evidence traceability, we propose a hierarchical multi-agent framework, termed UltrasoundAgents. A main agent localizes the lesion in the full image and triggers a crop-and-zoom operation. A sub-agent analyzes the local view and predicts four clinically relevant attributes, namely echogenicity pattern, calcification, boundary type, and edge (margin) morphology. The main agent then integrates these structured attributes to perform evidence-based reasoning and output the BI-RADS category and the malignancy prediction, while producing reviewable intermediate evidence. Furthermore, hierarchical multi-agent training often suffers from error propagation, difficult credit assignment, and sparse rewards. To alleviate this and improve training stability, we introduce a decoupled progressive training strategy. We first train the attribute agent, then train the main agent with oracle attributes to learn robust attribute-based reasoning, and finally apply corrective trajectory self-distillation with spatial supervision to build high-quality trajectories for supervised fine-tuning, yielding a deployable end-to-end policy. Experiments show consistent gains over strong vision-language baselines in diagnostic accuracy and attribute agreement, together with structured evidence and traceable reasoning.",
+      "published": "2026-03-11T15:03:52Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.10852v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.10852v1.pdf",
+      "authors": [
+        "Yali Zhu",
+        "Kang Zhou",
+        "Dingbang Wu",
+        "Gaofeng Meng"
+      ]
+    },
+    {
+      "title": "Security Considerations for Multi-agent Systems",
+      "summary": "Multi-agent artificial intelligence systems or MAS are systems of autonomous agents that exercise delegated tool authority, share persistent memory, and coordinate via inter-agent communication. MAS introduces qualitatively distinct security vulnerabilities from those documented for singular AI models. Existing security and governance frameworks were not designed for these emerging attack surfaces. This study systematically characterizes the threat landscape of MAS and quantitatively evaluates 16 security frameworks for AI against it. A four-phase methodology is proposed: constructing a deep technical knowledge base of production multi-agent architectures; conducting generative AI-assisted threat modeling scoped to MAS cybersecurity risks and validated by domain experts; structuring survey plans at individual-threat granularity; and scoring each framework on a three-point scale against the cybersecurity risks. The risks were organized into 193 distinct main threat items across nine risk categories. The expected minimal average score is 2. No reviewed framework achieves majority coverage of any single category. Non-Determinism (mean score 1.231 across all 16 frameworks) and Data Leakage (1.340) are the most under-addressed domains. The OWASP Agentic Security Initiative leads overall at 65.3\\% coverage and in the design phase; the CDAO Generative AI Responsible AI Toolkit leads in development and operational coverage. These results provide the first empirical cross-framework comparison for MAS security and offer evidence-based guidance for framework selection.",
+      "published": "2026-03-09T22:46:27Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.09002v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.09002v1.pdf",
+      "authors": [
+        "Tam Nguyen",
+        "Moses Ndebugre",
+        "Dheeraj Arremsetty"
+      ]
+    },
+    {
+      "title": "Human-AI Collaboration for Scaling Agile Regression Testing: An Agentic-AI Teammate from Manual to Automated Testing",
+      "summary": "Agile organizations increasingly rely on automated regression testing to sustain rapid, high-quality software delivery. However, as systems grow and requirements evolve, a persistent bottleneck arises: test specifications are produced faster than they can be transformed into executable scripts, leading to mounting manual effort and delayed releases. In partnership with Hacon (a Siemens company), we present an agentic AI approach that generates system-level test scripts directly from validated specifications, aiming to accelerate automation without sacrificing human oversight. Our solution features a retrieval-augmented, multi-agent architecture integrated into Hacon's agile workflows. We evaluate this system through a mixed-method analysis of industrial artifacts and practitioner feedback. Results show that the AI teammate significantly increases test script throughput and reduces manual authoring effort, while underscoring the ongoing need for clear specifications and human review to ensure quality and maintainability. We conclude with practical lessons for scaling regression automation and fostering effective Human-AI collaboration in agile environments.",
+      "published": "2026-03-09T10:19:13Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.08190v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.08190v1.pdf",
+      "authors": [
+        "Moustapha El Outmani",
+        "Manthan Venkataramana Shenoy",
+        "Ahmad Hatahet",
+        "Andreas Rausch",
+        "Tim Niklas Kniep",
+        "Thomas Raddatz",
+        "Benjamin King"
+      ]
+    },
+    {
+      "title": "Memory for Autonomous LLM Agents:Mechanisms, Evaluation, and Emerging Frontiers",
+      "summary": "Large language model (LLM) agents increasingly operate in settings where a single context window is far too small to capture what has happened, what was learned, and what should not be repeated. Memory -- the ability to persist, organize, and selectively recall information across interactions -- is what turns a stateless text generator into a genuinely adaptive agent. This survey offers a structured account of how memory is designed, implemented, and evaluated in modern LLM-based agents, covering work from 2022 through early 2026. We formalize agent memory as a \\emph{write--manage--read} loop tightly coupled with perception and action, then introduce a three-dimensional taxonomy spanning temporal scope, representational substrate, and control policy. Five mechanism families are examined in depth: context-resident compression, retrieval-augmented stores, reflective self-improvement, hierarchical virtual context, and policy-learned management. On the evaluation side, we trace the shift from static recall benchmarks to multi-session agentic tests that interleave memory with decision-making, analyzing four recent benchmarks that expose stubborn gaps in current systems. We also survey applications where memory is the differentiating factor -- personal assistants, coding agents, open-world games, scientific reasoning, and multi-agent teamwork -- and address the engineering realities of write-path filtering, contradiction handling, latency budgets, and privacy governance. The paper closes with open challenges: continual consolidation, causally grounded retrieval, trustworthy reflection, learned forgetting, and multimodal embodied memory.",
+      "published": "2026-03-08T15:08:01Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.07670v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.07670v1.pdf",
+      "authors": [
+        "Pengfei Du"
+      ]
+    },
+    {
+      "title": "HLER: Human-in-the-Loop Economic Research via Multi-Agent Pipelines for Empirical Discovery",
+      "summary": "Large language models (LLMs) have enabled agent-based systems that aim to automate scientific research workflows. Most existing approaches focus on fully autonomous discovery, where AI systems generate research ideas, conduct analyses, and produce manuscripts with minimal human involvement. However, empirical research in economics and the social sciences poses additional constraints: research questions must be grounded in available datasets, identification strategies require careful design, and human judgment remains essential for evaluating economic significance. We introduce HLER (Human-in-the-Loop Economic Research), a multi-agent architecture that supports empirical research automation while preserving critical human oversight. The system orchestrates specialized agents for data auditing, data profiling, hypothesis generation, econometric analysis, manuscript drafting, and automated review. A key design principle is dataset-aware hypothesis generation, where candidate research questions are constrained by dataset structure, variable availability, and distributional diagnostics, reducing infeasible or hallucinated hypotheses. HLER further implements a two-loop architecture: a question quality loop that screens and selects feasible hypotheses, and a research revision loop where automated review triggers re-analysis and manuscript revision. Human decision gates are embedded at key stages, allowing researchers to guide the automated pipeline. Experiments on three empirical datasets show that dataset-aware hypothesis generation produces feasible research questions in 87% of cases (versus 41% under unconstrained generation), while complete empirical manuscripts can be produced at an average API cost of $0.8-$1.5 per run. These results suggest that Human-AI collaborative pipelines may provide a practical path toward scalable empirical research.",
+      "published": "2026-03-08T03:40:34Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.07444v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.07444v1.pdf",
+      "authors": [
+        "Chen Zhu",
+        "Xiaolu Wang"
+      ]
+    },
+    {
+      "title": "An Interactive Multi-Agent System for Evaluation of New Product Concepts",
+      "summary": "Product concept evaluation is a critical stage that determines strategic resource allocation and project success in enterprises. However, traditional expert-led approaches face limitations such as subjective bias and high time and cost requirements. To support this process, this study proposes an automated approach utilizing a large language model (LLM)-based multi-agent system (MAS). Through a systematic analysis of previous research on product development and team collaboration, this study established two primary evaluation dimensions, namely technical feasibility and market feasibility. The proposed system consists of a team of eight virtual agents representing specialized domains such as R&D and marketing. These agents use retrieval-augmented generation (RAG) and real-time search tools to gather objective evidence and validate concepts through structured deliberations based on the established criteria. The agents were further fine-tuned using professional product review data to enhance their judgment accuracy. A case study involving professional display monitor concepts demonstrated that the system's evaluation rankings were consistent with those of senior industry experts. These results confirm the usability of the proposed multi-agent-based evaluation approach for supporting product development decisions.",
+      "published": "2026-03-06T07:22:52Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.05980v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.05980v1.pdf",
+      "authors": [
+        "Bin Xuan",
+        "Ruo Ai",
+        "Hakyeon Lee"
+      ]
+    },
+    {
+      "title": "Demonstrating ViviDoc: Generating Interactive Documents through Human-Agent Collaboration",
+      "summary": "Interactive articles help readers engage with complex ideas through exploration, yet creating them remains costly, requiring both domain expertise and web development skills. Recent LLM-based agents can automate content creation, but naively applying them yields uncontrollable and unverifiable outputs. We present ViviDoc, a human-agent collaborative system that generates interactive educational documents from a single topic input. ViviDoc introduces a multi-agent pipeline (Planner, Executor, Evaluator) and the Document Specification (DocSpec), a human-readable intermediate representation that decomposes each interactive visualization into State, Render, Transition, and Constraint components. The DocSpec enables educators to review and refine generation plans before code is produced, bridging the gap between pedagogical intent and executable output. Expert evaluation and a user study show that ViviDoc substantially outperforms naive agentic generation and provides an intuitive editing experience. Our project homepage is available at https://vividoc-homepage.vercel.app/.",
+      "published": "2026-03-02T14:27:49Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.01912v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.01912v1.pdf",
+      "authors": [
+        "Yinghao Tang",
+        "Yupeng Xie",
+        "Yingchaojie Feng",
+        "Tingfeng Lan",
+        "Wei Chen"
+      ]
+    },
+    {
+      "title": "CiteAudit: You Cited It, But Did You Read It? A Benchmark for Verifying Scientific References in the LLM Era",
+      "summary": "Scientific research relies on accurate citation for attribution and integrity, yet large language models (LLMs) introduce a new risk: fabricated references that appear plausible but correspond to no real publications. Such hallucinated citations have already been observed in submissions and accepted papers at major machine learning venues, exposing vulnerabilities in peer review. Meanwhile, rapidly growing reference lists make manual verification impractical, and existing automated tools remain fragile to noisy and heterogeneous citation formats and lack standardized evaluation. We present the first comprehensive benchmark and detection framework for hallucinated citations in scientific writing. Our multi-agent verification pipeline decomposes citation checking into claim extraction, evidence retrieval, passage matching, reasoning, and calibrated judgment to assess whether a cited source truly supports its claim. We construct a large-scale human-validated dataset across domains and define unified metrics for citation faithfulness and evidence alignment. Experiments with state-of-the-art LLMs reveal substantial citation errors and show that our framework significantly outperforms prior methods in both accuracy and interpretability. This work provides the first scalable infrastructure for auditing citations in the LLM era and practical tools to improve the trustworthiness of scientific references.",
+      "published": "2026-02-26T19:17:39Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.23452v1",
+      "pdf_url": "http://arxiv.org/pdf/2602.23452v1.pdf",
+      "authors": [
+        "Zhengqing Yuan",
+        "Kaiwen Shi",
+        "Zheyuan Zhang",
+        "Lichao Sun",
+        "Nitesh V. Chawla",
+        "Yanfang Ye"
+      ]
+    },
+    {
+      "title": "Federated Multi Agent Deep Learning and Neural Networks for Advanced Distributed Sensing in Wireless Networks",
+      "summary": "Multi-agent deep learning (MADL), including multi-agent deep reinforcement learning (MADRL), distributed/federated training, and graph-structured neural networks, is becoming a unifying framework for decision-making and inference in wireless systems where sensing, communication, and computing are tightly coupled. Recent 5G-Advanced and 6G visions strengthen this coupling through integrated sensing and communication, edge intelligence, open programmable RAN, and non-terrestrial/UAV networking, which create decentralized, partially observed, time-varying, and resource-constrained control problems. This survey synthesizes the state of the art, with emphasis on 2021-2025 research, on MADL for distributed sensing and wireless communications. We present a task-driven taxonomy across (i) learning formulations (Markov games, Dec-POMDPs, CTDE), (ii) neural architectures (GNN-based radio resource management, attention-based policies, hierarchical learning, and over-the-air aggregation), (iii) advanced techniques (federated reinforcement learning, communication-efficient federated deep RL, and serverless edge learning orchestration), and (iv) application domains (MEC offloading with slicing, UAV-enabled heterogeneous networks with power-domain NOMA, intrusion detection in sensor networks, and ISAC-driven perceptive mobile networks). We also provide comparative tables of algorithms, training topologies, and system-level trade-offs in latency, spectral efficiency, energy, privacy, and robustness. Finally, we identify open issues including scalability, non-stationarity, security against poisoning and backdoors, communication overhead, and real-time safety, and outline research directions toward 6G-native sense-communicate-compute-learn systems.",
+      "published": "2026-02-24T21:11:33Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.16881v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.16881v1.pdf",
+      "authors": [
+        "Nadine Muller",
+        "Stefano DeRosa",
+        "Su Zhang",
+        "Chun Lee Huan"
+      ]
+    },
+    {
+      "title": "Architecting AgentOS: From Token-Level Context to Emergent System-Level Intelligence",
+      "summary": "The paradigm of Large Language Models is undergoing a fundamental transition from static inference engines to dynamic autonomous cognitive systems.While current research primarily focuses on scaling context windows or optimizing prompt engineering the theoretical bridge between micro scale token processing and macro scale systemic intelligence remains fragmented.This paper proposes AgentOS,a holistic conceptual framework that redefines the LLM as a \"Reasoning Kernel\" governed by structured operating system logic.Central to this architecture is Deep Context Management which conceptualizes the context window as an Addressable Semantic Space rather than a passive buffer.We systematically deconstruct the transition from discrete sequences to coherent cognitive states introducing mechanisms for Semantic Slicing and Temporal Alignment to mitigate cognitive drift in multi-agent orchestration.By mapping classical OS abstractions such as memory paging interrupt handling and process scheduling onto LLM native constructs, this review provides a rigorous roadmap for architecting resilient scalable and self-evolving cognitive environments.Our analysis asserts that the next frontier of AGI development lies in the architectural efficiency of system-level coordination.",
+      "published": "2026-02-24T14:12:21Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.20934v1",
+      "pdf_url": "http://arxiv.org/pdf/2602.20934v1.pdf",
+      "authors": [
+        "ChengYou Li",
+        "XiaoDong Liu",
+        "XiangBao Meng",
+        "XinYu Zhao"
+      ]
+    },
+    {
+      "title": "Beyond Human Performance: A Vision-Language Multi-Agent Approach for Quality Control in Pharmaceutical Manufacturing",
+      "summary": "Colony-forming unit (CFU) detection is critical in pharmaceutical manufacturing, serving as a key component of Environmental Monitoring programs and ensuring compliance with stringent quality standards. Manual counting is labor-intensive and error-prone, while deep learning (DL) approaches, though accurate, remain vulnerable to sample quality variations and artifacts. Building on our earlier CNN-based framework (Beznik et al., 2020), we evaluated YOLOv5, YOLOv7, and YOLOv8 for CFU detection; however, these achieved only 97.08 percent accuracy, insufficient for pharmaceutical-grade requirements. A custom Detectron2 model trained on GSK's dataset of over 50,000 Petri dish images achieved 99 percent detection rate with 2 percent false positives and 0.6 percent false negatives. Despite high validation accuracy, Detectron2 performance degrades on outlier cases including contaminated plates, plastic artifacts, or poor optical clarity. To address this, we developed a multi-agent framework combining DL with vision-language models (VLMs). The VLM agent first classifies plates as valid or invalid. For valid samples, both DL and VLM agents independently estimate colony counts. When predictions align within 5 percent, results are automatically recorded in Postgres and SAP; otherwise, samples are routed for expert review. Expert feedback enables continuous retraining and self-improvement. Initial DL-based automation reduced human verification by 50 percent across vaccine manufacturing sites. With VLM integration, this increased to 85 percent, delivering significant operational savings. The proposed system provides a scalable, auditable, and regulation-ready solution for microbiological quality control, advancing automation in biopharmaceutical production.",
+      "published": "2026-02-24T04:48:05Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.20543v1",
+      "pdf_url": "http://arxiv.org/pdf/2602.20543v1.pdf",
+      "authors": [
+        "Subhra Jyoti Mandal",
+        "Lara Rachidi",
+        "Puneet Jain",
+        "Matthieu Duvinage",
+        "Sander W. Timmer"
+      ]
+    },
+    {
+      "title": "From Agent-Only Social Networks to Autonomous Scientific Research: Lessons from OpenClaw and Moltbook, and the Architecture of ClawdLab and Beach.Science",
+      "summary": "In January 2026, the open-source agent framework OpenClaw and the agent-only social network Moltbook produced a large-scale dataset of autonomous AI-to-AI interaction, attracting six academic publications within fourteen days. This study conducts a multivocal literature review of that ecosystem and presents two complementary platforms for autonomous scientific research as a design science response to the architectural failure modes identified. ClawdLab, an open-source platform for structured laboratory collaboration, addresses these failure modes through hard role restrictions, structured adversarial critique, PI-led governance, multi-model orchestration, and evidence requirements enforced through external tool verification, in which the principal investigator validates submitted work using available API calls, computational services, and model context protocol integrations rather than relying on social consensus. Beach.science, a public research commons, complements ClawdLab's structured laboratory model by providing a free-form environment in which heterogeneous agent configurations interact, discover research opportunities, and autonomously contribute computational analyses, supported by template-based role specialisation, extensible skill registries, and programmatic reward mechanisms that distribute inference resources to agents demonstrating scientific progress. A three-tier taxonomy distinguishes single-agent pipelines, predetermined multi-agent workflows, and fully decentralised systems, analysing why leading AI co-scientist platforms remain confined to the first two tiers. The composable third-tier architecture instantiated across ClawdLab and beach.science, in which foundation models, capabilities, governance, verification tooling, and inter-lab coordination are independently modifiable, enables compounding improvement as the broader AI ecosystem advances.",
+      "published": "2026-02-23T13:10:01Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.19810v3",
+      "pdf_url": "http://arxiv.org/pdf/2602.19810v3.pdf",
+      "authors": [
+        "Lukas Weidener",
+        "Marko Brkić",
+        "Phillip Lee",
+        "Martin Karlsson",
+        "Kevin Noessler",
+        "Paul Kohlhaas"
+      ]
+    },
+    {
+      "title": "MAC-AMP: A Closed-Loop Multi-Agent Collaboration System for Multi-Objective Antimicrobial Peptide Design",
+      "summary": "To address the global health threat of antimicrobial resistance, antimicrobial peptides (AMP) are being explored for their potent and promising ability to fight resistant pathogens. While artificial intelligence (AI) is being employed to advance AMP discovery and design, most AMP design models struggle to balance key goals like activity, toxicity, and novelty, using rigid or unclear scoring methods that make results hard to interpret and optimize. As the capabilities of Large Language Models (LLM) advance and evolve swiftly, we turn to AI multi-agent collaboration based on such models (multi-agent LLMs), which show rapidly rising potential in complex scientific design scenarios. Based on this, we introduce MAC-AMP, a closed-loop multi-agent collaboration (MAC) system for multi-objective AMP design. The system implements a fully autonomous simulated peer review-adaptive reinforcement learning framework that requires only a task description and example dataset to design novel AMPs. The novelty of our work lies in introducing a closed-loop multi-agent system for AMP design, with cross-domain transferability, that supports multi-objective optimization while remaining explainable rather than a 'black box'. Experiments show that MAC-AMP outperforms other AMP generative models by effectively optimizing AMP generation for multiple key molecular properties, demonstrating exceptional results in antibacterial activity, AMP likeliness, toxicity compliance, and structural reliability.",
+      "published": "2026-02-16T17:01:47Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.14926v1",
+      "pdf_url": "http://arxiv.org/pdf/2602.14926v1.pdf",
+      "authors": [
+        "Gen Zhou",
+        "Sugitha Janarthanan",
+        "Lianghong Chen",
+        "Pingzhao Hu"
+      ]
+    },
+    {
+      "title": "AmbiBench: Benchmarking Mobile GUI Agents Beyond One-Shot Instructions in the Wild",
+      "summary": "Benchmarks are paramount for gauging progress in the domain of Mobile GUI Agents. In practical scenarios, users frequently fail to articulate precise directives containing full task details at the onset, and their expressions are typically ambiguous. Consequently, agents are required to converge on the user's true intent via active clarification and interaction during execution. However, existing benchmarks predominantly operate under the idealized assumption that user-issued instructions are complete and unequivocal. This paradigm focuses exclusively on assessing single-turn execution while overlooking the alignment capability of the agent. To address this limitation, we introduce AmbiBench, the first benchmark incorporating a taxonomy of instruction clarity to shift evaluation from unidirectional instruction following to bidirectional intent alignment. Grounded in Cognitive Gap theory, we propose a taxonomy of four clarity levels: Detailed, Standard, Incomplete, and Ambiguous. We construct a rigorous dataset of 240 ecologically valid tasks across 25 applications, subject to strict review protocols. Furthermore, targeting evaluation in dynamic environments, we develop MUSE (Mobile User Satisfaction Evaluator), an automated framework utilizing an MLLM-as-a-judge multi-agent architecture. MUSE performs fine-grained auditing across three dimensions: Outcome Effectiveness, Execution Quality, and Interaction Quality. Empirical results on AmbiBench reveal the performance boundaries of SoTA agents across different clarity levels, quantify the gains derived from active interaction, and validate the strong correlation between MUSE and human judgment. This work redefines evaluation standards, laying the foundation for next-generation agents capable of truly understanding user intent.",
+      "published": "2026-02-12T09:25:15Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.11750v1",
+      "pdf_url": "http://arxiv.org/pdf/2602.11750v1.pdf",
+      "authors": [
+        "Jiazheng Sun",
+        "Mingxuan Li",
+        "Yingying Zhang",
+        "Jiayang Niu",
+        "Yachen Wu",
+        "Ruihan Jin",
+        "Shuyu Lei",
+        "Pengrongrui Tan",
+        "Zongyu Zhang",
+        "Ruoyi Wang",
+        "Jiachen Yang",
+        "Boyu Yang",
+        "Jiacheng Liu",
+        "Xin Peng"
+      ]
+    },
+    {
+      "title": "The Five Ws of Multi-Agent Communication: Who Talks to Whom, When, What, and Why -- A Survey from MARL to Emergent Language and LLMs",
+      "summary": "Multi-agent sequential decision-making powers many real-world systems, from autonomous vehicles and robotics to collaborative AI assistants. In dynamic, partially observable environments, communication is often what reduces uncertainty and makes collaboration possible. This survey reviews multi-agent communication (MA-Comm) through the Five Ws: who communicates with whom, what is communicated, when communication occurs, and why communication is beneficial. This framing offers a clean way to connect ideas across otherwise separate research threads. We trace how communication approaches have evolved across three major paradigms. In Multi-Agent Reinforcement Learning (MARL), early methods used hand-designed or implicit protocols, followed by end-to-end learned communication optimized for reward and control. While successful, these protocols are frequently task-specific and hard to interpret, motivating work on Emergent Language (EL), where agents can develop more structured or symbolic communication through interaction. EL methods, however, still struggle with grounding, generalization, and scalability, which has fueled recent interest in large language models (LLMs) that bring natural language priors for reasoning, planning, and collaboration in more open-ended settings. Across MARL, EL, and LLM-based systems, we highlight how different choices shape communication design, where the main trade-offs lie, and what remains unsolved. We distill practical design patterns and open challenges to support future hybrid systems that combine learning, language, and control for scalable and interpretable multi-agent collaboration.",
+      "published": "2026-02-12T05:07:50Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.11583v1",
+      "pdf_url": "http://arxiv.org/pdf/2602.11583v1.pdf",
+      "authors": [
+        "Jingdi Chen",
+        "Hanqing Yang",
+        "Zongjun Liu",
+        "Carlee Joe-Wong"
+      ]
+    },
+    {
+      "title": "SurveyLens: A Research Discipline-Aware Benchmark for Automatic Survey Generation",
+      "summary": "The exponential growth of scientific literature has driven the evolution of Automatic Survey Generation (ASG) from simple pipelines to multi-agent frameworks and commercial Deep Research agents. However, current ASG evaluation methods rely on generic metrics and are heavily biased toward Computer Science (CS), failing to assess whether ASG methods adhere to the distinct standards of various academic disciplines. Consequently, researchers, especially those outside CS, lack clear guidance on using ASG systems to yield high-quality surveys compliant with specific discipline standards. To bridge this gap, we introduce SurveyLens, the first discipline-aware benchmark evaluating ASG methods across diverse research disciplines. We construct SurveyLens-1k, a curated dataset of 1,000 high-quality human-written surveys spanning 10 disciplines. Subsequently, we propose a dual-lens evaluation framework: (1) Discipline-Aware Rubric Evaluation, which utilizes LLMs with human preference-aligned weights to assess adherence to domain-specific writing standards; and (2) Canonical Alignment Evaluation to rigorously measure content coverage and synthesis quality against human-written survey papers. We conduct extensive experiments by evaluating 11 state-of-the-art ASG methods on SurveyLens, including Vanilla LLMs, ASG systems, and Deep Research agents. Our analysis reveals the distinct strengths and weaknesses of each paradigm across fields, providing essential guidance for selecting tools tailored to specific disciplinary requirements.",
+      "published": "2026-02-11T17:16:43Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.11238v1",
+      "pdf_url": "http://arxiv.org/pdf/2602.11238v1.pdf",
+      "authors": [
+        "Beichen Guo",
+        "Zhiyuan Wen",
+        "Jia Gu",
+        "Senzhang Wang",
+        "Haochen Shi",
+        "Ruosong Yang",
+        "Shuaiqi Liu"
+      ]
+    },
+    {
+      "title": "PRISM: A Principled Framework for Multi-Agent Reasoning via Gain Decomposition",
+      "summary": "Multi-agent collaboration has emerged as a promising paradigm for enhancing reasoning capabilities of Large Language Models (LLMs). However, existing approaches remain largely heuristic, lacking principled guidance on what drives performance gains and how to systematically optimize multi-agent reasoning. Specifically, it remains unclear why multi-agent collaboration outperforms single-agent reasoning and which design choices contribute most to these gains, making it difficult to build better systems. We address this gap by introducing a unified theoretical framework that decomposes multi-agent reasoning gains into three conceptually independent dimensions: Exploration for diverse solution coverage, Information for high-fidelity feedback, and Aggregation for principled consensus. Through this lens, existing methods can be understood as special cases that optimize only subsets of these dimensions. Building upon this decomposition, a novel framework called PRISM (Propose-Review-Integrate Synthesis for Multi-agent Reasoning) is proposed, which jointly maximizes all three dimensions through role-based diversity, execution-grounded feedback with evidence-based cross-evaluation, and iterative synthesis with closed-loop validation. Extensive experiments across mathematical reasoning, code generation, and function calling benchmarks demonstrate that PRISM achieves state-of-the-art performance with superior compute-efficiency compared to methods optimizing partial dimensions. The theoretical framework provides actionable design principles for future multi-agent reasoning systems.",
+      "published": "2026-02-09T12:24:56Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.08586v2",
+      "pdf_url": "http://arxiv.org/pdf/2602.08586v2.pdf",
+      "authors": [
+        "Yiming Yang",
+        "Zhuoyuan Li",
+        "Fanxiang Zeng",
+        "Hao Fu",
+        "Yue Liu"
+      ]
+    },
+    {
+      "title": "ValueFlow: Measuring the Propagation of Value Perturbations in Multi-Agent LLM Systems",
+      "summary": "Multi-agent large language model (LLM) systems increasingly consist of agents that observe and respond to one another's outputs. While value alignment is typically evaluated for isolated models, how value perturbations propagate through agent interactions remains poorly understood. We present ValueFlow, a perturbation-based evaluation framework for measuring and analyzing value drift in multi-agent systems. ValueFlow introduces a 56-value evaluation dataset derived from the Schwartz Value Survey and quantifies agents' value orientations during interaction using an LLM-as-a-judge protocol. Building on this measurement layer, ValueFlow decomposes value drift into agent-level response behavior and system-level structural effects, operationalized by two metrics: beta-susceptibility, which measures an agent's sensitivity to perturbed peer signals, and system susceptibility (SS), which captures how node-level perturbations affect final system outputs. Experiments across multiple model backbones, prompt personas, value dimensions, and network structures show that susceptibility varies widely across values and is strongly shaped by structural topology.",
+      "published": "2026-02-09T12:06:07Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.08567v1",
+      "pdf_url": "http://arxiv.org/pdf/2602.08567v1.pdf",
+      "authors": [
+        "Jinnuo Liu",
+        "Chuke Liu",
+        "Hua Shen"
+      ]
+    },
+    {
+      "title": "Mirror: A Multi-Agent System for AI-Assisted Ethics Review",
+      "summary": "Ethics review is a foundational mechanism of modern research governance, yet contemporary systems face increasing strain as ethical risks arise as structural consequences of large-scale, interdisciplinary scientific practice. The demand for consistent and defensible decisions under heterogeneous risk profiles exposes limitations in institutional review capacity rather than in the legitimacy of ethics oversight. Recent advances in large language models (LLMs) offer new opportunities to support ethics review, but their direct application remains limited by insufficient ethical reasoning capability, weak integration with regulatory structures, and strict privacy constraints on authentic review materials. In this work, we introduce Mirror, an agentic framework for AI-assisted ethical review that integrates ethical reasoning, structured rule interpretation, and multi-agent deliberation within a unified architecture. At its core is EthicsLLM, a foundational model fine-tuned on EthicsQA, a specialized dataset of 41K question-chain-of-thought-answer triples distilled from authoritative ethics and regulatory corpora. EthicsLLM provides detailed normative and regulatory understanding, enabling Mirror to operate in two complementary modes. Mirror-ER (expedited Review) automates expedited review through an executable rule base that supports efficient and transparent compliance checks for minimal-risk studies. Mirror-CR (Committee Review) simulates full-board deliberation through coordinated interactions among expert agents, an ethics secretary agent, and a principal investigator agent, producing structured, committee-level assessments across ten ethical dimensions. Empirical evaluations demonstrate that Mirror significantly improves the quality, consistency, and professionalism of ethics assessments compared with strong generalist LLMs.",
+      "published": "2026-02-09T03:38:55Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.13292v1",
+      "pdf_url": "http://arxiv.org/pdf/2602.13292v1.pdf",
+      "authors": [
+        "Yifan Ding",
+        "Yuhui Shi",
+        "Zhiyan Li",
+        "Zilong Wang",
+        "Yifeng Gao",
+        "Yajun Yang",
+        "Mengjie Yang",
+        "Yixiu Liang",
+        "Xipeng Qiu",
+        "Xuanjing Huang",
+        "Xingjun Ma",
+        "Yu-Gang Jiang",
+        "Guoyu Wang"
+      ]
+    },
+    {
+      "title": "Artificial Organisations",
+      "summary": "Alignment research focuses on making individual AI systems reliable. Human institutions achieve reliable collective behaviour differently: they mitigate the risk posed by misaligned individuals through organisational structure. Multi-agent AI systems should follow this institutional model using compartmentalisation and adversarial review to achieve reliable outcomes through architectural design rather than assuming individual alignment. We demonstrate this approach through the Perseverance Composition Engine, a multi-agent system for document composition. The Composer drafts text, the Corroborator verifies factual substantiation with full source access, and the Critic evaluates argumentative quality without access to sources: information asymmetry enforced by system architecture. This creates layered verification: the Corroborator detects unsupported claims, whilst the Critic independently assesses coherence and completeness. Observations from 474 composition tasks (discrete cycles of drafting, verification, and evaluation) exhibit patterns consistent with the institutional hypothesis. When assigned impossible tasks requiring fabricated content, this iteration enabled progression from attempted fabrication toward honest refusal with alternative proposals--behaviour neither instructed nor individually incentivised. These findings motivate controlled investigation of whether architectural enforcement produces reliable outcomes from unreliable components. This positions organisational theory as a productive framework for multi-agent AI safety. By implementing verification and evaluation as structural properties enforced through information compartmentalisation, institutional design offers a route to reliable collective behaviour from unreliable individual components.",
+      "published": "2026-02-05T13:26:05Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.13275v1",
+      "pdf_url": "http://arxiv.org/pdf/2602.13275v1.pdf",
+      "authors": [
+        "William Waites"
+      ]
+    },
+    {
+      "title": "Agent Primitives: Reusable Latent Building Blocks for Multi-Agent Systems",
+      "summary": "While existing multi-agent systems (MAS) can handle complex problems by enabling collaboration among multiple agents, they are often highly task-specific, relying on manually crafted agent roles and interaction prompts, which leads to increased architectural complexity and limited reusability across tasks. Moreover, most MAS communicate primarily through natural language, making them vulnerable to error accumulation and instability in long-context, multi-stage interactions within internal agent histories. In this work, we propose \\textbf{Agent Primitives}, a set of reusable latent building blocks for LLM-based MAS. Inspired by neural network design, where complex models are built from reusable components, we observe that many existing MAS architectures can be decomposed into a small number of recurring internal computation patterns. Based on this observation, we instantiate three primitives: Review, Voting and Selection, and Planning and Execution. All primitives communicate internally via key-value (KV) cache, which improves both robustness and efficiency by mitigating information degradation across multi-stage interactions. To enable automatic system construction, an Organizer agent selects and composes primitives for each query, guided by a lightweight knowledge pool of previously successful configurations, forming a primitive-based MAS. Experiments show that primitives-based MAS improve average accuracy by 12.0-16.5\\% over single-agent baselines, reduce token usage and inference latency by approximately 3$\\times$-4$\\times$ compared to text-based MAS, while incurring only 1.3$\\times$-1.6$\\times$ overhead relative to single-agent inference and providing more stable performance across model backbones.",
+      "published": "2026-02-03T16:17:53Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.03695v1",
+      "pdf_url": "http://arxiv.org/pdf/2602.03695v1.pdf",
+      "authors": [
+        "Haibo Jin",
+        "Kuang Peng",
+        "Ye Yu",
+        "Xiaopeng Yuan",
+        "Haohan Wang"
+      ]
+    },
+    {
+      "title": "Constrained Process Maps for Multi-Agent Generative AI Workflows",
+      "summary": "Large language model (LLM)-based agents are increasingly used to perform complex, multi-step workflows in regulated settings such as compliance and due diligence. However, many agentic architectures rely primarily on prompt engineering of a single agent, making it difficult to observe or compare how models handle uncertainty and coordination across interconnected decision stages and with human oversight. We introduce a multi-agent system formalized as a finite-horizon Markov Decision Process (MDP) with a directed acyclic structure. Each agent corresponds to a specific role or decision stage (e.g., content, business, or legal review in a compliance workflow), with predefined transitions representing task escalation or completion. Epistemic uncertainty is quantified at the agent level using Monte Carlo estimation, while system-level uncertainty is captured by the MDP's termination in either an automated labeled state or a human-review state. We illustrate the approach through a case study in AI safety evaluation for self-harm detection, implemented as a multi-agent compliance system. Results demonstrate improvements over a single-agent baseline, including up to a 19\\% increase in accuracy, up to an 85x reduction in required human review, and, in some configurations, reduced processing time.",
+      "published": "2026-02-02T12:32:11Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.02034v1",
+      "pdf_url": "http://arxiv.org/pdf/2602.02034v1.pdf",
+      "authors": [
+        "Ananya Joshi",
+        "Michael Rudow"
+      ]
+    },
+    {
+      "title": "Agyn: A Multi-Agent System for Team-Based Autonomous Software Engineering",
+      "summary": "Large language models have demonstrated strong capabilities in individual software engineering tasks, yet most autonomous systems still treat issue resolution as a monolithic or pipeline-based process. In contrast, real-world software development is organized as a collaborative activity carried out by teams following shared methodologies, with clear role separation, communication, and review. In this work, we present a fully automated multi-agent system that explicitly models software engineering as an organizational process, replicating the structure of an engineering team. Built on top of agyn, an open-source platform for configuring agent teams, our system assigns specialized agents to roles such as coordination, research, implementation, and review, provides them with isolated sandboxes for experimentation, and enables structured communication. The system follows a defined development methodology for working on issues, including analysis, task specification, pull request creation, and iterative review, and operates without any human intervention. Importantly, the system was designed for real production use and was not tuned for SWE-bench. When evaluated post hoc on SWE-bench 500, it resolves 72.2% of tasks, outperforming single-agent baselines using comparable language models. Our results suggest that replicating team structure, methodology, and communication is a powerful paradigm for autonomous software engineering, and that future progress may depend as much on organizational design and agent infrastructure as on model improvements.",
+      "published": "2026-02-01T22:17:19Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.01465v2",
+      "pdf_url": "http://arxiv.org/pdf/2602.01465v2.pdf",
+      "authors": [
+        "Nikita Benkovich",
+        "Vitalii Valkov"
+      ]
+    },
+    {
+      "title": "Reimagining Peer Review Process Through Multi-Agent Mechanism Design",
+      "summary": "The software engineering research community faces a systemic crisis: peer review is failing under growing submissions, misaligned incentives, and reviewer fatigue. Community surveys reveal that researchers perceive the process as \"broken.\" This position paper argues that these dysfunctions are mechanism design failures amenable to computational solutions. We propose modeling the research community as a stochastic multi-agent system and applying multi-agent reinforcement learning to design incentive-compatible protocols. We outline three interventions: a credit-based submission economy, MARL-optimized reviewer assignment, and hybrid verification of review consistency. We present threat models, equity considerations, and phased pilot metrics. This vision charts a research agenda toward sustainable peer review.",
+      "published": "2026-01-27T16:43:11Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2601.19778v1",
+      "pdf_url": "http://arxiv.org/pdf/2601.19778v1.pdf",
+      "authors": [
+        "Ahmad Farooq",
+        "Kamran Iqbal"
+      ]
+    },
+    {
+      "title": "Dynamic Role Assignment for Multi-Agent Debate",
+      "summary": "Multi-agent large language model (LLM) and vision-language model (VLM) debate systems employ specialized roles for complex problem-solving, yet model specializations are not leveraged to decide which model should fill which role. We propose dynamic role assignment, a framework that runs a Meta-Debate to select suitable agents before the actual debate. The meta-debate has two stages: (1) proposal, where candidates provide role-tailored arguments, and (2) peer review, where proposals are scored with data and role-specific criteria to choose the best agent for each position. We evaluate our method on LLM problem solving benchmarks. Applied on top of existing debate systems, our approach consistently outperforms uniform assignments (filling all roles with the same model) by up to 74.8% and random assignments (assigning models to roles without considering their suitability) by up to 29.7%, depending on the task and the specific assignment. This work establishes a new paradigm for multi-agent system design, shifting from static agent deployment to dynamic and capability-aware selection.",
+      "published": "2026-01-23T20:15:29Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2601.17152v1",
+      "pdf_url": "http://arxiv.org/pdf/2601.17152v1.pdf",
+      "authors": [
+        "Miao Zhang",
+        "Junsik Kim",
+        "Siyuan Xiang",
+        "Jian Gao",
+        "Cheng Cao"
+      ]
+    },
+    {
+      "title": "Game-Theoretic Lens on LLM-based Multi-Agent Systems",
+      "summary": "Large language models (LLMs) have demonstrated strong reasoning, planning, and communication abilities, enabling them to operate as autonomous agents in open environments. While single-agent systems remain limited in adaptability and coordination, recent progress has shifted attention toward multi-agent systems (MAS) composed of interacting LLMs that pursue cooperative, competitive, or mixed objectives. This emerging paradigm provides a powerful testbed for studying social dynamics and strategic behaviors among intelligent agents. However, current research remains fragmented and lacks a unifying theoretical foundation. To address this gap, we present a comprehensive survey of LLM-based multi-agent systems through a game-theoretic lens. By organizing existing studies around the four key elements of game theory: players, strategies, payoffs, and information, we establish a systematic framework for understanding, comparing, and guiding future research on the design and analysis of LLM-based MAS.",
+      "published": "2026-01-21T14:50:34Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2601.15047v1",
+      "pdf_url": "http://arxiv.org/pdf/2601.15047v1.pdf",
+      "authors": [
+        "Jianing Hao",
+        "Han Ding",
+        "Yuanjian Xu",
+        "Tianze Sun",
+        "Ran Chen",
+        "Wanbo Zhang",
+        "Guang Zhang",
+        "Siguang Li"
+      ]
+    },
+    {
+      "title": "Tokenomics: Quantifying Where Tokens Are Used in Agentic Software Engineering",
+      "summary": "LLM-based Multi-Agent (LLM-MA) systems are increasingly applied to automate complex software engineering tasks such as requirements engineering, code generation, and testing. However, their operational efficiency and resource consumption remain poorly understood, hindering practical adoption due to unpredictable costs and environmental impact. To address this, we conduct an analysis of token consumption patterns in an LLM-MA system within the Software Development Life Cycle (SDLC), aiming to understand where tokens are consumed across distinct software engineering activities. We analyze execution traces from 30 software development tasks performed by the ChatDev framework using a GPT-5 reasoning model, mapping its internal phases to distinct development stages (Design, Coding, Code Completion, Code Review, Testing, and Documentation) to create a standardized evaluation framework. We then quantify and compare token distribution (input, output, reasoning) across these stages. Our preliminary findings show that the iterative Code Review stage accounts for the majority of token consumption for an average of 59.4% of tokens. Furthermore, we observe that input tokens consistently constitute the largest share of consumption for an average of 53.9%, providing empirical evidence for potentially significant inefficiencies in agentic collaboration. Our results suggest that the primary cost of agentic software engineering lies not in initial code generation but in automated refinement and verification. Our novel methodology can help practitioners predict expenses and optimize workflows, and it directs future research toward developing more token-efficient agent collaboration protocols.",
+      "published": "2026-01-20T20:52:14Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2601.14470v1",
+      "pdf_url": "http://arxiv.org/pdf/2601.14470v1.pdf",
+      "authors": [
+        "Mohamad Salim",
+        "Jasmine Latendresse",
+        "SayedHassan Khatoonabadi",
+        "Emad Shihab"
+      ]
+    },
+    {
+      "title": "LLMOrbit: A Circular Taxonomy of Large Language Models -From Scaling Walls to Agentic AI Systems",
+      "summary": "The field of artificial intelligence has undergone a revolution from foundational Transformer architectures to reasoning-capable systems approaching human-level performance. We present LLMOrbit, a comprehensive circular taxonomy navigating the landscape of large language models spanning 2019-2025. This survey examines over 50 models across 15 organizations through eight interconnected orbital dimensions, documenting architectural innovations, training methodologies, and efficiency patterns defining modern LLMs, generative AI, and agentic systems. We identify three critical crises: (1) data scarcity (9-27T tokens depleted by 2026-2028), (2) exponential cost growth ($3M to $300M+ in 5 years), and (3) unsustainable energy consumption (22x increase), establishing the scaling wall limiting brute-force approaches. Our analysis reveals six paradigms breaking this wall: (1) test-time compute (o1, DeepSeek-R1 achieve GPT-4 performance with 10x inference compute), (2) quantization (4-8x compression), (3) distributed edge computing (10x cost reduction), (4) model merging, (5) efficient training (ORPO reduces memory 50%), and (6) small specialized models (Phi-4 14B matches larger models). Three paradigm shifts emerge: (1) post-training gains (RLHF, GRPO, pure RL contribute substantially, DeepSeek-R1 achieving 79.8% MATH), (2) efficiency revolution (MoE routing 18x efficiency, Multi-head Latent Attention 8x KV cache compression enables GPT-4-level performance at <$0.30/M tokens), and (3) democratization (open-source Llama 3 88.6% MMLU surpasses GPT-4 86.4%). We provide insights into techniques (RLHF, PPO, DPO, GRPO, ORPO), trace evolution from passive generation to tool-using agents (ReAct, RAG, multi-agent systems), and analyze post-training innovations.",
+      "published": "2026-01-20T15:06:19Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2601.14053v1",
+      "pdf_url": "http://arxiv.org/pdf/2601.14053v1.pdf",
+      "authors": [
+        "Badri N. Patro",
+        "Vijay S. Agneeswaran"
+      ]
+    },
+    {
+      "title": "Disagreement as Data: Reasoning Trace Analytics in Multi-Agent Systems",
+      "summary": "Learning analytics researchers often analyze qualitative student data such as coded annotations or interview transcripts to understand learning processes. With the rise of generative AI, fully automated and human-AI workflows have emerged as promising methods for analysis. However, methodological standards to guide such workflows remain limited. In this study, we propose that reasoning traces generated by large language model (LLM) agents, especially within multi-agent systems, constitute a novel and rich form of process data to enhance interpretive practices in qualitative coding. We apply cosine similarity to LLM reasoning traces to systematically detect, quantify, and interpret disagreements among agents, reframing disagreement as a meaningful analytic signal. Analyzing nearly 10,000 instances of agent pairs coding human tutoring dialog segments, we show that LLM agents' semantic reasoning similarity robustly differentiates consensus from disagreement and correlates with human coding reliability. Qualitative analysis guided by this metric reveals nuanced instructional sub-functions within codes and opportunities for conceptual codebook refinement. By integrating quantitative similarity metrics with qualitative review, our method has the potential to improve and accelerate establishing inter-rater reliability during coding by surfacing interpretive ambiguity, especially when LLMs collaborate with humans. We discuss how reasoning-trace disagreements represent a valuable new class of analytic signals advancing methodological rigor and interpretive depth in educational research.",
+      "published": "2026-01-18T23:19:49Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2601.12618v1",
+      "pdf_url": "http://arxiv.org/pdf/2601.12618v1.pdf",
+      "authors": [
+        "Elham Tajik",
+        "Conrad Borchers",
+        "Bahar Shahrokhian",
+        "Sebastian Simon",
+        "Ali Keramati",
+        "Sonika Pal",
+        "Sreecharan Sankaranarayanan"
+      ]
+    },
+    {
+      "title": "Agentic Artificial Intelligence (AI): Architectures, Taxonomies, and Evaluation of Large Language Model Agents",
+      "summary": "Artificial Intelligence is moving from models that only generate text to Agentic AI, where systems behave as autonomous entities that can perceive, reason, plan, and act. Large Language Models (LLMs) are no longer used only as passive knowledge engines but as cognitive controllers that combine memory, tool use, and feedback from their environment to pursue extended goals. This shift already supports the automation of complex workflows in software engineering, scientific discovery, and web navigation, yet the variety of emerging designs, from simple single loop agents to hierarchical multi agent systems, makes the landscape hard to navigate. In this paper, we investigate architectures and propose a unified taxonomy that breaks agents into Perception, Brain, Planning, Action, Tool Use, and Collaboration. We use this lens to describe the move from linear reasoning procedures to native inference time reasoning models, and the transition from fixed API calls to open standards like the Model Context Protocol (MCP) and Native Computer Use. We also group the environments in which these agents operate, including digital operating systems, embodied robotics, and other specialized domains, and we review current evaluation practices. Finally, we highlight open challenges, such as hallucination in action, infinite loops, and prompt injection, and outline future research directions toward more robust and reliable autonomous systems.",
+      "published": "2026-01-18T19:51:16Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2601.12560v1",
+      "pdf_url": "http://arxiv.org/pdf/2601.12560v1.pdf",
+      "authors": [
+        "Arunkumar V",
+        "Gangadharan G. R.",
+        "Rajkumar Buyya"
+      ]
+    },
+    {
+      "title": "A Multi-Agent System for Generating Actionable Business Advice",
+      "summary": "Customer reviews contain rich signals about product weaknesses and unmet user needs, yet existing analytic methods rarely move beyond descriptive tasks such as sentiment analysis or aspect extraction. While large language models (LLMs) can generate free-form suggestions, their outputs often lack accuracy and depth of reasoning. In this paper, we present a multi-agent, LLM-based framework for prescriptive decision support, which transforms large scale review corpora into actionable business advice. The framework integrates four components: clustering to select representative reviews, generation of advices, iterative evaluation, and feasibility based ranking. This design couples corpus distillation with feedback driven advice refinement to produce outputs that are specific, actionable, and practical. Experiments across three service domains and multiple model families show that our framework consistently outperform single model baselines on actionability, specificity, and non-redundancy, with medium sized models approaching the performance of large model frameworks.",
+      "published": "2026-01-17T12:07:55Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2601.12024v1",
+      "pdf_url": "http://arxiv.org/pdf/2601.12024v1.pdf",
+      "authors": [
+        "Kartikey Singh Bhandari",
+        "Tanish Jain",
+        "Archit Agrawal",
+        "Dhruv Kumar",
+        "Praveen Kumar",
+        "Pratik Narang"
+      ]
+    },
+    {
+      "title": "EHRNavigator: A Multi-Agent System for Patient-Level Clinical Question Answering over Heterogeneous Electronic Health Records",
+      "summary": "Clinical decision-making increasingly relies on timely and context-aware access to patient information within Electronic Health Records (EHRs), yet most existing natural language question-answering (QA) systems are evaluated solely on benchmark datasets, limiting their practical relevance. To overcome this limitation, we introduce EHRNavigator, a multi-agent framework that harnesses AI agents to perform patient-level question answering across heterogeneous and multimodal EHR data. We assessed its performance using both public benchmark and institutional datasets under realistic hospital conditions characterized by diverse schemas, temporal reasoning demands, and multimodal evidence integration. Through quantitative evaluation and clinician-validated chart review, EHRNavigator demonstrated strong generalization, achieving 86% accuracy on real-world cases while maintaining clinically acceptable response times. Overall, these findings confirm that EHRNavigator effectively bridges the gap between benchmark evaluation and clinical deployment, offering a robust, adaptive, and efficient solution for real-world EHR question answering.",
+      "published": "2026-01-15T03:02:15Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2601.10020v1",
+      "pdf_url": "http://arxiv.org/pdf/2601.10020v1.pdf",
+      "authors": [
+        "Lingfei Qian",
+        "Mauro Giuffre",
+        "Yan Wang",
+        "Huan He",
+        "Qianqian Xie",
+        "Xuguang Ai",
+        "Xeuqing Peng",
+        "Fan Ma",
+        "Ruey-Ling Weng",
+        "Donald Wright",
+        "Adan Wang",
+        "Qingyu Chen",
+        "Vipina K. Keloth",
+        "Hua Xu"
+      ]
+    },
+    {
+      "title": "The AI Hippocampus: How Far are We From Human Memory?",
+      "summary": "Memory plays a foundational role in augmenting the reasoning, adaptability, and contextual fidelity of modern Large Language Models and Multi-Modal LLMs. As these models transition from static predictors to interactive systems capable of continual learning and personalized inference, the incorporation of memory mechanisms has emerged as a central theme in their architectural and functional evolution. This survey presents a comprehensive and structured synthesis of memory in LLMs and MLLMs, organizing the literature into a cohesive taxonomy comprising implicit, explicit, and agentic memory paradigms. Specifically, the survey delineates three primary memory frameworks. Implicit memory refers to the knowledge embedded within the internal parameters of pre-trained transformers, encompassing their capacity for memorization, associative retrieval, and contextual reasoning. Recent work has explored methods to interpret, manipulate, and reconfigure this latent memory. Explicit memory involves external storage and retrieval components designed to augment model outputs with dynamic, queryable knowledge representations, such as textual corpora, dense vectors, and graph-based structures, thereby enabling scalable and updatable interaction with information sources. Agentic memory introduces persistent, temporally extended memory structures within autonomous agents, facilitating long-term planning, self-consistency, and collaborative behavior in multi-agent systems, with relevance to embodied and interactive AI. Extending beyond text, the survey examines the integration of memory within multi-modal settings, where coherence across vision, language, audio, and action modalities is essential. Key architectural advances, benchmark tasks, and open challenges are discussed, including issues related to memory capacity, alignment, factual consistency, and cross-system interoperability.",
+      "published": "2026-01-14T03:24:08Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2601.09113v1",
+      "pdf_url": "http://arxiv.org/pdf/2601.09113v1.pdf",
+      "authors": [
+        "Zixia Jia",
+        "Jiaqi Li",
+        "Yipeng Kang",
+        "Yuxuan Wang",
+        "Tong Wu",
+        "Quansen Wang",
+        "Xiaobo Wang",
+        "Shuyi Zhang",
+        "Junzhe Shen",
+        "Qing Li",
+        "Siyuan Qi",
+        "Yitao Liang",
+        "Di He",
+        "Zilong Zheng",
+        "Song-Chun Zhu"
+      ]
+    },
+    {
+      "title": "DIAGPaper: Diagnosing Valid and Specific Weaknesses in Scientific Papers via Multi-Agent Reasoning",
+      "summary": "Paper weakness identification using single-agent or multi-agent LLMs has attracted increasing attention, yet existing approaches exhibit key limitations. Many multi-agent systems simulate human roles at a surface level, missing the underlying criteria that lead experts to assess complementary intellectual aspects of a paper. Moreover, prior methods implicitly assume identified weaknesses are valid, ignoring reviewer bias, misunderstanding, and the critical role of author rebuttals in validating review quality. Finally, most systems output unranked weakness lists, rather than prioritizing the most consequential issues for users. In this work, we propose DIAGPaper, a novel multi-agent framework that addresses these challenges through three tightly integrated modules. The customizer module simulates human-defined review criteria and instantiates multiple reviewer agents with criterion-specific expertise. The rebuttal module introduces author agents that engage in structured debate with reviewer agents to validate and refine proposed weaknesses. The prioritizer module learns from large-scale human review practices to assess the severity of validated weaknesses and surfaces the top-K severest ones to users. Experiments on two benchmarks, AAAR and ReviewCritique, demonstrate that DIAGPaper substantially outperforms existing methods by producing more valid and more paper-specific weaknesses, while presenting them in a user-oriented, prioritized manner.",
+      "published": "2026-01-12T14:59:00Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2601.07611v2",
+      "pdf_url": "http://arxiv.org/pdf/2601.07611v2.pdf",
+      "authors": [
+        "Zhuoyang Zou",
+        "Abolfazl Ansari",
+        "Delvin Ce Zhang",
+        "Dongwon Lee",
+        "Wenpeng Yin"
+      ]
+    },
+    {
+      "title": "The Rise of Agentic Testing: Multi-Agent Systems for Robust Software Quality Assurance",
+      "summary": "Software testing has progressed toward intelligent automation, yet current AI-based test generators still suffer from static, single-shot outputs that frequently produce invalid, redundant, or non-executable tests due to the lack of execution aware feedback. This paper introduces an agentic multi-model testing framework a closed-loop, self-correcting system in which a Test Generation Agent, an Execution and Analysis Agent, and a Review and Optimization Agent collaboratively generate, execute, analyze, and refine tests until convergence. By using sandboxed execution, detailed failure reporting, and iterative regeneration or patching of failing tests, the framework autonomously improves test quality and expands coverage. Integrated into a CI/CD-compatible pipeline, it leverages reinforcement signals from coverage metrics and execution outcomes to guide refinement. Empirical evaluations on microservice based applications show up to a 60% reduction in invalid tests, 30% coverage improvement, and significantly reduced human effort compared to single-model baselines demonstrating that multi-agent, feedback-driven loops can evolve software testing into an autonomous, continuously learning quality assurance ecosystem for self-healing, high-reliability codebases.",
+      "published": "2026-01-05T18:20:14Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2601.02454v1",
+      "pdf_url": "http://arxiv.org/pdf/2601.02454v1.pdf",
+      "authors": [
+        "Saba Naqvi",
+        "Mohammad Baqar",
+        "Nawaz Ali Mohammad"
+      ]
+    },
+    {
+      "title": "Agentic AI in Remote Sensing: Foundations, Taxonomy, and Emerging Systems",
+      "summary": "The paradigm of Earth Observation analysis is shifting from static deep learning models to autonomous agentic AI. Although recent vision foundation models and multimodal large language models advance representation learning, they often lack the sequential planning and active tool orchestration required for complex geospatial workflows. This survey presents the first comprehensive review of agentic AI in remote sensing. We introduce a unified taxonomy distinguishing between single-agent copilots and multi-agent systems while analyzing architectural foundations such as planning mechanisms, retrieval-augmented generation, and memory structures. Furthermore, we review emerging benchmarks that move the evaluation from pixel-level accuracy to trajectory-aware reasoning correctness. By critically examining limitations in grounding, safety, and orchestration, this work outlines a strategic roadmap for the development of robust, autonomous geospatial intelligence.",
+      "published": "2026-01-05T08:34:17Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2601.01891v1",
+      "pdf_url": "http://arxiv.org/pdf/2601.01891v1.pdf",
+      "authors": [
+        "Niloufar Alipour Talemi",
+        "Julia Boone",
+        "Fatemeh Afghah"
+      ]
+    },
+    {
+      "title": "AppellateGen: A Benchmark for Appellate Legal Judgment Generation",
+      "summary": "Legal judgment generation is a critical task in legal intelligence. However, existing research in legal judgment generation has predominantly focused on first-instance trials, relying on static fact-to-verdict mappings while neglecting the dialectical nature of appellate (second-instance) review. To address this, we introduce AppellateGen, a benchmark for second-instance legal judgment generation comprising 7,351 case pairs. The task requires models to draft legally binding judgments by reasoning over the initial verdict and evidentiary updates, thereby modeling the causal dependency between trial stages. We further propose a judicial Standard Operating Procedure (SOP)-based Legal Multi-Agent System (SLMAS) to simulate judicial workflows, which decomposes the generation process into discrete stages of issue identification, retrieval, and drafting. Experimental results indicate that while SLMAS improves logical consistency, the complexity of appellate reasoning remains a substantial challenge for current LLMs. The dataset and code are publicly available at: https://anonymous.4open.science/r/AppellateGen-5763.",
+      "published": "2026-01-04T02:15:17Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2601.01331v2",
+      "pdf_url": "http://arxiv.org/pdf/2601.01331v2.pdf",
+      "authors": [
+        "Hongkun Yang",
+        "Lionel Z. Wang",
+        "Wei Fan",
+        "Yiran Hu",
+        "Lixu Wang",
+        "Chenyu Liu",
+        "Shenghong Fu",
+        "Haoyang Li",
+        "Xin Xu",
+        "Jiexin Zheng",
+        "Wei Dong"
+      ]
+    },
+    {
+      "title": "Building from Scratch: A Multi-Agent Framework with Human-in-the-Loop for Multilingual Legal Terminology Mapping",
+      "summary": "Accurately mapping legal terminology across languages remains a significant challenge, especially for language pairs like Chinese and Japanese, which share a large number of homographs with different meanings. Existing resources and standardized tools for these languages are limited. To address this, we propose a human-AI collaborative approach for building a multilingual legal terminology database, based on a multi-agent framework. This approach integrates advanced large language models and legal domain experts throughout the entire process-from raw document preprocessing, article-level alignment, to terminology extraction, mapping, and quality assurance. Unlike a single automated pipeline, our approach places greater emphasis on how human experts participate in this multi-agent system. Humans and AI agents take on different roles: AI agents handle specific, repetitive tasks, such as OCR, text segmentation, semantic alignment, and initial terminology extraction, while human experts provide crucial oversight, review, and supervise the outputs with contextual knowledge and legal judgment. We tested the effectiveness of this framework using a trilingual parallel corpus comprising 35 key Chinese statutes, along with their English and Japanese translations. The experimental results show that this human-in-the-loop, multi-agent workflow not only improves the precision and consistency of multilingual legal terminology mapping but also offers greater scalability compared to traditional manual methods.",
+      "published": "2025-12-15T03:29:21Z",
+      "year": "2025",
+      "abs_url": "http://arxiv.org/abs/2512.12950v1",
+      "pdf_url": "http://arxiv.org/pdf/2512.12950v1.pdf",
+      "authors": [
+        "Lingyi Meng",
+        "Maolin Liu",
+        "Hao Wang",
+        "Yilan Cheng",
+        "Qi Yang",
+        "Idlkaid Mohanmmed"
+      ]
+    },
+    {
+      "title": "The Evolution of Agentic AI in Cybersecurity: From Single LLM Reasoners to Multi-Agent Systems and Autonomous Pipelines",
+      "summary": "Cybersecurity has become one of the earliest adopters of agentic AI, as security operations centers increasingly rely on multi-step reasoning, tool-driven analysis, and rapid decision-making under pressure. While individual large language models can summarize alerts or interpret unstructured reports, they fall short in real SOC environments that require grounded data access, reproducibility, and accountable workflows. In response, the field has seen a rapid architectural evolution from single-model helpers toward tool-augmented agents, distributed multi-agent systems, schema-bound tool ecosystems, and early explorations of semi-autonomous investigative pipelines. This survey presents a five-generation taxonomy of agentic AI in cybersecurity. It traces how capabilities and risks change as systems advance from text-only LLM reasoners to multi-agent collaboration frameworks and constrained-autonomy pipelines. We compare these generations across core dimensions - reasoning depth, tool use, memory, reproducibility, and safety. In addition, we also synthesize emerging benchmarks used to evaluate cyber-oriented agents. Finally, we outline the unresolved challenges that accompany this evolution, such as response validation, tool-use correctness, multi-agent coordination, long-horizon reasoning, and safeguards for high-impact actions. Collectively, this work provides a structured perspective on how agentic AI is taking shape within cybersecurity and what is required to ensure its safe and reliable deployment.",
+      "published": "2025-12-07T05:10:16Z",
+      "year": "2025",
+      "abs_url": "http://arxiv.org/abs/2512.06659v1",
+      "pdf_url": "http://arxiv.org/pdf/2512.06659v1.pdf",
+      "authors": [
+        "Vaishali Vinay"
+      ]
+    },
+    {
+      "title": "PaperDebugger: A Plugin-Based Multi-Agent System for In-Editor Academic Writing, Review, and Editing",
+      "summary": "Large language models are increasingly embedded into academic writing workflows, yet existing assistants remain external to the editor, preventing deep interaction with document state, structure, and revision history. This separation makes it impossible to support agentic, context-aware operations directly within LaTeX editors such as Overleaf. We present PaperDebugger, an in-editor, multi-agent, and plugin-based academic writing assistant that brings LLM-driven reasoning directly into the writing environment. Enabling such in-editor interaction is technically non-trivial: it requires reliable bidirectional synchronization with the editor, fine-grained version control and patching, secure state management, multi-agent scheduling, and extensible communication with external tools. PaperDebugger addresses these challenges through a Chrome-approved extension, a Kubernetes-native orchestration layer, and a Model Context Protocol (MCP) toolchain that integrates literature search, reference lookup, document scoring, and revision pipelines. Our demo showcases a fully integrated workflow, including localized edits, structured reviews, parallel agent execution, and diff-based updates, encapsulated within a minimal-intrusion user interface (UI). Early aggregated analytics demonstrate active user engagement and validate the practicality of an editor-native, agentic writing assistant. More details about this demo and video could be found at https://github.com/PaperDebugger/PaperDebugger.",
+      "published": "2025-12-02T10:00:37Z",
+      "year": "2025",
+      "abs_url": "http://arxiv.org/abs/2512.02589v2",
+      "pdf_url": "http://arxiv.org/pdf/2512.02589v2.pdf",
+      "authors": [
+        "Junyi Hou",
+        "Andre Lin Huikai",
+        "Nuo Chen",
+        "Yiwei Gong",
+        "Bingsheng He"
+      ]
+    },
+    {
+      "title": "Toward a Safe Internet of Agents",
+      "summary": "Background: Autonomous agents powered by Large Language Models (LLMs) are driving a paradigm shift toward an \"Internet of Agents\" (IoA). While offering immense potential, this vision also introduces novel and systemic risks to safety and security. Objectives: Unlike common threat-centric taxonomies, our survey provides a principled, architectural framework for engineering safe and reliable agentic systems. We aim to identify the architectural sources of vulnerabilities to establish a foundation for secure design. Methods: We perform a bottom-up deconstruction of agentic systems, treating each component as a dual-use interface. The analysis spans three levels of complexity: the foundational Single Agent, the collaborative Multi-Agent System (MAS), and the visionary Interoperable Multi-Agent System (IMAS). At each level, we identify core architectural components and their inherent security risks. Results & Conclusions: Our central finding is that agentic safety is an architectural principle, not an add-on. By identifying specific vulnerabilities and deriving mitigation principles at each level of the agentic stack, this survey serves as a foundational guide for building the capable, safe, and trustworthy AI needed to realize a secure Internet of Agents.",
+      "published": "2025-11-29T15:31:16Z",
+      "year": "2025",
+      "abs_url": "http://arxiv.org/abs/2512.00520v1",
+      "pdf_url": "http://arxiv.org/pdf/2512.00520v1.pdf",
+      "authors": [
+        "Juan A. Wibowo",
+        "George C. Polyzos"
+      ]
+    },
+    {
+      "title": "Distributed Agent Reasoning Across Independent Systems With Strict Data Locality",
+      "summary": "This paper presents a proof-of-concept demonstration of agent-to-agent communication across distributed systems, using only natural-language messages and without shared identifiers, structured schemas, or centralised data exchange. The prototype explores how multiple organisations (represented here as a Clinic, Insurer, and Specialist Network) can cooperate securely via pseudonymised case tokens, local data lookups, and controlled operational boundaries. The system uses Orpius as the underlying platform for multi-agent orchestration, tool execution, and privacy-preserving communication. All agents communicate through OperationRelay calls, exchanging concise natural-language summaries. Each agent operates on its own data (such as synthetic clinic records, insurance enrolment tables, and clinical guidance extracts), and none receives or reconstructs patient identity. The Clinic computes an HMAC-based pseudonymous token, the Insurer evaluates coverage rules and consults the Specialist agent, and the Specialist returns an appropriateness recommendation. The goal of this prototype is intentionally limited: to demonstrate feasibility, not to provide a clinically validated, production-ready system. No clinician review was conducted, and no evaluation beyond basic functional runs was performed. The work highlights architectural patterns, privacy considerations, and communication flows that enable distributed reasoning among specialised agents while keeping data local to each organisation. We conclude by outlining opportunities for more rigorous evaluation and future research in decentralised multi-agent systems.",
+      "published": "2025-11-20T12:13:20Z",
+      "year": "2025",
+      "abs_url": "http://arxiv.org/abs/2511.16292v1",
+      "pdf_url": "http://arxiv.org/pdf/2511.16292v1.pdf",
+      "authors": [
+        "Daniel Vaughan",
+        "Kateřina Vaughan"
+      ]
+    },
+    {
+      "title": "BeautyGuard: Designing a Multi-Agent Roundtable System for Proactive Beauty Tech Compliance through Stakeholder Collaboration",
+      "summary": "As generative AI enters enterprise workflows, ensuring compliance with legal, ethical, and reputational standards becomes a pressing challenge. In beauty tech, where biometric and personal data are central, traditional reviews are often manual, fragmented, and reactive. To examine these challenges, we conducted a formative study with six experts (four IT managers, two legal managers) at a multinational beauty company. The study revealed pain points in rule checking, precedent use, and the lack of proactive guidance. Motivated by these findings, we designed a multi-agent \"roundtable\" system powered by a large language model. The system assigns role-specialized agents for legal interpretation, checklist review, precedent search, and risk mitigation, synthesizing their perspectives into structured compliance advice. We evaluated the prototype with the same experts using System Usability Scale(SUS), The Official NASA Task Load Index(NASA-TLX), and interviews. Results show exceptional usability (SUS: 77.5/100) and minimal cognitive workload, with three key findings: (1) multi-agent systems can preserve tacit knowledge into standardized workflows, (2) information augmentation achieves higher acceptance than decision automation, and (3) successful enterprise AI should mirror organizational structures. This work contributes design principles for human-AI collaboration in compliance review, with broader implications for regulated industries beyond beauty tech.",
+      "published": "2025-11-16T15:27:35Z",
+      "year": "2025",
+      "abs_url": "http://arxiv.org/abs/2511.12645v2",
+      "pdf_url": "http://arxiv.org/pdf/2511.12645v2.pdf",
+      "authors": [
+        "Junwei Li",
+        "Wenqing Wang",
+        "Huiliu Mao",
+        "Jiazhe Ni",
+        "Zeyu Xiong"
+      ]
+    },
+    {
+      "title": "Automatic Paper Reviewing with Heterogeneous Graph Reasoning over LLM-Simulated Reviewer-Author Debates",
+      "summary": "Existing paper review methods often rely on superficial manuscript features or directly on large language models (LLMs), which are prone to hallucinations, biased scoring, and limited reasoning capabilities. Moreover, these methods often fail to capture the complex argumentative reasoning and negotiation dynamics inherent in reviewer-author interactions. To address these limitations, we propose ReViewGraph (Reviewer-Author Debates Graph Reasoner), a novel framework that performs heterogeneous graph reasoning over LLM-simulated multi-round reviewer-author debates. In our approach, reviewer-author exchanges are simulated through LLM-based multi-agent collaboration. Diverse opinion relations (e.g., acceptance, rejection, clarification, and compromise) are then explicitly extracted and encoded as typed edges within a heterogeneous interaction graph. By applying graph neural networks to reason over these structured debate graphs, ReViewGraph captures fine-grained argumentative dynamics and enables more informed review decisions. Extensive experiments on three datasets demonstrate that ReViewGraph outperforms strong baselines with an average relative improvement of 15.73%, underscoring the value of modeling detailed reviewer-author debate structures.",
+      "published": "2025-11-11T14:46:07Z",
+      "year": "2025",
+      "abs_url": "http://arxiv.org/abs/2511.08317v2",
+      "pdf_url": "http://arxiv.org/pdf/2511.08317v2.pdf",
+      "authors": [
+        "Shuaimin Li",
+        "Liyang Fan",
+        "Yufang Lin",
+        "Zeyang Li",
+        "Xian Wei",
+        "Shiwen Ni",
+        "Hamid Alinejad-Rokny",
+        "Min Yang"
+      ]
+    },
+    {
+      "title": "A Survey on Improving Human Robot Collaboration through Vision-and-Language Navigation",
+      "summary": "Vision-and-Language Navigation (VLN) is a multi-modal, cooperative task requiring agents to interpret human instructions, navigate 3D environments, and communicate effectively under ambiguity. This paper presents a comprehensive review of recent VLN advancements in robotics and outlines promising directions to improve multi-robot coordination. Despite progress, current models struggle with bidirectional communication, ambiguity resolution, and collaborative decision-making in the multi-agent systems. We review approximately 200 relevant articles to provide an in-depth understanding of the current landscape. Through this survey, we aim to provide a thorough resource that inspires further research at the intersection of VLN and robotics. We advocate that the future VLN systems should support proactive clarification, real-time feedback, and contextual reasoning through advanced natural language understanding (NLU) techniques. Additionally, decentralized decision-making frameworks with dynamic role assignment are essential for scalable, efficient multi-robot collaboration. These innovations can significantly enhance human-robot interaction (HRI) and enable real-world deployment in domains such as healthcare, logistics, and disaster response.",
+      "published": "2025-11-06T07:52:56Z",
+      "year": "2025",
+      "abs_url": "http://arxiv.org/abs/2512.00027v1",
+      "pdf_url": "http://arxiv.org/pdf/2512.00027v1.pdf",
+      "authors": [
+        "Nivedan Yakolli",
+        "Avinash Gautam",
+        "Abhijit Das",
+        "Yuankai Qi",
+        "Virendra Singh Shekhawat"
+      ]
+    },
+    {
+      "title": "Machine learning-based cloud resource allocation algorithms: a comprehensive comparative review",
+      "summary": "Cloud resource allocation has emerged as a major challenge in modern computing environments, with organizations struggling to manage complex, dynamic workloads while optimizing performance and cost efficiency. Traditional heuristic approaches prove inadequate for handling the multi-objective optimization demands of existing cloud infrastructures. This paper presents a comparative analysis of state-of-the-art artificial intelligence and machine learning algorithms for resource allocation. We systematically evaluate 10 algorithms across four categories: Deep Reinforcement Learning approaches, Neural Network architectures, Traditional Machine Learning enhanced methods, and Multi-Agent systems. Analysis of published results demonstrates significant performance improvements across multiple metrics including makespan reduction, cost optimization, and energy efficiency gains compared to traditional methods. The findings reveal that hybrid architectures combining multiple artificial intelligence and machine learning techniques consistently outperform single-method approaches, with edge computing environments showing the highest deployment readiness. Our analysis provides critical insights for both academic researchers and industry practitioners seeking to implement next-generation cloud resource allocation strategies in increasingly complex and dynamic computing environments.",
+      "published": "2025-10-31T20:30:21Z",
+      "year": "2025",
+      "abs_url": "http://arxiv.org/abs/2511.11603v1",
+      "pdf_url": "http://arxiv.org/pdf/2511.11603v1.pdf",
+      "authors": [
+        "Deep Bodra",
+        "Sushil Khairnar"
+      ]
+    },
+    {
+      "title": "The Evolution of Tool Use in LLM Agents: From Single-Tool Call to Multi-Tool Orchestration",
+      "summary": "Tool use enables large language models (LLMs) to access external information, invoke software systems, and act in digital environments beyond what can be solved from model parameters alone. Early research mainly studied whether a model could select and execute a correct single tool call. As agent systems evolve, however, the central problem has shifted from isolated invocation to multi-tool orchestration over long trajectories with intermediate state, execution feedback, changing environments, and practical constraints such as safety, cost, and verifiability. We comprehensively review recent progress in multi-tool LLM agents and analyzes the state of the art in this rapidly developing area. First, we unify task formulations and distinguish single-call tool use from long-horizon orchestration. Then, we organize the literature around six core dimensions: inference-time planning and execution, training and trajectory construction, safety and control, efficiency under resource constraints, capability completeness in open environments, and benchmark design and evaluation. We further summarize representative applications in software engineering, enterprise workflows, graphical user interfaces, and mobile systems. Finally, we discuss major challenges and outline future directions for building reliable, scalable, and verifiable multi-tool agents.",
+      "published": "2026-03-24T07:05:05Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.22862v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.22862v1.pdf",
+      "authors": [
+        "Haoyuan Xu",
+        "Chang Li",
+        "Xinyan Ma",
+        "Xianhao Ou",
+        "Zihan Zhang",
+        "Tao He",
+        "Xiangyu Liu",
+        "Zixiang Wang",
+        "Jiafeng Liang",
+        "Zheng Chu",
+        "Runxuan Liu",
+        "Rongchuan Mu",
+        "Ming Liu",
+        "Bing Qin"
+      ]
+    },
+    {
+      "title": "From Static Templates to Dynamic Runtime Graphs: A Survey of Workflow Optimization for LLM Agents",
+      "summary": "Large language model (LLM)-based systems are becoming increasingly popular for solving tasks by constructing executable workflows that interleave LLM calls, information retrieval, tool use, code execution, memory updates, and verification. This survey reviews recent methods for designing and optimizing such workflows, which we treat as agentic computation graphs (ACGs). We organize the literature based on when workflow structure is determined, where structure refers to which components or agents are present, how they depend on each other, and how information flows between them. This lens distinguishes static methods, which fix a reusable workflow scaffold before deployment, from dynamic methods, which select, generate, or revise the workflow for a particular run before or during execution. We further organize prior work along three dimensions: when structure is determined, what part of the workflow is optimized, and which evaluation signals guide optimization (e.g., task metrics, verifier signals, preferences, or trace-derived feedback). We also distinguish reusable workflow templates, run-specific realized graphs, and execution traces, separating reusable design choices from the structures actually deployed in a given run and from realized runtime behavior. Finally, we outline a structure-aware evaluation perspective that complements downstream task metrics with graph-level properties, execution cost, robustness, and structural variation across inputs. Our goal is to provide a clear vocabulary, a unified framework for positioning new methods, a more comparable view of existing body of literature, and a more reproducible evaluation standard for future work in workflow optimizations for LLM agents.",
+      "published": "2026-03-23T17:42:59Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.22386v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.22386v1.pdf",
+      "authors": [
+        "Ling Yue",
+        "Kushal Raj Bhandari",
+        "Ching-Yun Ko",
+        "Dhaval Patel",
+        "Shuxin Lin",
+        "Nianjun Zhou",
+        "Jianxi Gao",
+        "Pin-Yu Chen",
+        "Shaowu Pan"
+      ]
+    },
+    {
+      "title": "AgentSLR: Automating Systematic Literature Reviews in Epidemiology with Agentic AI",
+      "summary": "Systematic literature reviews are essential for synthesizing scientific evidence but are costly, difficult to scale and time-intensive, creating bottlenecks for evidence-based policy. We study whether large language models can automate the complete systematic review workflow, from article retrieval, article screening, data extraction to report synthesis. Applied to epidemiological reviews of nine WHO-designated priority pathogens and validated against expert-curated ground truth, our open-source agentic pipeline (AgentSLR) achieves performance comparable to human researchers while reducing review time from approximately 7 weeks to 20 hours (a 58x speed-up). Our comparison of five frontier models reveals that performance on SLR is driven less by model size or inference cost than by each model's distinctive capabilities. Through human-in-the-loop validation, we identify key failure modes. Our results demonstrate that agentic AI can substantially accelerate scientific evidence synthesis in specialised domains.",
+      "published": "2026-03-20T17:11:58Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.22327v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.22327v1.pdf",
+      "authors": [
+        "Shreyansh Padarha",
+        "Ryan Othniel Kearns",
+        "Tristan Naidoo",
+        "Lingyi Yang",
+        "Łukasz Borchmann",
+        "Piotr BŁaszczyk",
+        "Christian Morgenstern",
+        "Ruth McCabe",
+        "Sangeeta Bhatia",
+        "Philip H. Torr",
+        "Jakob Foerster",
+        "Scott A. Hale",
+        "Thomas Rawson",
+        "Anne Cori",
+        "Elizaveta Semenova",
+        "Adam Mahdi"
+      ]
+    },
+    {
+      "title": "Security, privacy, and agentic AI in a regulatory view: From definitions and distinctions to provisions and reflections",
+      "summary": "The rapid proliferation of artificial intelligence (AI) technologies has led to a dynamic regulatory landscape, where legislative frameworks strive to keep pace with technical advancements. As AI paradigms shift towards greater autonomy, specifically in the form of agentic AI, it becomes increasingly challenging to precisely articulate regulatory stipulations. This challenge is even more acute in the domains of security and privacy, where the capabilities of autonomous agents often blur traditional legal and technical boundaries. This paper reviews the evolving European Union (EU) AI regulatory provisions via analyzing 24 relevant documents published between 2024 and 2025. From this review, we provide a clarification of critical definitions. We deconstruct the regulatory interpretations of security, privacy, and agentic AI, distinguishing them from closely related concepts to resolve ambiguity. We synthesize the reviewed documents to articulate the current state of regulatory provisions targeting different types of AI, particularly those related to security and privacy aspects. We analyze and reflect on the existing provisions in the regulatory dimension to better align security and privacy obligations with AI and agentic behaviors. These insights serve to inform policymakers, developers, and researchers on the compliance and AI governance in the society with increasing algorithmic agencies.",
+      "published": "2026-03-19T13:50:52Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.18914v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.18914v1.pdf",
+      "authors": [
+        "Shiliang Zhang",
+        "Sabita Maharjan"
+      ]
+    },
+    {
+      "title": "From Digital Twins to World Models:Opportunities, Challenges, and Applications for Mobile Edge General Intelligence",
+      "summary": "The rapid evolution toward 6G and beyond communication systems is accelerating the convergence of digital twins and world models at the network edge. Traditional digital twins provide high-fidelity representations of physical systems and support monitoring, analysis, and offline optimization. However, in highly dynamic edge environments, they face limitations in autonomy, adaptability, and scalability. This paper presents a systematic survey of the transition from digital twins to world models and discusses its role in enabling edge general intelligence (EGI). First, the paper clarifies the conceptual differences between digital twins and world models and highlights the shift from physics-based, centralized, and system-centric replicas to data-driven, decentralized, and agent-centric internal models. This discussion helps readers gain a clear understanding of how this transition enables more adaptive, autonomous, and resource-efficient intelligence at the network edge. The paper reviews the design principles, architectures, and key components of world models, including perception, latent state representation, dynamics learning, imagination-based planning, and memory. In addition, it examines the integration of world models and digital twins in wireless EGI systems and surveys emerging applications in integrated sensing and communications, semantic communication, air-ground networks, and low-altitude wireless networks. Finally, this survey provides a systematic roadmap and practical insights for designing world-model-driven edge intelligence systems in wireless and edge computing environments. It also outlines key research challenges and future directions toward scalable, reliable, and interoperable world models for edge-native agentic AI.",
+      "published": "2026-03-18T06:54:49Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.17420v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.17420v1.pdf",
+      "authors": [
+        "Jie Zheng",
+        "Dusit Niyato",
+        "Changyuan Zhao",
+        "Jiawen Kang",
+        "Jiacheng Wang"
+      ]
+    },
+    {
+      "title": "Is Your LLM-as-a-Recommender Agent Trustable? LLMs' Recommendation is Easily Hacked by Biases (Preferences)",
+      "summary": "Current Large Language Models (LLMs) are gradually exploited in practically valuable agentic workflows such as Deep Research, E-commerce recommendation, and job recruitment. In these applications, LLMs need to select some optimal solutions from massive candidates, which we term as \\textit{LLM-as-a-Recommender} paradigm. However, the reliability of using LLM agents for recommendations is underexplored. In this work, we introduce a \\textbf{Bias} \\textbf{Rec}ommendation \\textbf{Bench}mark (\\textbf{BiasRecBench}) to highlight the critical vulnerability of such agents to biases in high-value real-world tasks. The benchmark includes three practical domains: paper review, e-commerce, and job recruitment. We construct a \\textsc{Bias Synthesis Pipeline with Calibrated Quality Margins} that 1) synthesizes evaluation data by controlling the quality gap between optimal and sub-optimal options to provide a calibrated testbed to elicit the vulnerability to biases; 2) injects contextual biases that are logical and suitable for option contexts. Extensive experiments on both SOTA (Gemini-{2.5,3}-pro, GPT-4o, DeepSeek-R1) and small-scale LLMs reveal that agents frequently succumb to injected biases despite having sufficient reasoning capabilities to identify the ground truth. These findings expose a significant reliability bottleneck in current agentic workflows, calling for specialized alignment strategies for LLM-as-a-Recommender. The complete code and evaluation datasets will be made publicly available shortly.",
+      "published": "2026-03-18T06:50:48Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.17417v2",
+      "pdf_url": "http://arxiv.org/pdf/2603.17417v2.pdf",
+      "authors": [
+        "Zichen Tang",
+        "Zirui Zhang",
+        "Qian Wang",
+        "Zhenheng Tang",
+        "Bo Li",
+        "Xiaowen Chu"
+      ]
+    },
+    {
+      "title": "Intent Formalization: A Grand Challenge for Reliable Coding in the Age of AI Agents",
+      "summary": "Agentic AI systems can now generate code with remarkable fluency, but a fundamental question remains: \\emph{does the generated code actually do what the user intended?} The gap between informal natural language requirements and precise program behavior -- the \\emph{intent gap} -- has always plagued software engineering, but AI-generated code amplifies it to an unprecedented scale. This article argues that \\textbf{intent formalization} -- the translation of informal user intent into a set of checkable formal specifications -- is the key challenge that will determine whether AI makes software more reliable or merely more abundant. Intent formalization offers a tradeoff spectrum suitable to the reliability needs of different contexts: from lightweight tests that disambiguate likely misinterpretations, through full functional specifications for formal verification, to domain-specific languages from which correct code is synthesized automatically. The central bottleneck is \\emph{validating specifications}: since there is no oracle for specification correctness other than the user, we need semi-automated metrics that can assess specification quality with or without code, through lightweight user interaction and proxy artifacts such as tests. We survey early research that demonstrates the \\emph{potential} of this approach: interactive test-driven formalization that improves program correctness, AI-generated postconditions that catch real-world bugs missed by prior methods, and end-to-end verified pipelines that produce provably correct code from informal specifications. We outline the open research challenges -- scaling beyond benchmarks, achieving compositionality over changes, metrics for validating specifications, handling rich logics, designing human-AI specification interactions -- that define a research agenda spanning AI, programming languages, formal methods, and human-computer interaction.",
+      "published": "2026-03-17T21:28:59Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.17150v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.17150v1.pdf",
+      "authors": [
+        "Shuvendu K. Lahiri"
+      ]
+    },
+    {
+      "title": "Parametric Social Identity Injection and Diversification in Public Opinion Simulation",
+      "summary": "Large language models (LLMs) have recently been adopted as synthetic agents for public opinion simulation, offering a promising alternative to costly and slow human surveys. Despite their scalability, current LLM-based simulation methods fail to capture social diversity, producing flattened inter-group differences and overly homogeneous responses within demographic groups. We identify this limitation as a Diversity Collapse phenomenon in LLM hidden representations, where distinct social identities become increasingly indistinguishable across layers. Motivated by this observation, we propose Parametric Social Identity Injection (PSII), a general framework that injects explicit, parametric representations of demographic attributes and value orientations directly into intermediate hidden states of LLMs. Unlike prompt-based persona conditioning, PSII enables fine-grained and controllable identity modulation at the representation level. Extensive experiments on the World Values Survey using multiple open-source LLMs show that PSII significantly improves distributional fidelity and diversity, reducing KL divergence to real-world survey data while enhancing overall diversity. This work provides new insights into representation-level control of LLM agents and advances scalable, diversity-aware public opinion simulation. Code and data are available at https://github.com/halsayxi/PSII.",
+      "published": "2026-03-17T05:52:03Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.16142v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.16142v1.pdf",
+      "authors": [
+        "Hexi Wang",
+        "Yujia Zhou",
+        "Bangde Du",
+        "Qingyao Ai",
+        "Yiqun Liu"
+      ]
+    },
+    {
+      "title": "NormCode Canvas: Making LLM Agentic Workflows Development Sustainable via Case-Based Reasoning",
+      "summary": "We present NormCode Canvas (v1.1.3), a deployed system realizing Case-Based Reasoning at two levels for multi-step LLM workflows. The foundation is NormCode, a semi-formal planning language whose compiler-verified scope rule ensures every execution checkpoint is a genuinely self-contained case -- eliminating the implicit shared state that makes retrieval unreliable and failure non-localizable in standard orchestration frameworks. Level 1 treats each checkpoint as a concrete case (suspended runtime); Fork implements retrieve-and-reuse, Value Override implements revision with automatic stale-boundary propagation. Level 2 treats each compiled plan as an abstract case; the compilation pipeline is itself a NormCode plan, enabling recursive case learning. Three structural properties follow: (C1) direct checkpoint inspection; (C2) pre-execution review via compiler-generated narrative; (C3) scope-bounded selective re-execution. Four deployed plans serve as structured evidence: PPT Generation produces presentation decks at ~40s per slide on commercial APIs; Code Assistant carries out multi-step software-engineering tasks spanning up to ten reasoning cycles; NC Compilations converts natural-language specifications into executable NormCode plans; and Canvas Assistant, when connected to an external AI code editor, automates plan debugging. Together these plans form a self-sustaining ecosystem in which plans produce, debug, and refine one another -- realizing cumulative case-based learning at system scale.",
+      "published": "2026-03-13T12:59:22Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.13443v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.13443v1.pdf",
+      "authors": [
+        "Xin Guan",
+        "Yunshan Li",
+        "Ze Wang"
+      ]
+    },
+    {
+      "title": "The Attack and Defense Landscape of Agentic AI: A Comprehensive Survey",
+      "summary": "AI agents that combine large language models with non-AI system components are rapidly emerging in real-world applications, offering unprecedented automation and flexibility. However, this unprecedented flexibility introduces complex security challenges fundamentally different from those in traditional software systems. This paper presents the first systematic and comprehensive survey of AI agent security, including an analysis of the design space, attack landscape, and defense mechanisms for secure AI agent systems. We further conduct case studies to point out existing gaps in securing agentic AI systems and identify open challenges in this emerging domain. Our work also introduces the first systematic framework for understanding the security risks and defense strategies of AI agents, serving as a foundation for building both secure agentic systems and advancing research in this critical area.",
+      "published": "2026-03-11T05:25:55Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.11088v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.11088v1.pdf",
+      "authors": [
+        "Juhee Kim",
+        "Xiaoyuan Liu",
+        "Zhun Wang",
+        "Shi Qiu",
+        "Bo Li",
+        "Wenbo Guo",
+        "Dawn Song"
+      ]
+    },
+    {
+      "title": "YAQIN: Culturally Sensitive, Agentic AI for Mental Healthcare Support Among Muslim Women in the UK",
+      "summary": "Mental healthcare services in the UK lack tools and resources to address the cultural needs of Muslim women, often leaving them feeling as though their values are pathologised and limiting trust and engagement [1]. Despite growing awareness of cultural competency, few interventions integrate Islamic frameworks into therapeutic support. This report investigates the design and evaluation of YAQIN, a co-designed AI-based application supporting culturally and faith-sensitive mental health engagement for Muslim women. With almost 1.9 million Muslim women in England in 2021, YAQIN responds to a gap in care [2]. It leverages AIś anonymity and continuous support through a faith-aware chatbot and guided journaling tool grounded in user-centred design and Islamic psychology. The YAQIN design research methodology comprised three stages: contextual investigation and literature review, user research with N=14 stakeholders including Muslim women and mental health experts, and prototype development informed by deductive thematic analysis, personas, journey maps, and design specifications. Evaluation involved a co-designed user study with five participants: four Muslim women and one mental health expert who reviewed therapeutic alignment and cultural sensitivity after using the chatbot prototype. Feedback focused on tone, faith relevance, emotional resonance, and the Retrieval-Augmented Generation pipeline enabling contextual continuity. Participants highlighted YAQINś ability to bridge cultural gaps in trust and therapeutic confidence. Feedback included suggestions of including linguistic diversity and routine-based guidance. This project demonstrates how culturally sensitive AI can improve mental healthcare accessibility and trust for marginalised communities and highlights the potential of faith-integrated technology in healthcare innovation.",
+      "published": "2026-03-08T16:23:43Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.07709v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.07709v1.pdf",
+      "authors": [
+        "Yasmin Zaraket",
+        "Céline Mougenot"
+      ]
+    },
+    {
+      "title": "Talk Freely, Execute Strictly: Schema-Gated Agentic AI for Flexible and Reproducible Scientific Workflows",
+      "summary": "Large language models (LLMs) can now translate a researcher's plain-language goal into executable computation, yet scientific workflows demand determinism, provenance, and governance that are difficult to guarantee when an LLM decides what runs. Semi-structured interviews with 18 experts across 10 industrial R&D stakeholders surface 2 competing requirements--deterministic, constrained execution and conversational flexibility without workflow rigidity--together with boundary properties (human-in-the-loop control and transparency) that any resolution must satisfy. We propose schema-gated orchestration as the resolving principle: the schema becomes a mandatory execution boundary at the composed-workflow level, so that nothing runs unless the complete action--including cross-step dependencies--validates against a machine-checkable specification. We operationalize the 2 requirements as execution determinism (ED) and conversational flexibility (CF), and use these axes to review 20 systems spanning 5 architectural groups along a validation-scope spectrum. Scores are assigned via a multi-model protocol--15 independent sessions across 3 LLM families--yielding substantial-to-near-perfect inter-model agreement (Krippendorff a=0.80 for ED and a=0.98 for CF), demonstrating that multi-model LLM scoring can serve as a reusable alternative to human expert panels for architectural assessment. The resulting landscape reveals an empirical Pareto front--no reviewed system achieves both high flexibility and high determinism--but a convergence zone emerges between the generative and workflow-centric extremes. We argue that a schema-gated architecture, separating conversational from execution authority, is positioned to decouple this trade-off, and distill 3 operational principles--clarification-before-execution, constrained plan-act orchestration, and tool-to-workflow-level gating--to guide adoption.",
+      "published": "2026-03-06T15:40:39Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.06394v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.06394v1.pdf",
+      "authors": [
+        "Joel Strickland",
+        "Arjun Vijeta",
+        "Chris Moores",
+        "Oliwia Bodek",
+        "Bogdan Nenchev",
+        "Thomas Whitehead",
+        "Charles Phillips",
+        "Karl Tassenberg",
+        "Gareth Conduit",
+        "Ben Pellegrini"
+      ]
+    },
+    {
+      "title": "Computational Pathology in the Era of Emerging Foundation and Agentic AI -- International Expert Perspectives on Clinical Integration and Translational Readiness",
+      "summary": "Recent breakthroughs in artificial intelligence through foundation models and agents have accelerated the evolution of computational pathology. Demonstrated performance gains reported across academia in benchmarking datasets in predictive tasks such as diagnosis, prognosis, and treatment response have ignited substantial enthusiasm for clinical application. Despite this development momentum, real world adoption has lagged, as implementation faces economic, technical, and administrative challenges. Beyond existing discussions of technical architectures and comparative performance, this review considers how these emerging AI systems can be responsibly integrated into medical practice by connecting deployable clinical relevance with downstream analytical capabilities and their technical maturity, operational readiness, and economic and regulatory context. Drawing on perspectives from an international group, we provide a practical assessment of current capabilities and barriers to adoption in patient care settings.",
+      "published": "2026-03-06T04:07:16Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.05884v2",
+      "pdf_url": "http://arxiv.org/pdf/2603.05884v2.pdf",
+      "authors": [
+        "Qian Da",
+        "Yijiang Chen",
+        "Min Ju",
+        "Zheyi Ji",
+        "Albert Zhou",
+        "Wenwen Wang",
+        "Matthew A Abikenari",
+        "Philip Chikontwe",
+        "Guillaume Larghero",
+        "Bowen Chen",
+        "Peter Neidlinger",
+        "Dingrong Zhong",
+        "Shuhao Wang",
+        "Wei Xu",
+        "Drew Williamson",
+        "German Corredor",
+        "Sen Yang",
+        "Le Lu",
+        "Xiao Han",
+        "Kun-Hsing Yu",
+        "Jun-zhou Huang",
+        "Laura Barisoni",
+        "Geert Litjens",
+        "Anant Madabhushi",
+        "Lifeng Zhu",
+        "Chaofu Wang",
+        "Junhan Zhao",
+        "Weiguo Hu"
+      ]
+    },
+    {
+      "title": "Agentic Code Reasoning",
+      "summary": "Can LLM agents explore codebases and reason about code semantics without executing the code? We study this capability, which we call agentic code reasoning, and introduce semi-formal reasoning: a structured prompting methodology that requires agents to construct explicit premises, trace execution paths, and derive formal conclusions. Unlike unstructured chain-of-thought, semi-formal reasoning acts as a certificate: the agent cannot skip cases or make unsupported claims. We evaluate across three tasks (patch equivalence verification, fault localization, and code question answering) and show that semi-formal reasoning consistently improves accuracy on all of them. For patch equivalence, accuracy improves from 78% to 88% on curated examples and reaches 93% on real-world agent-generated patches, approaching the reliability needed for execution-free RL reward signals. For code question answering on RubberDuckBench Mohammad et al. (2026), semi-formal reasoning achieves 87% accuracy. For fault localization on Defects4J Just et al. (2014), semi-formal reasoning improves Top-5 accuracy by 5 percentage points over standard reasoning. These results demonstrate that structured agentic reasoning enables meaningful semantic code analysis without execution, opening practical applications in RL training pipelines, code review, and static program analysis.",
+      "published": "2026-03-02T14:17:06Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.01896v2",
+      "pdf_url": "http://arxiv.org/pdf/2603.01896v2.pdf",
+      "authors": [
+        "Shubham Ugare",
+        "Satish Chandra"
+      ]
+    },
+    {
+      "title": "From Secure Agentic AI to Secure Agentic Web: Challenges, Threats, and Future Directions",
+      "summary": "Large Language Models (LLMs) are increasingly deployed as agentic systems that plan, memorize, and act in open-world environments. This shift brings new security problems: failures are no longer only unsafe text generation, but can become real harm through tool use, persistent memory, and interaction with untrusted web content. In this survey, we provide a transition-oriented view from Secure Agentic AI to a Secure Agentic Web. We first summarize a component-aligned threat taxonomy covering prompt abuse, environment injection, memory attacks, toolchain abuse, model tampering, and agent network attacks. We then review defense strategies, including prompt hardening, safety-aware decoding, privilege control for tools and APIs, runtime monitoring, continuous red-teaming, and protocol-level security mechanisms. We further discuss how these threats and mitigations escalate in the Agentic Web, where delegation chains, cross-domain interactions, and protocol-mediated ecosystems amplify risks via propagation and composition. Finally, we highlight open challenges for web-scale deployment, such as interoperable identity and authorization, provenance and traceability, ecosystem-level response, and scalable evaluation under adaptive adversaries. Our goal is to connect recent empirical findings with system-level requirements, and to outline practical research directions toward trustworthy agent ecosystems.",
+      "published": "2026-03-02T07:44:18Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2603.01564v1",
+      "pdf_url": "http://arxiv.org/pdf/2603.01564v1.pdf",
+      "authors": [
+        "Zhihang Deng",
+        "Jiaping Gui",
+        "Weinan Zhang"
+      ]
+    },
+    {
+      "title": "Agentic AI-RAN: Enabling Intent-Driven, Explainable and Self-Evolving Open RAN Intelligence",
+      "summary": "Open RAN (O-RAN) exposes rich control and telemetry interfaces across the Non-RT RIC, Near-RT RIC, and distributed units, but also makes it harder to operate multi-tenant, multi-objective RANs in a safe and auditable manner. In parallel, agentic AI systems with explicit planning, tool use, memory, and self-management offer a natural way to structure long-lived control loops. This article surveys how such agentic controllers can be brought into O-RAN: we review the O-RAN architecture, contrast agentic controllers with conventional ML/RL xApps, and organise the task landscape around three clusters: network slice life-cycle, radio resource management (RRM) closed loops, and cross-cutting security, privacy, and compliance. We then introduce a small set of agentic primitives (Plan-Act-Observe-Reflect, skills as tool use, memory and evidence, and self-management gates) and show, in a multi-cell O-RAN simulation, how they improve slice life-cycle and RRM performance compared to conventional baselines and ablations that remove individual primitives. Security, privacy, and compliance are discussed as architectural constraints and open challenges for standards-aligned deployments. This framework achieves an average 8.83\\% reduction in resource usage across three classic network slices.",
+      "published": "2026-02-27T15:55:34Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.24115v1",
+      "pdf_url": "http://arxiv.org/pdf/2602.24115v1.pdf",
+      "authors": [
+        "Zhizhou He",
+        "Yang Luo",
+        "Xinkai Liu",
+        "Mahdi Boloursaz Mashhadi",
+        "Mohammad Shojafar",
+        "Merouane Debbah",
+        "Rahim Tafazolli"
+      ]
+    },
+    {
+      "title": "SoK: Agentic Skills -- Beyond Tool Use in LLM Agents",
+      "summary": "Agentic systems increasingly rely on reusable procedural capabilities, \\textit{a.k.a., agentic skills}, to execute long-horizon workflows reliably. These capabilities are callable modules that package procedural knowledge with explicit applicability conditions, execution policies, termination criteria, and reusable interfaces. Unlike one-off plans or atomic tool calls, skills operate (and often do well) across tasks. This paper maps the skill layer across the full lifecycle (discovery, practice, distillation, storage, composition, evaluation, and update) and introduces two complementary taxonomies. The first is a system-level set of \\textbf{seven design patterns} capturing how skills are packaged and executed in practice, from metadata-driven progressive disclosure and executable code skills to self-evolving libraries and marketplace distribution. The second is an orthogonal \\textbf{representation $\\times$ scope} taxonomy describing what skills \\emph{are} (natural language, code, policy, hybrid) and what environments they operate over (web, OS, software engineering, robotics). We analyze the security and governance implications of skill-based agents, covering supply-chain risks, prompt injection via skill payloads, and trust-tiered execution, grounded by a case study of the ClawHavoc campaign in which nearly 1{,}200 malicious skills infiltrated a major agent marketplace, exfiltrating API keys, cryptocurrency wallets, and browser credentials at scale. We further survey deterministic evaluation approaches, anchored by recent benchmark evidence that curated skills can substantially improve agent success rates while self-generated skills may degrade them. We conclude with open challenges toward robust, verifiable, and certifiable skills for real-world autonomous agents.",
+      "published": "2026-02-24T13:11:38Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.20867v1",
+      "pdf_url": "http://arxiv.org/pdf/2602.20867v1.pdf",
+      "authors": [
+        "Yanna Jiang",
+        "Delong Li",
+        "Haiyu Deng",
+        "Baihe Ma",
+        "Xu Wang",
+        "Qin Wang",
+        "Guangsheng Yu"
+      ]
+    },
+    {
+      "title": "Quantifying the Expectation-Realisation Gap for Agentic AI Systems",
+      "summary": "Agentic AI systems are deployed with expectations of substantial productivity gains, yet rigorous empirical evidence reveals systematic discrepancies between pre-deployment expectations and post-deployment outcomes. We review controlled trials and independent validations across software engineering, clinical documentation, and clinical decision support to quantify this expectation-realisation gap. In software development, experienced developers expected a 24% speedup from AI tools but were slowed by 19% -- a 43 percentage-point calibration error. In clinical documentation, vendor claims of multi-minute time savings contrast with measured reductions of less than one minute per note, and one widely deployed tool showed no statistically significant effect. In clinical decision support, externally validated performance falls substantially below developer-reported metrics. These shortfalls are driven by workflow integration friction, verification burden, measurement construct mismatches, and systematic variation in who benefits and who does not. The evidence motivates structured planning frameworks that require explicit, quantified benefit expectations with human oversight costs factored in.",
+      "published": "2026-02-23T19:16:30Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.20292v2",
+      "pdf_url": "http://arxiv.org/pdf/2602.20292v2.pdf",
+      "authors": [
+        "Sebastian Lobentanzer"
+      ]
+    },
+    {
+      "title": "Anatomy of Agentic Memory: Taxonomy and Empirical Analysis of Evaluation and System Limitations",
+      "summary": "Agentic memory systems enable large language model (LLM) agents to maintain state across long interactions, supporting long-horizon reasoning and personalization beyond fixed context windows. Despite rapid architectural development, the empirical foundations of these systems remain fragile: existing benchmarks are often underscaled, evaluation metrics are misaligned with semantic utility, performance varies significantly across backbone models, and system-level costs are frequently overlooked. This survey presents a structured analysis of agentic memory from both architectural and system perspectives. We first introduce a concise taxonomy of MAG systems based on four memory structures. Then, we analyze key pain points limiting current systems, including benchmark saturation effects, metric validity and judge sensitivity, backbone-dependent accuracy, and the latency and throughput overhead introduced by memory maintenance. By connecting the memory structure to empirical limitations, this survey clarifies why current agentic memory systems often underperform their theoretical promise and outlines directions for more reliable evaluation and scalable system design.",
+      "published": "2026-02-22T19:50:01Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.19320v1",
+      "pdf_url": "http://arxiv.org/pdf/2602.19320v1.pdf",
+      "authors": [
+        "Dongming Jiang",
+        "Yi Li",
+        "Songtao Wei",
+        "Jinxin Yang",
+        "Ayushi Kishore",
+        "Alysa Zhao",
+        "Dingyi Kang",
+        "Xu Hu",
+        "Feng Chen",
+        "Qiannan Li",
+        "Bingzhe Li"
+      ]
+    },
+    {
+      "title": "LLM Scalability Risk for Agentic-AI and Model Supply Chain Security",
+      "summary": "Large Language Models (LLMs) & Generative AI are transforming cybersecurity, enabling both advanced defenses and new attacks. Organizations now use LLMs for threat detection, code review, and DevSecOps automation, while adversaries leverage them to produce malwares and run targeted social-engineering campaigns. This paper presents a unified analysis integrating offensive and defensive perspectives on GenAI-driven cybersecurity. Drawing on 70 academic, industry, and policy sources, it analyzes the rise of AI-facilitated threats and its implications for global security to ground necessity for scalable defensive mechanisms. We introduce two primary contributions: the LLM Scalability Risk Index (LSRI), a parametric framework to stress-test operational risks when deploying LLMs in security-critical environments & a model-supply-chain framework establishing a verifiable root of trust throughout model lifecycle. We also synthesize defense strategies from platforms like Google Play Protect, Microsoft Security Copilot and outline a governance roadmap for secure, large-scale LLM deployment.",
+      "published": "2026-02-22T03:20:49Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.19021v1",
+      "pdf_url": "http://arxiv.org/pdf/2602.19021v1.pdf",
+      "authors": [
+        "Kiarash Ahi",
+        "Vaibhav Agrawal",
+        "Saeed Valizadeh"
+      ]
+    },
+    {
+      "title": "Agentic Wireless Communication for 6G: Intent-Aware and Continuously Evolving Physical-Layer Intelligence",
+      "summary": "As 6G wireless systems evolve, growing functional complexity and diverse service demands are driving a shift from rule-based control to intent-driven autonomous intelligence. User requirements are no longer captured by a single metric (e.g., throughput or reliability), but by multi-dimensional objectives such as latency sensitivity, energy preference, computational constraints, and service-level requirements. These objectives may also change over time due to environmental dynamics and user-network interactions. Therefore, accurate understanding of both the communication environment and user intent is critical for autonomous and sustainably evolving 6G communications. Large language models (LLMs), with strong contextual understanding and cross-modal reasoning, provide a promising foundation for intent-aware network agents. Compared with rule-driven or centrally optimized designs, LLM-based agents can integrate heterogeneous information and translate natural-language intents into executable control and configuration decisions. Focusing on a closed-loop pipeline of intent perception, autonomous decision making, and network execution, this paper investigates agentic AI for the 6G physical layer and its realization pathways. We review representative physical-layer tasks and their limitations in supporting intent awareness and autonomy, identify application scenarios where agentic AI is advantageous, and discuss key challenges and enabling technologies in multimodal perception, cross-layer decision making, and sustainable optimization. Finally, we present a case study of an intent-driven link decision agent, termed AgenCom, which adaptively constructs communication links under diverse user preferences and channel conditions.",
+      "published": "2026-02-19T05:36:27Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.17096v1",
+      "pdf_url": "http://arxiv.org/pdf/2602.17096v1.pdf",
+      "authors": [
+        "Zhaoyang Li",
+        "Xingzhi Jin",
+        "Junyu Pan",
+        "Qianqian Yang",
+        "Zhiguo Shi"
+      ]
+    },
+    {
+      "title": "Agent Skills for Large Language Models: Architecture, Acquisition, Security, and the Path Forward",
+      "summary": "The transition from monolithic language models to modular, skill-equipped agents marks a defining shift in how large language models (LLMs) are deployed in practice. Rather than encoding all procedural knowledge within model weights, agent skills -- composable packages of instructions, code, and resources that agents load on demand -- enable dynamic capability extension without retraining. It is formalized in a paradigm of progressive disclosure, portable skill definitions, and integration with the Model Context Protocol (MCP). This survey provides a comprehensive treatment of the agent skills landscape, as it has rapidly evolved during the last few months. We organize the field along four axes: (i) architectural foundations, examining the SKILL$.$md specification, progressive context loading, and the complementary roles of skills and MCP; (ii) skill acquisition, covering reinforcement learning with skill libraries, autonomous skill discovery (SEAgent), and compositional skill synthesis; (iii) deployment at scale, including the computer-use agent (CUA) stack, GUI grounding advances, and benchmark progress on OSWorld and SWE-bench; and (iv) security, where recent empirical analyses reveal that 26.1% of community-contributed skills contain vulnerabilities, motivating our proposed Skill Trust and Lifecycle Governance Framework -- a four-tier, gate-based permission model that maps skill provenance to graduated deployment capabilities. We identify seven open challenges -- from cross-platform skill portability to capability-based permission models -- and propose a research agenda for realizing trustworthy, self-improving skill ecosystems. Unlike prior surveys that broadly cover LLM agents or tool use, this work focuses specifically on the emerging skill abstraction layer and its implications for the next generation of agentic systems. Project repo: https://github.com/scienceaix/agentskills",
+      "published": "2026-02-12T21:33:25Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.12430v3",
+      "pdf_url": "http://arxiv.org/pdf/2602.12430v3.pdf",
+      "authors": [
+        "Renjun Xu",
+        "Yang Yan"
+      ]
+    },
+    {
+      "title": "AI Infrastructure Sovereignty",
+      "summary": "Artificial intelligence has shifted from a software-centric discipline to an infrastructure-driven system. Large-scale training and inference increasingly depend on tightly coupled data centers, high-capacity optical networks, and energy systems operating close to physical and environmental limits. As a result, control over data and algorithms alone is no longer sufficient to achieve meaningful AI sovereignty. Practical sovereignty now depends on who can deploy, operate, and adapt AI infrastructure under constraints imposed by energy availability, sustainability targets, and network reach. This tutorial-survey introduces the concept of AI infrastructure sovereignty, defined as the ability of a region, operator, or nation to exercise operational control over AI systems within physical and environmental limits. The paper argues that sovereignty emerges from the co-design of three layers: AI-oriented data centers, optical transport networks, and automation frameworks that provide real-time visibility and control. We analyze how AI workloads reshape data center design, driving extreme power densities, advanced cooling requirements, and tighter coupling to local energy systems, with sustainability metrics such as carbon intensity and water usage acting as hard deployment boundaries. We then examine optical networks as the backbone of distributed AI, showing how latency, capacity, failure domains, and jurisdictional control define practical sovereignty limits. Building on this foundation, the paper positions telemetry, agentic AI, and digital twins as enablers of operational sovereignty through validated, closed-loop control across compute, network, and energy domains. The tutorial concludes with a reference architecture for sovereign AI infrastructure that integrates telemetry pipelines, agent-based control, and digital twins, framing sustainability as a first-order design constraint.",
+      "published": "2026-02-11T14:28:04Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.10900v1",
+      "pdf_url": "http://arxiv.org/pdf/2602.10900v1.pdf",
+      "authors": [
+        "Sergio Cruzes"
+      ]
+    },
+    {
+      "title": "The Landscape of Prompt Injection Threats in LLM Agents: From Taxonomy to Analysis",
+      "summary": "The evolution of Large Language Models (LLMs) has resulted in a paradigm shift towards autonomous agents, necessitating robust security against Prompt Injection (PI) vulnerabilities where untrusted inputs hijack agent behaviors. This SoK presents a comprehensive overview of the PI landscape, covering attacks, defenses, and their evaluation practices. Through a systematic literature review and quantitative analysis, we establish taxonomies that categorize PI attacks by payload generation strategies (heuristic vs. optimization) and defenses by intervention stages (text, model, and execution levels). Our analysis reveals a key limitation shared by many existing defenses and benchmarks: they largely overlook context-dependent tasks, in which agents are authorized to rely on runtime environmental observations to determine actions. To address this gap, we introduce AgentPI, a new benchmark designed to systematically evaluate agent behavior under context-dependent interaction settings. Using AgentPI, we empirically evaluate representative defenses and show that no single approach can simultaneously achieve high trustworthiness, high utility, and low latency. Moreover, we show that many defenses appear effective under existing benchmarks by suppressing contextual inputs, yet fail to generalize to realistic agent settings where context-dependent reasoning is essential. This SoK distills key takeaways and open research problems, offering structured guidance for future research and practical deployment of secure LLM agents.",
+      "published": "2026-02-11T02:47:10Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.10453v1",
+      "pdf_url": "http://arxiv.org/pdf/2602.10453v1.pdf",
+      "authors": [
+        "Peiran Wang",
+        "Xinfeng Li",
+        "Chong Xiang",
+        "Jinghuai Zhang",
+        "Ying Li",
+        "Lixia Zhang",
+        "Xiaofeng Wang",
+        "Yuan Tian"
+      ]
+    },
+    {
+      "title": "SocialVeil: Probing Social Intelligence of Language Agents under Communication Barriers",
+      "summary": "Large language models (LLMs) are increasingly evaluated in interactive environments to test their social intelligence. However, existing benchmarks often assume idealized communication between agents, limiting our ability to diagnose whether LLMs can maintain and repair interactions in more realistic, imperfect settings. To close this gap, we present \\textsc{SocialVeil}, a social learning environment that can simulate social interaction under cognitive-difference-induced communication barriers. Grounded in a systematic literature review of communication challenges in human interaction, \\textsc{SocialVeil} introduces three representative types of such disruption, \\emph{semantic vagueness}, \\emph{sociocultural mismatch}, and \\emph{emotional interference}. We also introduce two barrier-aware evaluation metrics, \\emph{unresolved confusion} and \\emph{mutual understanding}, to evaluate interaction quality under impaired communication. Experiments across 720 scenarios and four frontier LLMs show that barriers consistently impair performance, with mutual understanding reduced by over 45\\% on average, and confusion elevated by nearly 50\\%. Human evaluations validate the fidelity of these simulated barriers (ICC$\\approx$0.78, Pearson r$\\approx$0.80). We further demonstrate that adaptation strategies (Repair Instruction and Interactive learning) only have a modest effect far from barrier-free performance. This work takes a step toward bringing social interaction environments closer to real-world communication, opening opportunities for exploring the social intelligence of LLM agents.",
+      "published": "2026-02-04T23:04:25Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.05115v1",
+      "pdf_url": "http://arxiv.org/pdf/2602.05115v1.pdf",
+      "authors": [
+        "Keyang Xuan",
+        "Pengda Wang",
+        "Chongrui Ye",
+        "Haofei Yu",
+        "Tal August",
+        "Jiaxuan You"
+      ]
+    },
+    {
+      "title": "From Fragmentation to Integration: Exploring the Design Space of AI Agents for Human-as-the-Unit Privacy Management",
+      "summary": "Managing one's digital footprint is overwhelming, as it spans multiple platforms and involves countless context-dependent decisions. Recent advances in agentic AI offer ways forward by enabling holistic, contextual privacy-enhancing solutions. Building on this potential, we adopted a ''human-as-the-unit'' perspective and investigated users' cross-context privacy challenges through 12 semi-structured interviews. Results reveal that people rely on ad hoc manual strategies while lacking comprehensive privacy controls, highlighting nine privacy-management challenges across applications, temporal contexts, and relationships. To explore solutions, we generated nine AI agent concepts and evaluated them via a speed-dating survey with 116 US participants. The three highest-ranked concepts were all post-sharing management tools with half or full agent autonomy, with users expressing greater trust in AI accuracy than in their own efforts. Our findings highlight a promising design space where users see AI agents bridging the fragments in privacy management, particularly through automated, comprehensive post-sharing remediation of users' digital footprints.",
+      "published": "2026-02-04T20:12:37Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.05016v2",
+      "pdf_url": "http://arxiv.org/pdf/2602.05016v2.pdf",
+      "authors": [
+        "Eryue Xu",
+        "Tianshi Li"
+      ]
+    },
+    {
+      "title": "Agentic AI-Empowered Dynamic Survey Framework",
+      "summary": "Survey papers play a central role in synthesizing and organizing scientific knowledge, yet they are increasingly strained by the rapid growth of research output. As new work continues to appear after publication, surveys quickly become outdated, contributing to redundancy and fragmentation in the literature. We reframe survey writing as a long-horizon maintenance problem rather than a one-time generation task, treating surveys as living documents that evolve alongside the research they describe. We propose an agentic Dynamic Survey Framework that supports the continuous updating of existing survey papers by incrementally integrating new work while preserving survey structure and minimizing unnecessary disruption. Using a retrospective experimental setup, we demonstrate that the proposed framework effectively identifies and incorporates emerging research while preserving the coherence and structure of existing surveys.",
+      "published": "2026-02-03T23:14:25Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.04071v1",
+      "pdf_url": "http://arxiv.org/pdf/2602.04071v1.pdf",
+      "authors": [
+        "Furkan Mumcu",
+        "Lokman Bekit",
+        "Michael J. Jones",
+        "Anoop Cherian",
+        "Yasin Yilmaz"
+      ]
+    },
+    {
+      "title": "TxRay: Agentic Postmortem of Live Blockchain Attacks",
+      "summary": "Decentralized Finance (DeFi) has turned blockchains into financial infrastructure, allowing anyone to trade, lend, and build protocols without intermediaries, but this openness exposes pools of value controlled by code. Within five years, the DeFi ecosystem has lost over 15.75B USD to reported exploits. Many exploits arise from permissionless opportunities that any participant can trigger using only public state and standard interfaces, which we call Anyone-Can-Take (ACT) opportunities. Despite on-chain transparency, postmortem analysis remains slow and manual: investigations start from limited evidence, sometimes only a single transaction hash, and must reconstruct the exploit lifecycle by recovering related transactions, contract code, and state dependencies. We present TxRay, a Large Language Model (LLM) agentic postmortem system that uses tool calls to reconstruct live ACT attacks from limited evidence. Starting from one or more seed transactions, TxRay recovers the exploit lifecycle, derives an evidence-backed root cause, and generates a runnable, self-contained Proof of Concept (PoC) that deterministically reproduces the incident. TxRay self-checks postmortems by encoding incident-specific semantic oracles as executable assertions. To evaluate PoC correctness and quality, we develop PoCEvaluator, an independent agentic execution-and-review evaluator. On 114 incidents from DeFiHackLabs, TxRay produces an expert-aligned root cause and an executable PoC for 105 incidents, achieving 92.11% end-to-end reproduction. Under PoCEvaluator, 98.1% of TxRay PoCs avoid hard-coding attacker addresses, a +22.9pp lift over DeFiHackLabs. In a live deployment, TxRay delivers validated root causes in 40 minutes and PoCs in 59 minutes at median latency. TxRay's oracle-validated PoCs enable attack imitation, improving coverage by 15.6% and 65.5% over STING and APE.",
+      "published": "2026-02-01T16:17:33Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.01317v5",
+      "pdf_url": "http://arxiv.org/pdf/2602.01317v5.pdf",
+      "authors": [
+        "Ziyue Wang",
+        "Jiangshan Yu",
+        "Kaihua Qin",
+        "Dawn Song",
+        "Arthur Gervais",
+        "Liyi Zhou"
+      ]
+    },
+    {
+      "title": "Towards Agentic Intelligence for Materials Science",
+      "summary": "The convergence of artificial intelligence and materials science presents a transformative opportunity, but achieving true acceleration in discovery requires moving beyond task-isolated, fine-tuned models toward agentic systems that plan, act, and learn across the full discovery loop. This survey advances a unique pipeline-centric view that spans from corpus curation and pretraining, through domain adaptation and instruction tuning, to goal-conditioned agents interfacing with simulation and experimental platforms. Unlike prior reviews, we treat the entire process as an end-to-end system to be optimized for tangible discovery outcomes rather than proxy benchmarks. This perspective allows us to trace how upstream design choices-such as data curation and training objectives-can be aligned with downstream experimental success through effective credit assignment. To bridge communities and establish a shared frame of reference, we first present an integrated lens that aligns terminology, evaluation, and workflow stages across AI and materials science. We then analyze the field through two focused lenses: From the AI perspective, the survey details LLM strengths in pattern recognition, predictive analytics, and natural language processing for literature mining, materials characterization, and property prediction; from the materials science perspective, it highlights applications in materials design, process optimization, and the acceleration of computational workflows via integration with external tools (e.g., DFT, robotic labs). Finally, we contrast passive, reactive approaches with agentic design, cataloging current contributions while motivating systems that pursue long-horizon goals with autonomy, memory, and tool use. This survey charts a practical roadmap towards autonomous, safety-aware LLM agents aimed at discovering novel and useful materials.",
+      "published": "2026-01-29T23:48:43Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.00169v2",
+      "pdf_url": "http://arxiv.org/pdf/2602.00169v2.pdf",
+      "authors": [
+        "Huan Zhang",
+        "Yizhan Li",
+        "Wenhao Huang",
+        "Ziyu Hou",
+        "Yu Song",
+        "Xuye Liu",
+        "Farshid Effaty",
+        "Jinya Jiang",
+        "Sifan Wu",
+        "Qianggang Ding",
+        "Izumi Takahara",
+        "Leonard R. MacGillivray",
+        "Teruyasu Mizoguchi",
+        "Tianshu Yu",
+        "Lizi Liao",
+        "Yuyu Luo",
+        "Yu Rong",
+        "Jia Li",
+        "Ying Diao",
+        "Heng Ji",
+        "Bang Liu"
+      ]
+    },
+    {
+      "title": "Agent Benchmarks Fail Public Sector Requirements",
+      "summary": "Deploying Large Language Model-based agents (LLM agents) in the public sector requires assuring that they meet the stringent legal, procedural, and structural requirements of public-sector institutions. Practitioners and researchers often turn to benchmarks for such assessments. However, it remains unclear what criteria benchmarks must meet to ensure they adequately reflect public-sector requirements, or how many existing benchmarks do so. In this paper, we first define such criteria based on a first-principles survey of public administration literature: benchmarks must be \\emph{process-based}, \\emph{realistic}, \\emph{public-sector-specific} and report \\emph{metrics} that reflect the unique requirements of the public sector. We analyse more than 1,300 benchmark papers for these criteria using an expert-validated LLM-assisted pipeline. Our results show that no single benchmark meets all of the criteria. Our findings provide a call to action for both researchers to develop public sector-relevant benchmarks and for public-sector officials to apply these criteria when evaluating their own agentic use cases.",
+      "published": "2026-01-28T13:51:30Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2601.20617v1",
+      "pdf_url": "http://arxiv.org/pdf/2601.20617v1.pdf",
+      "authors": [
+        "Jonathan Rystrøm",
+        "Chris Schmitz",
+        "Karolina Korgul",
+        "Jan Batzner",
+        "Chris Russell"
+      ]
+    },
+    {
+      "title": "Understanding Dominant Themes in Reviewing Agentic AI-authored Code",
+      "summary": "While prior work has examined the generation capabilities of Agentic AI systems, little is known about how reviewers respond to AI-authored code in practice. In this paper, we present a large-scale empirical study of code review dynamics in agent-generated PRs. Using a curated subset of the AIDev dataset, we analyze 19,450 inline review comments spanning 3,177 agent-authored PRs from real-world GitHub repositories. We first derive a taxonomy of 12 review comment themes using topic modeling combined with large language model (LLM)-assisted semantic clustering and consolidation. According to this taxonomy, we then investigate whether zero-shot prompts to LLM can reliably annotate review comments. Our evaluation against human annotations shows that open-source LLM achieves reasonably high exact match (78.63%), macro F1 score (0.78), and substantial agreement with human annotators at the review comment level. At the PR level, the LLM also correctly identifies the dominant review theme with 78% Top-1 accuracy and achieves an average Jaccard similarity of 0.76, indicating strong alignment with human judgments. Applying this annotation pipeline at scale, we find that apart from functional correctness and logical changes, reviews of agent-authored PRs predominantly focus on documentation gaps, refactoring needs, styling and formatting issues, with testing and security-related concerns. These findings suggest that while AI agents can accelerate code production, there remain gaps requiring targeted human review oversight.",
+      "published": "2026-01-27T07:21:09Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2601.19287v1",
+      "pdf_url": "http://arxiv.org/pdf/2601.19287v1.pdf",
+      "authors": [
+        "Md. Asif Haider",
+        "Thomas Zimmermann"
+      ]
+    },
+    {
+      "title": "AgenticSCR: An Autonomous Agentic Secure Code Review for Immature Vulnerabilities Detection",
+      "summary": "Secure code review is critical at the pre-commit stage, where vulnerabilities must be caught early under tight latency and limited-context constraints. Existing SAST-based checks are noisy and often miss immature, context-dependent vulnerabilities, while standalone Large Language Models (LLMs) are constrained by context windows and lack explicit tool use. Agentic AI, which combine LLMs with autonomous decision-making, tool invocation, and code navigation, offer a promising alternative, but their effectiveness for pre-commit secure code review is not yet well understood. In this work, we introduce AgenticSCR, an agentic AI for secure code review for detecting immature vulnerabilities during the pre-commit stage, augmented by security-focused semantic memories. Using our own curated benchmark of immature vulnerabilities, tailored to the pre-commit secure code review, we empirically evaluate how accurate is our AgenticSCR for localizing, detecting, and explaining immature vulnerabilities. Our results show that AgenticSCR achieves at least 153% relatively higher percentage of correct code review comments than the static LLM-based baseline, and also substantially surpasses SAST tools. Moreover, AgenticSCR generates more correct comments in four out of five vulnerability types, consistently and significantly outperforming all other baselines. These findings highlight the importance of Agentic Secure Code Review, paving the way towards an emerging research area of immature vulnerability detection.",
+      "published": "2026-01-27T03:10:12Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2601.19138v1",
+      "pdf_url": "http://arxiv.org/pdf/2601.19138v1.pdf",
+      "authors": [
+        "Wachiraphan Charoenwet",
+        "Kla Tantithamthavorn",
+        "Patanamon Thongtanunam",
+        "Hong Yi Lin",
+        "Minwoo Jeong",
+        "Ming Wu"
+      ]
+    },
+    {
+      "title": "Agentic AI for Self-Driving Laboratories in Soft Matter: Taxonomy, Benchmarks,and Open Challenges",
+      "summary": "Self-driving laboratories (SDLs) close the loop between experiment design, automated execution, and data-driven decision making, and they provide a demanding testbed for agentic AI under expensive actions, noisy and delayed feedback, strict feasibility and safety constraints, and non-stationarity. This survey uses soft matter as a representative setting but focuses on the AI questions that arise in real laboratories. We frame SDL autonomy as an agent environment interaction problem with explicit observations, actions, costs, and constraints, and we use this formulation to connect common SDL pipelines to established AI principles. We review the main method families that enable closed loop experimentation, including Bayesian optimization and active learning for sample efficient experiment selection, planning and reinforcement learning for long horizon protocol optimization, and tool using agents that orchestrate heterogeneous instruments and software. We emphasize verifiable and provenance aware policies that support debugging, reproducibility, and safe operation. We then propose a capability driven taxonomy that organizes systems by decision horizon, uncertainty modeling, action parameterization, constraint handling, failure recovery, and human involvement. To enable meaningful comparison, we synthesize benchmark task templates and evaluation metrics that prioritize cost aware performance, robustness to drift, constraint violation behavior, and reproducibility. Finally, we distill lessons from deployed SDLs and outline open challenges in multi-modal representation, calibrated uncertainty, safe exploration, and shared benchmark infrastructure.",
+      "published": "2026-01-25T17:44:19Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2601.17920v1",
+      "pdf_url": "http://arxiv.org/pdf/2601.17920v1.pdf",
+      "authors": [
+        "Xuanzhou Chen",
+        "Audrey Wang",
+        "Stanley Yin",
+        "Hanyang Jiang",
+        "Dong Zhang"
+      ]
+    },
+    {
+      "title": "Multi-Agent Collaborative Intrusion Detection for Low-Altitude Economy IoT: An LLM-Enhanced Agentic AI Framework",
+      "summary": "The rapid expansion of low-altitude economy Internet of Things (LAE-IoT) networks has created unprecedented security challenges due to dynamic three-dimensional mobility patterns, distributed autonomous operations, and severe resource constraints. Traditional intrusion detection systems designed for static ground-based networks prove inadequate for tackling the unique characteristics of aerial IoT environments, including frequent topology changes, real-time detection requirements, and energy limitations. In this article, we analyze the intrusion detection requirements for LAE-IoT networks, complemented by a comprehensive review of evaluation metrics that cover detection effectiveness, response time, and resource consumption. Then, we investigate transformative potential of agentic artificial intelligence (AI) paradigms and introduce a large language model (LLM)-enabled agentic AI framework for enhancing intrusion detection in LAE-IoT networks. This leads to our proposal of a novel multi-agent collaborative intrusion detection framework that leverages specialized LLM-enhanced agents for intelligent data processing and adaptive classification. Through experimental validation, our framework demonstrates superior performance of over 90\\% classification accuracy across multiple benchmark datasets. These results highlight the transformative potential of combining agentic AI principles with LLMs for next-generation LAE-IoT security systems.",
+      "published": "2026-01-25T12:47:25Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2601.17817v1",
+      "pdf_url": "http://arxiv.org/pdf/2601.17817v1.pdf",
+      "authors": [
+        "Hongjuan Li",
+        "Hui Kang",
+        "Jiahui Li",
+        "Geng Sun",
+        "Ruichen Zhang",
+        "Jiacheng Wang",
+        "Dusit Niyato",
+        "Wei Ni",
+        "Abbas Jamalipour"
+      ]
+    },
+    {
+      "title": "Reinforcement Learning for Control Systems with Time Delays: A Comprehensive Survey",
+      "summary": "In the last decade, Reinforcement Learning (RL) has achieved remarkable success in the control and decision-making of complex dynamical systems. However, most RL algorithms rely on the Markov Decision Process assumption, which is violated in practical cyber-physical systems affected by sensing delays, actuation latencies, and communication constraints. Such time delays introduce memory effects that can significantly degrade performance and compromise stability, particularly in networked and multi-agent environments. This paper presents a comprehensive survey of RL methods designed to address time delays in control systems. We first formalize the main classes of delays and analyze their impact on the Markov property. We then systematically categorize existing approaches into five major families: state augmentation and history-based representations, recurrent policies with learned memory, predictor-based and model-aware methods, robust and domain-randomized training strategies, and safe RL frameworks with explicit constraint handling. For each family, we discuss underlying principles, practical advantages, and inherent limitations. A comparative analysis highlights key trade-offs among these approaches and provides practical guidelines for selecting suitable methods under different delay characteristics and safety requirements. Finally, we identify open challenges and promising research directions, including stability certification, large-delay learning, multi-agent communication co-design, and standardized benchmarking. This survey aims to serve as a unified reference for researchers and practitioners developing reliable RL-based controllers in delay-affected cyber-physical systems.",
+      "published": "2026-01-30T23:25:30Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2602.00399v1",
+      "pdf_url": "http://arxiv.org/pdf/2602.00399v1.pdf",
+      "authors": [
+        "Armando Alves Neto"
+      ]
+    },
+    {
+      "title": "If You Want Coherence, Orchestrate a Team of Rivals: Multi-Agent Models of Organizational Intelligence",
+      "summary": "AI Agents can perform complex operations at great speed, but just like all the humans we have ever hired, their intelligence remains fallible. Miscommunications aren't noticed, systemic biases have no counter-action, and inner monologues are rarely written down. We did not come to fire them for their mistakes, but to hire them and provide a safe productive working environment. We posit that we can reuse a common corporate organizational structure: teams of independent AI agents with strict role boundaries can work with common goals, but opposing incentives. Multiple models serving as a team of rivals can catch and minimize errors within the final product at a small cost to the velocity of actions. In this paper we demonstrate that we can achieve reliability without acquiring perfect components, but through careful orchestration of imperfect ones. This paper describes the architecture of such a system in practice: specialized agent teams (planners, executors, critics, experts), organized into an organization with clear goals, coordinated through a remote code executor that keeps data transformations and tool invocations separate from reasoning models. Rather than agents directly calling tools and ingesting full responses, they write code that executes remotely; only relevant summaries return to agent context. By preventing raw data and tool outputs from contaminating context windows, the system maintains clean separation between perception (brains that plan and reason) and execution (hands that perform heavy data transformations and API calls). We demonstrate the approach achieves over 90% internal error interception prior to user exposure while maintaining acceptable latency tradeoffs. A survey from our traces shows that we only trade off cost and latency to achieve correctness and incrementally expand capabilities without impacting existing ones.",
+      "published": "2026-01-20T17:19:09Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2601.14351v1",
+      "pdf_url": "http://arxiv.org/pdf/2601.14351v1.pdf",
+      "authors": [
+        "Gopal Vijayaraghavan",
+        "Prasanth Jayachandran",
+        "Arun Murthy",
+        "Sunil Govindan",
+        "Vivek Subramanian"
+      ]
+    },
+    {
+      "title": "Agentic Reasoning for Large Language Models",
+      "summary": "Reasoning is a fundamental cognitive process underlying inference, problem-solving, and decision-making. While large language models (LLMs) demonstrate strong reasoning capabilities in closed-world settings, they struggle in open-ended and dynamic environments. Agentic reasoning marks a paradigm shift by reframing LLMs as autonomous agents that plan, act, and learn through continual interaction. In this survey, we organize agentic reasoning along three complementary dimensions. First, we characterize environmental dynamics through three layers: foundational agentic reasoning, which establishes core single-agent capabilities including planning, tool use, and search in stable environments; self-evolving agentic reasoning, which studies how agents refine these capabilities through feedback, memory, and adaptation; and collective multi-agent reasoning, which extends intelligence to collaborative settings involving coordination, knowledge sharing, and shared goals. Across these layers, we distinguish in-context reasoning, which scales test-time interaction through structured orchestration, from post-training reasoning, which optimizes behaviors via reinforcement learning and supervised fine-tuning. We further review representative agentic reasoning frameworks across real-world applications and benchmarks, including science, robotics, healthcare, autonomous research, and mathematics. This survey synthesizes agentic reasoning methods into a unified roadmap bridging thought and action, and outlines open challenges and future directions, including personalization, long-horizon interaction, world modeling, scalable multi-agent training, and governance for real-world deployment.",
+      "published": "2026-01-18T18:58:23Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2601.12538v1",
+      "pdf_url": "http://arxiv.org/pdf/2601.12538v1.pdf",
+      "authors": [
+        "Tianxin Wei",
+        "Ting-Wei Li",
+        "Zhining Liu",
+        "Xuying Ning",
+        "Ze Yang",
+        "Jiaru Zou",
+        "Zhichen Zeng",
+        "Ruizhong Qiu",
+        "Xiao Lin",
+        "Dongqi Fu",
+        "Zihao Li",
+        "Mengting Ai",
+        "Duo Zhou",
+        "Wenxuan Bao",
+        "Yunzhe Li",
+        "Gaotang Li",
+        "Cheng Qian",
+        "Yu Wang",
+        "Xiangru Tang",
+        "Yin Xiao",
+        "Liri Fang",
+        "Hui Liu",
+        "Xianfeng Tang",
+        "Yuji Zhang",
+        "Chi Wang",
+        "Jiaxuan You",
+        "Heng Ji",
+        "Hanghang Tong",
+        "Jingrui He"
+      ]
+    },
+    {
+      "title": "Role-Playing Agents Driven by Large Language Models: Current Status, Challenges, and Future Trends",
+      "summary": "In recent years, with the rapid advancement of large language models (LLMs), role-playing language agents (RPLAs) have emerged as a prominent research focus at the intersection of natural language processing (NLP) and human-computer interaction. This paper systematically reviews the current development and key technologies of RPLAs, delineating the technological evolution from early rule-based template paradigms, through the language style imitation stage, to the cognitive simulation stage centered on personality modeling and memory mechanisms. It summarizes the critical technical pathways supporting high-quality role-playing, including psychological scale-driven character modeling, memory-augmented prompting mechanisms, and motivation-situation-based behavioral decision control. At the data level, the paper further analyzes the methods and challenges of constructing role-specific corpora, focusing on data sources, copyright constraints, and structured annotation processes. In terms of evaluation, it collates multi-dimensional assessment frameworks and benchmark datasets covering role knowledge, personality fidelity, value alignment, and interactive hallucination, while commenting on the advantages and disadvantages of methods such as human evaluation, reward models, and LLM-based scoring. Finally, the paper outlines future development directions of role-playing agents, including personality evolution modeling, multi-agent collaborative narrative, multimodal immersive interaction, and integration with cognitive neuroscience, aiming to provide a systematic perspective and methodological insights for subsequent research.",
+      "published": "2026-01-15T07:08:20Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2601.10122v1",
+      "pdf_url": "http://arxiv.org/pdf/2601.10122v1.pdf",
+      "authors": [
+        "Ye Wang",
+        "Jiaxing Chen",
+        "Hongjiang Xiao"
+      ]
+    },
+    {
+      "title": "CHASE: LLM Agents for Dissecting Malicious PyPI Packages",
+      "summary": "Modern software package registries like PyPI have become critical infrastructure for software development, but are increasingly exploited by threat actors distributing malicious packages with sophisticated multi-stage attack chains. While Large Language Models (LLMs) offer promising capabilities for automated code analysis, their application to security-critical malware detection faces fundamental challenges, including hallucination and context confusion, which can lead to missed detections or false alarms. We present CHASE (Collaborative Hierarchical Agents for Security Exploration), a high-reliability multi-agent architecture that addresses these limitations through a Plan-and-Execute coordination model, specialized Worker Agents focused on specific analysis aspects, and integration with deterministic security tools for critical operations. Our key insight is that reliability in LLM-based security analysis emerges not from improving individual model capabilities but from architecting systems that compensate for LLM weaknesses while leveraging their semantic understanding strengths. Evaluation on a dataset of 3,000 packages (500 malicious, 2,500 benign) demonstrates that CHASE achieves 98.4% recall with only 0.08% false positive rate, while maintaining a practical median analysis time of 4.5 minutes per package, making it suitable for operational deployment in automated package screening. Furthermore, we conducted a survey with cybersecurity professionals to evaluate the generated analysis reports, identifying their key strengths and areas for improvement. This work provides a blueprint for building reliable AI-powered security tools that can scale with the growing complexity of modern software supply chains. Our project page is available at https://t0d4.github.io/CHASE-AIware25/",
+      "published": "2026-01-11T10:06:14Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2601.06838v1",
+      "pdf_url": "http://arxiv.org/pdf/2601.06838v1.pdf",
+      "authors": [
+        "Takaaki Toda",
+        "Tatsuya Mori"
+      ]
+    },
+    {
+      "title": "Agent-as-a-Judge",
+      "summary": "LLM-as-a-Judge has revolutionized AI evaluation by leveraging large language models for scalable assessments. However, as evaluands become increasingly complex, specialized, and multi-step, the reliability of LLM-as-a-Judge has become constrained by inherent biases, shallow single-pass reasoning, and the inability to verify assessments against real-world observations. This has catalyzed the transition to Agent-as-a-Judge, where agentic judges employ planning, tool-augmented verification, multi-agent collaboration, and persistent memory to enable more robust, verifiable, and nuanced evaluations. Despite the rapid proliferation of agentic evaluation systems, the field lacks a unified framework to navigate this shifting landscape. To bridge this gap, we present the first comprehensive survey tracing this evolution. Specifically, we identify key dimensions that characterize this paradigm shift and establish a developmental taxonomy. We organize core methodologies and survey applications across general and professional domains. Furthermore, we analyze frontier challenges and identify promising research directions, ultimately providing a clear roadmap for the next generation of agentic evaluation.",
+      "published": "2026-01-08T16:58:10Z",
+      "year": "2026",
+      "abs_url": "http://arxiv.org/abs/2601.05111v1",
+      "pdf_url": "http://arxiv.org/pdf/2601.05111v1.pdf",
+      "authors": [
+        "Runyang You",
+        "Hongru Cai",
+        "Caiqi Zhang",
+        "Qiancheng Xu",
+        "Meng Liu",
+        "Tiezheng Yu",
+        "Yongqi Li",
+        "Wenjie Li"
+      ]
+    }
+  ]
+}
