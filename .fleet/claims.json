@@ -1914,7 +1914,8 @@
       "session_id": "智乃-10-1774462090-e5577c",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774462090.3375986,
-      "active": true
+      "active": false,
+      "released_at": 1774462668.5637653
     },
     "claim-70c5c529c311": {
       "task_id": "36bb4b93b9bfab7a",
