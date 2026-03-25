@@ -577,7 +577,8 @@
       "session_id": "果穗-07-1774446525-397d21",
       "project": "multi-agent-survey",
       "claimed_at": 1774446525.7628646,
-      "active": true
+      "active": false,
+      "released_at": 1774446767.7310154
     },
     "claim-c4125f9b55c5": {
       "task_id": "a3aecc56640eb26b",
@@ -585,7 +586,8 @@
       "session_id": "灯里-08-1774446585-6c2668",
       "project": "multi-agent-survey",
       "claimed_at": 1774446585.8432775,
-      "active": true
+      "active": false,
+      "released_at": 1774446772.9165351
     },
     "claim-6c0895be72a5": {
       "task_id": "3edbfc91e7efebbe",
