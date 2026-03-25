@@ -72,8 +72,9 @@
   Completed: 2026-03-25T22:25:38+08:00
   Evidence: `projects/multi-agent-survey/analysis/2026-03-25-future-research-directions.md`; `projects/multi-agent-survey/logs/2026-03-25T22:25:38+08:00-fleet-智乃-02-1774448699-17e24d-research-directions-closeout.md`
 
-- [ ] 汇总全部调研结果并形成最终综述报告 [zero-resource]
-  Done when: TBD
+- [x] 汇总全部调研结果并形成最终综述报告 [zero-resource]
+  Completed: 2026-03-25T22:25:42+08:00
+  Evidence: `projects/multi-agent-survey/paper/2026-03-25-kdd-style-multi-agent-survey.tex`; `projects/multi-agent-survey/analysis/2026-03-25-theme-synthesis.md`; `projects/multi-agent-survey/literature/2026-03-25-reference-table-and-download-manifest.md`; `projects/multi-agent-survey/analysis/2026-03-25-future-research-directions.md`; `projects/multi-agent-survey/logs/2026-03-25T22:25:42+08:00-fleet-结衣-03-1774448699-f66c79-final-survey-closeout.md`
 
 - [ ] 调研近三年 ICLR 的 multi-agent 相关论文，筛选并整理每篇论文的 Motivation、创新点、方法论、论文下载链接与简要综述 [zero-resource]
   Done when: TBD
@@ -90,8 +91,9 @@
 - [ ] 基于上述论文综述，提出 5 个最适合继续开展的研究课题/方向，并给出每个方向的详细方法设计 [zero-resource]
   Done when: TBD
 
-- [ ] 汇总全部调研结果，形成最终综述报告 [zero-resource]
-  Done when: TBD
+- [x] 汇总全部调研结果，形成最终综述报告 [zero-resource]
+  Completed: 2026-03-25T22:25:42+08:00
+  Evidence: `projects/multi-agent-survey/paper/2026-03-25-kdd-style-multi-agent-survey.tex`; `projects/multi-agent-survey/analysis/2026-03-25-theme-synthesis.md`; `projects/multi-agent-survey/literature/2026-03-25-reference-table-and-download-manifest.md`; `projects/multi-agent-survey/analysis/2026-03-25-future-research-directions.md`; `projects/multi-agent-survey/logs/2026-03-25T22:25:42+08:00-fleet-结衣-03-1774448699-f66c79-final-survey-closeout.md`
 
 - [ ] 调研近三年 ICLR 的 multi-agent 相关论文，整理每篇论文的 Motivation、创新点、方法论与获取方式 [zero-resource]
   Done when: TBD
@@ -107,4 +109,3 @@
 
 - [ ] 基于全部调研结果撰写综述，并提出 5 个最适合继续做的课题方向及详细方法设计 [zero-resource]
   Done when: TBD
-
