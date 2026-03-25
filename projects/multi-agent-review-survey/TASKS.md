@@ -291,6 +291,9 @@
   Done when: 已存在 blocked 审计工件，明确区分伪阻塞与阶段性真实阻塞，并记录统一打回要求
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-blocked-agent-audit-and-pua-disposition.md`; `projects/multi-agent-review-survey/logs/2026-03-26T03:17:35+08:00-fleet-智乃-10-1774466206-e809ec-final-delivery-closeout.md`
 
+- [ ] 统一最终 10 篇综述的 source of truth：决定沿用当前 canonical reading set，或将更严格的 high-quality Top 10 联动同步到 metadata / 精读笔记 / 中文主报告。
+  Done when: README / TASKS / `ten-paper-metadata.md` / `ten_multi_agent_surveys_cn.md` 对最终 10 篇清单保持单一口径，不再并存双轨 Top 10
+
 - [x] 将最终交付物落盘到项目目录中的 Markdown 文件，并给出可直接汇报给小侑的完成版摘要。
   Completed: 2026-03-26T03:17:35+08:00
   Done when: 最终主文档已落盘为 `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md`，且文内包含 `## 9. 可直接汇报给小侑的完成版摘要`
