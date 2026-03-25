@@ -569,14 +569,17 @@ class AgentLoop:
                 self._ensure_project_tasks(project, tasks, args.get("reason", ""))
 
             existing = get_fleet_scheduler()
-            if existing and existing._running:
+            if existing and existing._running and not existing._draining:
                 if project:
                     existing.add_project_filter(project)
                     pf = existing.config.project_filter
                     return f"Multi-Agent 系统运行中，已加入项目: {', '.join(sorted(pf))}"
-                active = existing.metrics.get_active_count()
-                done = existing.metrics._total_completed
-                return f"Multi-Agent 系统已在运行 (工作中: {active}, 已完成: {done})"
+                snap = existing.metrics.get_snapshot()
+                return (
+                    f"Multi-Agent 系统已在运行 "
+                    f"({snap.active_workers}/{snap.max_workers} 活跃, "
+                    f"已完成: {snap.total_completed})"
+                )
 
             fleet_config = FleetConfig.from_env()
             max_workers = args.get("max_workers")
@@ -600,11 +603,31 @@ class AgentLoop:
 
         if skill_name == "multiagent_status":
             scheduler = get_fleet_scheduler()
-            if not scheduler or not scheduler._running:
+            if not scheduler or not scheduler._running or scheduler._draining:
                 return "Multi-Agent 系统目前没有运行"
+            snap = scheduler.metrics.get_snapshot()
+            active = snap.active_workers
+            launched = snap.total_launched
+            completed = snap.total_completed
+            ok = snap.total_ok
+            failed = snap.total_failed
+            lines = [
+                f"Fleet 状态: {active}/{snap.max_workers} 个 Agent 活跃",
+                f"已启动: {launched}, 已完成: {completed} (成功{ok}, 失败{failed})",
+            ]
+            if snap.active_list:
+                lines.append("\n当前工作中:")
+                for w in snap.active_list:
+                    idle_tag = " [探索]" if w["is_idle"] else ""
+                    lines.append(
+                        f"  {w['worker_id']}: {w['project']}/{w['task_id']} "
+                        f"({w['elapsed_seconds']:.0f}s){idle_tag}"
+                    )
+            if not snap.active_list and completed > 0:
+                lines.append("所有任务已完成。")
             if scheduler._dashboard:
-                return scheduler._dashboard.render_snapshot()
-            return _fleet_status()
+                lines.append(f"\n--- Dashboard ---\n{scheduler._dashboard.render_snapshot()}")
+            return "\n".join(lines)
 
         if skill_name == "multiagent_stop":
             scheduler = get_fleet_scheduler()
