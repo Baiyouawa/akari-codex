@@ -216,11 +216,15 @@
   Done when: `projects/multi-agent-review-survey/analysis/2026-03-26-final-selected-10-and-exclusion-list.md` 给出最终入选 10 篇与剔除 9 篇，逐篇包含来源链接、PDF 链接、年份、survey 证据句与入选/剔除理由
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-final-selected-10-and-exclusion-list.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-candidate-survey-judgment-and-top10.md`
 
-- [ ] 若再次报 blocked，必须写明至少3种已尝试方法及各自结果；未使用 web_search/web_fetch 不得报 blocked
-  Done when: TBD
+- [x] 若再次报 blocked，必须写明至少3种已尝试方法及各自结果；未使用 web_search/web_fetch 不得报 blocked
+  Completed: 2026-03-26T02:44:53+08:00
+  Done when: 项目内已有 blocked 审计规则与复核记录，且最新复核结果确认未出现未用 web_search/web_fetch 即报 blocked 的新结果
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-blocked-agent-audit-and-pua-disposition.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-shamixiang-01-result-recheck.md`
 
-- [ ] 安排另一名 Agent 复核沙弥香-01 的新结果，检查是否存在把普通论文误当综述、把旧论文误当最新、或证据链不完整的问题
-  Done when: TBD
+- [x] 安排另一名 Agent 复核沙弥香-01 的新结果，检查是否存在把普通论文误当综述、把旧论文误当最新、或证据链不完整的问题
+  Completed: 2026-03-26T02:44:53+08:00
+  Done when: 形成独立复核文档，明确说明是否存在普通论文误判、旧论文误判或证据链缺口
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-shamixiang-01-result-recheck.md`
 
 - [ ] 盘点 projects/multi-agent-review-survey/literature/ 现有 PDF，核对哪些是真正的 multi-agent 综述/survey、哪些重复或不合格，形成缺口清单
   Done when: TBD
