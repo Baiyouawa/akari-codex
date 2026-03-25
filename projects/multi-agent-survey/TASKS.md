@@ -68,8 +68,9 @@
 - [ ] 调研最近三个月 OpenReview 上 ICML 2026 的 multi-agent 相关论文，逐篇整理 Motivation、创新点、方法论，并收集论文下载链接 [zero-resource]
   Done when: TBD
 
-- [ ] 基于上述论文提出 5 个最适合继续开展的研究课题/方向，并为每个方向给出详细方法设计 [zero-resource]
-  Done when: TBD
+- [x] 基于上述论文提出 5 个最适合继续开展的研究课题/方向，并为每个方向给出详细方法设计 [zero-resource]
+  Completed: 2026-03-25T22:25:38+08:00
+  Evidence: `projects/multi-agent-survey/analysis/2026-03-25-future-research-directions.md`; `projects/multi-agent-survey/logs/2026-03-25T22:25:38+08:00-fleet-智乃-02-1774448699-17e24d-research-directions-closeout.md`
 
 - [ ] 汇总全部调研结果并形成最终综述报告 [zero-resource]
   Done when: TBD
@@ -91,3 +92,19 @@
 
 - [ ] 汇总全部调研结果，形成最终综述报告 [zero-resource]
   Done when: TBD
+
+- [ ] 调研近三年 ICLR 的 multi-agent 相关论文，整理每篇论文的 Motivation、创新点、方法论与获取方式 [zero-resource]
+  Done when: TBD
+
+- [ ] 调研近三年 ICML 的 multi-agent 相关论文，整理每篇论文的 Motivation、创新点、方法论与获取方式 [zero-resource]
+  Done when: TBD
+
+- [ ] 调研近三年 NeurIPS 的 multi-agent 相关论文，整理每篇论文的 Motivation、创新点、方法论与获取方式 [zero-resource]
+  Done when: TBD
+
+- [ ] 调研近三个月 OpenReview 上 ICML 2026 的 multi-agent 相关论文，整理每篇论文的 Motivation、创新点、方法论与获取方式 [zero-resource]
+  Done when: TBD
+
+- [ ] 基于全部调研结果撰写综述，并提出 5 个最适合继续做的课题方向及详细方法设计 [zero-resource]
+  Done when: TBD
+
