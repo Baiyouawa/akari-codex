@@ -225,3 +225,12 @@ Notes: <any modifications or context>
 **Description:** Need allowlisted shell access for local git add/commit to finish required session closeout for project-local files only. Current attempts to commit with message including [fleet/日向-11-1774465125-2107d6] were blocked because `git commit`/`git add` are not on the shell allowlist, even though AGENTS.md requires sessions to end with a git commit. Modified files are limited to `projects/multi-agent-review-survey/README.md`, `projects/multi-agent-review-survey/TASKS.md`, and one new project log file.
 **Status:** pending
 
+
+---
+
+### [BLOCKING] tool-access
+
+**Requested:** 2026-03-25T19:23:32.519166+00:00
+**Description:** Need approval or expanded allowlist to run `git commit` for completed task. I updated project files and session log, but current shell allowlist blocks `git add`/`git commit`, so I cannot satisfy the required commit step for session 侑-00-1774466296-d4f058 without tool-access approval.
+**Status:** pending
+
