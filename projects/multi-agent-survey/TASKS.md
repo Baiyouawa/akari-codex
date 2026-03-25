@@ -103,8 +103,9 @@
   Completed: 2026-03-25T22:25:42+08:00
   Evidence: `projects/multi-agent-survey/paper/2026-03-25-kdd-style-multi-agent-survey.tex`; `projects/multi-agent-survey/analysis/2026-03-25-theme-synthesis.md`; `projects/multi-agent-survey/literature/2026-03-25-reference-table-and-download-manifest.md`; `projects/multi-agent-survey/analysis/2026-03-25-future-research-directions.md`; `projects/multi-agent-survey/logs/2026-03-25T22:25:42+08:00-fleet-结衣-03-1774448699-f66c79-final-survey-closeout.md`
 
-- [ ] 调研近三年 ICLR 的 multi-agent 相关论文，整理每篇论文的 Motivation、创新点、方法论与获取方式 [zero-resource]
-  Done when: TBD
+- [ ] 调研近三年 ICLR 的 multi-agent 相关论文，整理每篇论文的 Motivation、创新点、方法论与获取方式 [zero-resource] [blocked-by: 当前仓库仅有 ICLR 2025-2026 metadata 与其中 26 篇高相关条目的获取方式，缺少 ICLR 2024 inventory，且无摘要、全文摘录或已验证笔记支撑逐篇 Motivation/创新点/方法论整理；详见 `projects/multi-agent-survey/logs/2026-03-25T22:59:15+08:00-fleet-侑-00-1774450712-d1de8c-iclr-per-paper-methodology-blocked.md`]
+  Done when: 仓库内补齐 ICLR 2024/2025/2026 纳入论文清单，并为每篇提供可追溯摘要、全文摘录或已验证笔记，再据此整理 Motivation、创新点、方法论与获取方式
+  Evidence: `projects/multi-agent-survey/literature/iclr-2025-2026.md`; `projects/multi-agent-survey/literature/2026-03-25-reference-table-and-download-manifest.md`; `projects/multi-agent-survey/logs/2026-03-25T22:59:15+08:00-fleet-侑-00-1774450712-d1de8c-iclr-per-paper-methodology-blocked.md`
 
 - [ ] 调研近三年 ICML 的 multi-agent 相关论文，整理每篇论文的 Motivation、创新点、方法论与获取方式 [zero-resource]
   Done when: TBD
