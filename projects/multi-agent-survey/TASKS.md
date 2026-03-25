@@ -89,8 +89,9 @@
 - [ ] 调研近三年 NeurIPS 的 multi-agent 相关论文，筛选并整理每篇论文的 Motivation、创新点、方法论、论文下载链接与简要综述 [zero-resource]
   Done when: TBD
 
-- [ ] 调研最近三个月 OpenReview 上 ICML 2026 的 multi-agent 相关论文，整理每篇论文的 Motivation、创新点、方法论、论文下载链接与简要综述 [zero-resource]
-  Done when: TBD
+- [ ] 调研最近三个月 OpenReview 上 ICML 2026 的 multi-agent 相关论文，整理每篇论文的 Motivation、创新点、方法论、论文下载链接与简要综述 [zero-resource] [blocked-by: 当前仓库缺少最近三个月 ICML 2026 OpenReview 投稿列表的本地快照/导出，且缺少这些论文的摘要、全文摘录或已验证笔记；详见 `projects/multi-agent-survey/logs/2026-03-25T22:38:17+08:00-fleet-日向-03-1774449450-aea253-icml-2026-openreview-per-paper-review-blocked.md`]
+  Done when: 仓库内补齐最近三个月 ICML 2026 OpenReview multi-agent 投稿清单，并为每篇提供可追溯摘要、全文摘录或已验证笔记，再据此整理每篇论文的 Motivation、创新点、方法论、论文下载链接与简要综述
+  Evidence: `projects/multi-agent-survey/logs/2026-03-25T22:38:17+08:00-fleet-日向-03-1774449450-aea253-icml-2026-openreview-per-paper-review-blocked.md`
 
 - [ ] 基于上述论文综述，提出 5 个最适合继续开展的研究课题/方向，并给出每个方向的详细方法设计 [zero-resource]
   Done when: TBD
