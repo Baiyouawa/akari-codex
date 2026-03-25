@@ -923,7 +923,8 @@
       "session_id": "花阳-06-1774449810-e08dbd",
       "project": "multi-agent-survey",
       "claimed_at": 1774449810.9153535,
-      "active": true
+      "active": false,
+      "released_at": 1774450184.2357843
     },
     "claim-591580b6aed3": {
       "task_id": "d2b1001370c609a5",
