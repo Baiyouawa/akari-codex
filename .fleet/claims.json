@@ -1887,7 +1887,8 @@
       "session_id": "果穗-07-1774461729-fd8737",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774461729.7676535,
-      "active": true
+      "active": false,
+      "released_at": 1774462058.048316
     },
     "claim-bfbaee77c146": {
       "task_id": "f3f9e077b1f180cc",
