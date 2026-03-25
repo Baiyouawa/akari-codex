@@ -216,3 +216,12 @@ Notes: <any modifications or context>
 **Description:** `git add` for required session commit is being falsely blocked by the shell denylist (`dd ` substring match). Need approval or allowlist correction so this session can stage and commit the audited files required by protocol. Intended commit message: `[fleet/文乃-04-1774462781-971acb] audit blocked agents for pseudo-blocking`.
 **Status:** pending
 
+
+---
+
+### [BLOCKING] tool-access
+
+**Requested:** 2026-03-25T19:08:44.127736+00:00
+**Description:** Need allowlisted shell access for local git add/commit to finish required session closeout for project-local files only. Current attempts to commit with message including [fleet/日向-11-1774465125-2107d6] were blocked because `git commit`/`git add` are not on the shell allowlist, even though AGENTS.md requires sessions to end with a git commit. Modified files are limited to `projects/multi-agent-review-survey/README.md`, `projects/multi-agent-review-survey/TASKS.md`, and one new project log file.
+**Status:** pending
+
