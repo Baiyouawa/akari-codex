@@ -54,8 +54,10 @@
 - [ ] 对已下载论文进行交叉复核：检查题目、年份、survey属性、PDF可读性与文件是否落盘完整
   Done when: TBD
 
-- [ ] 汇总10篇论文的基础信息，准备后续中文解读整理
-  Done when: TBD
+- [x] 汇总10篇论文的基础信息，准备后续中文解读整理
+  Completed: 2026-03-26T01:11:19+08:00
+  Done when: `projects/multi-agent-review-survey/analysis/2026-03-26-basic-info-for-10-papers.md` 完成 10 篇 canonical reading set 的基础信息汇总
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-basic-info-for-10-papers.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-literature-pdf-verification.md`
 
 - [ ] 使用 web_search/web_fetch 检索 2024-2026 年 multi-agent systems / LLM agents / cooperative agents 相关综述或 survey，整理不少于 15 篇候选，附标题、年份、来源 URL
   Done when: TBD
