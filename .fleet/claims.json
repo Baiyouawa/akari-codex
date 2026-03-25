@@ -1129,7 +1129,8 @@
       "session_id": "柑奈-02-1774451763-af745a",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774451763.6695294,
-      "active": true
+      "active": false,
+      "released_at": 1774451944.2411318
     },
     "claim-6954d6eb8d25": {
       "task_id": "2b8368859bf73f67",
@@ -1137,7 +1138,8 @@
       "session_id": "日向-03-1774451763-82a7be",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774451763.672153,
-      "active": true
+      "active": false,
+      "released_at": 1774451941.8590536
     },
     "claim-93cb4025e46c": {
       "task_id": "d705e91d3977901d",
@@ -1145,7 +1147,8 @@
       "session_id": "文乃-04-1774451763-e37b1e",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774451763.6780858,
-      "active": true
+      "active": false,
+      "released_at": 1774451947.7982972
     },
     "claim-635969436b5f": {
       "task_id": "af48d38c7c75c18b",
