@@ -1689,7 +1689,8 @@
       "session_id": "沙弥香-09-1774459295-5067c4",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774459295.7297246,
-      "active": true
+      "active": false,
+      "released_at": 1774460121.5460875
     },
     "claim-83ecdcf422f4": {
       "task_id": "4a7ebfefa0a5c997",
