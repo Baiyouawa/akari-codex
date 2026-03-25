@@ -257,31 +257,41 @@
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-detailed-ideas.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-idea-dedup-and-priority.md`; `projects/multi-agent-review-survey/logs/2026-03-26T03:06:55+08:00-fleet-日向-03-1774465575-348aea-idea-assignment-closeout.md`
 
 - [x] 盘点并确认项目中目标 10 篇 multi-agent 相关综述论文的最终清单，补齐题目、年份、链接与引用信息，若缺失则联网检索验证。
-  Completed: 2026-03-26T03:14:18+08:00
-  Done when: canonical 10 篇最终清单已在项目文档中补齐题目、年份、来源链接、PDF 链接与引用入口，并经本地 PDF 存在性/页数复核
-  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-final-top10-list-with-cn-abstract-entry.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-final-selected-10-and-exclusion-list.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/logs/2026-03-26T03:14:18+08:00-fleet-侑-08-1774465996-f31c04-final-top10-list-closeout.md`
+  Completed: 2026-03-26T03:08:56+08:00
+  Done when: canonical 10 篇的题目、年份、来源链接、PDF 文件名/路径与入选理由已在项目文档中统一收口，且 10/10 PDF 经本地 `python3 + pypdf.PdfReader` 复核存在、字节数大于 0、页数大于 0。
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-final-top10-list-with-cn-abstract-entry.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-final-selected-10-and-exclusion-list.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/logs/2026-03-26T03:08:56+08:00-fleet-枫-05-1774465696-18492c-final-top10-list-reconciliation.md`
 
-- [ ] 对这 10 篇综述逐篇精读，提炼中文总结：研究问题、分类框架、核心观点、代表方法、数据集/benchmark、优缺点、局限与启发。
-  Done when: TBD
+- [x] 对这 10 篇综述逐篇精读，提炼中文总结：研究问题、分类框架、核心观点、代表方法、数据集/benchmark、优缺点、局限与启发。
+  Completed: 2026-03-26T03:14:26+08:00
+  Done when: canonical 10 篇均已有逐篇中文精读与后续 Markdown 复用版结构化笔记，覆盖研究问题、分类框架、核心观点/代表方法、数据集/benchmark、优缺点、局限与启发等字段。
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-confirmed-ten-survey-structured-notes-for-cn-markdown.md`; `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md`; `projects/multi-agent-review-survey/logs/2026-03-26T03:14:26+08:00-fleet-沙弥香-09-1774466026-002d07-structured-reading-closeout.md`
 
 - [x] 交叉比对 10 篇综述之间的重合点与差异点，整理统一的 multi-agent survey 总体脉络，包括任务分类、协作机制、通信方式、评测维度与应用方向。
   Completed: 2026-03-26T03:12:14+08:00
   Done when: `projects/multi-agent-review-survey/analysis/2026-03-26-unified-multi-agent-survey-framework.md` 显式覆盖任务分类、协作机制、通信方式、评测维度、应用方向，并给出统一总体脉络
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-unified-multi-agent-survey-framework.md`; `projects/multi-agent-review-survey/logs/2026-03-26T03:12:14+08:00-fleet-绫-07-1774465906-581fd3-unified-survey-framework.md`
 
-- [ ] 产出最终中文 Markdown 文档，内容包含：10 篇综述精读、横向对比表、统一知识框架、关键结论。
-  Done when: TBD
+- [x] 产出最终中文 Markdown 文档，内容包含：10 篇综述精读、横向对比表、统一知识框架、关键结论。
+  Completed: 2026-03-26T03:17:35+08:00
+  Done when: `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md` 在单文件中显式包含 `## 2. 十篇逐篇精读卡片`、`## 3. 横向对比表`、`## 6. 统一知识框架`、`## 8. 关键结论`
+  Evidence: `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-unified-multi-agent-survey-framework.md`; `projects/multi-agent-review-survey/logs/2026-03-26T03:17:35+08:00-fleet-智乃-10-1774466206-e809ec-final-delivery-closeout.md`
 
 - [x] 在综述总结之外，额外提出 10 个后续可做的详细 research ideas，每个 idea 说明动机、切入点、可能方法、预期贡献与风险。
   Completed: 2026-03-26T03:06:55+08:00
   Done when: 项目内已存在 10 个 ideas 的主文档、去重排序文档与本次 closeout，对每个 idea 的动机、切入点、可能方法、预期贡献与风险均可追溯
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-detailed-ideas.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-idea-dedup-and-priority.md`; `projects/multi-agent-review-survey/logs/2026-03-26T03:06:55+08:00-fleet-日向-03-1774465575-348aea-idea-assignment-closeout.md`
 
-- [ ] 对所有引用与事实进行复核，检查证据链、链接可追溯性和表述准确性，不足处重新检索补证。
-  Done when: TBD
+- [x] 对所有引用与事实进行复核，检查证据链、链接可追溯性和表述准确性，不足处重新检索补证。
+  Completed: 2026-03-26T03:17:35+08:00
+  Done when: 最终主文档已通过至少两份独立复核工件，且关键事实、PDF 对应关系与年份口径已对齐
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-final-markdown-review.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-final-markdown-cross-review.md`; `projects/multi-agent-review-survey/logs/2026-03-26T03:17:35+08:00-fleet-智乃-10-1774466206-e809ec-final-delivery-closeout.md`
 
-- [ ] 检查现有 Agent 历史产出，若有 blocked 或质量不足，按要求重派并穷尽搜索，不允许未检索就放弃。
-  Done when: TBD
+- [x] 检查现有 Agent 历史产出，若有 blocked 或质量不足，按要求重派并穷尽搜索，不允许未检索就放弃。
+  Completed: 2026-03-26T03:17:35+08:00
+  Done when: 已存在 blocked 审计工件，明确区分伪阻塞与阶段性真实阻塞，并记录统一打回要求
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-blocked-agent-audit-and-pua-disposition.md`; `projects/multi-agent-review-survey/logs/2026-03-26T03:17:35+08:00-fleet-智乃-10-1774466206-e809ec-final-delivery-closeout.md`
 
-- [ ] 将最终交付物落盘到项目目录中的 Markdown 文件，并给出可直接汇报给小侑的完成版摘要。
-  Done when: TBD
+- [x] 将最终交付物落盘到项目目录中的 Markdown 文件，并给出可直接汇报给小侑的完成版摘要。
+  Completed: 2026-03-26T03:17:35+08:00
+  Done when: 最终主文档已落盘为 `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md`，且文内包含 `## 9. 可直接汇报给小侑的完成版摘要`
+  Evidence: `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md`; `projects/multi-agent-review-survey/logs/2026-03-26T03:17:35+08:00-fleet-智乃-10-1774466206-e809ec-final-delivery-closeout.md`

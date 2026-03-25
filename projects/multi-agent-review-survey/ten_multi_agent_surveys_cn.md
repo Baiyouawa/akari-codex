@@ -220,7 +220,57 @@ Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-r
 
 ---
 
-## 6. 给快速浏览者的阅读顺序建议
+## 6. 统一知识框架
+
+基于 `projects/multi-agent-review-survey/analysis/2026-03-26-unified-multi-agent-survey-framework.md`，这 10 篇综述可以统一压缩为一个 **任务—组织—通信—执行—评测/治理** 五层框架：
+
+1. **任务层**：multi-agent 被用于什么问题，包括认知求解、社会模拟、垂直场景、系统执行。
+2. **组织层**：多个 agent 如何分工，包括角色设定、合作/竞争关系、拓扑结构、职责分配与纠错机制。
+3. **通信层**：谁在何时以何种方式交换什么信息，可统一到 `Who / Whom / When / What / Why` 五个问题。
+4. **执行层**：memory、planning、tool-use、workflow graph 如何支撑长期运行。
+5. **评测与治理层**：除了任务正确率，还要一起看协作效率、通信质量、执行质量、成本、安全与可治理性。
+
+### 6.1 统一任务分类
+- **认知求解类**：问答、代码、复杂推理。代表综述：Guo 2024、Chen 2024。
+- **社会模拟类**：角色扮演、长期互动、world simulation。代表综述：Guo 2024、Wang 2026。
+- **垂直场景类**：自动驾驶等高风险真实系统。代表综述：Wu 2025。
+- **系统执行类**：tool-use、workflow 优化、runtime graph。代表综述：Xu 2026、Yue 2026。
+
+### 6.2 统一协作机制
+可统一拆成五个问题：
+- **谁参与协作**：固定角色、动态角色、社会角色；
+- **关系是什么**：合作、竞争、竞合、人机协同；
+- **拓扑如何组织**：点对点、中心化、分布式、图结构；
+- **职责如何分配**：静态分工、计划驱动分工、运行时重分配；
+- **怎样纠错收敛**：讨论、投票、verifier、重规划、工具检查。
+
+### 6.3 统一通信框架
+综合 Yan 2025、Chen 2026、Tran 2025、Wu 2025，可以把通信统一为：
+- **Who**：哪些 agent / 人 / 外部系统在说话；
+- **Whom**：通信对象是谁；
+- **When**：固定轮次、事件触发、预算触发还是风险触发；
+- **What**：自然语言、计划、状态、工具结果、压缩摘要、结构化信号；
+- **Why**：信息共享、协调、纠错、任务分解、风险规避。
+
+### 6.4 统一评测维度
+把 10 篇综述合并后，最稳的评价框架是六类：
+1. 任务结果；
+2. 协作效率；
+3. 通信质量；
+4. 执行质量；
+5. 成本与治理；
+6. 场景特定质量（如自动驾驶安全、角色一致性）。
+
+### 6.5 统一应用方向
+统一后可归纳为四条主线：
+- **任务求解主线**
+- **社会模拟主线**
+- **真实产业主线**
+- **平台基础设施主线**
+
+Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-unified-multi-agent-survey-framework.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-synthesis-report.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`
+
+## 7. 给快速浏览者的阅读顺序建议
 
 ### 如果你只有 30 分钟
 1. 先读 Guo 2024，建立总地图；
@@ -240,7 +290,7 @@ Provenance: 阅读顺序综合自 `projects/multi-agent-review-survey/analysis/2
 
 ---
 
-## 7. 最终 takeaway
+## 8. 关键结论
 
 如果把这 10 篇综述压缩成 6 句话，可以记住：
 
@@ -253,7 +303,16 @@ Provenance: 阅读顺序综合自 `projects/multi-agent-review-survey/analysis/2
 
 ---
 
-## 8. 证据链
+## 9. 可直接汇报给小侑的完成版摘要
+
+- **已确认并精读 10 篇 canonical multi-agent 相关综述**，对应 PDF 已全部落盘到 `projects/multi-agent-review-survey/literature/`，且已有多轮 `pypdf` 可读性核验。
+- **中文主报告已完成**：当前文件 `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md` 已覆盖执行摘要、10 篇逐篇精读卡片、横向对比表、统一知识框架、关键结论。
+- **统一知识框架已完成**：详见本文第 6 节，以及 `projects/multi-agent-review-survey/analysis/2026-03-26-unified-multi-agent-survey-framework.md`。
+- **10 个 detailed research ideas 已完成**：详见 `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-detailed-ideas.md` 与 `projects/multi-agent-review-survey/analysis/2026-03-26-ten-idea-dedup-and-priority.md`。
+- **事实复核已完成**：主文档已通过 `projects/multi-agent-review-survey/analysis/2026-03-26-final-markdown-review.md` 与 `projects/multi-agent-review-survey/analysis/2026-03-26-final-markdown-cross-review.md` 双重复核；后者还修正了 Chen 2412.17481 的年份口径，使年份分布对齐为 `2024 年 2 篇、2025 年 4 篇、2026 年 4 篇`。
+- **建议对外汇报的一句话**：这 10 篇综述共同说明，multi-agent 研究已从“多个 LLM 一起回答问题”进入“协作结构、通信协议、工具编排、workflow 优化与治理约束的系统工程阶段”。
+
+## 10. 证据链
 
 - canonical 10 篇题目、作者、年份、来源页、PDF 路径、页数：  
   `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`
