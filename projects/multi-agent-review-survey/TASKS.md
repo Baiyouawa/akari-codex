@@ -262,8 +262,10 @@
 - [ ] 对这 10 篇综述逐篇精读，提炼中文总结：研究问题、分类框架、核心观点、代表方法、数据集/benchmark、优缺点、局限与启发。
   Done when: TBD
 
-- [ ] 交叉比对 10 篇综述之间的重合点与差异点，整理统一的 multi-agent survey 总体脉络，包括任务分类、协作机制、通信方式、评测维度与应用方向。
-  Done when: TBD
+- [x] 交叉比对 10 篇综述之间的重合点与差异点，整理统一的 multi-agent survey 总体脉络，包括任务分类、协作机制、通信方式、评测维度与应用方向。
+  Completed: 2026-03-26T03:12:14+08:00
+  Done when: `projects/multi-agent-review-survey/analysis/2026-03-26-unified-multi-agent-survey-framework.md` 显式覆盖任务分类、协作机制、通信方式、评测维度、应用方向，并给出统一总体脉络
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-unified-multi-agent-survey-framework.md`; `projects/multi-agent-review-survey/logs/2026-03-26T03:12:14+08:00-fleet-绫-07-1774465906-581fd3-unified-survey-framework.md`
 
 - [ ] 产出最终中文 Markdown 文档，内容包含：10 篇综述精读、横向对比表、统一知识框架、关键结论。
   Done when: TBD
