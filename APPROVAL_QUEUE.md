@@ -189,3 +189,12 @@ Notes: <any modifications or context>
 **Description:** Need permission or tool support to run git add/git commit for project-scoped files after completing task `projects/multi-agent-survey/TASKS.md` item "基于全部调研结果撰写综述，并提出 5 个最适合继续做的课题方向及详细方法设计". Current shell allowlist permits `git status/log/diff/branch` but blocks staging/commit, so the completed task state and session log cannot be persisted as a commit with required message `[fleet/花阳-06-1774452064-c766e9] ...`.
 **Status:** pending
 
+
+---
+
+### [BLOCKING] tool-access
+
+**Requested:** 2026-03-25T16:43:39.788329+00:00
+**Description:** Need temporary shell allowlist access for `git add`/`git commit` to complete required session protocol and persist completed task state for project `multi-agent-review-survey`. Work is already written to repo files; only commit is blocked by current shell allowlist.
+**Status:** pending
+

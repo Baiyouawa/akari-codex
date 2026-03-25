@@ -8,20 +8,26 @@
   Done when: literature/ 中有 10 个可打开的 PDF 文件，命名规范
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-pdf-links-and-download-record.md`
 
-- [ ] 验证 literature 文件夹中的 10 个 PDF 是否可正常打开、文件不为空、命名无冲突
+- [x] 验证 literature 文件夹中的 10 个 PDF 是否可正常打开、文件不为空、命名无冲突
+  Completed: 2026-03-26T00:19:05+08:00
   Done when: 每个文件验证通过并记录验证结果
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-literature-pdf-verification.md`; `projects/multi-agent-review-survey/logs/2026-03-26T00:19:05+08:00-fleet-沙弥香-01-1774455505-5782fc-literature-pdf-verification.md`
 
 - [ ] 记录每篇论文的元数据（题目、作者、年份、来源、PDF 路径）并汇总到项目文档中
   Done when: 元数据清单完整且与实际文件一致
 
-- [ ] 对全部 10 篇综述逐篇精读，提取研究问题、分类框架、核心方法、数据集/基准、优缺点与未来方向
+- [x] 对全部 10 篇综述逐篇精读，提取研究问题、分类框架、核心方法、数据集/基准、优缺点与未来方向
+  Completed: 2026-03-26T00:16:17+08:00
   Done when: 10 篇结构化中文笔记完成
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`; `projects/multi-agent-review-survey/logs/2026-03-26T00:16:17+08:00-fleet-结衣-03-1774454544-65f537-ten-survey-deep-reading.md`
 
 - [ ] 综合 10 篇综述撰写中文 Markdown 报告，包含横向比较与研究空白总结
   Done when: 报告文件完成，包含逐篇详述和横向分析
 
-- [ ] 基于 10 篇综述提出 5 个可做的研究 idea，每个 idea 包含问题动机、核心假设、方法设计、评测方案
+- [x] 基于 10 篇综述提出 5 个可做的研究 idea，每个 idea 包含问题动机、核心假设、方法设计、评测方案
+  Completed: 2026-03-26T00:16:17+08:00
   Done when: 5 个结构完整的 research idea 文档
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-research-ideas.md`; `projects/multi-agent-review-survey/logs/2026-03-26T00:16:17+08:00-fleet-结衣-03-1774454544-65f537-ten-survey-deep-reading.md`
 
 - [ ] 对已下载论文进行交叉 review：至少一名 Agent 初审，另一名 Agent 复核质量
   Done when: review 记录完成，质量问题已修正
@@ -77,8 +83,10 @@
 - [ ] 核查 projects/multi-agent-review-survey/literature/ 中现有 PDF，补齐到 10 篇“最新且明确属于 multi-agent 综述/survey”的论文，并记录每篇的题目、年份、链接、是否正式综述、PDF 路径
   Done when: TBD
 
-- [ ] 对 10 篇综述逐篇精读，抽取统一结构信息：研究问题、分类框架、核心观点、方法谱系、数据集/benchmark、评测维度、主要结论、局限性、未来方向
-  Done when: TBD
+- [x] 对 10 篇综述逐篇精读，抽取统一结构信息：研究问题、分类框架、核心观点、方法谱系、数据集/benchmark、评测维度、主要结论、局限性、未来方向
+  Completed: 2026-03-26T00:16:17+08:00
+  Done when: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md` 完成 10 篇统一模板笔记
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`; `projects/multi-agent-review-survey/logs/2026-03-26T00:16:17+08:00-fleet-结衣-03-1774454544-65f537-ten-survey-deep-reading.md`
 
 - [ ] 对每篇论文做证据链核验：至少核对摘要、引言、结论与 survey/review 定位表述，避免把普通论文误判为综述；如遇边界论文，写明保留或剔除理由
   Done when: TBD
@@ -138,4 +146,22 @@
   Done when: TBD
 
 - [ ] 安排另一名 Agent 复核沙弥香-01 的新结果，检查是否存在把普通论文误当综述、把旧论文误当最新、或证据链不完整的问题
+  Done when: TBD
+
+- [ ] 盘点 projects/multi-agent-review-survey/literature/ 现有 PDF，核对哪些是真正的 multi-agent 综述/survey、哪些重复或不合格，形成缺口清单
+  Done when: TBD
+
+- [ ] 从互联网系统检索 2023-2026 年优先的 multi-agent 相关正式综述/survey 论文，候选需包含题目、年份、来源、是否 survey/review 的证据
+  Done when: TBD
+
+- [ ] 对候选综述做交叉 review，剔除伪综述、教程、观点文、单篇方法总结和重复主题，最终确定 10 篇高质量综述清单
+  Done when: TBD
+
+- [ ] 下载最终确认的综述 PDF 到 projects/multi-agent-review-survey/literature/，保证文件可打开、命名规范且总数达到 10 篇
+  Done when: TBD
+
+- [ ] 为每篇已确认综述提取摘要、研究问题、分类框架、核心结论、局限性和可延展方向，整理成后续中文 Markdown 精读的结构化笔记
+  Done when: TBD
+
+- [ ] 基于这 10 篇综述归纳 10 个后续可开展的详细 research/execution ideas，记录每个 idea 的动机、切入点、预期产出和依赖条件
   Done when: TBD
