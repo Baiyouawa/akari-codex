@@ -8,6 +8,7 @@
 - [ ] Write first decision record for the Codex migration [zero-resource] [skill: record]
   Done when: decisions/ contains the new ADR
 
+
 ## Completed
 
 - [x] Repository health check — verify structure, read key files, write session log [zero-resource] [skill: orient]

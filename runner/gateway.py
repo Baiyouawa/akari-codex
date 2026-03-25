@@ -26,8 +26,10 @@ MAX_RESULT_LENGTH = 4000
 SENSITIVE_PATTERNS = [
     re.compile(r"(sk-[a-zA-Z0-9]{8,})"),
     re.compile(r"(OPENAI_API_KEY\s*=\s*\S+)"),
-    re.compile(r"(/home/[^\s]+)"),
 ]
+
+_HOME_PATH_RE = re.compile(r"(/home/[^\s]+)")
+_MEDIA_TAG_RE = re.compile(r"\[(IMG|FILE|VOICE|FACE):[^\]]*\]")
 
 ALLOWED_USERS_ENV = "AKARI_ALLOWED_USERS"
 
@@ -35,9 +37,24 @@ BLOCKED_ACTIONS = frozenset()
 
 
 def _sanitize_output(text: str) -> str:
-    """Strip sensitive information from output before sending externally."""
+    """Strip sensitive information from output before sending externally.
+
+    Preserves media tags like [IMG:/path], [FILE:/path] etc.
+    """
     for pat in SENSITIVE_PATTERNS:
         text = pat.sub("[REDACTED]", text)
+
+    media_tag_spans = set()
+    for m in _MEDIA_TAG_RE.finditer(text):
+        for i in range(m.start(), m.end()):
+            media_tag_spans.add(i)
+
+    def _redact_home_path(m: re.Match) -> str:
+        if m.start() in media_tag_spans:
+            return m.group()
+        return "[REDACTED]"
+
+    text = _HOME_PATH_RE.sub(_redact_home_path, text)
     return text
 
 

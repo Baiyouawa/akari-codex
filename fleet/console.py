@@ -35,7 +35,7 @@ def _print_banner() -> None:
     w = _term_width()
     print()
     print(f"{'═' * w}")
-    print("  🚢 小白舰队控制台 — 多Agent并行系统")
+    print("  🚢 小白 Multi-Agent 控制台 — 多Agent并行系统")
     print(f"  小白和伙伴们随时待命！直接说话就好~")
     print(f"{'═' * w}")
 
@@ -71,9 +71,9 @@ def _print_help() -> None:
     print(textwrap.dedent("""\
       🎮 命令指南:
 
-      🚀 舰队控制:
-        start [N] [项目名]  启动舰队 (例: start 4 moe — 仅跑 moe 项目)
-        stop               优雅停止舰队
+      🚀 Multi-Agent 控制:
+        start [N] [项目名]  启动 Multi-Agent (例: start 4 moe — 仅跑 moe 项目)
+        stop               优雅停止 Multi-Agent
         status / s         查看当前运行状态
         report / r         查看交付报告（含文件路径）
         scale N            调整 worker 上限
@@ -109,7 +109,7 @@ def _handle_command(
     if verb in ("exit", "quit", "退出", "q"):
         scheduler = get_fleet_scheduler()
         if scheduler and scheduler._running:
-            print("  ⏳ 正在停止舰队...")
+            print("  ⏳ 正在停止 Multi-Agent...")
             stop_fleet()
             time.sleep(1)
         print("  👋 再见!")
@@ -139,7 +139,7 @@ def _handle_command(
             else:
                 active = existing.metrics.get_active_count()
                 done = existing.metrics._total_completed
-                print(f"  ⚠️  舰队已在运行 (active: {active}, done: {done})")
+                print(f"  ⚠️  Multi-Agent 已在运行 (active: {active}, done: {done})")
             print(f"  💡 用 scale N 调整数量，或 stop 后重新启动")
             return True
 
@@ -154,7 +154,7 @@ def _handle_command(
             idle_exploration_enabled=not bool(proj_filter),
         )
         scope_msg = f" (仅 {', '.join(sorted(proj_filter))})" if proj_filter else " (所有项目)"
-        print(f"  🚀 启动舰队: {n} workers{scope_msg} — 后台运行中")
+        print(f"  🚀 启动 Multi-Agent: {n} workers{scope_msg} — 后台运行中")
         start_fleet(repo_root=repo_root, fleet_config=new_config, background=True)
         print(f"  💡 输入 status 查看进度，report 查看结果")
         return True
@@ -163,18 +163,18 @@ def _handle_command(
     if verb in ("stop", "停止"):
         scheduler = get_fleet_scheduler()
         if not scheduler or not scheduler._running:
-            print("  ⚠️  舰队未在运行")
+            print("  ⚠️  Multi-Agent 未在运行")
             return True
-        print("  ⏳ 正在停止舰队...")
+        print("  ⏳ 正在停止 Multi-Agent...")
         result = stop_fleet()
         print(f"  ✅ {result}")
         return True
 
     # ── status (on-demand snapshot) ──────────────────────────────
-    if verb in ("status", "s", "状态", "舰队状态"):
+    if verb in ("status", "s", "状态", "Multi-Agent状态"):
         scheduler = get_fleet_scheduler()
         if not scheduler:
-            print("  ⚠️  舰队未运行。输入 start 启动")
+            print("  ⚠️  Multi-Agent 未运行。输入 start 启动")
             return True
         if scheduler._dashboard:
             print(scheduler._dashboard.render_snapshot())
@@ -186,7 +186,7 @@ def _handle_command(
     if verb in ("report", "r", "报告", "交付", "结果"):
         scheduler = get_fleet_scheduler()
         if not scheduler or not scheduler._dashboard:
-            print("  ⚠️  舰队未运行或没有执行记录")
+            print("  ⚠️  Multi-Agent 未运行或没有执行记录")
             return True
         print(scheduler._dashboard.render_report())
         return True
@@ -204,7 +204,7 @@ def _handle_command(
             scheduler.metrics._max_workers = n
             print(f"  ✅ Worker 上限调整为 {n}（下一轮 refill 生效）")
         else:
-            print(f"  ⚠️  舰队未运行。先 start {n} 启动")
+            print(f"  ⚠️  Multi-Agent 未运行。先 start {n} 启动")
         return True
 
     # ── tasks ────────────────────────────────────────────────────
@@ -266,9 +266,9 @@ def _handle_command(
         print(f"  ✅ 任务已添加到 projects/{project}/TASKS.md")
         scheduler = get_fleet_scheduler()
         if scheduler and scheduler._running:
-            print("     舰队下一轮 refill 会自动认领")
+            print("     Multi-Agent 下一轮 refill 会自动认领")
         else:
-            print("     输入 start 启动舰队来执行")
+            print("     输入 start 启动 Multi-Agent 来执行")
         return True
 
     # ── fallback: 直接走小白 process_message ───────────────────
@@ -340,13 +340,13 @@ def _dispatch_as_fleet_task(
             project_filter=frozenset({project}),
             idle_exploration_enabled=False,
         )
-        print(f"  🚀 启动舰队: {workers} workers (仅 {project} 项目)")
+        print(f"  🚀 启动 Multi-Agent: {workers} workers (仅 {project} 项目)")
         start_fleet(repo_root=repo_root, fleet_config=new_config, background=True)
     else:
         scheduler.add_project_filter(project)
         pf = scheduler.config.project_filter
         active = scheduler.metrics.get_active_count()
-        print(f"  🚀 舰队运行中 ({active} active)，已加入项目筛选: {', '.join(sorted(pf))}")
+        print(f"  🚀 Multi-Agent 运行中 ({active} active)，已加入项目筛选: {', '.join(sorted(pf))}")
 
     print(f"  💡 输入 status 查看进度，report 查看结果")
     return True
@@ -380,7 +380,7 @@ def run_console(
     _print_help()
 
     if auto_start:
-        print(f"  🚀 启动舰队: {config.max_workers} workers — 后台运行中")
+        print(f"  🚀 启动 Multi-Agent: {config.max_workers} workers — 后台运行中")
         start_fleet(repo_root=repo_root, fleet_config=config, background=True)
         print(f"  💡 输入 status 查看进度，report 查看结果\n")
 
@@ -406,7 +406,7 @@ def run_console(
             print()
             scheduler = get_fleet_scheduler()
             if scheduler and scheduler._running:
-                print("  小白正在停止舰队...")
+                print("  小白正在停止 Multi-Agent...")
                 stop_fleet()
                 time.sleep(1)
             print("  小白和伙伴们下线啦~ 小侑再见! (≧▽≦)/")

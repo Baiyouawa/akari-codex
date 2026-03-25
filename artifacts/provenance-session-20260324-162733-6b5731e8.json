@@ -1,0 +1,23 @@
+{
+  "session_id": "session-20260324-162733-6b5731e8",
+  "timestamp": "2026-03-24T16:27:33Z",
+  "task_source": "projects/akari/TASKS.md",
+  "model": "gpt-5.4",
+  "commands_executed": [],
+  "files_read": [],
+  "files_written": [],
+  "decisions_made": [],
+  "approvals": {
+    "requested": [],
+    "granted": [],
+    "denied": []
+  },
+  "token_usage": {
+    "prompt_tokens": 426202,
+    "completion_tokens": 9751,
+    "total_tokens": 435953
+  },
+  "latency_seconds": 299.08149456977844,
+  "success": true,
+  "error": null
+}

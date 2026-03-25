@@ -10,3 +10,4 @@ dist/
 venv/
 logs/xiaobai/
 logs/sessions/
+logs/media_cache/

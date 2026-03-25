@@ -2,11 +2,10 @@
 
 ## Meta-project setup
 
-- [ ] Adapt the self-improvement measurement plan to your own repo [in-progress: 2026-03-23] [requires-opus] [skill: design] [zero-resource]
+- [x] Adapt the self-improvement measurement plan to your own repo [requires-opus] [skill: design] [zero-resource]
   Why: The public examples show the pattern, but each deployment needs its own metrics, denominators, and failure modes.
-  Done when: A repo-specific measurement plan exists with 3-5 concrete metrics and explicit data sources.
-  Priority: high
-  Progress: `projects/akari/logs/2026-03-23T170000Z-metric-comparison-investigation.md`, `projects/akari/logs/2026-03-23T163541Z-minimum-operational-logging.md`, and `projects/akari/logs/2026-03-23T172000Z-transferability-investigation.md` now bound three design constraints for that plan: which metrics look cross-fork-comparable, what minimum logging supports them, and which improvement types are likely portable versus repo-local.
+  Completed: 2026-03-24T16:28:35Z
+  Evidence: `projects/akari/plans/self-improvement-measurement.md` now defines five repo-specific metrics — Approval-Queue Intervention Rate, Knowledge-Producing Session Rate, Gap-to-Action Closure Rate, Measured Improvement Effectiveness, and System-Learning Embed Rate — with explicit formulas, artifact-class counting rules, and primary data sources (`APPROVAL_QUEUE.md`, `logs/sessions/session-*.json`, and durable project artifacts). The plan also records one deferred metric, findings-per-dollar, because this fork still lacks a mechanical counting rule for findings and a stable cost ledger.
 
 - [ ] Write one self-observation diagnosis from operational evidence [requires-opus] [skill: diagnose] [zero-resource]
   Why: The meta-project only becomes real when the system diagnoses its own failure modes from its own logs and artifacts.

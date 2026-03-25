@@ -515,6 +515,39 @@
       "session_id": "岛村-01-1774360855-6ed6b7",
       "project": "moe",
       "claimed_at": 1774360855.6005833,
+      "active": false,
+      "released_at": 1774361296.0986998
+    },
+    "claim-9696ae4fe55d": {
+      "task_id": "95aa395c012a164f",
+      "worker_id": "沙弥香-01",
+      "session_id": "沙弥香-01-1774446135-2b0204",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774446135.2304358,
+      "active": true
+    },
+    "claim-6e3ffa230366": {
+      "task_id": "e7bc8800b558e4eb",
+      "worker_id": "柑奈-02",
+      "session_id": "柑奈-02-1774446135-3b009f",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774446135.254224,
+      "active": true
+    },
+    "claim-0ff138663a2b": {
+      "task_id": "2b9931e36e84256a",
+      "worker_id": "日向-03",
+      "session_id": "日向-03-1774446135-36cad9",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774446135.2561066,
+      "active": true
+    },
+    "claim-6c225b5ae6b7": {
+      "task_id": "a3aecc56640eb26b",
+      "worker_id": "文乃-04",
+      "session_id": "文乃-04-1774446135-705c34",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774446135.2581794,
       "active": true
     }
   }

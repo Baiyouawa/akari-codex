@@ -1,9 +1,0 @@
-resources:
-  llm_api_calls:
-    limit: 2000
-    unit: calls
-  total_tokens:
-    limit: 5000000
-    unit: tokens
-
-deadline: 2026-04-30T00:00:00Z

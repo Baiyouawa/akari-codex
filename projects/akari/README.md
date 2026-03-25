@@ -122,19 +122,21 @@ Findings:
 
 Interpretation: this is a genuinely new self-study direction for akari because it shifts from isolated telemetry surfaces to a fork-comparison benchmark frame. The main remaining gap is that this public fork still lacks a fully mechanical classifier for `knowledge-producing sessions`, so benchmark portability depends on standardizing those definitions.
 
-### 2026-03-24T13:41:13Z
+### 2026-03-24T16:28:35Z
 
-Re-audited akari conventions and fixed one real stale contradiction.
+Completed a repo-specific self-improvement measurement plan in `projects/akari/plans/self-improvement-measurement.md`.
 
 Findings:
-1. `projects/akari/README.md` still follows the expected project README structure and `projects/akari/TASKS.md` open-task formatting remains internally consistent.
-   - Provenance: direct reads of `projects/akari/README.md` and `projects/akari/TASKS.md` in this session.
-2. Root `README.md` still claimed `decisions/` contained `67 architectural decision records`, but shell count returned `68` files.
-   - Provenance: direct read of root `README.md`; `run_shell("find decisions -maxdepth 1 -type f | wc -l")` returned `68`.
-3. No additional stale or contradictory information was found in the audited akari project files.
-   - Provenance: comparison of `projects/akari/README.md`, `projects/akari/TASKS.md`, and prior akari audit artifacts.
-4. The root README decision-count claim was corrected in place from `67` to `68`.
-   - Provenance: updated root `README.md` in this session.
+1. The plan now defines 5 concrete metrics for this fork: Approval-Queue Intervention Rate, Knowledge-Producing Session Rate, Gap-to-Action Closure Rate, Measured Improvement Effectiveness, and System-Learning Embed Rate.
+   - Provenance: `projects/akari/plans/self-improvement-measurement.md`.
+2. Each metric is now tied to explicit formulas, artifact-class counting rules, and primary data sources already present in this repo, especially `APPROVAL_QUEUE.md`, `logs/sessions/session-*.json`, and durable project artifacts under `projects/` and `decisions/`.
+   - Provenance: `projects/akari/plans/self-improvement-measurement.md`.
+3. The plan defers findings-per-dollar as a measured metric for now because this fork still lacks both a mechanical counting rule for `findings` and a stable cost ledger covering session work.
+   - Provenance: `projects/akari/plans/self-improvement-measurement.md`; `AGENTS.md`; `projects/akari/logs/2026-03-24T034144Z-cross-fork-metrics.md`.
+4. The immediate next standardization needs are now explicit: define a mechanical classifier for `knowledge-producing sessions`, choose a canonical intervention-event source, and add a lightweight before/after schema for self-improvement claims.
+   - Provenance: `projects/akari/plans/self-improvement-measurement.md`.
+
+Interpretation: the meta-project now has a fork-local measurement plan with concrete denominators and data sources instead of only an adapted example. The main remaining work is not metric invention but standardizing the classifier rules needed to recompute those metrics consistently over time.
 
 ## Open questions
 
@@ -142,3 +144,4 @@ Findings:
 - What is the smallest useful amount of operational logging needed to support real self-study without overwhelming orient cost?
 - Which kinds of capability improvements transfer across projects, and which depend on the specific repo's history and conventions?
 - Should this deployment standardize on `APPROVAL_QUEUE.md` requests, resolved approvals, or both as the canonical intervention-event source for future autonomy comparisons?
+- What exact mechanical classifier should this fork use for `knowledge-producing sessions` so that fleet-style benchmark comparisons can be recomputed rather than hand-labeled?
