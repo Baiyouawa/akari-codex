@@ -95,6 +95,9 @@ class FleetScheduler:
         self._event_queue: Queue | None = None
         self._dashboard: DashboardRenderer | None = None
 
+        self._blocked_notifications: list[dict[str, str]] = []
+        self._blocked_lock = threading.Lock()
+
     def _next_worker_id(self, role: str = "default") -> str:
         with self._worker_counter_lock:
             self._worker_counter += 1
@@ -372,6 +375,9 @@ class FleetScheduler:
                 result: FleetWorkerResult = future.result(timeout=5)
                 self.metrics.record_completion(worker_id, result)
 
+                if result.blocked:
+                    self._enqueue_blocked(result)
+
                 if result.ok:
                     self._consecutive_failures = 0
                 else:
@@ -433,6 +439,31 @@ class FleetScheduler:
         """Remove project filter — all projects become eligible."""
         from dataclasses import replace
         self.config = replace(self.config, project_filter=frozenset())
+
+    def _enqueue_blocked(self, result: FleetWorkerResult) -> None:
+        """Record a blocked worker notification for owner escalation."""
+        with self._blocked_lock:
+            self._blocked_notifications.append({
+                "worker": result.session_id,
+                "project": result.project,
+                "task_id": result.task_id,
+                "reason": result.blocked_reason or "未说明原因",
+            })
+        logger.warning(
+            "Worker %s BLOCKED on task %s: %s",
+            result.session_id, result.task_id[:8],
+            result.blocked_reason[:120] if result.blocked_reason else "unknown",
+        )
+
+    def drain_blocked_notifications(self) -> list[dict[str, str]]:
+        """Pop all pending blocked notifications (thread-safe).
+
+        Called by the onebot_client polling loop to forward to the owner.
+        """
+        with self._blocked_lock:
+            items = list(self._blocked_notifications)
+            self._blocked_notifications.clear()
+            return items
 
     def get_status(self) -> str:
         """Get formatted fleet status."""

@@ -243,6 +243,58 @@ def execute_fleet_worker(
     return result
 
 
+_BLOCKED_KEYWORDS = (
+    "blocked", "blocker", "cannot proceed", "cannot complete",
+    "阻塞", "无法继续", "无法完成", "需要审批", "approval needed",
+)
+
+
+def _detect_blocked(
+    session_result: Any,
+    opts: FleetExecutionOpts,
+    repo_root: Path,
+) -> tuple[bool, str]:
+    """Detect if a worker session ended in a blocked state.
+
+    Checks the final output text and any log files written by the worker
+    for blocked-related keywords. Returns (is_blocked, reason).
+    """
+    output = (session_result.final_output or "").lower()
+    for kw in _BLOCKED_KEYWORDS:
+        if kw in output:
+            reason = _extract_blocked_reason(session_result.final_output or "")
+            return True, reason
+
+    written = _extract_written_files(session_result.tool_calls_log)
+    for fpath in written:
+        full = repo_root / fpath if not Path(fpath).is_absolute() else Path(fpath)
+        if not full.is_file():
+            continue
+        try:
+            content = full.read_text(errors="replace")[:4000].lower()
+        except Exception:
+            continue
+        if "outcome: blocked" in content or "## blocker" in content.lower():
+            reason = _extract_blocked_reason(content)
+            return True, reason
+
+    return False, ""
+
+
+def _extract_blocked_reason(text: str) -> str:
+    """Extract a concise blocked reason from output text."""
+    import re
+    for pattern in (
+        r"## Blocker\s*\n(.*?)(?:\n##|\Z)",
+        r"Blocker:\s*(.+)",
+        r"blocked[:\s]+(.{10,200})",
+    ):
+        m = re.search(pattern, text, re.IGNORECASE | re.DOTALL)
+        if m:
+            return m.group(1).strip()[:300]
+    return text[:200].strip()
+
+
 def _save_fleet_session_log(
     opts: FleetExecutionOpts,
     session_result: Any,

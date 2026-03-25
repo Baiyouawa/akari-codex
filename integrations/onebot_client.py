@@ -779,6 +779,10 @@ async def _run(config: OneBotConfig) -> None:
             ) as ws:
                 logger.info("已连接到 NapCatQQ! 小白 QQ 端上线~")
 
+                blocked_poller = asyncio.create_task(
+                    _poll_blocked_notifications(ws, config)
+                )
+
                 async for raw in ws:
                     try:
                         event = json.loads(raw)
