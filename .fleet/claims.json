@@ -1654,7 +1654,8 @@
       "session_id": "千早-05-1774459025-ee93cb",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774459025.2521675,
-      "active": true
+      "active": false,
+      "released_at": 1774460157.1978805
     },
     "claim-ed05e9b92fcf": {
       "task_id": "4a7ebfefa0a5c997",
