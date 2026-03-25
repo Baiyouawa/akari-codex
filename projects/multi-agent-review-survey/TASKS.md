@@ -27,21 +27,20 @@
 - [ ] 基于 5 篇综述的共同空白与趋势，提出 5 个可做的研究 idea；每个 idea 需要写清问题动机、核心假设、方法设计、数据/benchmark、评测指标、潜在风险与预期贡献。 [zero-resource] [blocked-by: 缺少前置的 5 篇综述比较与研究空白总结。]
   Done when: 基于已完成的 5 篇综述比较，产出 5 个结构完整的研究 idea。
 
-- [ ] 检索 multi-agent 相关最新5篇综述论文，优先覆盖 arXiv 与 OpenReview，可补充可信学术来源 [zero-resource]
-  Done when: TBD
+- [ ] 检索 multi-agent 相关最新5篇综述论文，优先覆盖 arXiv 与 OpenReview，可补充可信学术来源 [zero-resource] [blocked-by: 仓库内仍无可验证的本地候选综述清单、来源页面快照、PDF、摘要摘录或已验证笔记；`search_text(pattern="multi-agent|survey|综述|review|arXiv|OpenReview", path="projects/multi-agent-review-survey", max_results=200)` 在本会话返回 no matches，因此在零外部检索约束下无法确认“最新5篇”。详见 `projects/multi-agent-review-survey/logs/2026-03-25T23:27:42+08:00-fleet-沙弥香-01-1774452423-4754bc-latest-five-surveys-blocked.md`]
+  Done when: 仓库内补齐候选综述的可追溯元数据或来源页面快照，并据此确认5篇目标综述。
 
-- [ ] 将确认后的5篇综述下载到本地 paper 目录，并记录来源链接与文件名映射 [zero-resource]
-  Done when: TBD
+- [ ] 将确认后的5篇综述下载到本地 paper 目录，并记录来源链接与文件名映射 [zero-resource] [blocked-by: 上游“确认5篇综述”任务未完成；当前仓库内没有已确认论文标题、来源链接或 PDF 地址，无法生成可追溯下载与文件名映射。]
+  Done when: 仓库内已有确认后的5篇综述及其来源链接，并已将对应文件保存到 `projects/multi-agent-review-survey/paper/`，同时记录来源链接与文件名映射。
 
-- [ ] 逐篇精读5篇综述，提取研究问题、分类框架、核心方法、数据集/基准、优缺点与未来方向 [zero-resource]
-  Done when: TBD
+- [ ] 逐篇精读5篇综述，提取研究问题、分类框架、核心方法、数据集/基准、优缺点与未来方向 [zero-resource] [blocked-by: 缺少已确认并下载到仓库内的5篇综述全文或等效可追溯阅读材料。]
+  Done when: 5篇综述均具备本地全文或可追溯阅读材料，并完成逐篇结构化笔记。
 
-- [ ] 汇总生成中文 Markdown 文档，分别详述5篇综述的内容与价值 [zero-resource]
-  Done when: TBD
+- [ ] 汇总生成中文 Markdown 文档，分别详述5篇综述的内容与价值 [zero-resource] [blocked-by: 前置逐篇精读任务尚未完成。]
+  Done when: 基于5篇综述的结构化笔记生成中文 Markdown 汇总文档。
 
-- [ ] 基于5篇综述提出5个可做的研究 idea，并为每个 idea 写出具体方法设计、可行性与潜在贡献 [zero-resource]
-  Done when: TBD
+- [ ] 基于5篇综述提出5个可做的研究 idea，并为每个 idea 写出具体方法设计、可行性与潜在贡献 [zero-resource] [blocked-by: 缺少前置综述比较与研究空白综合。]
+  Done when: 形成5个结构完整、来源可追溯的研究 idea。
 
 - [ ] 若任一论文缺失、下载失败或信息不全，立即报告阻塞详情：哪个Agent卡住、卡点与缺失资料 [zero-resource]
   Done when: TBD
-

@@ -1166,7 +1166,8 @@
       "session_id": "花阳-06-1774452064-c766e9",
       "project": "multi-agent-survey",
       "claimed_at": 1774452064.1210766,
-      "active": true
+      "active": false,
+      "released_at": 1774452517.9849193
     },
     "claim-dd7a8122b1c4": {
       "task_id": "489df804eb714b9c",

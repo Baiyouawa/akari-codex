@@ -1,0 +1,49 @@
+# Session log
+
+- Timestamp: 2026-03-25T23:27:50+08:00
+- Session: 柑奈-02-1774452423-dad5ad
+- Project: `projects/multi-agent-review-survey`
+- Task: 将确认后的5篇综述下载到本地 paper 目录，并记录来源链接与文件名映射
+- Classification: ROUTINE
+- Outcome: blocked
+
+## Work performed
+
+1. Read `AGENTS.md` and root `README.md` for session protocol, provenance rules, and repository structure.
+2. Read `projects/multi-agent-review-survey/README.md` and `projects/multi-agent-review-survey/TASKS.md`.
+3. Read prior project blocker records:
+   - `projects/multi-agent-review-survey/logs/2026-03-25T23:17:07+08:00-fleet-柑奈-02-1774451763-af745a-download-task-blocked-by-missing-selection.md`
+   - `projects/multi-agent-review-survey/logs/2026-03-25T23:17:05+08:00-fleet-沙弥香-01-1774451763-e36f36-latest-review-selection-blocked.md`
+   - `projects/multi-agent-review-survey/analysis/2026-03-25-latest-review-selection-blocker-assessment.md`
+4. Searched repository paths for any newly recorded evidence of a confirmed five-paper list, source links, PDF URLs, or filename manifest.
+5. Updated `projects/multi-agent-review-survey/TASKS.md` so the duplicate task entries explicitly reflect the same blocker state as the canonical upstream/downstream task chain.
+
+## Findings
+
+1. The project README still records the same open questions about whether external source-page import is allowed and who provides a local candidate bibliography.
+   - Provenance: `projects/multi-agent-review-survey/README.md`
+2. The canonical task chain remains blocked: the five-paper selection task has not been completed in-repo, so the downstream download task still lacks confirmed titles and source pages.
+   - Provenance: `projects/multi-agent-review-survey/TASKS.md`
+3. No repository artifact in this session identified all of the following for the target set: confirmed paper titles, authoritative source links, and download URLs/file naming rules.
+   - Provenance: repo searches performed during this session plus the previously recorded blocker documents above.
+4. Because the assignment is to download the confirmed five surveys and record source-to-filename mappings, proceeding without an in-repo confirmed list would require inventing provenance and risks downloading the wrong papers.
+   - Provenance: dependency structure in `projects/multi-agent-review-survey/TASKS.md` and blocker analysis in `projects/multi-agent-review-survey/analysis/2026-03-25-latest-review-selection-blocker-assessment.md`
+
+## Blocker
+
+Blocked by missing prerequisite confirmation artifact for the five survey papers.
+
+Missing inputs:
+- confirmed set of 5 survey titles
+- source links for each selected paper
+- downloadable PDF links or equivalent canonical landing pages
+- any existing filename convention tied to those confirmed papers
+
+## Files changed
+
+- `projects/multi-agent-review-survey/TASKS.md` — added blocker tags and concrete done-when criteria to the duplicate task entries so task state reflects current repository evidence.
+- `projects/multi-agent-review-survey/logs/2026-03-25T23:27:50+08:00-fleet-柑奈-02-1774452423-dad5ad-download-confirmed-five-surveys-blocked.md` — recorded this session outcome.
+
+## Next unblock step
+
+Complete the preceding confirmation task by adding a verifiable in-repo record of the five selected survey papers and their source pages, or import authoritative source-page snapshots/bibliography into the repository first. Only after that can the `paper/` download and source-link-to-filename manifest be produced correctly.
