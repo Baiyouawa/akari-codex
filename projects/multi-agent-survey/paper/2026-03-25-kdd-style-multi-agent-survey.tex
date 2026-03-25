@@ -1,0 +1,295 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{multirow}
+
+\title{A KDD-Style Survey of Multi-Agent Research from Repository-Grounded ICML, ICLR, and NeurIPS Evidence}
+\author{OpenAkari-Codex Fleet Worker 侑-00-1774447517-67e5d0}
+\date{2026-03-25}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This survey consolidates the multi-agent research evidence currently available inside the OpenAkari-Codex repository and organizes it into a KDD-style review spanning foundations, systems, and future opportunities. The paper is explicitly bounded by repository-grounded sources rather than new external retrieval. The currently normalized corpus contains 247 entries with standardized venue/year/link metadata, consisting of 83 ICML papers, 26 high-relevance ICLR papers, and 138 NeurIPS candidate entries; inline arithmetic gives $83 + 26 + 138 = 247$ \cite{manifest}. A broader theme-classification pass over the repository's recovered venue inventories covers 367 entries from 83 ICML, 146 ICLR, and 138 NeurIPS records, and reports overlapping theme-hit counts of 167 for multi-agent LLM systems, 134 for coordination and planning, 59 for communication, 45 for game-theoretic alignment, 14 for tool use, and 42 for training and evaluation \cite{theme_synthesis}. Based on that evidence, this survey argues that the field's center of gravity has shifted from classical multi-agent reinforcement learning toward multi-agent LLM system engineering. We review six major directions: coordination and planning, communication, games/alignment/safety, tool-using workflows, LLM-based multi-agent system design, and training/evaluation. We then synthesize five future research programs around adaptive topology design, information-bottleneck communication, failure attribution and self-repair, safe tool-using agent systems, and transferable evaluation/training loops. The paper closes with a repository-grounded reference list and an explicit discussion of current evidence gaps, especially incomplete ICLR 2024 coverage, incomplete NeurIPS metadata, and missing per-paper abstracts/full-text notes for structured paper-by-paper summarization.
+\end{abstract}
+
+\section{Introduction}
+Multi-agent research has expanded from a relatively concentrated focus on cooperative or competitive reinforcement learning to a broader systems agenda involving language-mediated collaboration, tool use, social alignment, orchestration, runtime efficiency, and failure diagnosis. The repository evidence currently available for this project reflects that transition clearly. In the normalized reference manifest, the working corpus contains 247 entries: 83 from ICML, 26 from an ICLR high-relevance subset, and 138 from a NeurIPS candidate list \cite{manifest}. In a larger theme-classification pass over the recovered inventories, the repository contains 367 total records from 83 ICML, 146 ICLR, and 138 NeurIPS entries; because one paper can map to multiple themes, the resulting theme counts are overlapping rather than partitioned \cite{theme_synthesis,theme_json}.
+
+The dominant signal in that larger corpus is the growth of multi-agent LLM systems, which receive 167 theme hits, ahead of coordination/planning (134), communication (59), games/alignment (45), tool use (14), and training/evaluation (42) \cite{theme_synthesis}. This quantitative pattern matters for review design: a contemporary survey that treats LLM-based multi-agent systems as a niche extension of classical MARL would misrepresent the repository-grounded evidence.
+
+This paper therefore makes three contributions. First, it consolidates the project's current repo-grounded evidence into a single survey narrative. Second, it proposes a taxonomy that bridges older MARL foundations and newer LLM-system concerns. Third, it distills the future research agenda already implicit in the recovered corpus and prior project analyses \cite{future_directions}. Throughout, we preserve the repository's provenance rule: every numerical claim is traced either to an in-repo artifact or to inline arithmetic over those artifacts.
+
+\paragraph{Scope boundary.}
+This survey intentionally does not claim coverage beyond the repository's current state. The project README and task tracker explicitly record that the repo still lacks an in-repo ICLR 2024 inventory, lacks complete NeurIPS 2023/2025 support, lacks a repository snapshot of recent ICML 2026 OpenReview submissions, and lacks per-paper abstract/full-text notes for provenance-safe structured summaries \cite{project_readme,project_tasks}. The survey is therefore best read as a complete \emph{repository-grounded} review draft rather than a claim of complete field coverage.
+
+\section{Related Work and Evidence Base}
+The survey draws from four types of project artifacts.
+
+\subsection{Venue inventories and normalized manifest}
+The first layer is the venue inventory layer: the recovered ICML 2023--2025 list \cite{icml_list}, the ICLR 2025--2026 high-relevance subset \cite{iclr_subset}, and the NeurIPS 2024--2025 candidate list \cite{neurips_list}. These are consolidated in a standardized reference table and download manifest with 247 normalized entries, 109 direct-PDF rows, and 138 rows lacking direct PDFs in-repo; inline arithmetic gives $109 + 138 = 247$ \cite{manifest}. This layer is the paper-level anchor for links, years, and representative references.
+
+\subsection{Cross-paper synthesis artifacts}
+The second layer is the synthesis layer. The theme synthesis artifact converts the available literature inventories into a six-theme storyline and reports the overlapping theme-hit counts used throughout this paper \cite{theme_synthesis}. The taxonomy matrix adds theme-by-venue representative examples and explicitly records the classifier-backed counts \cite{taxonomy_matrix}. The classifier's machine-readable output is stored in JSON for reproducibility \cite{theme_json}.
+
+\subsection{Future-agenda artifact}
+The third layer is the future research agenda artifact, which proposes five directions with problem definitions, hypotheses, methods, benchmark suggestions, risks, and feasibility comments. This survey reuses that artifact as the basis for its forward-looking section \cite{future_directions}.
+
+\subsection{Coverage limitations as first-class evidence}
+The fourth layer is the set of project logs documenting what remains unavailable. The project records blocked status for ICML 2026 OpenReview ingestion, structured per-paper summaries, incomplete ICLR three-year coverage, and incomplete NeurIPS completeness \cite{project_readme,project_tasks}. These gaps are not incidental; they determine what can and cannot be asserted in a provenance-safe survey.
+
+\section{Taxonomy of the Current Multi-Agent Landscape}
+Table~\ref{tab:taxonomy} summarizes the six themes recovered from the repository's thematic synthesis.
+
+\begin{table}[ht]
+\centering
+\small
+\begin{tabular}{p{3.2cm}p{1.5cm}p{8cm}}
+\toprule
+Theme & Hits & Representative signal from repository artifacts \\
+\midrule
+Coordination and planning & 134 & From cooperative MARL and zero-shot coordination to agent-oriented planning, topology control, and task-level decomposition \\
+Communication & 59 & From asynchronous message passing to debate, discussion, semantic sharing, and KV/cache exchange \\
+Games, alignment, and safety & 45 & From Stackelberg/equilibrium reasoning to collusion, robustness, bias amplification, and control-flow attacks \\
+Tool use & 14 & From coding and AutoML agents to GUI/device operation and issue-resolution workflows \\
+Multi-agent LLM systems & 167 & The largest theme; emphasizes architecture, role design, reflection, self-configuration, and orchestration \\
+Training and evaluation & 42 & Benchmarks, failure attribution, security evaluation, curricula, distillation, and system-level training loops \\
+\bottomrule
+\end{tabular}
+\caption{Repository-grounded taxonomy. Counts are overlapping theme-hit counts from the classifier-backed synthesis rather than a partition of papers \cite{theme_synthesis,theme_json}.}
+\label{tab:taxonomy}
+\end{table}
+
+The same synthesis artifact also reports venue-theme distributions. For example, coordination/planning has 16 ICML, 57 ICLR, and 61 NeurIPS hits, while multi-agent LLM systems has 54 ICML, 70 ICLR, and 43 NeurIPS hits \cite{theme_synthesis}. Even allowing for heuristic title-based classification, the directional conclusion is stable: modern multi-agent research is simultaneously retaining its MARL foundations and reorganizing around LLM-centric system construction.
+
+\section{Coordination and Planning}
+Coordination is the oldest and still one of the widest themes in the corpus. The ICML inventory includes classical cooperative MARL papers on attention, partial observability, factorization, and asynchronous coordination, such as \emph{Context-Aware Bayesian Network Actor-Critic Methods for Cooperative Multi-Agent Reinforcement Learning}, \emph{Complementary Attention for Multi-Agent Reinforcement Learning}, and \emph{Cooperative Multi-Agent Reinforcement Learning: Asynchronous Communication and Linear Function Approximation} \cite{icml_list}. NeurIPS candidates extend this line with titles such as \emph{Randomized Exploration in Cooperative Multi-Agent Reinforcement Learning}, \emph{N-agent Ad Hoc Teamwork}, \emph{Long-Horizon Planning for Multi-Agent Robots in Partially Observable Environments}, and \emph{ZSC-Eval: An Evaluation Toolkit and Benchmark for Multi-agent Zero-shot Coordination} \cite{neurips_list}.
+
+What changes in the newer ICLR and ICML slices is the unit of coordination. Instead of optimizing only joint policies, many papers now optimize roles, topologies, planning interfaces, or structured workflows. Representative examples include \emph{Agent-Oriented Planning in Multi-Agent Systems}, \emph{ATLAS: Constraints-Aware Multi-Agent Collaboration for Real-World Travel Planning}, \emph{CARD: Towards Conditional Design of Multi-agent Topological Structures}, \emph{Graph-of-Agents}, \emph{Multi-Agent Design}, \emph{G-Designer}, and \emph{Multi-agent Architecture Search via Agentic Supernet} \cite{iclr_subset,icml_list}.
+
+The repository's thematic synthesis interprets this shift as a movement from strategy-level coordination to task-level organization design \cite{theme_synthesis}. That interpretation is well supported by the title evidence. Earlier work asks how agents should coordinate in partially observed or decentralized settings; newer work asks how many agents to use, what roles they should play, and what communication graph or deliberation structure they should adopt.
+
+\paragraph{Takeaway.}
+Coordination is no longer only a learning problem. In the repo-available recent literature, it is also an orchestration, topology, and decomposition problem.
+
+\section{Communication Protocols}
+Communication remains a central mechanism but has been substantially reinterpreted. In the older MARL line, communication is usually an explicit message-passing or information-sharing mechanism under constraints. Examples include ICML 2023's \emph{Cooperative Multi-Agent Reinforcement Learning: Asynchronous Communication and Linear Function Approximation} and \emph{Multi-Agent Best Arm Identification with Private Communications}, plus NeurIPS titles such as \emph{Language Grounded Multi-agent Reinforcement Learning with Human-interpretable Communication} and \emph{Multi-Agent Coordination via Multi-Level Communication} \cite{icml_list,neurips_list}.
+
+In the newer LLM-oriented line, communication becomes a reasoning protocol. ICML 2024--2025 includes \emph{Improving Factuality and Reasoning in Language Models through Multiagent Debate}, \emph{Should we be going MAD?}, and \emph{From Debate to Equilibrium: Belief-Driven Multi-Agent LLM Reasoning via Bayesian Nash Equilibrium} \cite{icml_list}. The ICLR subset pushes further with \emph{Cut the Crap}, \emph{Benefits and Limitations of Communication in Multi-Agent Reasoning}, and \emph{KVComm: Enabling Efficient LLM Communication through Selective KV Sharing} \cite{iclr_subset}.
+
+The project synthesis describes this as a three-stage progression: explicit low-dimensional message passing, natural-language debate/discussion, and system-level semantic state sharing \cite{theme_synthesis}. The evidence supporting this claim comes not from speculative interpretation but from the repository's representative title progression itself.
+
+\paragraph{Implication for survey design.}
+A modern survey should not isolate communication as a narrow channel-design topic. It is now a core interface between reasoning quality, system efficiency, and organization design.
+
+\section{Games, Alignment, Robustness, and Safety}
+Game-theoretic and alignment-related work forms a smaller but strategically important layer. Classical examples in the repo include \emph{A Game-Theoretic Framework for Managing Risk in Multi-Agent Systems}, \emph{Oracles \& Followers: Stackelberg Equilibria in Deep Multi-Agent Reinforcement Learning}, and \emph{Convex Markov Games: A New Frontier for Multi-Agent Reinforcement Learning} \cite{icml_list}. These works reflect the longstanding connection between multi-agent learning and equilibrium analysis.
+
+The newer literature expands the notion of alignment beyond equilibrium or human preference learning. The NeurIPS list includes \emph{Aligning Individual and Collective Objectives in Multi-Agent Cooperation} and \emph{Secret Collusion among AI Agents: Multi-Agent Deception via Steganography} \cite{neurips_list}. The ICML list adds robustness and mixed-quality feedback with titles such as \emph{Breaking the Curse of Multiagency in Robust Multi-Agent Reinforcement Learning} and \emph{M$^3$HF: Multi-agent Reinforcement Learning from Multi-phase Human Feedback of Mixed Quality} \cite{icml_list}. The ICLR subset contributes security benchmarking and debugging-oriented system papers such as \emph{A2ASecBench} and \emph{DoVer} \cite{iclr_subset}.
+
+Taken together, these artifacts suggest that ``alignment'' in current multi-agent research spans at least three relations: agent-agent alignment, agent-human alignment, and agent-tool/protocol alignment. This is precisely why the project README and task tracker treat structured paper-level evidence as necessary for future deeper summarization: many safety claims depend on details not recoverable from titles alone \cite{project_readme,project_tasks}.
+
+\section{Tool-Using Multi-Agent Workflows}
+The tool-use theme is the smallest by count (14 hits) but one of the clearest signals of a systems transition \cite{theme_synthesis}. Representative ICML and ICLR titles include \emph{AutoML-Agent: A Multi-Agent LLM Framework for Full-Pipeline AutoML}, \emph{CoAct-1: Computer-using Multi-agent System with Coding Actions}, and \emph{TUMIX: Multi-Agent Test-Time Scaling with Tool-Use Mixture} \cite{icml_list,iclr_subset}. NeurIPS candidates add \emph{MAGIS: LLM-Based Multi-Agent Framework for GitHub Issue Resolution} and \emph{Mobile-Agent-v2: Mobile Device Operation Assistant with Effective Navigation via Multi-Agent Collaboration} \cite{neurips_list}.
+
+These titles indicate a shift from collaborative reasoning to collaborative acting. A tool-using multi-agent system must solve not only coordination and communication but also permission control, interface grounding, failure recovery, and result verification. This is exactly the boundary where classical MARL abstractions become insufficient and workflow/system abstractions become necessary.
+
+\paragraph{Research significance.}
+Even though the theme has only 14 hits in the current classifier output, its strategic value is high because it is the most direct bridge from benchmarked research systems to production-style agent orchestration \cite{future_directions}.
+
+\section{Multi-Agent LLM Systems as the New Center}
+The strongest repository-wide signal is the rise of multi-agent LLM systems, which receive 167 theme hits in the classifier-backed synthesis \cite{theme_synthesis}. Representative papers span several subfamilies:
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Architecture and orchestration:} \emph{Scaling Large Language Model-based Multi-Agent Collaboration}, \emph{ACC-Collab}, \emph{Graph-of-Agents}, \emph{MAS$^2$}, \emph{MetaAgent}, and \emph{Multi-Agent Design} \cite{iclr_subset,icml_list}.
+    \item \textbf{Reflection and deliberation:} \emph{Hypothetical Minds}, \emph{Unlocking the Power of Multi-Agent LLM for Reasoning}, and \emph{Reinforce LLM Reasoning through Multi-Agent Reflection} \cite{iclr_subset,icml_list}.
+    \item \textbf{Training and self-improvement:} \emph{MAS-GPT}, \emph{MARTI}, and \emph{MAGDi} \cite{icml_list,iclr_subset}.
+    \item \textbf{Robustness and debugging:} \emph{On the Resilience of LLM-Based Multi-Agent Collaboration with Faulty Agents}, \emph{Which Agent Causes Task Failures and When?}, \emph{Aegis}, and \emph{DoVer} \cite{icml_list,iclr_subset}.
+    \item \textbf{Applications:} software engineering, research, medicine, finance, mobility, and education through titles such as \emph{MAGIS}, \emph{LiveResearchBench}, \emph{MDAgents}, \emph{FinCon}, and \emph{EduVisAgent} \cite{neurips_list,iclr_subset}.
+\end{itemize}
+
+The project's theme synthesis concludes that the field's center has moved from ``multi-agent RL'' to ``multi-agent LLM system engineering'' \cite{theme_synthesis}. The corpus supports that conclusion in two ways. First, the counts are decisive. Second, the titles themselves increasingly discuss topologies, prompts, role assignment, debugging, test-time scaling, system training, and architecture search rather than only policy optimization.
+
+\paragraph{Why this matters.}
+This survey therefore places multi-agent LLM systems at the center of the taxonomy instead of treating them as a late-stage application chapter. The older themes now serve as method and constraint sources for the newer system-building agenda.
+
+\section{Training, Evaluation, and Failure Analysis}
+The repository evidence also shows that benchmarking and evaluation have become system-level concerns. Older benchmark-style examples include \emph{FightLadder} and \emph{WFCRL} \cite{icml_list,neurips_list}. Newer work expands the evaluation target to research assistance, social dilemmas, security, and attribution: \emph{LiveResearchBench}, \emph{SocialJax}, \emph{A2ASecBench}, and \emph{Which Agent Causes Task Failures and When?} \cite{iclr_subset,icml_list,neurips_list}.
+
+The future-directions artifact argues that this dispersion creates an unmet need for capability-level evaluation and closed-loop training: systems should be compared not only by end-task success but also by planning, communication, tool use, safety, and recovery behaviors \cite{future_directions}. This proposal is consistent with the current evidence base. Many of the repo-available titles are already implicitly about capability diagnosis rather than raw task performance.
+
+\paragraph{Core challenge.}
+Without a unified evaluation language, the field risks benchmark fragmentation: progress on one multi-agent task family may fail to transfer to others even if the underlying capability improves.
+
+\section{Cross-Directional Analysis}
+Across the six themes, several field-level patterns emerge.
+
+\subsection{From policy learning to system design}
+The repo evidence suggests a transition from learning good decentralized policies to designing good multi-agent systems. This does not eliminate MARL; rather, MARL becomes one substrate inside a broader orchestration stack.
+
+\subsection{From communication bandwidth to communication semantics}
+Communication used to be evaluated mainly by efficiency or learnability. In current LLM-oriented work, the question is increasingly semantic: what evidence, state, or deliberation trace should be shared, and when?
+
+\subsection{From isolated errors to traceable failures}
+Newer titles on resilience, debugging, and attribution indicate that failure analysis is itself becoming a first-class problem. This is a hallmark of systems maturation.
+
+\subsection{From sandbox tasks to high-consequence workflows}
+Tool-using agents and application papers show that many systems are moving toward consequential interfaces such as coding, research, planning, or domain decision support. Safety, governance, and auditing therefore become structurally necessary, not optional add-ons.
+
+\section{Future Research Programs}
+The project's future-agenda artifact proposes five directions. We summarize them here in survey form \cite{future_directions}.
+
+\subsection{Adaptive topology and role co-design}
+The key idea is to jointly optimize agent count, role allocation, and communication graph as a dynamic function of task state. The motivation is directly supported by titles such as \emph{Graph-of-Agents}, \emph{CARD}, \emph{Multi-Agent Design}, \emph{MetaAgent}, and \emph{Multi-agent Architecture Search via Agentic Supernet} \cite{iclr_subset,icml_list}. The central hypothesis is that dynamic organization can improve success-per-token over fixed orchestration.
+
+\subsection{Information-bottleneck communication}
+Prompt-based collaboration often wastes tokens or amplifies noise. Titles such as \emph{Cut the Crap}, \emph{KVComm}, and \emph{Benefits and Limitations of Communication in Multi-Agent Reasoning} motivate protocols that transmit only the most decision-relevant evidence or latent state \cite{iclr_subset}. The hypothesis is that structured compression can improve both efficiency and reliability.
+
+\subsection{Failure attribution and self-repair}
+Titles such as \emph{Which Agent Causes Task Failures and When?}, \emph{DoVer}, \emph{Aegis}, and \emph{On the Resilience of LLM-Based Multi-Agent Collaboration with Faulty Agents} motivate causal tracing and localized repair rather than whole-system reruns \cite{icml_list,iclr_subset}. The future-agenda artifact frames this as a trace-attribution-repair loop \cite{future_directions}.
+
+\subsection{Safe tool-using multi-agent systems}
+As tool use expands, so do risks from permission misuse, control-flow hijacking, and collusion. The repo-grounded evidence combines tool-use papers such as \emph{CoAct-1}, \emph{MAGIS}, and \emph{Mobile-Agent-v2} with safety-focused works such as \emph{A2ASecBench} and \emph{Secret Collusion among AI Agents} \cite{iclr_subset,neurips_list}. A layered policy-sandbox-audit architecture is therefore a natural research target \cite{future_directions}.
+
+\subsection{Transferable evaluation and training loops}
+The final direction seeks a common capability matrix across planning, communication, tool use, safety, and recovery. The goal is to close the loop between trace collection, failure analysis, evaluation, and training, leveraging benchmarks such as \emph{LiveResearchBench}, \emph{SocialJax}, \emph{ZSC-Eval}, \emph{WFCRL}, and \emph{FightLadder} \cite{iclr_subset,neurips_list,icml_list}.
+
+\section{Limitations}
+This survey inherits the repository's current evidence limits.
+
+First, the project task tracker explicitly records that complete three-year ICLR coverage is blocked because only an ICLR 2025--2026 inventory and high-relevance subset are currently available in-repo; no in-repo ICLR 2024 inventory was found \cite{project_tasks}. Second, NeurIPS coverage is incomplete: the recovered artifact currently supports a 138-entry 2024 candidate pool, with no verified 2025 records in the stored Crossref snapshot and without direct PDF/OpenReview metadata for those rows \cite{neurips_gap,manifest}. Third, the project remains blocked on per-paper structured summaries because the repository generally stores title/link-level inventories rather than verified abstracts or full-text notes \cite{project_tasks,project_readme}. Fourth, the project also lacks a local snapshot of recent ICML 2026 OpenReview submissions, which blocks the zero-resource ingestion task for that slice \cite{project_tasks}.
+
+These limitations do not invalidate the survey's higher-level conclusions, but they do constrain granularity. The paper is strongest as a taxonomy-and-agenda synthesis; it is weaker as a paper-by-paper technical comparison.
+
+\section{Conclusion}
+The repository-grounded evidence reviewed here supports a clear narrative: multi-agent research has not abandoned its MARL roots, but its most active frontier now lies in multi-agent LLM systems that must be designed, trained, evaluated, debugged, and governed as full systems. Coordination and planning remain core; communication has become semantic and protocol-centric; safety and alignment have expanded from equilibrium concerns to system security and collusion; tool use is converting discussion agents into workflow agents; and evaluation is increasingly about failure analysis and trustworthy deployment.
+
+Within the repository's current boundaries, this KDD-style survey provides a complete LaTeX review draft containing the required abstract, introduction, related work/evidence base, taxonomy, directional analysis, future research agenda, conclusion, and references. Its next iteration should be strengthened by unblocking the currently missing evidence layers: ICLR 2024 recovery, richer NeurIPS metadata, ICML 2026 OpenReview snapshots, and per-paper abstract/full-text notes for structured summaries.
+
+\begin{thebibliography}{99}
+
+\bibitem{project_readme}
+OpenAkari-Codex repository. \emph{projects/multi-agent-survey/README.md}. Project mission, session log, and open questions for the multi-agent survey workspace.
+
+\bibitem{project_tasks}
+OpenAkari-Codex repository. \emph{projects/multi-agent-survey/TASKS.md}. Task tracker documenting completed tasks and current blockers for ICLR, NeurIPS, ICML 2026 OpenReview, and structured summaries.
+
+\bibitem{icml_list}
+OpenAkari-Codex repository. \emph{projects/multi-agent-survey/literature/icml-2023-2025.md}. Repository-grounded ICML 2023--2025 multi-agent literature list with proceedings pages, PDFs, OpenReview links, and tags.
+
+\bibitem{iclr_subset}
+OpenAkari-Codex repository. \emph{projects/multi-agent-survey/literature/2026-03-25-iclr-high-relevance-2025-2026.md}. High-relevance ICLR 2025--2026 subset with titles, authors, presentation type, OpenReview links, PDFs, and conference-page provenance.
+
+\bibitem{neurips_list}
+OpenAkari-Codex repository. \emph{projects/multi-agent-survey/literature/neurips-2024-2025.md}. Recovered NeurIPS multi-agent candidate list with DOI links and title-level tags.
+
+\bibitem{manifest}
+OpenAkari-Codex repository. \emph{projects/multi-agent-survey/literature/2026-03-25-reference-table-and-download-manifest.md}. Standardized 247-entry reference and download manifest for the repo-available corpus.
+
+\bibitem{theme_synthesis}
+OpenAkari-Codex repository. \emph{projects/multi-agent-survey/analysis/2026-03-25-theme-synthesis.md}. Repository-grounded thematic synthesis reporting 367 total entries and overlapping theme-hit counts.
+
+\bibitem{theme_json}
+OpenAkari-Codex repository. \emph{projects/multi-agent-survey/analysis/2026-03-25-theme-classification.json}. Machine-readable classifier output used to support theme counts.
+
+\bibitem{taxonomy_matrix}
+OpenAkari-Codex repository. \emph{projects/multi-agent-survey/analysis/2026-03-25-theme-taxonomy-matrix.md}. Theme-by-venue matrix with representative examples.
+
+\bibitem{future_directions}
+OpenAkari-Codex repository. \emph{projects/multi-agent-survey/analysis/2026-03-25-future-research-directions.md}. Five future research directions for multi-agent systems.
+
+\bibitem{neurips_gap}
+OpenAkari-Codex repository. \emph{projects/multi-agent-survey/analysis/2026-03-25-neurips-inventory-recovery-and-gap-assessment.md}. Gap assessment showing that the repo currently supports a 138-entry NeurIPS 2024 candidate pool but still lacks complete three-year coverage and richer metadata.
+
+\bibitem{acc_collab}
+Andrew Estornell, Jean-Francois Ton, Yuanshun Yao, and Yang Liu. 2025. \emph{ACC-Collab: An Actor-Critic Approach to Multi-Agent LLM Collaboration}. ICLR Poster. OpenReview link recorded in \cite{iclr_subset}.
+
+\bibitem{agent_oriented_planning}
+Ao Li, Yuexiang Xie, Songze Li, Fugee Tsung, Bolin Ding, and Yaliang Li. 2025. \emph{Agent-Oriented Planning in Multi-Agent Systems}. ICLR Poster. OpenReview link recorded in \cite{iclr_subset}.
+
+\bibitem{cut_the_crap}
+Guibin Zhang, Yanwei Yue, Zhixun Li, Sukwon Yun, Guancheng Wan, Kun Wang, Dawei Cheng, Jeffrey Yu, and Tianlong Chen. 2025. \emph{Cut the Crap: An Economical Communication Pipeline for LLM-based Multi-Agent Systems}. ICLR Poster. OpenReview link recorded in \cite{iclr_subset}.
+
+\bibitem{graph_of_agents}
+Sukwon Yun, Jie Peng, Pingzhi Li, Wendong Fan, Jie Chen, James Y. Zou, Guohao Li, and Tianlong Chen. 2026. \emph{Graph-of-Agents: A Graph-based Framework for Multi-Agent LLM Collaboration}. ICLR Poster. OpenReview link recorded in \cite{iclr_subset}.
+
+\bibitem{kvcomm}
+Xiangyu Shi, Marco Chiesa, Gerald Q. Maguire Jr., and Dejan Kostic. 2026. \emph{KVComm: Enabling Efficient LLM Communication through Selective KV Sharing}. ICLR Poster. OpenReview link recorded in \cite{iclr_subset}.
+
+\bibitem{liveresearchbench}
+Jiayu Wang, Yifei Ming, Riya Dulepet, Qinglin Chen, Austin Xu, Zixuan Ke, Frederic Sala, Aws Albarghouthi, Caiming Xiong, and Shafiq Joty. 2026. \emph{LiveResearchBench: Benchmarking Single- and Multi-Agent Systems for Citation-Grounded Deep Research}. ICLR Poster. OpenReview link recorded in \cite{iclr_subset}.
+
+\bibitem{marti}
+Kaiyan Zhang et al. 2026. \emph{MARTI: A Framework for Multi-Agent LLM Systems Reinforced Training and Inference}. ICLR Poster. OpenReview link recorded in \cite{iclr_subset}.
+
+\bibitem{multi_agent_design}
+Han Zhou, Xingchen Wan, Ruoxi Sun, Hamid Palangi, Shariq Iqbal, Ivan Vulic, Anna Korhonen, and Sercan Arik. 2026. \emph{Multi-Agent Design: Optimizing Agents with Better Prompts and Topologies}. ICLR Poster. OpenReview link recorded in \cite{iclr_subset}.
+
+\bibitem{socialjax}
+Zihao Guo, Shuqing Shi, Richard Willis, Tristan Tomilin, Joel Z. Leibo, and Yali Du. 2026. \emph{SocialJax: An Evaluation Suite for Multi-agent Reinforcement Learning in Sequential Social Dilemmas}. ICLR Poster. OpenReview link recorded in \cite{iclr_subset}.
+
+\bibitem{tumix}
+Yongchao Chen et al. 2026. \emph{TUMIX: Multi-Agent Test-Time Scaling with Tool-Use Mixture}. ICLR Poster. OpenReview link recorded in \cite{iclr_subset}.
+
+\bibitem{coact1}
+Linxin Song et al. 2026. \emph{CoAct-1: Computer-using Multi-agent System with Coding Actions}. ICLR Poster. OpenReview link recorded in \cite{iclr_subset}.
+
+\bibitem{dover}
+Ming Ma, Jue Zhang, Fangkai Yang, Yu Kang, Qingwei Lin, Saravan Rajmohan, and Dongmei Zhang. 2026. \emph{DoVer: Intervention-Driven Auto Debugging for LLM Multi-Agent Systems}. ICLR Poster. OpenReview link recorded in \cite{iclr_subset}.
+
+\bibitem{a2asecbench}
+Tianhao Li, Chuangxin Chu, Yujia Zheng, Bohan Zhang, Neil Gong, and Chaowei Xiao. 2026. \emph{A2ASecBench: A Protocol-Aware Security Benchmark for Agent-to-Agent Multi-Agent Systems}. ICLR Poster. OpenReview link recorded in \cite{iclr_subset}.
+
+\bibitem{debate_icml}
+Yilun Du, Shuang Li, Antonio Torralba, Joshua B. Tenenbaum, and Igor Mordatch. 2024. \emph{Improving Factuality and Reasoning in Language Models through Multiagent Debate}. ICML. Proceedings and PDF links recorded in \cite{icml_list}.
+
+\bibitem{mad_icml}
+Andries Petrus Smit, Nathan Grinsztajn, Paul Duckworth, Thomas D. Barrett, and Arnu Pretorius. 2024. \emph{Should we be going MAD? A Look at Multi-Agent Debate Strategies for LLMs}. ICML. Proceedings and PDF links recorded in \cite{icml_list}.
+
+\bibitem{automl_agent}
+Patara Trirat, Wonyong Jeong, and Sung Ju Hwang. 2025. \emph{AutoML-Agent: A Multi-Agent LLM Framework for Full-Pipeline AutoML}. ICML. Proceedings and PDF links recorded in \cite{icml_list}.
+
+\bibitem{mas_gpt}
+Rui Ye, Shuo Tang, Rui Ge, Yaxin Du, Zhenfei Yin, Siheng Chen, and Jing Shao. 2025. \emph{MAS-GPT: Training LLMs to Build LLM-based Multi-Agent Systems}. ICML. Proceedings and PDF links recorded in \cite{icml_list}.
+
+\bibitem{metaagent}
+Yaolun Zhang, Xiaogeng Liu, and Chaowei Xiao. 2025. \emph{MetaAgent: Automatically Constructing Multi-Agent Systems Based on Finite State Machines}. ICML. Proceedings and PDF links recorded in \cite{icml_list}.
+
+\bibitem{g_designer}
+Guibin Zhang et al. 2025. \emph{G-Designer: Architecting Multi-agent Communication Topologies via Graph Neural Networks}. ICML. Proceedings and PDF links recorded in \cite{icml_list}.
+
+\bibitem{failure_attr}
+Shaokun Zhang et al. 2025. \emph{Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems}. ICML. Proceedings and PDF links recorded in \cite{icml_list}.
+
+\bibitem{faulty_agents}
+Jen-Tse Huang et al. 2025. \emph{On the Resilience of LLM-Based Multi-Agent Collaboration with Faulty Agents}. ICML. Proceedings and PDF links recorded in \cite{icml_list}.
+
+\bibitem{fightladder}
+Wenzhe Li, Zihan Ding, Seth Karten, and Chi Jin. 2024. \emph{FightLadder: A Benchmark for Competitive Multi-Agent Reinforcement Learning}. ICML. Proceedings and PDF links recorded in \cite{icml_list}.
+
+\bibitem{mdagents}
+Cynthia Breazeal et al. 2024. \emph{MDAgents: An Adaptive Collaboration of LLMs for Medical Decision-Making}. NeurIPS candidate list entry recorded in \cite{neurips_list}.
+
+\bibitem{magis}
+Yu Cheng, Wei Tao, Yanlin Wang, Hongyu Zhang, Wenqiang Zhang, and Yucheng Zhou. 2024. \emph{MAGIS: LLM-Based Multi-Agent Framework for GitHub Issue Resolution}. NeurIPS candidate list entry recorded in \cite{neurips_list}.
+
+\bibitem{mobile_agent_v2}
+Fei Huang et al. 2024. \emph{Mobile-Agent-v2: Mobile Device Operation Assistant with Effective Navigation via Multi-Agent Collaboration}. NeurIPS candidate list entry recorded in \cite{neurips_list}.
+
+\bibitem{secret_collusion}
+Mikhail Baranchuk et al. 2024. \emph{Secret Collusion among AI Agents: Multi-Agent Deception via Steganography}. NeurIPS candidate list entry recorded in \cite{neurips_list}.
+
+\bibitem{wfcrl}
+Ana Busic, Donatien Dubuc, Claire Monroc, and Jiamin Zhu. 2024. \emph{WFCRL: A Multi-Agent Reinforcement Learning Benchmark for Wind Farm Control}. NeurIPS candidate list entry recorded in \cite{neurips_list}.
+
+\bibitem{zsceval}
+Jingxiao Chen et al. 2024. \emph{ZSC-Eval: An Evaluation Toolkit and Benchmark for Multi-agent Zero-shot Coordination}. NeurIPS candidate list entry recorded in \cite{neurips_list}.
+
+\end{thebibliography}
+
+\end{document}
