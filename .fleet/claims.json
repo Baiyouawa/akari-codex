@@ -1013,7 +1013,8 @@
       "session_id": "果穗-07-1774450622-48e166",
       "project": "multi-agent-survey",
       "claimed_at": 1774450622.0817375,
-      "active": true
+      "active": false,
+      "released_at": 1774451014.5255148
     },
     "claim-43d40ebe1561": {
       "task_id": "7db3b00e003b03b4",
