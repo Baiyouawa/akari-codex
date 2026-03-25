@@ -1,578 +1,269 @@
-# 2026-03-26 十篇 multi-agent 相关综述中文总报告
+# 10 篇 multi-agent 综述中文速读手册
 
-- Timestamp: 2026-03-26T00:52:23+08:00
-- Session: 结衣-03-1774457492-789106
-- 任务: 综合 10 篇综述撰写中文 Markdown 报告，包含横向比较与研究空白总结
+- Timestamp: 2026-03-26T01:59:33+08:00
+- Session: 枫-05-1774461549-e6b16c
+- Purpose: 帮助人快速了解当前 canonical reading set 的 10 篇 multi-agent / agentic 综述
 - Canonical reading set: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`
-- 逐篇精读来源: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`
-- 综合修订来源: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-synthesis-report.md`
-- 交叉 review: `projects/multi-agent-review-survey/analysis/2026-03-26-cross-review-record.md`
-- research ideas: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-research-ideas.md`
+- Structured reading notes: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`
+- Synthesis report: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-synthesis-report.md`
+- Quick overview: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-quick-overview.md`
+- Cross-review evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-cross-review-record.md`
 
-> 说明：本报告不重新发明一套未验证结论，而是把项目内已经完成交叉复核的 10 篇 canonical 论文集合、结构化笔记、综合分析与 ideas 统一整理成一份可直接阅读的中文主报告。所有具体论文信息、页数、PDF 路径、来源页面均可回溯到上列文件。
+> 说明：本文不新增未经核验的论文事实，只把项目内已经 cross-review 对齐过的 10 篇综述，整理成更适合快速浏览的中文 Markdown。年份分布、页数、PDF 路径、题目与作者均以 `analysis/2026-03-26-ten-paper-metadata.md` 为准；逐篇判断与 benchmark/主题摘要以 `analysis/2026-03-26-ten-survey-structured-reading-notes.md` 为准。
+
+---
+
+## 0. 论文清单与 PDF 对应关系
+
+| # | 简题 | 年份 | 主题 | 本地 PDF 路径 |
+|---|---|---:|---|---|
+| 1 | Guo 2024 | 2024 | 通用总览 | `projects/multi-agent-review-survey/literature/2024-guo-et-al-large-language-model-based-multi-agents-a-survey-of-progress-and-challenges-arxiv-2402.01680.pdf` |
+| 2 | Aratchige & Ilmini 2025 | 2025 | 技术底座 | `projects/multi-agent-review-survey/literature/2025-aratchige-ilmini-llms-working-in-harmony-a-survey-on-the-technological-aspects-of-building-effective-llm-based-multi-agent-systems-arxiv-2504.01963.pdf` |
+| 3 | Chen et al. 2025 | 2025 | 应用前沿 | `projects/multi-agent-review-survey/literature/2025-chen-et-al-a-survey-on-llm-based-multi-agent-system-recent-advances-and-new-frontiers-in-application-arxiv-2412.17481.pdf` |
+| 4 | Tran et al. 2025 | 2025 | 协作机制 | `projects/multi-agent-review-survey/literature/2025-tran-et-al-multi-agent-collaboration-mechanisms-a-survey-of-llms-arxiv-2501.06322.pdf` |
+| 5 | Wu et al. 2025 | 2025 | 自动驾驶垂直场景 | `projects/multi-agent-review-survey/literature/2025-wu-et-al-multi-agent-autonomous-driving-systems-with-large-language-models-a-survey-of-recent-advances-arxiv-2502.16804.pdf` |
+| 6 | Yan et al. 2025 | 2025 | 通信中心视角 | `projects/multi-agent-review-survey/literature/2025-yan-et-al-beyond-self-talk-a-communication-centric-survey-of-llm-based-multi-agent-systems-arxiv-2502.14321.pdf` |
+| 7 | Xu et al. 2026 | 2026 | 工具编排 | `projects/multi-agent-review-survey/literature/2026-xu-et-al-tool-use-in-llm-agents.pdf` |
+| 8 | Yue et al. 2026 | 2026 | workflow 优化 | `projects/multi-agent-review-survey/literature/2026-yue-et-al-workflow-optimization-for-llm-agents.pdf` |
+| 9 | Chen et al. 2026 | 2026 | 5W 通信理论 | `projects/multi-agent-review-survey/literature/2026-chen-et-al-five-ws-of-multi-agent-communication.pdf` |
+| 10 | Wang et al. 2026 | 2026 | role-playing / social agents | `projects/multi-agent-review-survey/literature/2026-wang-et-al-role-playing-agents.pdf` |
 
 ---
 
 ## 1. 执行摘要
 
-这 10 篇综述共同说明，multi-agent 研究的重心已经从“让多个 LLM 一起工作”升级为“如何系统设计协作结构、通信协议、记忆机制、工具编排、运行时工作流、角色建模与治理边界”。
+### 一句话结论
+这 10 篇综述共同说明：multi-agent 研究已经从“让多个 LLM 一起回答问题”，转向“如何系统设计协作结构、通信协议、记忆机制、工具编排、运行时 workflow 与治理边界”。
 
-### 1.1 最主要的四个趋势
+### 最值得记住的 5 个判断
+1. **总览型综述正在让位于专题化综述。** 2024 年以全景地图为主，2025-2026 年则拆出 communication、collaboration、tool-use、workflow、role-play 等细分方向。  
+   Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-synthesis-report.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-quick-overview.md`
+2. **通信已变成核心研究变量。** “谁对谁说、什么时候说、说什么、为什么说”不再是 prompt 细节，而是独立设计空间。  
+   Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md` 中 Yan 2025、Chen 2026 条目
+3. **工程系统视角明显增强。** 2026 年综述显著更关注 multi-tool orchestration、runtime graph、预算、安全与治理。  
+   Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md` 中 Xu 2026、Yue 2026 条目
+4. **benchmark 很多，但仍然碎。** communication、workflow、tool-use、role-play 各有各的 benchmark，横向可比性不足。  
+   Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-synthesis-report.md`
+5. **最值钱的下一步不是再做一个 demo，而是解释 multi-agent 为什么在什么条件下更优。**  
+   Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-quick-overview.md`
 
-1. **总览型综述正在让位于专题化综述**
-   - 2024 年的 Guo 2024 更像全景地图；
-   - 2025 年开始出现 communication、collaboration、垂直应用等专题化综述；
-   - 2026 年进一步出现 workflow optimization、tool orchestration、role-playing agents 等工程/社会化子方向。
-
-2. **通信已经从实现细节升级为一等研究对象**
-   - Yan 2025 与 Chen 2026 都把 communication 放到中心位置；
-   - “谁对谁说、什么时候说、说什么、为什么说”已成为独立 taxonomy。
-
-3. **agent engineering 进入系统工程阶段**
-   - Aratchige 2025、Xu 2026、Yue 2026 明显强调 architecture、memory、planning、tool-use、workflow graph；
-   - 研究对象不再只是 prompt，而是完整运行时系统。
-
-4. **评测与治理仍然是最大短板之一**
-   - 多篇综述都指出 benchmark fragmented、成本与安全缺少统一度量、长期运行和真实世界评测薄弱；
-   - 这也是本轮综述综合后最清晰的研究空白之一。
-
-### 1.2 一句话结论
-
-如果说 2024 年的主问题是“multi-agent systems 是什么”，那么 2025-2026 年的主问题已经变成“如何在成本、安全、可解释性和真实约束下，把 multi-agent systems 做成可复用、可优化、可治理的工程系统”。
+### 数量核验
+- canonical reading set：10 篇。  
+  Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`
+- 年份分布：2024 年 1 篇，2025 年 5 篇，2026 年 4 篇。  
+  Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md` 中 `year_counts = Counter({'2025': 5, '2026': 4, '2024': 1})`
+- 总页数：340 页。  
+  Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-basic-info-for-10-papers.md` 中 inline arithmetic `15 + 12 + 13 + 35 + 18 + 16 + 42 + 31 + 143 + 15 = 340`
 
 ---
 
-## 2. 本轮最终采用的 10 篇综述
+## 2. 十篇逐篇精读卡片
 
-以下清单与 `analysis/2026-03-26-ten-paper-metadata.md` 保持一致。
+> 卡片字段统一来自 `analysis/2026-03-26-ten-survey-structured-reading-notes.md`，题目/年份/PDF 路径来自 `analysis/2026-03-26-ten-paper-metadata.md`。
 
-| # | 论文 | 年份 | 主题定位 | 本地 PDF |
-|---|---|---:|---|---|
-| 1 | Guo et al. — *Large Language Model based Multi-Agents: A Survey of Progress and Challenges* | 2024 | 通用总览 | `projects/multi-agent-review-survey/literature/2024-guo-et-al-large-language-model-based-multi-agents-a-survey-of-progress-and-challenges-arxiv-2402.01680.pdf` |
-| 2 | Aratchige & Ilmini — *LLMs Working in Harmony* | 2025 | architecture / memory / planning / frameworks | `projects/multi-agent-review-survey/literature/2025-aratchige-ilmini-llms-working-in-harmony-a-survey-on-the-technological-aspects-of-building-effective-llm-based-multi-agent-systems-arxiv-2504.01963.pdf` |
-| 3 | Chen et al. — *A Survey on LLM-based Multi-Agent System: Recent Advances and New Frontiers in Application* | 2025 | 应用前沿与组件 | `projects/multi-agent-review-survey/literature/2025-chen-et-al-a-survey-on-llm-based-multi-agent-system-recent-advances-and-new-frontiers-in-application-arxiv-2412.17481.pdf` |
-| 4 | Tran et al. — *Multi-Agent Collaboration Mechanisms: A Survey of LLMs* | 2025 | collaboration taxonomy | `projects/multi-agent-review-survey/literature/2025-tran-et-al-multi-agent-collaboration-mechanisms-a-survey-of-llms-arxiv-2501.06322.pdf` |
-| 5 | Wu et al. — *Multi-Agent Autonomous Driving Systems with Large Language Models* | 2025 | 自动驾驶垂直应用 | `projects/multi-agent-review-survey/literature/2025-wu-et-al-multi-agent-autonomous-driving-systems-with-large-language-models-a-survey-of-recent-advances-arxiv-2502.16804.pdf` |
-| 6 | Yan et al. — *Beyond Self-Talk: A Communication-Centric Survey of LLM-Based Multi-Agent Systems* | 2025 | communication-centric survey | `projects/multi-agent-review-survey/literature/2025-yan-et-al-beyond-self-talk-a-communication-centric-survey-of-llm-based-multi-agent-systems-arxiv-2502.14321.pdf` |
-| 7 | Xu et al. — *The Evolution of Tool Use in LLM Agents* | 2026 | tool orchestration | `projects/multi-agent-review-survey/literature/2026-xu-et-al-tool-use-in-llm-agents.pdf` |
-| 8 | Yue et al. — *From Static Templates to Dynamic Runtime Graphs* | 2026 | workflow optimization | `projects/multi-agent-review-survey/literature/2026-yue-et-al-workflow-optimization-for-llm-agents.pdf` |
-| 9 | Chen et al. — *The Five Ws of Multi-Agent Communication* | 2026 | 5W communication framework | `projects/multi-agent-review-survey/literature/2026-chen-et-al-five-ws-of-multi-agent-communication.pdf` |
-| 10 | Wang et al. — *Role-Playing Agents Driven by Large Language Models* | 2026 | 角色扮演/社会型 agent | `projects/multi-agent-review-survey/literature/2026-wang-et-al-role-playing-agents.pdf` |
+### 卡片 1：Guo et al. 2024
+- **定位**：最适合作为入门基线的通用总览。
+- **核心问题**：LLM-based multi-agent systems 到底由哪些组件构成、用于哪些任务、面临哪些挑战？
+- **怎么分**：interface、profiling、management、communication、training、orchestration/efficiency；应用上覆盖 problem solving、world simulation、dialogue generation。
+- **你会得到什么**：一张“多智能体系统总地图”，方便后续专题化阅读定位。
+- **局限**：时间较早，对 2025-2026 年 workflow、tool orchestration、communication 专题的深度不足。
+- **适合谁先读**：第一次建立整个 LLM-MAS 认知框架的人。
+- **Provenance**：`projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`
+
+### 卡片 2：Aratchige & Ilmini 2025
+- **定位**：技术底座导向综述。
+- **核心问题**：构建有效 LLM-based MAS 时，architecture、memory、planning、frameworks 哪些最关键？
+- **怎么分**：Architecture / Memory / Planning / Technologies & Frameworks 四大块。
+- **你会得到什么**：从“怎么搭系统”而不是“系统能做什么”来理解 multi-agent。
+- **局限**：应用覆盖面不如大型总览；更偏工程搭建视角。
+- **适合谁先读**：想自己实现或改造 agent 系统的人。
+- **Provenance**：`projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`
+
+### 卡片 3：Chen et al. 2025
+- **定位**：应用前沿导向综述。
+- **核心问题**：LLM-MAS 目前已经扩展到哪些复杂任务、仿真场景与评测前沿？
+- **怎么分**：复杂任务求解、特定场景仿真、生成式 agent 评估，并补充 core components 与 interactions。
+- **你会得到什么**：从应用需求反推系统能力边界。
+- **局限**：对 workflow / communication / tool-use 的细拆不如后续专题综述。
+- **适合谁先读**：优先关心落地场景与应用空间的人。
+- **Provenance**：`projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`
+
+### 卡片 4：Tran et al. 2025
+- **定位**：collaboration taxonomy 代表作。
+- **核心问题**：多个 LLM agent 协作时，合作、竞争、竞合与结构拓扑该如何组织？
+- **怎么分**：actors、relation types、structures、strategies、coordination protocols。
+- **你会得到什么**：理解“多 agent 的收益来自结构，而不是人数”的最清晰框架之一。
+- **局限**：对 tool-use、workflow、memory 讨论较少，需要与工程类综述配合。
+- **适合谁先读**：研究集体智能、协作协议和角色分工的人。
+- **Provenance**：`projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`
+
+### 卡片 5：Wu et al. 2025
+- **定位**：自动驾驶垂直应用综述。
+- **核心问题**：在高风险、强实时约束下，multi-agent + LLM 如何支持车-车、车-路、车-助手、agent-人协作？
+- **怎么分**：按交互对象和任务类型划分，包括协同感知、协同决策、云边部署与协同辅助工具。
+- **你会得到什么**：看到 multi-agent 如何从“研究系统”进入“真实约束系统”。
+- **局限**：场景专用性强，不能直接代表通用 MAS 全貌。
+- **适合谁先读**：关心高风险场景、安全与实时性的研究者。
+- **Provenance**：`projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`
+
+### 卡片 6：Yan et al. 2025
+- **定位**：communication-centric 综述。
+- **核心问题**：communication 为什么是 LLM-MAS 的中心变量，而不是附属实现细节？
+- **怎么分**：system-level communication 与 system-internal communication 两层；再细分 architecture、goals、protocols、strategy、paradigm、object、content。
+- **你会得到什么**：把通信从“提示词设计”升级为“系统设计”的视角。
+- **局限**：聚焦通信，因此 workflow、tool-use、memory 讨论相对弱。
+- **适合谁先读**：打算研究消息协议、通信成本、安全与可解释性的人。
+- **Provenance**：`projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`
+
+### 卡片 7：Xu et al. 2026
+- **定位**：tool-use / multi-tool orchestration 综述。
+- **核心问题**：agent 的工具调用如何从单工具调用，演化到长程、多工具、受约束的编排问题？
+- **怎么分**：planning & execution、trajectory construction、safety & control、resource efficiency、open-environment completeness、benchmark & evaluation。
+- **你会得到什么**：理解为什么真实 agent 系统的难点常常是“multi-tool”而不只是“multi-agent”。
+- **局限**：不是纯 communication / collaboration survey，对社会互动覆盖有限。
+- **适合谁先读**：构建工业级 agent runtime 或工具链系统的人。
+- **Provenance**：`projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`
+
+### 卡片 8：Yue et al. 2026
+- **定位**：workflow optimization 综述。
+- **核心问题**：workflow 结构在何时确定、如何优化、由什么 evaluation signal 驱动？
+- **怎么分**：静态 vs 动态；优化 workflow 哪一部分；由哪些信号指导优化。
+- **你会得到什么**：从 template 转向 runtime graph / ACG 的系统抽象。
+- **局限**：对社会性与通信协议细节覆盖不深。
+- **适合谁先读**：想研究 agent graph、planner、verifier、runtime optimization 的人。
+- **Provenance**：`projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`
+
+### 卡片 9：Chen et al. 2026
+- **定位**：5W 通信理论综述。
+- **核心问题**：如何用统一框架联通 MARL、emergent language 与 LLM-based MAS 的通信研究？
+- **怎么分**：Who / Whom / When / What / Why。
+- **你会得到什么**：一个足够通用、可直接拿来拆解问题的通信模板。
+- **局限**：聚焦通信，对 memory/tool/workflow 全景不覆盖。
+- **适合谁先读**：要做“通信理论化”和跨范式比较的人。
+- **Provenance**：`projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`
+
+### 卡片 10：Wang et al. 2026
+- **定位**：role-playing / social agents 综述。
+- **核心问题**：人格、记忆、动机如何驱动 role-playing agents 的长期互动与社会行为？
+- **怎么分**：研究范式演化、角色建模核心技术、数据构建、评测方法与未来趋势。
+- **你会得到什么**：看到 multi-agent 不只做任务协作，还能构建社会互动与叙事系统。
+- **局限**：对通用协作、tool-use、workflow 优化覆盖较少。
+- **适合谁先读**：做 social simulation、角色智能体、长期记忆与叙事系统的人。
+- **Provenance**：`projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`
 
 ---
 
-## 3. 十篇逐篇详述
-
-以下逐篇内容基于结构化笔记文件 `analysis/2026-03-26-ten-survey-structured-reading-notes.md` 汇总改写，保留原有证据边界：优先依据来源页摘要、源码 section heading、以及源码中抽取到的 benchmark/dataset 命中信息。
-
-### 3.1 Guo et al. 2024
-
-**研究问题**
-- 系统梳理 LLM-based multi-agent systems 的核心组成、应用类型与挑战。
-
-**分类框架**
-- 组件层：interface、profiling、management、communication、training、orchestration/efficiency；
-- 应用层：problem solving、world simulation、dialogue data generation。
-
-**核心贡献**
-- 提供了早期最完整的通用框架地图之一；
-- 适合作为后续专题综述的共同起点。
-
-**涉及 benchmark / 数据集**
-- `GSM8K`、`HumanEval`、`MMLU`、`BIG-bench`、`ChatArena`、`RoCoBench`、`CAMEL`、`AVALONBENCH`。
-
-**优点**
-- 覆盖面最广；
-- 同时讨论 benchmark 与实现资源；
-- 能快速建立对 LLM-MAS 的总体认识。
-
-**局限**
-- 时间较早；
-- 对 2025-2026 年兴起的 workflow、tool orchestration、通信专题深度不足。
-
-**启发**
-- 适合作为“总览基线”，不适合作为最新专题问题的唯一依据。
-
-### 3.2 Aratchige & Ilmini 2025
-
-**研究问题**
-- 构建高效 LLM-based MAS 时，哪些技术要素最关键？
-
-**分类框架**
-- `Architecture`、`Memory`、`Planning`、`Technologies/Frameworks` 四大块。
-
-**核心贡献**
-- 把研究重点从“系统长什么样”转向“系统为什么有效”；
-- 更偏工程搭建视角。
-
-**涉及 benchmark / 数据集**
-- `ALFWorld`、`HotpotQA`、`HumanEval`、`MATH`、`MT-Bench`、`AlpacaEval`、`CAMEL`、`AutoGen`。
-
-**优点**
-- 对 architecture / memory / planning 的工程意义总结清晰；
-- 对研发者比应用导向综述更直接。
-
-**局限**
-- 应用覆盖不如大型总览广；
-- 更偏技术基建，总体地图感稍弱。
-
-**启发**
-- 对搭建真实系统最有帮助的是把 memory、planning 视作一等模块，而非附属功能。
-
-### 3.3 Chen et al. 2025
-
-**研究问题**
-- 随着工作快速增长，LLM-MAS 在应用前沿上扩展到了哪些新边界？
-
-**分类框架**
-- 按应用场景组织：复杂任务求解、特定场景仿真、生成式 agent 评估；
-- 同时补充 core components 与 interactions。
-
-**核心贡献**
-- 更强调“多生成式 agent 系统拿来做什么”；
-- 把应用前沿与评测边界并列起来看。
-
-**涉及 benchmark / 数据集**
-- `AgentBench`、`AUCARENA`、`EvalPlus`、`GSM8K`、`HumanEval`、`MATH`、`MMLU`、`MT-Bench`、`MLAgentBench`、`ToolBench`、`LLMArena`、`ChatEval`。
-
-**优点**
-- 应用与评测覆盖面较强；
-- 有助于从“场景需求”反推系统设计。
-
-**局限**
-- 对 workflow/tool/通信机制的深入程度不如后续专题综述。
-
-**启发**
-- 如果目标是找落地场景，这篇比纯 taxonomy 综述更实用。
-
-### 3.4 Tran et al. 2025
-
-**研究问题**
-- 多个 LLM agent 的 collaboration mechanism 应该如何抽象、组织和比较？
-
-**分类框架**
-- actor、relation type（合作/竞争/竞合）、structure（点对点/中心化/分布式）、strategy、coordination protocol。
-
-**核心贡献**
-- 把 collaboration 从“多个 agent 一起做事”提升为有明确定义的结构问题；
-- 对集体智能研究非常关键。
-
-**涉及 benchmark / 应用域**
-- 文中强调 benchmark 与应用域包括 QA/NLG、5G/6G、Industry 5.0、social/cultural settings。
-
-**优点**
-- taxonomy 很强；
-- 合作/竞争/竞合三分法很有研究价值；
-- 能帮助设计更丰富的多主体关系。
-
-**局限**
-- 对 workflow、工具、长程记忆不是重点；
-- 需要与工程类综述配合使用。
-
-**启发**
-- “多 agent”不是简单加人数，而是重新定义交互结构与激励关系。
-
-### 3.5 Wu et al. 2025
-
-**研究问题**
-- 在自动驾驶中，multi-agent + LLM 能否解决单 agent ADS 的感知、协作与决策瓶颈？
-
-**分类框架**
-- 按交互对象分：车-车、车-路、车-助手、agent-人类；
-- 按任务分：协同感知、协同决策、云边部署、协同辅助工具。
-
-**核心贡献**
-- 证明 multi-agent 研究已从通用框架进入真实高风险行业场景；
-- 把语言驱动通信映射到自动驾驶协同系统。
-
-**涉及 benchmark / 数据集**
-- `Waymo Open Motion Dataset`、multi-agent autonomous driving datasets 等。
-
-**优点**
-- 现实约束强；
-- 对实时性、安全性、部署问题更敏感；
-- 给了垂直场景下的具体需求。
-
-**局限**
-- 领域专用性强；
-- 一些结论未必可无损迁移到通用 MAS。
-
-**启发**
-- 真正高价值的 multi-agent 系统不只是提高任务分数，还必须在时延、安全和部署约束下成立。
-
-### 3.6 Yan et al. 2025
-
-**研究问题**
-- communication 在 LLM-MAS 中并非附属因素，而是核心决定变量；如何据此重构研究版图？
-
-**分类框架**
-- system-level：architecture、goals、protocols；
-- internal communication：strategy、paradigm、object、content。
-
-**核心贡献**
-- 给出了 communication-centric taxonomy；
-- 强调 communication design 决定协作质量、成本、安全与扩展性。
-
-**涉及 benchmark / 数据集**
-- `GAMA-Bench`、`MultiAgentBench`、`RealWorldBench`。
-
-**优点**
-- 视角鲜明，补上此前通用综述忽略的中心问题；
-- system-level / internal 两层切分很适合做方法设计。
-
-**局限**
-- 过于聚焦通信，可能弱化 workflow、tool-use、memory 等其他因素。
-
-**启发**
-- 今后做多智能体实验，通信协议不应只当 prompt engineering 细节，而应当单独建模和评测。
-
-### 3.7 Xu et al. 2026
-
-**研究问题**
-- LLM agent 的 tool use 如何从单工具调用演化到长程、多工具编排？
-
-**分类框架**
-- inference-time planning/execution、training/trajectory construction、safety/control、resource efficiency、open-environment completeness、benchmark/evaluation。
-
-**核心贡献**
-- 把工具调用问题升级为 multi-tool orchestration 问题；
-- 更接近真实工业系统。
-
-**涉及 benchmark / 数据集**
-- `AgentLongBench`、`AndroidArena`、`CostBench`、`HammerBench`、`MCP-Bench`、`MTU-Bench`、`Mobile-Bench`、`OdysseyBench`、`RepoBench`、`RestBench`。
-
-**优点**
-- 长程、多工具、成本、安全四个维度总结完整；
-- 对工业级 agent 系统非常有价值。
-
-**局限**
-- 不是纯 communication / collaboration survey；
-- 对社会互动、角色建模覆盖有限。
-
-**启发**
-- 未来许多“multi-agent”提升，很可能和“multi-tool”能力边界纠缠在一起，不能分开看。
-
-### 3.8 Yue et al. 2026
-
-**研究问题**
-- LLM agents 的 workflow 结构在何时确定、如何优化、用什么信号指导优化？
-
-**分类框架**
-- 三条主轴：
-  1. 结构何时决定：静态 vs 动态；
-  2. 优化 workflow 的哪一部分；
-  3. 由何种 evaluation signal 驱动。
-
-**核心贡献**
-- 提出 `agentic computation graphs (ACGs)` 抽象；
-- 把 workflow 从“固定模板链”升级为“运行时图结构”。
-
-**涉及 benchmark / 数据集**
-- `FlowBench`、`GAIA`、`GSM8K`、`HotpotQA`、`HumanEval`、`MATH`、`MCP-Bench`、`MCPEval`、`SOP-Bench`、`SWE-bench`、`Terminal-Bench`、`ToolBench`、`WorkflowBench`。
-
-**优点**
-- taxonomy 清晰且工程上可执行；
-- 引入 graph-level properties、cost、robustness，超越单一 task score。
-
-**局限**
-- 对角色社会性、通信协议细节不是主线。
-
-**启发**
-- 未来 agent 系统优化，不会只靠 prompt 微调，而会越来越依赖 runtime graph 级别优化。
-
-### 3.9 Chen et al. 2026
-
-**研究问题**
-- 如何用统一框架联通 MARL、emergent language、LLM-based MAS 中的通信研究？
-
-**分类框架**
-- 5W：Who / Whom / When / What / Why。
-
-**核心贡献**
-- 给出跨范式桥梁，把传统多智能体通信与 LLM 通信放进统一问题模板；
-- 同时包含纳入/排除标准，综述方法更规范。
-
-**涉及 benchmark / 数据集**
-- `AvalonBench`、`BattleAgentBench`、`ChatEval`、`GAIA`、`MultiAgentBench`、`RoCoBench`、`CAMEL` 等。
-
-**优点**
-- 5W 框架普适性很强；
-- 有助于后续研究直接按 5W 拆问题；
-- 为 communication 子方向提供“标准问法”。
-
-**局限**
-- 强聚焦通信，不覆盖 workflow/tool/memory 全景。
-
-**启发**
-- 对任何多智能体系统，都可以先问：谁通信、面向谁、何时触发、消息内容是什么、通信目标为何。
-
-### 3.10 Wang et al. 2026
-
-**研究问题**
-- role-playing agents 如何从模板角色生成，演化为人格、记忆、动机驱动的社会型 agent 系统？
-
-**分类框架**
-- paradigm evolution、角色建模核心技术、角色专属数据构建、评测方法与指标、未来趋势。
-
-**核心贡献**
-- 把 social/role-playing agents 作为独立且系统化的研究支线；
-- 强调 personality、memory、motivation 对长期互动与叙事一致性的作用。
-
-**涉及 benchmark / 数据集**
-- `CharacterEval`、`RoleBench`、`RoleEval`、`RoleEval-Chinese`、`RoleEval-Global`、`RMTBench`、`RVBench`。
-
-**优点**
-- 对人格一致性、长期记忆、价值对齐等问题讨论细；
-- 对 social simulation、companion agents 研究特别有价值。
-
-**局限**
-- 对通用协作、工具调用、workflow 优化覆盖较少；
-- 更偏社会型场景。
-
-**启发**
-- 多智能体不只用于做任务，也可能用于构建社会互动、叙事生成与角色生态。
+## 3. 横向对比表
+
+| 论文 | 最强标签 | 主要贡献 | 最适合回答的问题 | 主要局限 |
+|---|---|---|---|---|
+| Guo 2024 | 通用总览 | 给出组件-应用-挑战总图谱 | multi-agent 全景是什么 | 对 2026 新主题覆盖不足 |
+| Aratchige 2025 | 技术底座 | 把 architecture / memory / planning 提到核心位置 | 怎样搭一个有效 MAS | 应用面较窄 |
+| Chen 2025 | 应用前沿 | 从复杂任务/仿真/评测看系统扩张 | 这些系统能拿来做什么 | 机制拆分不够细 |
+| Tran 2025 | 协作机制 | cooperation / competition / structure taxonomy | 多 agent 怎样组织协作关系 | 工具与 workflow 讨论较弱 |
+| Wu 2025 | 垂直场景 | 展示高风险真实约束下的多主体协作 | 自动驾驶等真实系统怎么落地 | 泛化到通用场景有限 |
+| Yan 2025 | 通信中心视角 | communication taxonomy | communication 为什么是核心变量 | 其他系统因素覆盖较少 |
+| Xu 2026 | 工具编排 | 从单工具到多工具编排的演化 | 工业级 agent 怎样管工具链 | 社会/角色互动覆盖少 |
+| Yue 2026 | workflow 优化 | 提出 runtime graph / ACG 视角 | workflow 何时该动态优化 | 通信细节不是重点 |
+| Chen 2026 | 5W 通信理论 | 用 5W 统一通信研究 | 如何系统拆解多智能体通信 | 非通信主题覆盖有限 |
+| Wang 2026 | social agents | 角色/人格/记忆建模体系化 | role-play/social agent 如何建模 | 不主讲通用 MAS 工程 |
 
 ---
 
-## 4. 横向比较
+## 4. 关键趋势
 
-### 4.1 按研究主题分组
+### 趋势 1：从“总览”走向“专题化”
+- 2024 年重点是建立问题空间；
+- 2025 年开始把 collaboration、communication、应用前沿、技术底座拆开讲；
+- 2026 年进一步出现 tool orchestration、workflow graph、5W communication、role-playing agents 等高密度子方向。  
+Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-quick-overview.md`
 
-| 组别 | 论文 | 关心的问题 |
-|---|---|---|
-| 通用总览 | Guo 2024、Chen 2025 | multi-agent 系统有哪些组件、应用和挑战 |
-| 技术底座 | Aratchige 2025 | architecture / memory / planning / frameworks 如何影响系统效果 |
-| 协作机制 | Tran 2025 | cooperation / competition / coordination 如何组织 |
-| 通信机制 | Yan 2025、Chen 2026 | 谁在何时对谁说什么、为什么说 |
-| 工具与工作流 | Xu 2026、Yue 2026 | multi-tool orchestration 与 workflow graph 如何设计与优化 |
-| 垂直应用 | Wu 2025 | 自动驾驶中的多主体协同与安全约束 |
-| 社会型 agents | Wang 2026 | 角色、人格、记忆、社会叙事如何建模 |
+### 趋势 2：通信成为统一变量
+多篇综述都隐含同一判断：通信会同时影响性能、成本、延迟、攻击面和可解释性，因此未来通信设计很难再只当作 prompt trick。  
+Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-synthesis-report.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`
 
-### 4.2 共识
+### 趋势 3：multi-agent 与 multi-tool / workflow 越来越耦合
+2026 年的工程型综述表明，实际系统里 workflow、tool-use、communication 是联动的：谁沟通、何时调用工具、如何改写 graph，往往一起决定系统收益。  
+Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-synthesis-report.md`
 
-跨 10 篇综述反复出现的共识如下：
+### 趋势 4：真实部署约束正在压过单纯分数
+安全、时延、预算、可治理性、运行时可控性正在成为和 task score 同等重要的指标。  
+Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-quick-overview.md`
 
-1. **单 agent 在复杂长期任务中会触顶**
-   - 多角色分工、互补视角和并行探索仍然是 multi-agent 的核心吸引力。
-
-2. **真正决定收益的不是 agent 数量，而是交互结构**
-   - 这一点在 Tran 2025、Yan 2025、Chen 2026 中尤为明显。
-
-3. **通信是性能、成本与安全的共同瓶颈**
-   - 通信不足会导致协作失效；
-   - 通信过量又会抬高 token 成本、延迟和攻击面。
-
-4. **agent benchmark 体系不统一**
-   - 不同论文使用不同的 benchmark 家族，导致横向比较困难。
-
-5. **现实部署要求开始压过纯方法分数**
-   - Xu 2026、Yue 2026、Wu 2025 都在强调效率、治理、时延、鲁棒性、运行时优化。
-
-### 4.3 分歧
-
-1. **研究主语不同**
-   - 有的把 multi-agent 看成应用系统；
-   - 有的看成通信网络；
-   - 有的看成 workflow graph；
-   - 有的看成社会角色生态。
-
-2. **自然语言通信 vs 高效协议通信**
-   - Chen 2026 连接了 MARL、emergent language 与 LLM communication，显示这两类传统并未统一。
-
-3. **通用性 vs 领域约束**
-   - 通用综述追求统一框架；
-   - Wu 2025、Wang 2026 则显示垂直领域必须接纳真实约束，而不能只靠抽象统一。
+### 趋势 5：社会型 agent 成为新分支
+Wang 2026 表明 multi-agent 的边界正在从“任务系统”扩展到“社会系统”，人格、记忆、关系稳定性成为新的核心维度。  
+Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md` 中 Wang 2026 条目
 
 ---
 
-## 5. 时间演化脉络
+## 5. 局限与机会
 
-### 5.1 2024：先回答“是什么”
+### 5.1 当前文献的共同局限
+1. **协作增益缺少因果拆解。** 很多工作只证明 multi-agent 优于 single-agent，但没有严格控制 token 预算、工具权限、拓扑结构与外部检索条件。  
+   Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-synthesis-report.md`
+2. **通信层指标不足。** 现有评测更偏任务分数，较少衡量消息有效率、冗余率、恢复时延与成本-性能曲线。  
+   Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-quick-overview.md`
+3. **workflow / tool / communication 仍被割裂研究。** 真系统中它们强耦合，但文献常分开综述、分开优化。  
+   Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-synthesis-report.md`
+4. **长期、真实、可治理 benchmark 仍弱。** 对开放环境、长轨迹、异常恢复、责任归因的覆盖不足。  
+   Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-synthesis-report.md`
+5. **社会型多智能体评测还很早期。** 人格一致性、关系稳定性、长期记忆可靠性仍缺标准化协议。  
+   Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md` 中 Wang 2026 条目
 
-- 代表：Guo 2024。
-- 核心任务：建立 LLM-based MAS 的总地图。
-- 关键词：组件、应用、挑战、资源、benchmark。
-
-### 5.2 2025：进入专题化分化
-
-- architecture / memory / planning：Aratchige 2025；
-- 应用前沿：Chen 2025；
-- collaboration：Tran 2025；
-- communication：Yan 2025；
-- 垂直场景：Wu 2025。
-
-这一阶段的标志是：研究者不再满足于“多 agent 有用”，而开始问“究竟是哪一层机制在起作用”。
-
-### 5.3 2026：工程系统化与社会化并进
-
-- tool orchestration：Xu 2026；
-- runtime workflow graph：Yue 2026；
-- unified communication theory：Chen 2026；
-- role-playing/social agents：Wang 2026。
-
-这说明 multi-agent 已经明显分裂成多个高密度子方向，并开始争夺统一方法学与统一评测协议。
+### 5.2 最值得追的机会点
+1. **预算感知的 communication-workflow 联合优化**：同时回应 communication / workflow / cost 三个断裂点。  
+2. **统一的 agent benchmark protocol**：解决 benchmark fragmentation。  
+3. **带治理约束的 multi-tool 多智能体系统**：面向真实工业部署。  
+4. **角色记忆驱动的 social multi-agent system**：连接 role-play 与 world simulation。  
+5. **高风险场景下的通信压缩与优先级调度**：把自动驾驶类垂直系统做深。  
+Provenance: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-research-ideas.md`
 
 ---
 
-## 6. 研究空白总结
+## 6. 给快速浏览者的阅读顺序建议
 
-以下空白是根据 `analysis/2026-03-26-ten-survey-synthesis-report.md` 与各逐篇笔记共同归纳得出。
+### 如果你只有 30 分钟
+1. 先读 Guo 2024，建立总地图；
+2. 再读 Yan 2025 或 Chen 2026，理解通信主线；
+3. 最后读 Xu 2026 或 Yue 2026，看工程系统如何升级。
 
-### 6.1 协作收益缺少因果拆解
+### 如果你想做系统实现
+优先顺序：Aratchige 2025 → Xu 2026 → Yue 2026 → Yan 2025。
 
-很多工作只报告 multi-agent 优于 single-agent，但未严格控制：
-- token 预算；
-- 工具使用权限；
-- 外部检索条件；
-- 拓扑与角色数。
+### 如果你想做理论与结构研究
+优先顺序：Tran 2025 → Yan 2025 → Chen 2026。
 
-因此现在往往只能知道“多 agent 变好了”，却不知道到底是：
-- 多了一次采样；
-- 多了外部工具；
-- 多了角色分工；
-- 还是通信结构真的更优。
+### 如果你想做场景与应用
+优先顺序：Chen 2025 → Wu 2025 → Wang 2026。
 
-### 6.2 缺少通信层专属指标
-
-Yan 2025 与 Chen 2026 都间接说明，当前评测过度依赖任务得分，缺失以下关键指标：
-- 消息有效率；
-- 冗余率；
-- 冲突恢复时延；
-- 通信成本-性能曲线；
-- 安全/攻击鲁棒性。
-
-### 6.3 workflow / communication / tool-use 仍被割裂研究
-
-- Xu 2026 研究工具编排；
-- Yue 2026 研究 workflow graph；
-- Yan 2025 / Chen 2026 研究 communication。
-
-但真实系统中，这三者是强耦合的：
-- workflow 决定谁有机会通信；
-- 通信决定是否触发工具；
-- 工具结果反过来改变 workflow。
-
-目前缺少把三者一起优化的统一框架。
-
-### 6.4 缺少长期、真实、可治理 benchmark
-
-- 自动驾驶、开放环境工具调用、社会型角色交互都提示：
-  - 长轨迹；
-  - 失败恢复；
-  - 安全边界；
-  - 权限治理；
-  - 责任归因；
-  还远未被现有 benchmark 系统覆盖。
-
-### 6.5 角色与社会型多智能体研究仍处早期
-
-Wang 2026 提醒我们：
-- personality fidelity；
-- memory consistency；
-- social relation stability；
-- narrative coherence；
-目前仍缺少统一而强的评测与建模标准。
-
-### 6.6 真实工业系统的治理仍弱
-
-Xu 2026、Wu 2025 都在强调：
-- 开放环境下的越权调用；
-- 多工具并发带来的安全问题；
-- 高风险行业中的通信失真；
-- runtime graph 的不可控增长；
-这些仍是研究与落地之间最大的缝隙之一。
+Provenance: 阅读顺序综合自 `projects/multi-agent-review-survey/analysis/2026-03-26-basic-info-for-10-papers.md` 与各篇 structured notes 的主题定位。
 
 ---
 
-## 7. 对本项目与 agent 集群的直接启发
+## 7. 最终 takeaway
 
-结合本仓库的 `repo as memory + multi-agent` 工作方式，10 篇综述带来的可执行启发包括：
+如果把这 10 篇综述压缩成 6 句话，可以记住：
 
-### 7.1 把通信当成一等对象记录
-
-不仅要记录最终结论，还要记录：
-- 谁提出；
-- 基于哪些文件；
-- 是否被复核；
-- 是否与他人结论冲突。
-
-这与 Yan 2025、Chen 2026 的通信中心视角高度一致。
-
-### 7.2 共享记忆要分层
-
-可分为：
-- 个体工作笔记；
-- 团队共享中间结论；
-- 经交叉 review 锁定的 canonical facts。
-
-这与 Aratchige 2025、Wang 2026 对 memory 重要性的强调一致。
-
-### 7.3 不同阶段应使用不同协作拓扑
-
-- 检索期：并行探索更有效；
-- 写作期：主笔 + 复核更有效；
-- 质检期：交叉审查更有效。
-
-这与 Tran 2025、Yue 2026 对结构与 workflow 的认识一致。
-
-### 7.4 将治理嵌入工作流
-
-- 高风险写操作触发 review；
-- 文档间 canonical set 不一致时强制修正；
-- 未验证断言不允许升格为最终结论。
-
-这与 Xu 2026 对 governance 的强调一致。
+1. **multi-agent 已进入系统工程阶段。**
+2. **人数不是关键，交互结构才是关键。**
+3. **通信是最核心的统一变量之一。**
+4. **workflow、tool-use、memory、communication 需要联合优化。**
+5. **benchmark 体系仍然碎片化，是当前最大方法学瓶颈之一。**
+6. **社会型 agents 可能是下一波高增长方向。**
 
 ---
 
-## 8. 可继续推进的研究方向
+## 8. 证据链
 
-本项目已另行产出 5 个 research ideas：
-`projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-research-ideas.md`
-
-其中最值得优先推进的方向包括：
-
-1. **预算感知的通信-工作流联合优化器**
-   - 直接对应 communication 与 workflow 断裂这一空白。
-
-2. **agent benchmark 统一协议**
-   - 直接回应 benchmark fragmentation 问题。
-
-3. **开放环境中的多工具协作 agent 安全治理**
-   - 直接回应 industrial-grade deployment 的治理缺口。
-
-4. **角色记忆驱动的社会型多智能体叙事系统**
-   - 对 social agents / role-playing agents 有较强新意。
-
-5. **面向自动驾驶的多主体通信压缩与优先级调度**
-   - 适合作为高风险高收益方向。
-
----
-
-## 9. 快速结论版
-
-如果要把这 10 篇综述压缩成一页 takeaway，可以记住下面六句话：
-
-1. **multi-agent 研究已经从“多人协作”进入“系统工程”阶段。**
-2. **通信是核心变量，不是实现细节。**
-3. **workflow、tool-use、memory、communication 需要联合优化。**
-4. **benchmark 体系仍然碎片化，是当前最大方法学瓶颈之一。**
-5. **真实应用场景正在把安全、延迟、治理拉到和性能同等重要的位置。**
-6. **社会型 agent 与角色建模可能成为下一波新的增长点。**
-
----
-
-## 10. 证据链与对应关系
-
-- canonical 10 篇清单、作者、年份、来源、页数、PDF 路径：
+- canonical 10 篇题目、作者、年份、来源页、PDF 路径、页数：  
   `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`
-- 逐篇结构化精读：
+- 10 篇逐篇结构化精读：  
   `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`
-- 综合分析修订稿：
+- 中文综合报告：  
   `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-synthesis-report.md`
-- 交叉 review 证据：
+- 横向速览：  
+  `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-quick-overview.md`
+- 交叉 review 记录：  
   `projects/multi-agent-review-survey/analysis/2026-03-26-cross-review-record.md`
-- 研究 idea：
+- research ideas：  
   `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-research-ideas.md`
-
-本报告本身不新增未经验证的论文事实，只对以上已核验材料做统一编排与中文总结。

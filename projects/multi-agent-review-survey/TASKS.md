@@ -126,16 +126,20 @@
   Done when: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md` 完成 10 篇统一模板笔记
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`; `projects/multi-agent-review-survey/logs/2026-03-26T00:16:17+08:00-fleet-结衣-03-1774454544-65f537-ten-survey-deep-reading.md`
 
-- [ ] 对每篇论文做证据链核验：至少核对摘要、引言、结论与 survey/review 定位表述，避免把普通论文误判为综述；如遇边界论文，写明保留或剔除理由
-  Done when: TBD
+- [x] 对每篇论文做证据链核验：至少核对摘要、引言、结论与 survey/review 定位表述，避免把普通论文误判为综述；如遇边界论文，写明保留或剔除理由
+  Completed: 2026-03-26T01:57:28+08:00
+  Done when: 每篇目标论文都有摘要、引言、结论与 survey/review/SoK 定位证据，并对边界论文给出保留或剔除理由
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-survey-identity-evidence-chain-audit.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-latest-five-review-evidence-verification.md`; `projects/multi-agent-review-survey/logs/2026-03-26T01:57:28+08:00-fleet-日向-03-1774461369-d0939c-latest-five-review-evidence-verification.md`
 
 - [x] 对 10 篇综述做横向对比，整理共识、分歧、重复主题、空白问题、时间演化趋势，形成适合快速浏览的中文总览
   Completed: 2026-03-26T01:55:48+08:00
   Done when: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-quick-overview.md` 形成适合快速浏览的中文横向总览
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-quick-overview.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-synthesis-report.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`
 
-- [ ] 撰写一个中文 Markdown 文档，帮助人快速了解这 10 篇综述；文档需包含：执行摘要、10 篇逐篇精读卡片、横向对比表、关键趋势、局限与机会
-  Done when: TBD
+- [x] 撰写一个中文 Markdown 文档，帮助人快速了解这 10 篇综述；文档需包含：执行摘要、10 篇逐篇精读卡片、横向对比表、关键趋势、局限与机会
+  Completed: 2026-03-26T01:59:33+08:00
+  Done when: 文档落盘并覆盖执行摘要、10 篇逐篇精读卡片、横向对比表、关键趋势、局限与机会
+  Evidence: `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md`; `projects/multi-agent-review-survey/logs/2026-03-26T01:59:33+08:00-fleet-枫-05-1774461549-e6b16c-fast-survey-handbook.md`
 
 - [ ] 基于 10 篇综述的空白点与未来方向，提出 10 个后续可做的详细 idea；每个 idea 需包含：问题定义、为什么值得做、与现有综述的关系、可行方法、数据/benchmark、评测指标、预期难点、最小可执行原型
   Done when: TBD
