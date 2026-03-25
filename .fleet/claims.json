@@ -1040,7 +1040,8 @@
       "session_id": "沙弥香-01-1774450892-0c51b9",
       "project": "multi-agent-survey",
       "claimed_at": 1774450892.4676611,
-      "active": true
+      "active": false,
+      "released_at": 1774451278.9995098
     },
     "claim-bcaab217acb5": {
       "task_id": "d2b1001370c609a5",
@@ -1057,7 +1058,8 @@
       "session_id": "结衣-03-1774451072-4aa9d6",
       "project": "multi-agent-survey",
       "claimed_at": 1774451072.7188861,
-      "active": true
+      "active": false,
+      "released_at": 1774451281.4996772
     },
     "claim-344c9d948587": {
       "task_id": "7db3b00e003b03b4",
@@ -1065,7 +1067,8 @@
       "session_id": "由希奈-04-1774451102-2ff257",
       "project": "multi-agent-survey",
       "claimed_at": 1774451102.7634099,
-      "active": true
+      "active": false,
+      "released_at": 1774451308.0139725
     },
     "claim-c9415e3adda6": {
       "task_id": "d2b1001370c609a5",
@@ -1073,6 +1076,40 @@
       "session_id": "枫-05-1774451192-8b98ff",
       "project": "multi-agent-survey",
       "claimed_at": 1774451192.8903809,
+      "active": true
+    },
+    "claim-22e345cb5b11": {
+      "task_id": "7db3b00e003b03b4",
+      "worker_id": "花阳-06",
+      "session_id": "花阳-06-1774451313-0c83d4",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774451313.0507715,
+      "active": false,
+      "released_at": 1774451479.507075
+    },
+    "claim-25ad7f5eb035": {
+      "task_id": "af48d38c7c75c18b",
+      "worker_id": "果穗-07",
+      "session_id": "果穗-07-1774451313-3e76d7",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774451313.055324,
+      "active": false,
+      "released_at": 1774451505.7131019
+    },
+    "claim-09872d915e0e": {
+      "task_id": "7db3b00e003b03b4",
+      "worker_id": "侑-08",
+      "session_id": "侑-08-1774451643-b35b46",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774451643.4958751,
+      "active": true
+    },
+    "claim-278d7c76bf75": {
+      "task_id": "af48d38c7c75c18b",
+      "worker_id": "侑-00",
+      "session_id": "侑-00-1774451643-7012d2",
+      "project": "multi-agent-survey",
+      "claimed_at": 1774451643.5051968,
       "active": true
     }
   }
