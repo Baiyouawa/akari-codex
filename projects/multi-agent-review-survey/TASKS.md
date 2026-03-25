@@ -64,8 +64,10 @@
 - [ ] 使用 web_search/web_fetch 检索 2024-2026 年 multi-agent systems / LLM agents / cooperative agents 相关综述或 survey，整理不少于 15 篇候选，附标题、年份、来源 URL
   Done when: TBD
 
-- [ ] 从候选中筛出最新且真正属于综述/survey 的 10 篇，给出判断依据，并为每篇确认主页与 PDF 直链；必要时交叉检查 arXiv、OpenReview、出版社页面
-  Done when: TBD
+- [x] 从候选中筛出最新且真正属于综述/survey 的 10 篇，给出判断依据，并为每篇确认主页与 PDF 直链；必要时交叉检查 arXiv、OpenReview、出版社页面
+  Completed: 2026-03-26T01:21:48+08:00
+  Done when: 10 篇论文均有逐篇 survey 判定依据、主页/来源页与 PDF 直链，并在项目文档中可追溯
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-candidate-survey-judgment-and-top10.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-pdf-links-and-download-record.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-canonical-ten-cross-verification.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-top10-survey-selection-closeout.md`
 
 - [ ] 检索 2024-2026 年最新的 multi-agent 相关综述/survey 论文，初筛候选论文并记录来源链接、年份、标题与摘要
   Done when: TBD
