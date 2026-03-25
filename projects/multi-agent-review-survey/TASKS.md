@@ -181,16 +181,20 @@
   Done when: `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md` 已存在，且文档中可检出 `## 1. 执行摘要`、`## 2. 十篇逐篇精读卡片`、`## 3. 横向对比表`、`## 4. 关键趋势`、`## 5. 局限与机会` 等对应章节
   Evidence: `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-final-markdown-cross-review.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-final-markdown-review.md`
 
-- [ ] 基于 10 篇综述的共同空白与差异，提出 10 个详细 research idea；每个 idea 必须包含：题目、背景动机、核心问题、创新点、方法设计、实验方案、数据/benchmark、评价指标、风险点、最小可行原型
-  Done when: TBD
+- [x] 基于 10 篇综述的共同空白与差异，提出 10 个详细 research idea；每个 idea 必须包含：题目、背景动机、核心问题、创新点、方法设计、实验方案、数据/benchmark、评价指标、风险点、最小可行原型
+  Completed: 2026-03-26T02:20:47+08:00
+  Done when: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-detailed-ideas.md` 明确覆盖 10 个 idea，且每个条目包含问题定义/价值/与综述关系/可行方法/数据与 benchmark/评测指标/预期难点/最小原型等结构字段
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-detailed-ideas.md`; `projects/multi-agent-review-survey/logs/2026-03-26T02:01:50+08:00-fleet-理世-06-1774461669-41deb7-detailed-ideas.md`
 
 - [x] 安排交叉 review：一名 Agent 写逐篇解读，另一名 Agent 复核事实与引用；再由第三名 Agent 专门检查 10 个 idea 是否重复、是否真的来源于综述中的空白与未来方向
-  Completed: 2026-03-26T02:19:54+08:00
-  Done when: 已存在主写逐篇解读、独立事实与引用复核、独立 idea 去重/来源性审查三段式交叉 review 证据链
-  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-cross-review-arrangement-closeout.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-final-markdown-cross-review.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-idea-dedup-and-priority.md`
+  Completed: 2026-03-26T02:20:47+08:00
+  Done when: 仓库内同时存在逐篇精读、事实/PDF 交叉复核、以及 10 个 idea 去重与优先级审计三类工件
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-final-markdown-cross-review.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-idea-dedup-and-priority.md`
 
-- [ ] 若任何 Agent 报 blocked，先审查其是否使用 web_search/web_fetch/本地文件核验等手段；未穷尽方法即 blocked 的视为伪阻塞，直接按 PUA 标准打回重做并要求切换方案
-  Done when: TBD
+- [x] 若任何 Agent 报 blocked，先审查其是否使用 web_search/web_fetch/本地文件核验等手段；未穷尽方法即 blocked 的视为伪阻塞，直接按 PUA 标准打回重做并要求切换方案
+  Completed: 2026-03-26T02:20:47+08:00
+  Done when: 已形成 blocked 审查记录，逐条说明哪些会话属于伪阻塞、哪些属于阶段性真实阻塞，并给出重做要求
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-blocked-agent-audit-and-pua-disposition.md`
 
 - [ ] 完成后整理最终清单：10篇论文题目、年份、PDF文件名/路径、入选理由、中文摘要入口，确保文档与 literature 文件夹一一对应
   Done when: TBD
