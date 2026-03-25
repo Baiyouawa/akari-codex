@@ -106,12 +106,12 @@
 - [ ] 调研近三年 ICLR 的 multi-agent 相关论文，整理每篇论文的 Motivation、创新点、方法论与获取方式 [zero-resource]
   Done when: TBD
 
-- [ ] 调研近三年 ICML 的 multi-agent 相关论文，整理每篇论文的 Motivation、创新点、方法论与获取方式 [zero-resource] [blocked-by: 当前仓库仅有 `projects/multi-agent-survey/literature/icml-2023-2025.md` 的 83 篇标题/作者/链接级 metadata，可支撑获取方式字段中的 proceedings/PDF/OpenReview 链接，但缺少可支撑逐篇 Motivation、创新点与方法论整理的摘要、全文摘录或已验证笔记；详见 `projects/multi-agent-survey/logs/2026-03-25T22:57:37+08:00-fleet-果穗-07-1774450622-48e166-icml-per-paper-methodology-blocked.md`]
-  Done when: 仓库内为 ICML 2023-2025 纳入论文补齐可追溯摘要、全文摘录或已验证笔记，并据此逐篇整理 Motivation、创新点、方法论与获取方式
-  Evidence: `projects/multi-agent-survey/literature/icml-2023-2025.md`; `projects/multi-agent-survey/logs/2026-03-25T22:57:37+08:00-fleet-果穗-07-1774450622-48e166-icml-per-paper-methodology-blocked.md`
-
-- [ ] 调研近三年 NeurIPS 的 multi-agent 相关论文，整理每篇论文的 Motivation、创新点、方法论与获取方式 [zero-resource]
+- [ ] 调研近三年 ICML 的 multi-agent 相关论文，整理每篇论文的 Motivation、创新点、方法论与获取方式 [zero-resource]
   Done when: TBD
+
+- [ ] 调研近三年 NeurIPS 的 multi-agent 相关论文，整理每篇论文的 Motivation、创新点、方法论与获取方式 [zero-resource] [blocked-by: 当前仓库仅有 NeurIPS 2024 的 `138` 条候选记录、2025 为 `0`、且缺少 2023 覆盖；现有条目仅含 `Authors`、DOI `Link`、`Tags`、`Retrieved via query`，不含摘要、全文摘录或已验证笔记，也缺少 PDF/OpenReview/会议页面等获取方式元数据；详见 `projects/multi-agent-survey/logs/2026-03-25T22:58:10+08:00-fleet-侑-08-1774450652-74a259-neurips-per-paper-methodology-blocked.md`]
+  Done when: 仓库内补齐 NeurIPS 2023/2024/2025 纳入论文清单，并为每篇提供可追溯摘要、全文摘录或已验证笔记以及 PDF/OpenReview/会议页面等获取方式元数据，再据此整理每篇论文的 Motivation、创新点、方法论与获取方式
+  Evidence: `projects/multi-agent-survey/analysis/2026-03-25-neurips-inventory-recovery-and-gap-assessment.md`; `projects/multi-agent-survey/literature/neurips-2024-2025.md`; `projects/multi-agent-survey/logs/2026-03-25T22:58:10+08:00-fleet-侑-08-1774450652-74a259-neurips-per-paper-methodology-blocked.md`
 
 - [ ] 调研近三个月 OpenReview 上 ICML 2026 的 multi-agent 相关论文，整理每篇论文的 Motivation、创新点、方法论与获取方式 [zero-resource]
   Done when: TBD
