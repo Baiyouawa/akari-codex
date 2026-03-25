@@ -181,8 +181,10 @@
   Done when: `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md` 已存在，且文档中可检出 `## 1. 执行摘要`、`## 2. 十篇逐篇精读卡片`、`## 3. 横向对比表`、`## 4. 关键趋势`、`## 5. 局限与机会` 等对应章节
   Evidence: `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-final-markdown-cross-review.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-final-markdown-review.md`
 
-- [ ] 基于 10 篇综述的共同空白与差异，提出 10 个详细 research idea；每个 idea 必须包含：题目、背景动机、核心问题、创新点、方法设计、实验方案、数据/benchmark、评价指标、风险点、最小可行原型
-  Done when: TBD
+- [x] 基于 10 篇综述的共同空白与差异，提出 10 个详细 research idea；每个 idea 必须包含：题目、背景动机、核心问题、创新点、方法设计、实验方案、数据/benchmark、评价指标、风险点、最小可行原型
+  Completed: 2026-03-26T02:19:21+08:00
+  Done when: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-detailed-ideas.md` 完成 10 个字段对齐的 detailed ideas，并与项目内综述综合报告、横向总览、结构化精读笔记保持证据链一致
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-detailed-ideas.md`; `projects/multi-agent-review-survey/logs/2026-03-26T02:19:21+08:00-fleet-柑奈-02-1774462721-f2ece3-final-10-idea-field-alignment.md`
 
 - [x] 安排交叉 review：一名 Agent 写逐篇解读，另一名 Agent 复核事实与引用；再由第三名 Agent 专门检查 10 个 idea 是否重复、是否真的来源于综述中的空白与未来方向
   Completed: 2026-03-26T02:19:54+08:00
