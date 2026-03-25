@@ -198,3 +198,12 @@ Notes: <any modifications or context>
 **Description:** Need temporary shell allowlist access for `git add`/`git commit` to complete required session protocol and persist completed task state for project `multi-agent-review-survey`. Work is already written to repo files; only commit is blocked by current shell allowlist.
 **Status:** pending
 
+
+---
+
+### [BLOCKING] tool-access
+
+**Requested:** 2026-03-25T17:01:14.171299+00:00
+**Description:** Need allowlisted git staging/commit command to finish required session protocol for completed task. Work is already written in projects/multi-agent-review-survey/{TASKS.md,README.md,logs/2026-03-26T00:56:42+08:00-fleet-千早-05-1774457762-a2bc7b-literature-pdf-verification-recheck.md}, but current shell allowlist blocks `git add`/`git commit`, preventing the mandatory commit with message `[fleet/千早-05-1774457762-a2bc7b] ...`.
+**Status:** pending
+

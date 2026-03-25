@@ -8,23 +8,21 @@
   Done when: literature/ 中有 10 个可打开的 PDF 文件，命名规范
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-pdf-links-and-download-record.md`
 
-- [x] 验证 literature 文件夹中的 10 个 PDF 是否可正常打开、文件不为空、命名无冲突
-  Completed: 2026-03-26T00:56:42+08:00
+- [ ] 验证 literature 文件夹中的 10 个 PDF 是否可正常打开、文件不为空、命名无冲突
   Done when: 每个文件验证通过并记录验证结果
-  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-literature-pdf-verification.md`; `projects/multi-agent-review-survey/logs/2026-03-26T00:56:42+08:00-fleet-千早-05-1774457762-a2bc7b-literature-pdf-verification-recheck.md`
 
-- [ ] 记录每篇论文的元数据（题目、作者、年份、来源、PDF 路径）并汇总到项目文档中
+- [x] 记录每篇论文的元数据（题目、作者、年份、来源、PDF 路径）并汇总到项目文档中
+  Completed: 2026-03-26T00:52:11+08:00
   Done when: 元数据清单完整且与实际文件一致
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-literature-metadata-inventory.md`; `projects/multi-agent-review-survey/logs/2026-03-26T00:52:11+08:00-fleet-智乃-02-1774457492-d9ccb6-metadata-refresh.md`
 
 - [x] 对全部 10 篇综述逐篇精读，提取研究问题、分类框架、核心方法、数据集/基准、优缺点与未来方向
   Completed: 2026-03-26T00:16:17+08:00
   Done when: 10 篇结构化中文笔记完成
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`; `projects/multi-agent-review-survey/logs/2026-03-26T00:16:17+08:00-fleet-结衣-03-1774454544-65f537-ten-survey-deep-reading.md`
 
-- [x] 综合 10 篇综述撰写中文 Markdown 报告，包含横向比较与研究空白总结
-  Completed: 2026-03-26T00:52:23+08:00
+- [ ] 综合 10 篇综述撰写中文 Markdown 报告，包含横向比较与研究空白总结
   Done when: 报告文件完成，包含逐篇详述和横向分析
-  Evidence: `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-synthesis-report.md`; `projects/multi-agent-review-survey/logs/2026-03-26T00:52:23+08:00-fleet-结衣-03-1774457492-789106-survey-report.md`
 
 - [x] 基于 10 篇综述提出 5 个可做的研究 idea，每个 idea 包含问题动机、核心假设、方法设计、评测方案
   Completed: 2026-03-26T00:16:17+08:00
@@ -192,58 +190,4 @@
   Done when: TBD
 
 - [ ] 将最终交付物落盘到项目目录中的 Markdown 文件，并给出可直接汇报给小侑的完成版摘要。
-  Done when: TBD
-
-- [ ] 基于现有 canonical 10 篇 reading set 与结构化笔记，将 research ideas 从 5 个扩展到 10 个；每个 idea 必须包含动机、问题定义、方法设计、可用 benchmark、评测方案、预期贡献与主要风险。
-  Done when: TBD
-
-- [ ] 复核 10 篇 canonical 综述在 synthesis report、structured reading notes、metadata 三份文档中的题目、年份、链接、本地 PDF 路径是否完全一致；如不一致，逐项修正并记录证据。
-  Done when: TBD
-
-- [ ] 整合现有 10 篇精读笔记、横向比较、研究空白和 10 个 detailed ideas，产出单一最终中文 Markdown 文件，文件名使用明确可交付命名（如 final-survey-report.md），放在 projects/multi-agent-review-survey/analysis/ 下。
-  Done when: TBD
-
-- [ ] 为最终 Markdown 增加开头摘要与结尾结论，确保小侑可以直接阅读，不依赖多个分散文件来理解内容。
-  Done when: TBD
-
-- [ ] 对最终 Markdown 做 Humanize Review：检查结构完整性、证据链可追溯性、是否明确指出哪些判断来自摘要/目录/benchmark 命中，避免无依据扩写。
-  Done when: TBD
-
-- [ ] 检查当前活跃 Agent 的日志与产出；如果有 Agent 未使用 web_search/web_fetch 等可用手段就报 blocked，按 PUA 标准打回重做，不允许偷懒式阻塞。
-  Done when: TBD
-
-- [ ] 任务1：盘点 projects/multi-agent-review-survey/TASKS.md 中所有未完成项，去重归并为一份 canonical backlog，标注哪些是重复表述、哪些是真正未完成，并输出到 analysis/canonical-backlog.md。
-  Done when: TBD
-
-- [ ] 任务2：盘点 projects/multi-agent-review-survey/literature/ 下全部 PDF，检查文件是否存在、非空、可读、命名是否冲突，并形成验证记录与缺口清单。
-  Done when: TBD
-
-- [ ] 任务3：复核当前已确认的 10 篇 canonical reading set，在 metadata、structured notes、synthesis report 三份文档中的题目、年份、链接、PDF 路径是否一致；如不一致，逐项记录。
-  Done when: TBD
-
-- [ ] 任务4：联网检索 2024-2026 年 multi-agent systems / LLM-based multi-agent / cooperative agents 相关 survey/review 候选不少于15篇，附标题、年份、来源URL、survey证据句。
-  Done when: TBD
-
-- [ ] 任务5：对候选论文做 survey 属性核验与去重，给出最终 10 篇最新且真正属于综述/survey 的清单，并写明入选/剔除理由，不与任务4重复检索。
-  Done when: TBD
-
-- [ ] 任务6：为最终确认的 10 篇论文核对 PDF 直链与本地文件对应关系；若缺失则补记链接和目标文件名，但不要和任务2重复做文件可读性检查。
-  Done when: TBD
-
-- [ ] 任务7：基于现有 ten-survey-structured-reading-notes.md，补做逐篇证据链核验：至少核对摘要、引言、结论中的 survey/review 定位表述，避免把普通论文误判为综述。
-  Done when: TBD
-
-- [ ] 任务8：撰写 10 篇综述的横向对比，整理共识、分歧、时间演化、研究空白、评测与benchmark脉络，输出为独立中文 Markdown。
-  Done when: TBD
-
-- [ ] 任务9：将现有 5 个 research ideas 扩展到 10 个 detailed ideas；每个 idea 必须包含动机、问题定义、方法设计、benchmark、评测方案、预期贡献、风险与 MVP。
-  Done when: TBD
-
-- [ ] 任务10：对 10 个 ideas 做去重和优先级排序，标注短期/中期/高风险高收益，并推荐前3个起步方向；不要重写 idea 内容本体。
-  Done when: TBD
-
-- [ ] 任务11：整合已有精读笔记、metadata、横向比较与 ideas，起草最终中文主报告 projects/multi-agent-review-survey/analysis/final-survey-report.md，包含摘要、10篇逐篇解读、横向对比表、趋势、研究空白。
-  Done when: TBD
-
-- [ ] 任务12：作为审稿/质控 Agent，专门检查其他任务产出的证据链、事实一致性、引用可追溯性；若发现 blocked 但未用 web_search/web_fetch/本地核验，则明确记为伪阻塞并要求返工。
   Done when: TBD
