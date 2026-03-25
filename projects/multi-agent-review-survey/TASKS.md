@@ -26,3 +26,22 @@
 
 - [ ] 基于 5 篇综述的共同空白与趋势，提出 5 个可做的研究 idea；每个 idea 需要写清问题动机、核心假设、方法设计、数据/benchmark、评测指标、潜在风险与预期贡献。 [zero-resource] [blocked-by: 缺少前置的 5 篇综述比较与研究空白总结。]
   Done when: 基于已完成的 5 篇综述比较，产出 5 个结构完整的研究 idea。
+
+- [ ] 检索 multi-agent 相关最新5篇综述论文，优先覆盖 arXiv 与 OpenReview，可补充可信学术来源 [zero-resource]
+  Done when: TBD
+
+- [ ] 将确认后的5篇综述下载到本地 paper 目录，并记录来源链接与文件名映射 [zero-resource]
+  Done when: TBD
+
+- [ ] 逐篇精读5篇综述，提取研究问题、分类框架、核心方法、数据集/基准、优缺点与未来方向 [zero-resource]
+  Done when: TBD
+
+- [ ] 汇总生成中文 Markdown 文档，分别详述5篇综述的内容与价值 [zero-resource]
+  Done when: TBD
+
+- [ ] 基于5篇综述提出5个可做的研究 idea，并为每个 idea 写出具体方法设计、可行性与潜在贡献 [zero-resource]
+  Done when: TBD
+
+- [ ] 若任一论文缺失、下载失败或信息不全，立即报告阻塞详情：哪个Agent卡住、卡点与缺失资料 [zero-resource]
+  Done when: TBD
+

@@ -96,5 +96,6 @@
   Done when: 仓库内补齐最近三个月 ICML 2026 OpenReview multi-agent 投稿清单，并为每篇提供可追溯摘要、全文摘录或已验证笔记，再据此整理 Motivation、创新点、方法论与获取方式
   Evidence: `projects/multi-agent-survey/logs/2026-03-25T23:02:00+08:00-fleet-沙弥香-01-1774450892-0c51b9-icml-2026-openreview-per-paper-blocked.md`
 
-- [ ] 基于全部调研结果撰写综述，并提出 5 个最适合继续做的课题方向及详细方法设计 [zero-resource]
-  Done when: TBD
+- [x] 基于全部调研结果撰写综述，并提出 5 个最适合继续做的课题方向及详细方法设计 [zero-resource]
+  Completed: 2026-03-25T23:21:54+08:00
+  Evidence: `projects/multi-agent-survey/paper/2026-03-25-kdd-style-multi-agent-survey.tex`; `projects/multi-agent-survey/analysis/2026-03-25-future-research-directions.md`; `projects/multi-agent-survey/logs/2026-03-25T23:21:54+08:00-fleet-花阳-06-1774452064-c766e9-final-survey-and-directions-closeout.md`
