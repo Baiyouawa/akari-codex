@@ -1,5 +1,9 @@
 # multi-agent-survey — 任务列表
 
+- [x] 检索 multi-agent 相关最新五篇综述，下载到本地并逐篇详读，输出中文 markdown 总结与研究 idea [zero-resource]
+  Completed: 2026-03-26T02:39:11+08:00
+  Evidence: `projects/multi-agent-survey/analysis/2026-03-26-latest-five-multi-agent-reviews-cn.md`; `projects/multi-agent-survey/logs/2026-03-26T02:39:11+08:00-fleet-日向-11-1774463773-c59309-latest-five-reviews-closeout.md`
+
 - [ ] 检索并汇总近三年 ICLR 会议所有与 multi-agent 相关论文，筛选高相关条目并整理论文标题、作者、年份、链接、PDF下载地址、OpenReview/会议页面 [zero-resource] [blocked-by: 当前仓库仅能验证 ICLR 2025-2026 清单与高相关子集，未发现 ICLR 2024 inventory，因此无法满足“近三年 ICLR”完整覆盖]
   Done when: 基于可追溯来源补齐 ICLR 2024/2025/2026 高相关条目，并为每条提供标题、作者、年份、链接、PDF下载地址、OpenReview/会议页面
   Evidence: `projects/multi-agent-survey/literature/2026-03-25-iclr-high-relevance-2025-2026.md`; `projects/multi-agent-survey/logs/2026-03-25T21:44:14+08:00-iclr-high-relevance-subset.md`
