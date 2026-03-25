@@ -282,9 +282,9 @@
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-detailed-ideas.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-idea-dedup-and-priority.md`; `projects/multi-agent-review-survey/logs/2026-03-26T03:06:55+08:00-fleet-日向-03-1774465575-348aea-idea-assignment-closeout.md`
 
 - [x] 对所有引用与事实进行复核，检查证据链、链接可追溯性和表述准确性，不足处重新检索补证。
-  Completed: 2026-03-26T03:17:35+08:00
-  Done when: 最终主文档已通过至少两份独立复核工件，且关键事实、PDF 对应关系与年份口径已对齐
-  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-final-markdown-review.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-final-markdown-cross-review.md`; `projects/multi-agent-review-survey/logs/2026-03-26T03:17:35+08:00-fleet-智乃-10-1774466206-e809ec-final-delivery-closeout.md`
+  Completed: 2026-03-26T03:18:21+08:00
+  Done when: 最终主文档已通过至少两份独立复核工件，且关键事实、PDF 对应关系与年份口径已对齐；补充复核再次确认不存在需要重新联网补证的关键缺口
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-final-markdown-review.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-final-markdown-cross-review.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-reference-and-evidence-chain-recheck.md`; `projects/multi-agent-review-survey/logs/2026-03-26T03:18:21+08:00-fleet-结衣-11-1774466266-97093c-reference-evidence-recheck.md`
 
 - [x] 检查现有 Agent 历史产出，若有 blocked 或质量不足，按要求重派并穷尽搜索，不允许未检索就放弃。
   Completed: 2026-03-26T03:17:35+08:00
