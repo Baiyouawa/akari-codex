@@ -2146,6 +2146,15 @@
       "session_id": "灯里-00-1774465185-56c498",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774465185.2342472,
+      "active": false,
+      "released_at": 1774465354.8062072
+    },
+    "claim-7d14a7e09519": {
+      "task_id": "2e010b4c7f639b54",
+      "worker_id": "沙弥香-01",
+      "session_id": "沙弥香-01-1774465395-55ddc6",
+      "project": "multi-agent-review-survey",
+      "claimed_at": 1774465395.5369148,
       "active": true
     }
   }
