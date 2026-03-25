@@ -12,8 +12,9 @@
   Done when: 基于可追溯来源补齐 NeurIPS 2023/2024/2025 高相关条目，并为每条提供标题、作者、年份、链接、PDF下载地址、OpenReview/会议页面
   Evidence: `projects/multi-agent-survey/analysis/2026-03-25-neurips-inventory-recovery-and-gap-assessment.md`
 
-- [ ] 检索最近三个月 OpenReview 上 ICML 2026 中与 multi-agent 相关的投稿/论文，整理标题、作者、提交时间、链接、PDF地址与主题归类 [zero-resource]
-  Done when: TBD
+- [ ] 检索最近三个月 OpenReview 上 ICML 2026 中与 multi-agent 相关的投稿/论文，整理标题、作者、提交时间、链接、PDF地址与主题归类 [zero-resource] [blocked-by: 当前仓库缺少最近三个月 ICML 2026 OpenReview 投稿列表的本地快照/导出，且本会话无获批联网检索路径；详见 `projects/multi-agent-survey/logs/2026-03-25T21:54:37+08:00-icml-2026-openreview-blocked-shamixiang.md`]
+  Done when: 基于仓库内可追溯来源补齐最近三个月 ICML 2026 OpenReview multi-agent 投稿的标题、作者、提交时间、链接、PDF地址与主题归类
+  Evidence: `projects/multi-agent-survey/logs/2026-03-25T21:54:37+08:00-icml-2026-openreview-blocked-shamixiang.md`
 
 - [ ] 对每篇纳入论文撰写结构化总结，必须包含 Motivation、核心创新点、方法论/技术路线、任务设定、实验结论与局限 [zero-resource] [blocked-by: 当前仓库仅有标题级 inventory 与链接，缺少纳入论文的摘要、全文、实验细节或已验证笔记，无法在 provenance 约束下产出逐篇结构化总结；详见 `projects/multi-agent-survey/logs/2026-03-25T21:49:44+08:00-structured-summaries-blocked.md`]
   Done when: 每篇纳入论文都在仓库内具备可追溯内容来源（摘要、全文摘录或已验证笔记），并据此补齐 Motivation、核心创新点、方法论/技术路线、任务设定、实验结论与局限

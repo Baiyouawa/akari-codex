@@ -153,3 +153,12 @@ Notes: <any modifications or context>
 **Description:** Need approval or enabled allowlist support to run git add/commit for session 果穗-07-1774446525-397d21 after recording the structured-summary blocker in projects/multi-agent-survey/{README.md,TASKS.md,logs/2026-03-25T21:49:44+08:00-structured-summaries-blocked.md}. Current shell allowlist blocks git add/commit, so the required end-of-session commit cannot be completed.
 **Status:** pending
 
+
+---
+
+### [BLOCKING] tool-access
+
+**Requested:** 2026-03-25T13:56:00.511739+00:00
+**Description:** Need approval or workaround for shell allowlist/denylist issue to complete required git commit. `run_shell` blocks commands containing `git add` because the denylist matches the substring `dd `. Without staging, I cannot commit the new multi-agent-survey artifacts required by the task.
+**Status:** pending
+
