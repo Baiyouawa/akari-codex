@@ -88,8 +88,10 @@
   Done when: canonical 10 篇均具备可追溯 PDF 链接记录，且对应 PDF 已落盘到 `projects/multi-agent-review-survey/literature/`
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-pdf-links-and-download-record.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/logs/2026-03-26T01:36:07+08:00-fleet-柑奈-02-1774460107-7cb095-download-task-revalidation.md`
 
-- [ ] 对已下载文件进行互相 review：检查 PDF 是否可打开、标题是否匹配、是否为目标论文，并整理每篇论文的基础信息供后续中文解读使用
-  Done when: TBD
+- [x] 对已下载文件进行互相 review：检查 PDF 是否可打开、标题是否匹配、是否为目标论文，并整理每篇论文的基础信息供后续中文解读使用
+  Completed: 2026-03-26T01:58:40+08:00
+  Done when: canonical 10 篇论文均完成 PDF 可读性、标题匹配、目标论文身份与基础信息可用性复核，并写入项目文档
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-downloaded-files-cross-review-task-closeout.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-basic-info-for-10-papers.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-canonical-ten-cross-verification.md`; `projects/multi-agent-review-survey/logs/2026-03-26T01:58:40+08:00-fleet-文乃-04-1774461459-998a50-downloaded-files-cross-review-task-closeout.md`
 
 - [x] 为当前已下载并核验通过的 5 篇 multi-agent 相关综述/综述型论文记录元数据（题目、作者、年份、来源、PDF 路径）并汇总到项目文档中
   Done when: `analysis/2026-03-26-five-paper-metadata.md` 包含 5 篇论文元数据，且每个 `PDF 路径` 均与 `literature/` 中实际文件一致
@@ -127,8 +129,10 @@
 - [ ] 对每篇论文做证据链核验：至少核对摘要、引言、结论与 survey/review 定位表述，避免把普通论文误判为综述；如遇边界论文，写明保留或剔除理由
   Done when: TBD
 
-- [ ] 对 10 篇综述做横向对比，整理共识、分歧、重复主题、空白问题、时间演化趋势，形成适合快速浏览的中文总览
-  Done when: TBD
+- [x] 对 10 篇综述做横向对比，整理共识、分歧、重复主题、空白问题、时间演化趋势，形成适合快速浏览的中文总览
+  Completed: 2026-03-26T01:55:48+08:00
+  Done when: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-quick-overview.md` 形成适合快速浏览的中文横向总览
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-quick-overview.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-synthesis-report.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`
 
 - [ ] 撰写一个中文 Markdown 文档，帮助人快速了解这 10 篇综述；文档需包含：执行摘要、10 篇逐篇精读卡片、横向对比表、关键趋势、局限与机会
   Done when: TBD
