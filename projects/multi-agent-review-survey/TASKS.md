@@ -141,11 +141,15 @@
   Done when: 文档落盘并覆盖执行摘要、10 篇逐篇精读卡片、横向对比表、关键趋势、局限与机会
   Evidence: `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md`; `projects/multi-agent-review-survey/logs/2026-03-26T01:59:33+08:00-fleet-枫-05-1774461549-e6b16c-fast-survey-handbook.md`
 
-- [ ] 基于 10 篇综述的空白点与未来方向，提出 10 个后续可做的详细 idea；每个 idea 需包含：问题定义、为什么值得做、与现有综述的关系、可行方法、数据/benchmark、评测指标、预期难点、最小可执行原型
-  Done when: TBD
+- [x] 基于 10 篇综述的空白点与未来方向，提出 10 个后续可做的详细 idea；每个 idea 需包含：问题定义、为什么值得做、与现有综述的关系、可行方法、数据/benchmark、评测指标、预期难点、最小可执行原型
+  Completed: 2026-03-26T02:01:50+08:00
+  Done when: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-detailed-ideas.md` 完成 10 个结构完整、可追溯的 detailed ideas
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-detailed-ideas.md`
 
-- [ ] 对生成的 10 个 idea 做去重与优先级排序，标注短期可做/中期可做/高风险高收益，并给出推荐的前 3 个起步方向
-  Done when: TBD
+- [x] 对生成的 10 个 idea 做去重与优先级排序，标注短期可做/中期可做/高风险高收益，并给出推荐的前 3 个起步方向
+  Completed: 2026-03-26T02:03:11+08:00
+  Done when: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-idea-dedup-and-priority.md` 完成 10 个 idea 的去重、优先级排序、短中期/高风险分类与 Top 3 起步建议
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-idea-dedup-and-priority.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-detailed-ideas.md`
 
 - [ ] 对最终 Markdown 文档做互相 review，检查完整性、中文表达质量、事实一致性、可追溯引用与 PDF 对应关系；若发现偷懒式 blocked 或只尝试单一路径，按 PUA 标准打回重做
   Done when: TBD
