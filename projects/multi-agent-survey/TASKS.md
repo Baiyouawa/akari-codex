@@ -20,16 +20,17 @@
   Done when: 每篇纳入论文都在仓库内具备可追溯内容来源（摘要、全文摘录或已验证笔记），并据此补齐 Motivation、核心创新点、方法论/技术路线、任务设定、实验结论与局限
   Evidence: `projects/multi-agent-survey/logs/2026-03-25T21:49:44+08:00-structured-summaries-blocked.md`
 
-- [ ] 对全部论文进行主题归类与横向综述，形成研究脉络：协作规划、通信、博弈/对齐、工具使用、多智能体LLM系统、训练与评测等 [zero-resource]
-  Done when: 基于仓库内可验证文献清单输出一份带主题计数、代表论文与研究脉络的横向综述，并为计数提供脚本级 provenance
-  Evidence: `projects/multi-agent-survey/analysis/2026-03-25-theme-synthesis.md`; `projects/multi-agent-survey/scripts/classify_theme_synthesis.py`
+- [x] 对全部论文进行主题归类与横向综述，形成研究脉络：协作规划、通信、博弈/对齐、工具使用、多智能体LLM系统、训练与评测等 [zero-resource]
+  Completed: 2026-03-25T21:58:14+08:00
+  Evidence: `projects/multi-agent-survey/analysis/2026-03-25-theme-synthesis.md`; `projects/multi-agent-survey/analysis/2026-03-25-theme-classification.json`; `projects/multi-agent-survey/analysis/2026-03-25-theme-taxonomy-matrix.md`; `projects/multi-agent-survey/scripts/classify_theme_synthesis.py`; `projects/multi-agent-survey/logs/2026-03-25T21:58:14+08:00-theme-taxonomy-matrix.md`
 
 - [x] 自由探索并提出5个最值得后续开展的研究课题方向；对每个方向给出问题定义、研究假设、方法设计、数据/benchmark、实验方案、评测指标、潜在风险与可行性分析 [zero-resource]
   Completed: 2026-03-25T22:05:00+08:00
   Evidence: `projects/multi-agent-survey/analysis/2026-03-25-future-research-directions.md`; `projects/multi-agent-survey/logs/2026-03-25T22:05:00+08:00-future-research-directions.md`
 
-- [ ] 汇总所有引用与下载信息，生成标准化参考文献表与论文下载清单，确保链接可追溯 [zero-resource]
-  Done when: TBD
+- [x] 汇总所有引用与下载信息，生成标准化参考文献表与论文下载清单，确保链接可追溯 [zero-resource]
+  Completed: 2026-03-25T22:01:52+08:00
+  Evidence: `projects/multi-agent-survey/literature/2026-03-25-reference-table-and-download-manifest.md`; `projects/multi-agent-survey/logs/2026-03-25T21:55:15+08:00-reference-table-and-download-manifest.md`; `projects/multi-agent-survey/logs/2026-03-25T22:01:52+08:00-reference-manifest-task-closeout.md`
 
 - [ ] 撰写一篇完整的 LaTeX 综述论文，采用 KDD 风格结构，包含摘要、引言、相关工作、分类综述、逐方向分析、未来课题设计、结论与参考文献 [zero-resource]
   Done when: TBD
