@@ -79,8 +79,10 @@
 - [ ] 核验候选论文是否真正属于综述/survey，判断是否足够新，并去重后确定 10 篇最终名单
   Done when: TBD
 
-- [ ] 为最终确定的 10 篇论文查找可下载 PDF 链接，下载到项目目录 multi-agent-review-survey/literature 文件夹
-  Done when: TBD
+- [x] 为最终确定的 10 篇论文查找可下载 PDF 链接，下载到项目目录 multi-agent-review-survey/literature 文件夹
+  Completed: 2026-03-26T01:32:43+08:00
+  Done when: canonical 10 篇论文均具备可追溯来源页/PDF 链接记录，且本地 literature/ 文件存在并可读
+  Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-pdf-links-and-download-record.md`; `projects/multi-agent-review-survey/logs/2026-03-26T01:32:43+08:00-fleet-灯里-00-1774459926-977851-pdf-download-task-closeout.md`
 
 - [ ] 对已下载文件进行互相 review：检查 PDF 是否可打开、标题是否匹配、是否为目标论文，并整理每篇论文的基础信息供后续中文解读使用
   Done when: TBD
