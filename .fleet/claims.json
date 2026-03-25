@@ -685,7 +685,8 @@
       "session_id": "岛村-01-1774447757-819c29",
       "project": "multi-agent-survey",
       "claimed_at": 1774447757.3625233,
-      "active": true
+      "active": false,
+      "released_at": 1774447953.292118
     },
     "claim-e539d3a509b7": {
       "task_id": "0731cb76f78c1ade",
