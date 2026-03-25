@@ -239,8 +239,10 @@
   Done when: 形成一份基于候选池、survey 身份核验、web_fetch 元信息核验与主题去重规则的高质量 Top 10，并写明剔除理由
   Evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-high-quality-survey-top10-cross-review.md`
 
-- [ ] 下载最终确认的综述 PDF 到 projects/multi-agent-review-survey/literature/，保证文件可打开、命名规范且总数达到 10 篇
-  Done when: TBD
+- [x] 下载最终确认的综述 PDF 到 projects/multi-agent-review-survey/literature/，保证文件可打开、命名规范且总数达到 10 篇
+  Completed: 2026-03-26T03:00:35+08:00
+  Done when: canonical 10 篇对应 PDF 已全部落盘于 `projects/multi-agent-review-survey/literature/`，且逐文件验证可打开、非空、命名无冲突，目录总数不少于 10 篇
+  Evidence: `projects/multi-agent-review-survey/logs/2026-03-26T03:00:35+08:00-fleet-灯里-00-1774465185-56c498-download-final-confirmed-pdfs-closeout.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md`; `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-pdf-links-and-download-record.md`
 
 - [ ] 为每篇已确认综述提取摘要、研究问题、分类框架、核心结论、局限性和可延展方向，整理成后续中文 Markdown 精读的结构化笔记
   Done when: TBD
