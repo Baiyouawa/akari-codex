@@ -9,8 +9,8 @@
 - [ ] 调研第 2 周资料：Linux 进阶、文件权限、进程管理、SSH/服务器常用操作、Git 基础与实战；记录可直接教学使用的资料与来源
   Done when: TBD
 
-- [ ] 调研第 3 周资料：GitHub 协作、分支/PR、项目阅读、基础工程实践、Cursor 与 AI 编程工作流入门；记录资料与来源
-  Done when: TBD
+- [x] 调研第 3 周资料：GitHub 协作、分支/PR、项目阅读、基础工程实践、Cursor 与 AI 编程工作流入门；记录资料与来源
+  Done when: 已产出结构化调研文档、7 天课程映射、来源清单与自审文件，见 `analysis/2026-03-26-week3-github-collaboration-cursor-ai-workflow-research.md` 与 `plans/调研第-3-周资料-github-协作-分支-pr-项目阅读-基础工程实践-cursor-与-ai-编程工作流入门-记录-*.md`
 
 - [ ] 调研第 4 周资料：Vibe Coding 方法、AI 辅助开发实践、深度学习基础概念、训练/推理入门、综合实战与结课安排；记录资料与来源
   Done when: TBD

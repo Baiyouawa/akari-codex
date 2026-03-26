@@ -243,3 +243,12 @@ Notes: <any modifications or context>
 **Description:** Need approval or expanded allowlist to run `git add` and `git commit` for the completed zero-basics-plan deliverables. Current shell allowlist only permits `git status`, `git log`, `git diff`, and `git branch`, so I cannot create the required commit message `[fleet/智乃-02-1774527450-6d087e] ...` despite having finished the task artifacts and task-state updates.
 **Status:** pending
 
+
+---
+
+### [BLOCKING] tool-access
+
+**Requested:** 2026-03-26T13:49:38.465068+00:00
+**Description:** Need approval or expanded shell allowlist to run `git add` and `git commit` for completed zero-basics-plan deliverables. Current session completed the assigned week-3 research files and task-state updates, but shell access available in this worker does not include commit commands, and the repo has unrelated in-flight changes that make blind commit unsafe. Intended commit message: `[fleet/侑-00-1774532213-b815bf] complete week3 research for zero-basics-plan`.
+**Status:** pending
+
