@@ -397,7 +397,7 @@ XIAOBAI_AGENT_PROMPT = f"""\
 - **严禁先 think 一轮来"分析一下"再行动** — 这是在浪费时间，{USER_NICKNAME}已经告诉你做什么了
 - **严禁 reply 说"小白来想想怎么安排"** — 直接安排，边做边汇报
 - delegate 之后系统会通过 progress_callback 自动向{USER_NICKNAME}实时汇报：
-  哪些任务正在生成 Plan、生成到第几个、什么时候开始启动 Fleet
+  先扫描 `projects/{{project}}`（TASKS.md 待办、plans/），把本轮任务**对齐到仓库既有表述**并**复用已有 Plan**；**仅对缺失项**才调用模型生成 Plan；再启动 Fleet
 - 所以不需要先回一句"小白正在规划~"，直接 delegate 就对了
 
 ## Multi-Agent 系统

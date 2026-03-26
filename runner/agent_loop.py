@@ -17,8 +17,12 @@ import json
 import re
 import time
 from dataclasses import dataclass, field
+from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Any, Callable
+
+# plans/ 下由 Worker 生成的侧车文件，不参与「主 Plan」复用匹配
+_PLAN_SIDECAR_STEMS: tuple[str, ...] = ("-progress", "-summary", "-self-review")
 
 from openai import OpenAI
 
@@ -845,11 +849,11 @@ class AgentLoop:
 
         全程通过 progress_callback 向主人实时汇报每一步，不会静默等待。
         流程：
-          1. 汇报：收到任务，开始规划
-          2. 创建项目目录和 TASKS.md
-          3. 逐个生成 plan 文件，每完成一个汇报一个
-          4. 汇报：规划完毕，开始分配
-          5. 启动 Fleet，展示分配表
+          0. 扫描 projects/{slug}（TASKS.md 待办、plans/ 主文件数）；将本轮任务与仓库 TASKS 表述对齐
+          1. 汇报：扫描结果 + 任务表 + 仅对缺失 Plan 调用模型
+          2. 维护 README / TASKS.md
+          3. 逐个检查/生成 plan（精确 slug + 标题模糊匹配复用）
+          4. 汇报：规划完毕，启动 Fleet
         """
         tasks = action.get("tasks", [])
         max_workers = action.get("max_workers", 4)
@@ -865,22 +869,40 @@ class AgentLoop:
                 "reason": reason,
             })
 
-        # ── 阶段 1：汇报启动 ──
-        self._delegate_phase = "planning"
-        assignment_preview = self._format_assignment(deduped, project)
-        self._notify(
-            f"📋 收到！小白现在开始规划任务，共 {len(deduped)} 个子任务：\n\n"
-            f"{assignment_preview}\n\n"
-            f"⏳ 正在为每个任务生成执行计划（plan）..."
-        )
-
-        # ── 阶段 2：创建项目结构 ──
+        # ── 阶段 0：项目路径与扫描（先于「规划」话术，避免误导为从零生成）──
         repo = self.config.repo_home
         slug = re.sub(r"[^a-z0-9-]", "-", project.lower()).strip("-")
         project_dir = repo / "projects" / slug
         project_dir.mkdir(parents=True, exist_ok=True)
         for sub in ("literature", "analysis", "plans", "logs"):
             (project_dir / sub).mkdir(exist_ok=True)
+
+        n_open_scan, n_plan_scan = self._scan_delegate_project_brief(project_dir, slug)
+        deduped, repo_mapped = self._canonicalize_delegate_tasks_against_repo(
+            project_dir, slug, deduped
+        )
+
+        # ── 阶段 1：汇报启动 ──
+        self._delegate_phase = "planning"
+        assignment_preview = self._format_assignment(deduped, project)
+        scan_line = (
+            f"📂 已扫描 `projects/{slug}`：TASKS.md 待办 **{n_open_scan}** 条，"
+            f"plans/ 主 Plan **{n_plan_scan}** 个。"
+        )
+        align_line = (
+            f"🔄 已将本轮 {len(deduped)} 个子任务与仓库条目对齐"
+            f"（{repo_mapped} 条映射到既有 TASKS 表述，避免重复造 Plan 文件名）。"
+            if repo_mapped
+            else "🔄 本轮任务将按仓库现状检查可复用 Plan。"
+        )
+        self._notify(
+            f"{scan_line}\n{align_line}\n\n"
+            f"📋 收到！共 {len(deduped)} 个子任务：\n\n"
+            f"{assignment_preview}\n\n"
+            f"⏳ 正在逐个检查是否已有 Plan；**仅对缺失项**调用规划模型生成。"
+        )
+
+        # ── 阶段 2：README / TASKS 维护 ──
 
         if not (project_dir / "README.md").is_file():
             import time as _t
@@ -935,10 +957,12 @@ class AgentLoop:
         plans_dir = project_dir / "plans"
         plan_results: list[str] = []
         for i, t in enumerate(pending_tasks):
-            task_slug = re.sub(r"[^a-z0-9\u4e00-\u9fff]+", "-", t.lower())[:60].strip("-")
-            existing_plan = plans_dir / f"{task_slug}.md"
-            if existing_plan.exists():
-                line = f"  [{i+1}/{len(pending_tasks)}] {t[:50]}... ♻️ 已有 Plan（续做）"
+            existing_plan = self._find_existing_plan_for_task(plans_dir, t)
+            if existing_plan is not None:
+                line = (
+                    f"  [{i+1}/{len(pending_tasks)}] {t[:50]}... "
+                    f"♻️ 已有 Plan `{existing_plan.name}`（续做）"
+                )
                 plan_results.append(line)
             else:
                 try:
@@ -1355,6 +1379,138 @@ class AgentLoop:
             result.append(t)
         return result
 
+    @staticmethod
+    def _task_text_to_plan_slug(task_text: str, max_len: int = 60) -> str:
+        """与 `_auto_gen_plan` 一致的 plan 文件名 stem（截断需保持同步）。"""
+        slug = re.sub(r"[^a-z0-9\u4e00-\u9fff]+", "-", task_text.strip().lower())
+        slug = slug[:max_len].strip("-")
+        return slug or "task"
+
+    @staticmethod
+    def _normalize_task_match_key(text: str) -> str:
+        """用于任务文本相似度比较（弱化标点与空白差异）。"""
+        t = text.strip().lower()
+        t = re.sub(r"[\s,，.。;；:：/\\、（）()\[\]【】]+", " ", t)
+        t = re.sub(r"\s+", " ", t).strip()
+        return t
+
+    def _parse_open_task_texts_from_tasks_md(
+        self, tasks_file: Path, project_slug: str
+    ) -> list[str]:
+        """读取项目中仍为 `- [ ]` 的任务正文（与 Fleet 扫描一致）。"""
+        if not tasks_file.is_file():
+            return []
+        from fleet.task_scanner import parse_tasks_file
+
+        content = tasks_file.read_text(encoding="utf-8", errors="replace")
+        return [t.text for t in parse_tasks_file(content, project_slug, tasks_file.parent)]
+
+    def _canonicalize_delegate_tasks_against_repo(
+        self,
+        project_dir: Path,
+        project_slug: str,
+        tasks: list[str],
+    ) -> tuple[list[str], int]:
+        """将本轮 delegate 任务对齐到 TASKS.md 中已有表述，避免措辞微差导致重复生成 Plan。
+
+        返回 (对齐后的任务列表, 映射到仓库条目的任务数)。
+        """
+        repo_open = self._parse_open_task_texts_from_tasks_md(
+            project_dir / "TASKS.md", project_slug
+        )
+        if not repo_open:
+            return list(tasks), 0
+
+        out: list[str] = []
+        seen: set[str] = set()
+        mapped_n = 0
+        for t in tasks:
+            t = t.strip()
+            if not t:
+                continue
+            nt = self._normalize_task_match_key(t)
+            best_line: str | None = None
+            best_r = 0.0
+            for r in repo_open:
+                rr = SequenceMatcher(
+                    None, nt, self._normalize_task_match_key(r)
+                ).ratio()
+                if rr > best_r:
+                    best_r = rr
+                    best_line = r
+            chosen = t
+            if best_line is not None and best_r >= 0.73:
+                chosen = best_line
+                if self._normalize_task_match_key(chosen) != nt:
+                    mapped_n += 1
+            if chosen in seen:
+                continue
+            seen.add(chosen)
+            out.append(chosen)
+        return out, mapped_n
+
+    def _list_plan_base_files(self, plans_dir: Path) -> list[Path]:
+        """主 Plan 文件列表（排除 progress/summary/self-review 侧车）。"""
+        if not plans_dir.is_dir():
+            return []
+        result: list[Path] = []
+        for f in sorted(plans_dir.glob("*.md")):
+            stem = f.stem
+            if any(stem.endswith(sfx) for sfx in _PLAN_SIDECAR_STEMS):
+                continue
+            result.append(f)
+        return result
+
+    def _find_existing_plan_for_task(
+        self, plans_dir: Path, task_text: str
+    ) -> Path | None:
+        """先按 slug 精确匹配，再按各 Plan 文件首行 `# 标题` 模糊匹配。"""
+        stem = self._task_text_to_plan_slug(task_text)
+        direct = plans_dir / f"{stem}.md"
+        if direct.is_file():
+            return direct
+
+        n_task = self._normalize_task_match_key(task_text)
+        best: Path | None = None
+        best_ratio = 0.0
+        for f in self._list_plan_base_files(plans_dir):
+            try:
+                lines = f.read_text(encoding="utf-8", errors="replace").splitlines()
+            except OSError:
+                continue
+            title = ""
+            for line in lines[:8]:
+                s = line.strip()
+                if s.startswith("#"):
+                    title = s.lstrip("#").strip()
+                    break
+            if not title:
+                title = f.stem.replace("-", " ")
+            n_title = self._normalize_task_match_key(title)
+            ratio = SequenceMatcher(None, n_task, n_title).ratio()
+            # 长文本互相包含时抬高分数，避免仅截断差异被判成新任务
+            if len(n_task) >= 24 and len(n_title) >= 24:
+                if n_task in n_title or n_title in n_task:
+                    ratio = max(ratio, 0.88)
+            if ratio > best_ratio:
+                best_ratio = ratio
+                best = f
+        if best is not None and best_ratio >= 0.78:
+            return best
+        return None
+
+    def _scan_delegate_project_brief(
+        self, project_dir: Path, project_slug: str
+    ) -> tuple[int, int]:
+        """返回 (TASKS.md 待办条数, plans 主文件数)。"""
+        n_open = len(
+            self._parse_open_task_texts_from_tasks_md(
+                project_dir / "TASKS.md", project_slug
+            )
+        )
+        n_plans = len(self._list_plan_base_files(project_dir / "plans"))
+        return n_open, n_plans
+
     def _build_fleet_tasks(self, project: str, task_texts: list[str]) -> list:
         """将文本任务列表转为 FleetTask 对象，供 scheduler 预分配。"""
         import hashlib
@@ -1534,9 +1690,7 @@ class AgentLoop:
         Follows the gen-plan skill output format: Goal, Acceptance Criteria,
         Path Boundaries, Milestones.  Falls back to a template if LLM fails.
         """
-        task_slug = re.sub(r"[^a-z0-9\u4e00-\u9fff]+", "-", task_text.lower())[:60].strip("-")
-        if not task_slug:
-            task_slug = "task"
+        task_slug = AgentLoop._task_text_to_plan_slug(task_text)
         plan_file = project_dir / "plans" / f"{task_slug}.md"
         if plan_file.exists():
             return
