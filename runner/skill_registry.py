@@ -138,6 +138,14 @@ class SkillRegistry:
             ("list_system_dir", "列出本机任意目录内容。参数: path"),
             ("request_file_delete", "提交文件删除审批请求（不立即执行）。参数: path"),
             ("get_file_for_send", "获取文件信息（准备发送）。参数: path"),
+            # ── 表情包 Skill ─────────────────────────────
+            ("sticker_send", "从收藏中选择匹配情绪的表情包发送。参数: mood(情绪关键词,如'开心/卖萌/无语')"),
+            ("sticker_list", "列出当前收藏的表情包（数量和标签）"),
+            ("sticker_tag", "给表情包添加标签。参数: id(表情包ID), tags(标签列表)"),
+            # ── Humanize 代码审查 Skill ────────────────────
+            ("humanize_review", "请求 Codex 独立审查指定文件或代码变更。参数: target(文件路径或描述), focus(审查重点,可选)"),
+            ("humanize_rlcr_setup", "启动 RLCR 迭代开发循环（需要 plan 文件）。参数: plan_file, max(最大迭代,可选), skip_impl(跳过实现直接审查,可选)"),
+            ("humanize_status", "查看 Humanize/RLCR 系统状态和可用性"),
             # ── 电话 Skill ───────────────────────────────
             ("phone_check_setup", "检查电话功能配置状态"),
             ("phone_call_notification", "拨打语音通知电话（单向，播放 TTS 消息）。参数: phone_number, message"),
@@ -180,12 +188,14 @@ class SkillRegistry:
 
         system = self.list_by_category("system")
         if system:
+            humanize_skills = [s for s in system if s.name.startswith("humanize_")]
             media_skills = [s for s in system if s.name.startswith(("send_", "recognize_", "tts_"))]
             file_skills = [s for s in system if s.name.startswith(("read_system", "list_system", "request_file", "get_file_for"))]
             phone_skills = [s for s in system if s.name.startswith("phone_")]
             other_system = [
                 s for s in system
-                if s not in media_skills and s not in file_skills and s not in phone_skills
+                if s not in media_skills and s not in file_skills
+                and s not in phone_skills and s not in humanize_skills
             ]
 
             if other_system:
@@ -200,6 +210,9 @@ class SkillRegistry:
             if phone_skills:
                 lines = [s.summary_line() for s in phone_skills]
                 sections.append("### 电话 Skill（真实电话外呼）\n" + "\n".join(lines))
+            if humanize_skills:
+                lines = [s.summary_line() for s in humanize_skills]
+                sections.append("### 代码审查 Skill（Humanize / Codex Review）\n" + "\n".join(lines))
 
         return "\n\n".join(sections)
 

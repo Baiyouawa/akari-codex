@@ -43,6 +43,7 @@ class ProvenanceRecord:
     latency_seconds: float = 0.0
     success: bool = False
     error: str | None = None
+    humanize_reviews: list[dict[str, Any]] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -63,6 +64,7 @@ class ProvenanceRecord:
             "latency_seconds": self.latency_seconds,
             "success": self.success,
             "error": self.error,
+            "humanize_reviews": self.humanize_reviews,
         }
 
 
@@ -78,6 +80,24 @@ class ProvenanceTracker:
 
     def set_model(self, model: str) -> None:
         self.record.model = model
+
+    def log_humanize_review(
+        self,
+        review_type: str,
+        issues_found: int,
+        has_critical: bool,
+        summary: str,
+        duration_seconds: float,
+    ) -> None:
+        """Record a Humanize/Codex review in the provenance trail."""
+        self.record.humanize_reviews.append({
+            "type": review_type,
+            "timestamp": _now_iso(),
+            "issues_found": issues_found,
+            "has_critical": has_critical,
+            "summary": summary[:500],
+            "duration_seconds": round(duration_seconds, 2),
+        })
 
     def log_tool_call(self, tool_name: str, args: dict[str, Any]) -> None:
         if tool_name == "run_shell":

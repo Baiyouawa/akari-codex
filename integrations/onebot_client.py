@@ -47,11 +47,7 @@ if str(_project_root) not in sys.path:
 
 from integrations.config_qq import OneBotConfig
 from runner.gateway import process_remote_message
-from runner.persona import (
-    add_pending_user,
-    is_pending_user,
-    is_user_ready,
-)
+from runner.persona import is_user_ready
 
 logger = logging.getLogger("xiaobai.onebot")
 logging.basicConfig(
@@ -72,10 +68,16 @@ _MEDIA_TAG_IMAGE = re.compile(r"\[IMG:([^\]]+)\]")
 _MEDIA_TAG_VOICE = re.compile(r"\[VOICE:([^\]]+)\]")
 _MEDIA_TAG_FILE = re.compile(r"\[FILE:([^\]]+)\]")
 _MEDIA_TAG_FACE = re.compile(r"\[FACE:(\d+)\]")
+_MEDIA_TAG_STICKER = re.compile(r"\[STICKER:([^\]]+)\]")
 
 _owner_last_activity: float = 0.0
 _proactive_task: asyncio.Task | None = None  # type: ignore[type-arg]
 _proactive_sent_unanswered: bool = False
+
+MSG_AGGREGATE_WINDOW = 10.0
+_msg_buffers: dict[str, list[dict]] = {}
+_msg_timers: dict[str, asyncio.Task] = {}
+_msg_locks: dict[str, asyncio.Lock] = {}
 
 
 def _parse_cq_params(params_str: str) -> dict[str, str]:
@@ -385,6 +387,106 @@ async def _send_file_via_api(
     await ws.send(json.dumps(payload))
 
 
+async def _steal_sticker(url: str, user_id: str, group_id: str) -> None:
+    """后台下载别人发的图片并存入表情包收藏（偷表情包）。"""
+    try:
+        from runner.sticker_manager import save_sticker_from_url, auto_tag_sticker
+        entry = await asyncio.to_thread(
+            save_sticker_from_url, url,
+            source_user=user_id, source_group=group_id,
+        )
+        if entry:
+            logger.info("偷到表情包: %s (from user=%s)", entry["id"], user_id)
+            await asyncio.to_thread(auto_tag_sticker, entry["id"])
+    except Exception as e:
+        logger.debug("偷表情包失败: %s", e)
+
+
+async def _send_sticker_image(
+    ws,
+    msg_type: str,
+    user_id: int | None,
+    group_id: int | None,
+    sticker_path: Path,
+) -> bool:
+    """用 base64 将表情包图片作为图片消息发出。
+
+    NapCat 在 Windows 端无法访问 WSL 路径，所以和语音一样必须用 base64://。
+    """
+    try:
+        from runner.media_tools import file_to_base64
+        b64 = await asyncio.to_thread(file_to_base64, sticker_path)
+    except Exception as e:
+        logger.warning("表情包 base64 编码失败 (%s): %s", sticker_path, e)
+        return False
+
+    message = [{"type": "image", "data": {"file": f"base64://{b64}"}}]
+    payload: dict = {
+        "action": "send_msg",
+        "params": {"message_type": msg_type, "message": message},
+    }
+    if msg_type == "private" and user_id is not None:
+        payload["params"]["user_id"] = user_id
+    elif msg_type == "group" and group_id is not None:
+        payload["params"]["group_id"] = group_id
+    await ws.send(json.dumps(payload))
+    return True
+
+
+async def _send_sticker(
+    ws,
+    msg_type: str,
+    user_id: int | None,
+    group_id: int | None,
+    mood: str,
+) -> bool:
+    """根据 mood 从收藏中选一张表情包并发送。返回是否成功。"""
+    try:
+        from runner.sticker_manager import pick_sticker_for_mood, get_sticker_path
+
+        entry = await asyncio.to_thread(pick_sticker_for_mood, mood)
+        if not entry:
+            return False
+
+        sticker_path = await asyncio.to_thread(get_sticker_path, entry["id"])
+        if not sticker_path:
+            return False
+
+        ok = await _send_sticker_image(ws, msg_type, user_id, group_id, sticker_path)
+        if ok:
+            logger.info("发送表情包: %s (mood=%s, tags=%s)", entry["id"], mood,
+                        ",".join(entry.get("tags", [])))
+        return ok
+    except Exception as e:
+        logger.debug("发送表情包失败: %s", e)
+        return False
+
+
+async def _send_random_sticker(
+    ws,
+    msg_type: str,
+    user_id: int | None,
+    group_id: int | None,
+) -> bool:
+    """从收藏中随机选一张表情包发送（用于强制插入）。"""
+    try:
+        from runner.sticker_manager import pick_sticker_for_mood, get_sticker_path
+        moods = ["开心", "卖萌", "可爱", "有趣", "嘿嘿", ""]
+        entry = await asyncio.to_thread(pick_sticker_for_mood, random.choice(moods))
+        if not entry:
+            return False
+        sticker_path = await asyncio.to_thread(get_sticker_path, entry["id"])
+        if not sticker_path:
+            return False
+        ok = await _send_sticker_image(ws, msg_type, user_id, group_id, sticker_path)
+        if ok:
+            logger.info("强制插入表情包: %s (tags=%s)", entry["id"],
+                        ",".join(entry.get("tags", [])))
+        return ok
+    except Exception:
+        return False
+
+
 async def _process_media_tags_and_send(
     ws,
     msg_type: str,
@@ -399,6 +501,7 @@ async def _process_media_tags_and_send(
       [VOICE:要说的文字]   — TTS 合成后发送语音条
       [FILE:本地文件路径]  — 发送文件
       [FACE:表情ID]        — 发送 QQ 表情
+      [STICKER:情绪关键词]  — 从收藏中选择匹配的表情包发送
     """
     remaining = text
 
@@ -438,6 +541,13 @@ async def _process_media_tags_and_send(
             cq = build_image_cq(img_src)
             await _send_raw_cq(ws, msg_type, user_id, group_id, cq)
 
+    sticker_matches = list(_MEDIA_TAG_STICKER.finditer(remaining))
+    for m in reversed(sticker_matches):
+        sticker_mood = m.group(1).strip()
+        remaining = remaining[:m.start()] + remaining[m.end():]
+        if sticker_mood:
+            await _send_sticker(ws, msg_type, user_id, group_id, sticker_mood)
+
     face_matches = list(_MEDIA_TAG_FACE.finditer(remaining))
     for m in reversed(face_matches):
         face_id = m.group(1).strip()
@@ -448,9 +558,11 @@ async def _process_media_tags_and_send(
 
     remaining = remaining.strip()
     if remaining:
-        for chunk in _split_message(remaining):
+        chunks = _split_message(remaining)
+        for i, chunk in enumerate(chunks):
+            if i > 0:
+                await asyncio.sleep(random.uniform(0.8, 1.8))
             await _send_raw_cq(ws, msg_type, user_id, group_id, chunk)
-            await asyncio.sleep(0.3)
 
 
 async def _send_single(
@@ -463,13 +575,16 @@ async def _send_single(
     """Send one QQ message, detecting and handling media tags."""
     has_media_tags = any(
         pat.search(text)
-        for pat in [_MEDIA_TAG_IMAGE, _MEDIA_TAG_VOICE, _MEDIA_TAG_FILE, _MEDIA_TAG_FACE]
+        for pat in [_MEDIA_TAG_IMAGE, _MEDIA_TAG_VOICE, _MEDIA_TAG_FILE, _MEDIA_TAG_FACE, _MEDIA_TAG_STICKER]
     )
 
     if has_media_tags:
         await _process_media_tags_and_send(ws, msg_type, user_id, group_id, text)
     else:
-        for chunk in _split_message(text):
+        chunks = _split_message(text)
+        for i, chunk in enumerate(chunks):
+            if i > 0:
+                await asyncio.sleep(random.uniform(0.8, 1.8))
             payload: dict = {
                 "action": "send_msg",
                 "params": {
@@ -482,7 +597,9 @@ async def _send_single(
             elif msg_type == "group" and group_id is not None:
                 payload["params"]["group_id"] = group_id
             await ws.send(json.dumps(payload))
-            await asyncio.sleep(0.3)
+
+
+_reply_counters: dict[str, int] = {}
 
 
 async def _send_reply(
@@ -496,8 +613,7 @@ async def _send_reply(
 ) -> None:
     """Send a reply, splitting on ||| into separate messages with human-like delays.
 
-    When humanize_delay is True, adds random delays between messages to simulate
-    real typing speed. Used for persona-override conversations.
+    强制表情包：每 2 次回复（不是每 2 条消息），在回复发完后追加一张表情包。
     """
     if _MULTI_MSG_SEP in text:
         parts = [p.strip() for p in text.split(_MULTI_MSG_SEP) if p.strip()]
@@ -505,12 +621,25 @@ async def _send_reply(
         parts = [text]
 
     for i, part in enumerate(parts):
-        if humanize_delay and i > 0:
+        if i > 0:
             char_count = len(part)
-            base_delay = random.uniform(1.5, 4.0)
-            typing_delay = min(char_count * 0.08, 3.0)
+            if humanize_delay:
+                base_delay = random.uniform(2.0, 5.0)
+                typing_delay = min(char_count * 0.1, 4.0)
+            else:
+                base_delay = random.uniform(1.0, 2.5)
+                typing_delay = min(char_count * 0.05, 2.0)
             await asyncio.sleep(base_delay + typing_delay)
         await _send_single(ws, msg_type, user_id, group_id, part)
+
+    counter_key = f"{msg_type}:{user_id}:{group_id or ''}"
+    _reply_counters[counter_key] = _reply_counters.get(counter_key, 0) + 1
+    if _reply_counters[counter_key] >= 2:
+        _reply_counters[counter_key] = 0
+        await asyncio.sleep(random.uniform(0.5, 1.5))
+        ok = await _send_random_sticker(ws, msg_type, user_id, group_id)
+        if not ok:
+            logger.debug("表情包收藏为空或发送失败，跳过本次强制插入")
 
 
 async def _handle_request(ws, event: dict, config: OneBotConfig) -> None:
@@ -529,14 +658,12 @@ async def _handle_request(ws, event: dict, config: OneBotConfig) -> None:
         }))
         logger.info("自动同意好友请求: %s (%s)", nickname, user_id)
 
-        add_pending_user(user_id, f"{nickname}({user_id})")
-
         if config.owner_qq:
             owner_id = int(config.owner_qq)
             notice = (
                 f"有新好友 {nickname}({user_id}) 加了小白~\n"
-                f"要按什么身份跟ta聊？\n"
-                f"（回复「对{user_id}扮演xxx」来设定）"
+                f"小白会先用默认身份跟ta聊天\n"
+                f"如果需要特殊人设，回复「对{user_id}扮演xxx」"
             )
             await _send_reply(ws, "private", owner_id, None, notice)
 
@@ -553,7 +680,7 @@ async def _handle_request(ws, event: dict, config: OneBotConfig) -> None:
 
 
 async def _handle_message(ws, event: dict, config: OneBotConfig) -> None:
-    """Process a single incoming message event, including multimedia."""
+    """Buffer incoming messages and process them after a quiet window."""
     msg_type = event.get("message_type", "")
     raw_message = event.get("raw_message", "") or ""
     user_id = event.get("user_id")
@@ -603,24 +730,19 @@ async def _handle_message(ws, event: dict, config: OneBotConfig) -> None:
         len(media["files"]),
     )
 
-    if role != "owner" and msg_type == "private":
-        if not is_user_ready(user_display):
-            if not is_pending_user(uid_str):
-                add_pending_user(uid_str, user_display)
-                logger.info("新用户 %s 无人设，已通知主人确认", user_display)
-                if config.owner_qq:
-                    notice = (
-                        f"{nickname}({user_id}) 给小白发消息了，但还没设定身份~\n"
-                        f"要按什么身份跟ta聊？\n"
-                        f"（回复「对{user_id}扮演xxx」来设定）"
-                    )
-                    await _send_reply(ws, "private", int(config.owner_qq), None, notice)
-            else:
-                logger.debug("用户 %s 待确认中，静默", uid_str)
-            return
+    is_sticker_only = bool(media["images"]) and not text_only and not media["records"] and not media["files"]
+
+    if is_sticker_only:
+        for img in media["images"]:
+            url = img.get("url") or img.get("file", "")
+            if url:
+                asyncio.create_task(_steal_sticker(url, str(user_id), str(group_id or "")))
+        logger.info("纯表情包/图片，偷存并回一个表情包（不识别、不描述）")
+        await asyncio.sleep(random.uniform(0.3, 1.0))
+        await _send_random_sticker(ws, msg_type, user_id, group_id)
+        return
 
     media_context_parts: list[str] = []
-
     for img in media["images"]:
         url = img.get("url") or img.get("file", "")
         file_id = img.get("file_id", "") or img.get("file", "")
@@ -628,18 +750,13 @@ async def _handle_message(ws, event: dict, config: OneBotConfig) -> None:
             logger.info("识别图片: url=%s, file=%s, file_id=%s",
                         img.get("url", "")[:120], img.get("file", "")[:60], file_id[:60])
             desc = await _recognize_image(url, ws=ws, file_id=file_id)
-            media_context_parts.append(f"[收到图片: {desc}（简短回应即可，不要复述识别内容）]")
-        else:
-            logger.warning("图片无 URL 也无 file_id: %s", img)
+            media_context_parts.append(f"[收到图片: {desc}]")
 
     for rec in media["records"]:
         url = rec.get("url") or rec.get("path", "") or rec.get("file", "")
         if url:
-            logger.info("识别语音: url=%s, file=%s", rec.get("url", "")[:120], rec.get("file", "")[:60])
             stt_text = await _recognize_voice(url)
-            media_context_parts.append(f"[收到语音: {stt_text}（简短回应即可）]")
-        else:
-            logger.warning("语音无 URL: %s", rec)
+            media_context_parts.append(f"[收到语音: {stt_text}]")
 
     for f in media["files"]:
         fname = f.get("name") or f.get("file", "")
@@ -653,17 +770,70 @@ async def _handle_message(ws, event: dict, config: OneBotConfig) -> None:
     if not final_text:
         return
 
+    buf_key = f"{msg_type}:{user_id}:{group_id or ''}"
+
+    if buf_key not in _msg_locks:
+        _msg_locks[buf_key] = asyncio.Lock()
+
+    async with _msg_locks[buf_key]:
+        if buf_key not in _msg_buffers:
+            _msg_buffers[buf_key] = []
+
+        _msg_buffers[buf_key].append({
+            "text": final_text,
+            "msg_type": msg_type,
+            "user_id": user_id,
+            "group_id": group_id,
+            "user_display": user_display,
+            "role": role,
+            "is_owner": is_owner,
+        })
+
+        if buf_key in _msg_timers and not _msg_timers[buf_key].done():
+            _msg_timers[buf_key].cancel()
+
+        _msg_timers[buf_key] = asyncio.create_task(
+            _flush_after_window(ws, config, buf_key)
+        )
+
+
+async def _flush_after_window(ws, config: OneBotConfig, buf_key: str) -> None:
+    """Wait for the aggregation window, then process all buffered messages."""
+    await asyncio.sleep(MSG_AGGREGATE_WINDOW)
+
+    async with _msg_locks[buf_key]:
+        messages = _msg_buffers.pop(buf_key, [])
+        _msg_timers.pop(buf_key, None)
+
+    if not messages:
+        return
+
+    first = messages[0]
+    msg_type = first["msg_type"]
+    user_id = first["user_id"]
+    group_id = first["group_id"]
+    user_display = first["user_display"]
+    role = first["role"]
+    is_owner = first["is_owner"]
+
+    if len(messages) == 1:
+        combined_text = messages[0]["text"]
+    else:
+        parts = [m["text"] for m in messages]
+        combined_text = "\n".join(parts)
+        logger.info("聚合 %d 条消息来自 %s", len(messages), user_display)
+
     has_persona = role != "owner" and is_user_ready(user_display)
 
     if has_persona:
-        await asyncio.sleep(random.uniform(2.0, 6.0))
+        await asyncio.sleep(random.uniform(2.0, 5.0))
 
     try:
         result = await asyncio.to_thread(
             process_remote_message,
             source="qq-onebot",
             user=user_display,
-            text=final_text,
+            text=combined_text,
             role=role,
         )
     except Exception:
@@ -697,10 +867,10 @@ def _schedule_proactive(ws, config: OneBotConfig) -> None:
 
 
 async def _proactive_followup(ws, config: OneBotConfig) -> None:
-    """Wait for idle period, then send one proactive message to owner.
+    """Wait for idle period, then check fleet status or send casual message.
 
-    Only fires once per idle gap — if owner doesn't reply after the proactive
-    message, no further proactive messages are sent until owner speaks again.
+    Priority: fleet completion > fleet blocked > casual chat.
+    Only fires once per idle gap.
     """
     global _proactive_sent_unanswered
     import time as _time
@@ -717,13 +887,18 @@ async def _proactive_followup(ws, config: OneBotConfig) -> None:
     if _time.time() - _owner_last_activity < wait * 0.9:
         return
 
-    proactive_hint = (
-        "[系统提示：小侑已经有一段时间没说话了。"
-        "你可以主动发一条消息，比如汇报一下刚才做了什么、"
-        "分享一个发现、或者随口聊点什么。"
-        "像朋友之间自然地找话题。"
-        "不要说'你还在吗'这种话。简短一句就好。]"
-    )
+    fleet_hint = _check_fleet_for_proactive()
+
+    if fleet_hint:
+        proactive_hint = fleet_hint
+    else:
+        proactive_hint = (
+            "[系统提示：小侑已经有一段时间没说话了。"
+            "你可以主动发一条消息，比如汇报一下刚才做了什么、"
+            "分享一个发现、或者随口聊点什么。"
+            "像朋友之间自然地找话题。"
+            "不要说'你还在吗'这种话。简短一句就好。]"
+        )
 
     try:
         result = await asyncio.to_thread(
@@ -740,7 +915,49 @@ async def _proactive_followup(ws, config: OneBotConfig) -> None:
     if result and result.strip():
         _proactive_sent_unanswered = True
         await _send_reply(ws, "private", int(config.owner_qq), None, result)
-        logger.info("Sent proactive message to owner")
+        logger.info("Sent proactive message to owner (fleet=%s)", bool(fleet_hint))
+
+
+def _check_fleet_for_proactive() -> str | None:
+    """Check if fleet has completed tasks or blocked agents to report."""
+    try:
+        from fleet.scheduler import get_fleet_scheduler
+        scheduler = get_fleet_scheduler()
+        if not scheduler or not scheduler._running:
+            return None
+
+        snap = scheduler.metrics.get_snapshot()
+
+        if scheduler._dashboard and scheduler._dashboard.is_all_done() and snap.total_completed > 0:
+            return (
+                f"[系统提示：Multi-Agent 所有任务已完成！"
+                f"共完成 {snap.total_completed} 个任务"
+                f"（成功 {snap.total_ok}，失败 {snap.total_failed}）。"
+                f"请向小侑汇报任务完成情况，简洁说明完成了什么、"
+                f"有没有失败的。用小白的口吻，像朋友间汇报工作。]"
+            )
+
+        blocked = scheduler.drain_blocked_notifications()
+        if blocked:
+            details = []
+            for b in blocked[:3]:
+                w = b.get("worker", "?")
+                short_w = w.rsplit("-", 2)[0] if "-" in w else w
+                details.append(f"{short_w}: {b.get('reason', '未知')[:100]}")
+            block_info = "\n".join(details)
+            return (
+                f"[系统提示：有 {len(blocked)} 个 Agent 遇到阻塞，需要小侑定夺。"
+                f"阻塞详情：\n{block_info}\n"
+                f"请向小侑汇报这些阻塞情况，说清楚是谁被卡住了、原因是什么，"
+                f"然后问小侑怎么处理。用小白的口吻。]"
+            )
+
+        if snap.active_workers > 0:
+            return None
+
+    except Exception:
+        pass
+    return None
 
 
 _BLOCKED_POLL_INTERVAL = 30  # seconds

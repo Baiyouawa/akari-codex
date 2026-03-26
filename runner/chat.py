@@ -46,6 +46,27 @@ from . import memory as mem
 from . import memo
 
 
+_PUBLIC_HISTORY_MAX = 20
+_PUBLIC_TOOL_CALL_MAX = 3
+
+_public_chat_histories: dict[str, list[dict[str, str]]] = {}
+
+_PUBLIC_TOOLS_WHITELIST = {"web_search", "web_fetch", "get_current_time", "calculate"}
+
+
+def _get_public_tools() -> list[dict[str, Any]]:
+    """构建普通用户可用的 OpenAI function calling 工具定义。"""
+    from .tools import TOOL_DEFINITIONS
+    return [
+        {
+            "type": "function",
+            "function": {"name": name, **spec},
+        }
+        for name, spec in TOOL_DEFINITIONS.items()
+        if name in _PUBLIC_TOOLS_WHITELIST
+    ]
+
+
 class ChatBot:
     """小白主体 — 顶层智能 Agent。所有入口共享同一个实例。"""
 
@@ -148,21 +169,74 @@ class ChatBot:
     def get_progress_log(self) -> list[str]:
         return list(self._progress_log)
 
-    # ── 普通用户聊天（无工具、无 action、无记忆）─────────────
+    # ── 普通用户聊天（带短期记忆）──────────────────────────────
 
     def _public_chat(self, user_message: str, *, user: str = "") -> str:
+        from .tools import ToolExecutor
+
         override = get_persona_prompt_for_user(user) if user else None
         system = build_override_prompt(override) if override else XIAOBAI_PUBLIC_PROMPT
 
+        history = _public_chat_histories.setdefault(user, [])
+        tools = _get_public_tools()
+        tool_exec = ToolExecutor(self.config)
+
         messages: list[dict[str, Any]] = [
             {"role": "system", "content": system},
-            {"role": "user", "content": user_message},
         ]
-        try:
-            text = self._stream_chat(messages, temperature=0.8, max_tokens=1024)
-            return text or ""
-        except Exception:
-            return ""
+        messages.extend(history)
+        messages.append({"role": "user", "content": user_message})
+
+        reply = ""
+        for _round in range(_PUBLIC_TOOL_CALL_MAX + 1):
+            try:
+                resp = self.client.chat.completions.create(
+                    model=self.config.model,
+                    messages=messages,
+                    tools=tools if tools else None,
+                    temperature=0.8,
+                    max_tokens=1024,
+                )
+            except Exception:
+                break
+
+            choice = resp.choices[0] if resp.choices else None
+            if not choice:
+                break
+
+            msg = choice.message
+
+            if msg.tool_calls:
+                messages.append(msg.model_dump(exclude_none=True))
+                for tc in msg.tool_calls:
+                    fn_name = tc.function.name
+                    if fn_name not in _PUBLIC_TOOLS_WHITELIST:
+                        result = f"工具 {fn_name} 不可用"
+                    else:
+                        try:
+                            fn_args = json.loads(tc.function.arguments)
+                        except json.JSONDecodeError:
+                            fn_args = {}
+                        result = tool_exec.execute(fn_name, fn_args)
+                    messages.append({
+                        "role": "tool",
+                        "tool_call_id": tc.id,
+                        "content": result[:4000],
+                    })
+                continue
+
+            reply = msg.content or ""
+            break
+
+        history.append({"role": "user", "content": user_message})
+        if reply:
+            history.append({"role": "assistant", "content": reply})
+
+        while len(history) > _PUBLIC_HISTORY_MAX * 2:
+            history.pop(0)
+            history.pop(0)
+
+        return reply
 
     # ── 反思 ──────────────────────────────────────────────────
 

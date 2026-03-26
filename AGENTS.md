@@ -99,6 +99,19 @@ Decompose a task when:
 
 Never mark a task `[x]` with a "(partial)" annotation. If work is partially done, keep the task `[ ]` and update the description, or split into subtasks.
 
+## Code Review (Humanize / RLCR)
+
+Code changes to core modules (`runner/`, `fleet/`, `integrations/`) should be reviewed
+by an independent AI reviewer via the Humanize system (ADR 0068).
+
+Available mechanisms:
+- **Ask-Codex**: one-shot review via `humanize_review` skill or `ask-codex.sh`
+- **RLCR Loop**: iterative development with Codex review via `setup-rlcr-loop.sh`
+- **Fleet post-task review**: automatic Codex review after Fleet workers complete code tasks
+- **PR Loop**: automated PR review handling via `setup-pr-loop.sh`
+
+See `docs/sops/humanize-workflow.md` for the full SOP.
+
 ## Conventions
 
 | Convention | Description |
@@ -108,6 +121,7 @@ Never mark a task `[x]` with a "(partial)" annotation. If work is partially done
 | Temporal reasoning | Claims about duration, age, timelines require evidence |
 | Decisions | Significant choices → ADR in `decisions/` |
 | Structured work records | YAML frontmatter, type-specific sections |
+| Code review | Core module changes reviewed via Humanize/Codex (ADR 0068) |
 
 ## Schemas
 
@@ -130,3 +144,4 @@ The default model is configured via environment variables:
 - `OPENAI_BASE_URL` — API endpoint (default: `https://code.vangularcode.asia/v1`)
 - `OPENAI_MODEL` — Model identifier (default: `gpt-5.4`)
 - `OPENAKARI_HOME` — Root path of this repository
+- `HUMANIZE_ROOT` — Humanize skill root (default: `~/.cursor/skills/humanize`)

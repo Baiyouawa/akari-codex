@@ -2275,7 +2275,8 @@
       "session_id": "智乃-02-1774491696-aa30d7",
       "project": "multi-agent-review-survey",
       "claimed_at": 1774491696.6259143,
-      "active": true
+      "active": false,
+      "released_at": 1774492615.5748146
     }
   }
 }

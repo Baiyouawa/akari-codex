@@ -1,0 +1,22 @@
+{
+  "job_id": "weekly-code-audit",
+  "project_path": ".",
+  "task_selector": "auto",
+  "frequency_seconds": 604800,
+  "model": "",
+  "max_budget_usd": 5.0,
+  "approval_policy": "standard",
+  "output_location": "logs/sessions",
+  "enabled": true,
+  "humanize": {
+    "mode": "review",
+    "codex_model": "gpt-5.4",
+    "codex_effort": "high",
+    "review_timeout": 1800,
+    "targets": [
+      "runner/",
+      "integrations/",
+      "fleet/"
+    ]
+  }
+}

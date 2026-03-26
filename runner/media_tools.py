@@ -297,8 +297,14 @@ async def _tts_async(text: str, voice: str, output_path: Path) -> None:
     except ImportError:
         raise RuntimeError("edge-tts 未安装，请运行: pip install edge-tts")
 
-    communicate = edge_tts.Communicate(text=text, voice=voice)
+    communicate = edge_tts.Communicate(
+        text=text, voice=voice,
+        connect_timeout=30, receive_timeout=60,
+    )
     await communicate.save(str(output_path))
+
+
+_TTS_MAX_RETRIES = 3
 
 
 def tts_generate(text: str, voice: str = "", rate: str = "") -> Path:
@@ -316,21 +322,24 @@ def tts_generate(text: str, voice: str = "", rate: str = "") -> Path:
     cache = _get_cache_dir()
     output = cache / f"tts_{int(time.time() * 1000)}.mp3"
 
-    try:
-        loop = asyncio.get_event_loop()
-        if loop.is_running():
+    last_err: Exception | None = None
+    for attempt in range(1, _TTS_MAX_RETRIES + 1):
+        try:
             import concurrent.futures
-            with concurrent.futures.ThreadPoolExecutor() as pool:
-                pool.submit(
-                    lambda: asyncio.run(_tts_async(text, resolved_voice, output))
-                ).result(timeout=30)
-        else:
-            asyncio.run(_tts_async(text, resolved_voice, output))
-    except RuntimeError:
-        asyncio.run(_tts_async(text, resolved_voice, output))
+            with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
+                fut = pool.submit(asyncio.run, _tts_async(text, resolved_voice, output))
+                fut.result(timeout=60)
+            break
+        except Exception as e:
+            last_err = e
+            if attempt < _TTS_MAX_RETRIES:
+                _log.warning("TTS 第 %d 次失败 (%s)，重试...", attempt, e)
+                time.sleep(1)
+    else:
+        raise RuntimeError(f"TTS 合成失败（{_TTS_MAX_RETRIES}次重试后）: {last_err}")
 
     if not output.is_file() or output.stat().st_size == 0:
-        raise RuntimeError(f"TTS 合成失败: {output}")
+        raise RuntimeError(f"TTS 合成失败: 输出文件为空 {output}")
     _maybe_cleanup()
     return output
 
@@ -407,11 +416,22 @@ def recognize_speech(
     api_key: str = "",
     base_url: str = "",
 ) -> str:
-    """语音转文字。优先用 OpenAI Whisper API，失败则返回错误。"""
+    """语音转文字。
+
+    优先使用独立的 WHISPER_API_KEY / WHISPER_BASE_URL 配置，
+    回退到通用 OPENAI_API_KEY / OPENAI_BASE_URL。
+    """
     if not api_key:
-        api_key = os.environ.get("OPENAI_API_KEY", "")
+        api_key = (
+            os.environ.get("WHISPER_API_KEY")
+            or os.environ.get("OPENAI_API_KEY", "")
+        )
     if not base_url:
-        base_url = os.environ.get("OPENAI_BASE_URL", "https://code.vangularcode.asia/v1")
+        base_url = (
+            os.environ.get("WHISPER_BASE_URL")
+            or os.environ.get("OPENAI_BASE_URL", "https://api.openai.com/v1")
+        )
+    whisper_model = os.environ.get("WHISPER_MODEL", "whisper-1")
 
     p = Path(audio_path)
     if not p.is_file():
@@ -423,7 +443,7 @@ def recognize_speech(
     try:
         with open(p, "rb") as f:
             transcript = client.audio.transcriptions.create(
-                model="whisper-1",
+                model=whisper_model,
                 file=f,
                 language="zh",
             )

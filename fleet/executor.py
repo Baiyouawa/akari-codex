@@ -191,9 +191,20 @@ def execute_fleet_worker(
             result.ok = True
 
             written = _extract_written_files(session_result.tool_calls_log)
+
+            review_result = _maybe_humanize_review(
+                opts, written, fleet_config, cwd
+            )
+            if review_result and review_result.has_critical:
+                result.blocked = True
+                result.blocked_reason = (
+                    f"Humanize post-task review found {review_result.issues_found} "
+                    f"issues (critical): {review_result.summary[:200]}"
+                )
+
             elapsed = time.time() - start_time
 
-            done_msg = "ok (blocked)" if blocked else "ok"
+            done_msg = "ok (blocked)" if (blocked or result.blocked) else "ok"
             _send_event(
                 "done", message=done_msg,
                 deliverables=written,
@@ -209,7 +220,7 @@ def execute_fleet_worker(
                 result.total_tokens,
                 result.push_result,
                 len(written),
-                f" BLOCKED: {blocked_reason[:80]}" if blocked else "",
+                f" BLOCKED: {result.blocked_reason[:80]}" if result.blocked else "",
             )
         else:
             result.error = session_result.error
@@ -468,9 +479,33 @@ def execute_idle_worker(
             result.push_result = push_result.status
             result.ok = True
             written = _extract_written_files(session_result.tool_calls_log)
+
+            if written:
+                idle_review_opts = FleetExecutionOpts(
+                    task=FleetTask(
+                        task_id=f"idle-{exploration_type}",
+                        text=f"idle exploration: {exploration_type}",
+                        project=project,
+                    ),
+                    session_id=session_id,
+                    claim_id="",
+                    prompt="",
+                    repo_root=repo_root,
+                )
+                review_result = _maybe_humanize_review(
+                    idle_review_opts, written, fleet_config, cwd
+                )
+                if review_result and review_result.has_critical:
+                    result.blocked = True
+                    result.blocked_reason = (
+                        f"Post-task review found {review_result.issues_found} "
+                        f"issues (critical): {review_result.summary[:200]}"
+                    )
+
             elapsed = time.time() - start_time
+            done_msg = "ok (blocked)" if result.blocked else "ok"
             _send_event(
-                "done", message="ok",
+                "done", message=done_msg,
                 deliverables=written,
                 total_tokens=result.total_tokens,
                 duration_seconds=elapsed,
@@ -496,3 +531,56 @@ def execute_idle_worker(
             pass
 
     return result
+
+
+# ── Humanize post-task review integration ─────────────────────────
+
+
+def _maybe_humanize_review(
+    opts: FleetExecutionOpts,
+    written_files: list[str],
+    fleet_config: FleetConfig,
+    cwd: str,
+) -> Any:
+    """Run a post-task review for EVERY completed worker.
+
+    This is mandatory — every Fleet task gets reviewed. Strategy:
+      1. If Humanize/codex CLI available → use `codex review`
+      2. Otherwise → direct OpenAI API review (always works)
+
+    Returns PostTaskReviewResult or None only if no files were written.
+    """
+    if not written_files:
+        logger.info("Post-task review skipped for %s: no files written", opts.task.task_id[:8])
+        return None
+
+    try:
+        from runner.humanize_bridge import fleet_post_task_review
+
+        result = fleet_post_task_review(
+            repo_root=Path(cwd),
+            written_files=written_files,
+            task_text=opts.task.text,
+            model="gpt-5.4",
+            effort="medium",
+            timeout=600,
+        )
+        if result.reviewed:
+            logger.info(
+                "Post-task review for %s: %d issues (critical=%s, %.0fs)",
+                opts.task.task_id[:8],
+                result.issues_found,
+                result.has_critical,
+                result.duration_seconds,
+            )
+        else:
+            logger.warning(
+                "Post-task review for %s could not execute: %s",
+                opts.task.task_id[:8],
+                result.summary[:120],
+            )
+        return result
+
+    except Exception as e:
+        logger.warning("Post-task review failed for %s: %s", opts.task.task_id[:8], e)
+        return None

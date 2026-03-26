@@ -358,17 +358,35 @@ class AgentLoop:
             return self._sys_orient(args)
 
         if skill_name == "set_persona":
-            target = args.get("target", "")
-            persona = args.get("persona", "")
+            target = (
+                args.get("target", "")
+                or args.get("target_user", "")
+                or args.get("user", "")
+                or args.get("qq", "")
+            )
+            persona = (
+                args.get("persona", "")
+                or args.get("persona_desc", "")
+                or args.get("description", "")
+                or args.get("desc", "")
+            )
             if not target or not persona:
                 return "需要指定目标用户和角色描述"
+            import re as _re
+            qq_match = _re.search(r"(\d{5,12})", target)
+            if qq_match:
+                target = qq_match.group(1)
             set_persona_override(target, persona)
-            return f"收到！小白跟 {target} 聊天时会扮演: {persona}"
+            return f"收到！小白跟 {target} 聊天时会扮演: {persona[:80]}"
 
         if skill_name == "clear_persona":
-            target = args.get("target", "")
+            target = args.get("target", "") or args.get("target_user", "") or args.get("user", "")
             if not target:
                 return "需要指定要取消人设的用户"
+            import re as _re
+            qq_match = _re.search(r"(\d{5,12})", target)
+            if qq_match:
+                target = qq_match.group(1)
             if clear_persona_override(target):
                 return f"已取消对 {target} 的角色扮演，恢复默认"
             return f"没有找到对 {target} 的角色扮演设定"
@@ -381,6 +399,12 @@ class AgentLoop:
             for target, desc in overrides.items():
                 lines.append(f"  {target} → {desc[:60]}")
             return "\n".join(lines)
+
+        if skill_name.startswith("sticker_"):
+            return self._sys_sticker(skill_name, args)
+
+        if skill_name.startswith("humanize_"):
+            return self._sys_humanize(skill_name, args)
 
         if skill_name.startswith("multiagent_"):
             return self._sys_multiagent(skill_name, args)
@@ -532,6 +556,111 @@ class AgentLoop:
             return _json.dumps(calls, ensure_ascii=False, indent=2)
 
         return f"未知的电话 Skill: {skill_name}"
+
+    # ── 表情包 Skill ───────────────────────────────────────────
+
+    def _sys_sticker(self, skill_name: str, args: dict[str, Any]) -> str:
+        """表情包管理操作。"""
+        from runner import sticker_manager as sm
+
+        if skill_name == "sticker_send":
+            mood = args.get("mood", "开心")
+            entry = sm.pick_sticker_for_mood(mood)
+            if not entry:
+                return "表情包收藏是空的，需要先从聊天中收集一些~"
+            path = sm.get_sticker_path(entry["id"])
+            if not path:
+                return "表情包文件丢失了"
+            return f"[IMG:{path}]"
+
+        if skill_name == "sticker_list":
+            stickers = sm.list_stickers()
+            if not stickers:
+                return "收藏夹是空的~还没有偷到过表情包"
+            lines = [f"共收藏 {len(stickers)} 个表情包："]
+            for s in stickers[-20:]:
+                tags = ", ".join(s.get("tags", [])) or "未标注"
+                lines.append(f"  {s['id']} [{tags}] (用了{s.get('use_count', 0)}次)")
+            if len(stickers) > 20:
+                lines.append(f"  ...还有 {len(stickers) - 20} 个")
+            return "\n".join(lines)
+
+        if skill_name == "sticker_tag":
+            sid = args.get("id", "")
+            tags = args.get("tags", [])
+            if not sid or not tags:
+                return "需要指定 id 和 tags"
+            if isinstance(tags, str):
+                tags = [t.strip() for t in tags.replace("，", ",").split(",")]
+            ok = sm.tag_sticker(sid, tags, args.get("description", ""))
+            return f"已标注！" if ok else f"找不到 id={sid} 的表情包"
+
+        return f"未知的表情包 Skill: {skill_name}"
+
+    # ── Humanize 代码审查 ─────────────────────────────────────
+
+    def _sys_humanize(self, skill_name: str, args: dict[str, Any]) -> str:
+        """Humanize 代码审查系统操作。"""
+        try:
+            from . import humanize_bridge as hb
+        except ImportError:
+            return "Humanize bridge 模块不可用"
+
+        if not hb.is_humanize_available():
+            return "Humanize 未安装（找不到 ~/.cursor/skills/humanize/scripts/）"
+
+        if skill_name == "humanize_review":
+            target = args.get("target", "")
+            focus = args.get("focus", "")
+            if not target:
+                return "需要指定审查目标（文件路径或描述）"
+
+            question = f"Review {target}"
+            if focus:
+                question += f" focusing on: {focus}"
+
+            result = hb.ask_codex(
+                question,
+                model="gpt-5.4",
+                effort="high",
+                timeout=600,
+                cwd=self.config.repo_home,
+            )
+            if result.exit_code != 0:
+                return f"Codex 审查失败 (exit={result.exit_code}): {result.output[:500]}"
+            return f"[Codex 独立审查结果] ({result.duration_seconds:.0f}s)\n\n{result.output}"
+
+        if skill_name == "humanize_rlcr_setup":
+            plan_file = args.get("plan_file", "")
+            max_iter = int(args.get("max", 10))
+            skip_impl = args.get("skip_impl", False)
+
+            result = hb.setup_rlcr_loop(
+                plan_file,
+                max_iterations=max_iter,
+                skip_impl=bool(skip_impl),
+                cwd=self.config.repo_home,
+            )
+            if result.success:
+                return f"RLCR 循环已启动！\n目录: {result.loop_dir}\n\n{result.output[:1000]}"
+            return f"RLCR 启动失败 (exit={result.exit_code}): {result.output[:500]}"
+
+        if skill_name == "humanize_status":
+            available = hb.is_humanize_available()
+            root = hb.get_humanize_root()
+            lines = [
+                f"Humanize 状态: {'✓ 可用' if available else '✗ 不可用'}",
+                f"安装路径: {root}",
+            ]
+            humanize_dir = self.config.repo_home / ".humanize"
+            if humanize_dir.is_dir():
+                rlcr_dirs = list((humanize_dir / "rlcr").iterdir()) if (humanize_dir / "rlcr").is_dir() else []
+                lines.append(f"RLCR 历史会话: {len(rlcr_dirs)} 个")
+            else:
+                lines.append("尚无 .humanize/ 运行数据")
+            return "\n".join(lines)
+
+        return f"未知的 Humanize 操作: {skill_name}"
 
     # ── Multi-Agent 调度 ──────────────────────────────────────
 
