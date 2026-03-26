@@ -1,56 +1,34 @@
 # zero-basics-plan — 任务列表
 
-- [x] 设计整体课程框架：将教程拆分为 4 周共 28 天，每天有明确学习目标、实操任务、配套资料；每周末安排一次系统课程复盘与整合训练。
-  Done when: 形成课程总表，覆盖 4 周 / 28 天 / 每日学习目标 / 实操任务 / 配套资料 / 每周末系统复盘；见 `projects/zero-basics-plan/analysis/2026-03-26-28-day-course-framework.md`
-
-- [x] 调研 Linux 零基础入门资料：覆盖文件系统、常用命令、权限、软件安装、Shell 基础、实战练习，筛选适合初学者的高质量中文或英文资料并记录来源。
-  Done when: 形成带来源的调研笔记，包含资料清单、主题映射、课程拆分建议与练习设计；见 `projects/zero-basics-plan/analysis/2026-03-26-linux-beginner-resource-survey.md`
-
-- [x] 调研 Git 与 GitHub 零基础资料：覆盖版本控制概念、仓库初始化、commit、branch、merge、rebase、remote、PR、issue、协作流程，并整理新手友好教程与练习。
-  Done when: 形成带来源的调研笔记，包含资料清单、教程骨架、练习设计与 28 天课程拆分建议；见 `projects/zero-basics-plan/analysis/git-github-beginners-research.md`
-
-- [x] 调研开发工具链资料：覆盖 Cursor、VS Code、终端、包管理、环境配置、基本调试方法，重点整理适合零基础的 VibeCoding 入门实践资料。
-  Done when: 形成带来源的调研笔记，覆盖 Cursor / VS Code / 终端 / 包管理 / 环境配置 / 调试 / VibeCoding 入门实践，并给出课程落地建议；见 `projects/zero-basics-plan/analysis/dev-toolchain-beginner-research.md`
-
-- [x] 调研 VibeCoding / AI 辅助编程资料：说明概念、工作流、提示词基础、如何与 Cursor 配合完成小项目、常见误区与安全注意事项。
-  Done when: 形成带来源的调研笔记，覆盖概念 / 工作流 / 提示词基础 / Cursor 配合小项目 / 常见误区 / 安全注意事项；见 `projects/zero-basics-plan/analysis/2026-03-26-vibecoding-ai-assisted-programming-research.md`
-
-- [x] 调研 Python 与编程基础资料：覆盖语法、数据结构、函数、模块、文件读写、虚拟环境，为后续 AI / 深度学习学习做铺垫。
-  Done when: 形成带来源的调研笔记，覆盖语法 / 数据结构 / 函数 / 模块 / 文件读写 / 虚拟环境，并给出课程映射、练习设计与最小资料包建议；见 `projects/zero-basics-plan/analysis/2026-03-26-python-programming-basics-research.md`
-
-- [x] 调研基础深度学习入门资料：覆盖 Python 科学计算、NumPy、PyTorch 基础、张量、自动求导、简单神经网络、训练与推理概念，保证零基础可理解。
-  Done when: 形成带来源的调研笔记，覆盖 Python 科学计算 / NumPy / PyTorch 基础 / 张量 / 自动求导 / 简单神经网络 / 训练与推理概念，并给出课程映射、练习设计与最小资料包建议；见 `projects/zero-basics-plan/analysis/2026-03-26-deep-learning-beginner-resource-survey.md`
-
-- [x] 调研实践项目案例：为 28 天课程匹配由浅入深的小练习或小项目，如命令行练习、Git 协作练习、Cursor 辅助编码、小型深度学习 demo。
-  Done when: 形成带来源的调研笔记，按 Week 1~4 给出练习 / 小项目案例、28 天练习映射、验收标准与教学落地建议；见 `projects/zero-basics-plan/analysis/2026-03-26-practice-project-cases.md`
-
-- [x] 整理最终 Markdown 文档结构：输出一份完整《零基础计划》教程草案，要求包含课程说明、4 周周目标、28 天日程安排、每周末系统课程、每日资料链接、每日任务与阶段性产出。
-  Done when: 形成完整教程草案并落盘到 `projects/zero-basics-plan/zero-basics-plan-course-draft.md`，且包含课程说明 / 4 周周目标 / 28 天日程 / 每周末系统课程 / 每日资料链接 / 每日任务 / 阶段性产出
-
-- [ ] 对所有收集到的资料进行可追溯性审查：检查链接可访问性、内容质量、是否适合初学者，并标注推荐理由与难度。
+- [ ] 调研适合零基础学习者的 VSCode 远程连接服务器入门资料，覆盖 SSH、Remote-SSH、常见报错与排查，优先收集博客、知乎、小红书、实战教程等非纯官方来源，并记录来源链接与适用人群。
   Done when: TBD
 
-- [x] 梳理 zero-basics-plan 当前项目状态、现有待办、已有文档与缺口，输出重启现状说明
-  Done when: 形成可追溯的现状说明，覆盖当前状态 / 已有文档 / 待办 / 缺口 / 建议重启顺序；见 `projects/zero-basics-plan/analysis/2026-03-26-restart-status.md`
-
-- [ ] 制定《零基础计划》顶层执行方案：28天/4周课程结构、目标人群、产出规范、阶段里程碑、审批节点
+- [ ] 调研 Linux 零基础入门学习路径，整理文件系统、常用命令、权限、软件安装、进程、网络基础等内容，筛选适合第 1 周学习的资料并记录来源。
   Done when: TBD
 
-- [ ] 基于顶层方案拆解为周计划与每日计划，形成分层计划文档，并标记每一层需要 humanize review 的检查点
+- [ ] 调研 Git 与 GitHub 零基础学习资料，覆盖仓库创建、clone、commit、branch、merge、pull request、README、issue、协作流程与常见坑，优先收集通俗易懂的中文资料并记录来源。
   Done when: TBD
 
-- [ ] 调用 Humanize 流程对顶层计划进行独立审查，重点检查：结构完整性、难度梯度、是否适合零基础、是否能落地
+- [ ] 调研 vibe coding 与 Cursor 的入门到进阶资料，覆盖工作流、提示词思路、项目实战、代码理解、调试、Agent 协作、常见误区，优先收集中文社区经验帖、博客、知乎、小红书和教程并记录来源。
   Done when: TBD
 
-- [ ] 若 Humanize 审查发现问题，迭代修订计划并再次审查，直到通过
+- [ ] 调研基础深度学习知识的零基础入门资料，覆盖神经网络、训练与推理、损失函数、过拟合、数据集、PyTorch/基础实践等，要求材料适合完全新手并记录来源。
   Done when: TBD
 
-- [ ] 在计划通过后，为 Linux、Git、GitHub、vibecoding、Cursor、基础深度学习 各模块收集高质量资料与练习资源，并建立可追溯来源
+- [ ] 基于上述调研结果，设计一个 28 天、4 周的完整课程大纲：每天有学习目标、任务安排、详细学习资料、实践内容；每周末安排一次系统课程，用于回顾、串联和综合练习。
   Done when: TBD
 
-- [ ] 汇总为 Markdown 主文档骨架，包含目录、每日任务、学习资料、周末系统课程与实践安排
+- [ ] 最终汇总为 Markdown 文档结构方案，要求内容包含每日教程正文框架、资料来源区块、每周系统课程安排、学习顺序说明与阶段成果目标。
   Done when: TBD
 
-- [ ] 对最终文档骨架执行 Humanize 审查，检查证据链、可读性、执行闭环与是否需要继续细化
+- [x] 调研主题：VSCode连接远程服务器 + Linux入门。必须先使用 web_search，至少尝试 3 组不同关键词（如“VSCode 远程 SSH 新手 教程”“Linux 零基础 命令 入门 博客”“远程服务器 连接 踩坑 知乎”），收集不少于 10 条中文高质量来源，优先知乎/博客/经验帖；输出内容必须包含：来源标题、URL、适合零基础的原因、可用于课程的知识点、常见坑。最终写成一份 Markdown 调研笔记。
+  Done when: 已产出 `analysis/2026-03-26-vscode-linux-beginner-resource-survey.md`，包含 3 组以上关键词检索结果、10+ 条中文来源、零基础适配理由、课程映射、常见坑与交叉校验说明。
+
+- [ ] 调研主题：Git + GitHub + 基础协作工作流。必须先使用 web_search，至少尝试 3 组不同关键词，收集不少于 10 条中文高质量来源，覆盖 git add/commit/push/pull/branch/merge、SSH 配置、仓库创建、常见报错与解决；输出 Markdown 调研笔记，附标题、URL、摘要、适合插入第几天课程。
   Done when: TBD
 
+- [ ] 调研主题：vibe coding + Cursor + AI辅助编程工作流。必须先使用 web_search，至少尝试 3 组不同关键词，收集不少于 10 条中文高质量来源，优先实战教程、踩坑总结、提示词经验；输出 Markdown 调研笔记，包含来源、摘要、适合零基础者的切入方式、风险与误区。
+  Done when: TBD
+
+- [ ] 调研主题：基础深度学习 + 28天课程编排。必须先使用 web_search，至少尝试 3 组不同关键词，收集不少于 10 条中文高质量来源，覆盖前置数学直觉、神经网络基本概念、训练与推理、学习路线；同时基于全项目目标输出 28 天四周课程骨架草案：每天主题、任务、资料占位、每周系统课主题。结果写成 Markdown 文档。
+  Done when: TBD
