@@ -2934,7 +2934,8 @@
       "session_id": "岛村-01-1774532213-07a6a5",
       "project": "zero-basics-plan",
       "claimed_at": 1774532213.468182,
-      "active": true
+      "active": false,
+      "released_at": 1774532998.3791678
     },
     "claim-e78ad82b2260": {
       "task_id": "126b222a5bd1ac63",
@@ -2959,7 +2960,8 @@
       "session_id": "侑-00-1774532213-b815bf",
       "project": "zero-basics-plan",
       "claimed_at": 1774532213.5001612,
-      "active": true
+      "active": false,
+      "released_at": 1774533060.0055847
     },
     "claim-849ff4a34ecc": {
       "task_id": "063c00f7a48cb7e6",
@@ -2975,6 +2977,14 @@
       "session_id": "智乃-02-1774532894-7919f5",
       "project": "zero-basics-plan",
       "claimed_at": 1774532894.3445356,
+      "active": true
+    },
+    "claim-4941ed9493fe": {
+      "task_id": "42d6d008b92c883f",
+      "worker_id": "心奈-03",
+      "session_id": "心奈-03-1774533074-13c972",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774533074.5671065,
       "active": true
     }
   }
