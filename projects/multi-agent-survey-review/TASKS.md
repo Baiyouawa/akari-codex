@@ -9,8 +9,8 @@
 - [x] 对十篇综述逐篇详读，提炼每篇的研究问题、分类框架、核心观点、方法谱系、评测设定、优缺点、局限、值得精读章节与关键图表
   Done when: 产出统一模板的十篇中文精读笔记，已写入 `projects/multi-agent-survey-review/analysis/2026-03-26-ten-survey-detailed-reading-notes.md`
 
-- [ ] 交叉比较十篇综述，抽取共同趋势、分歧点、研究空白、数据集与benchmark脉络、系统设计范式
-  Done when: TBD
+- [x] 交叉比较十篇综述，抽取共同趋势、分歧点、研究空白、数据集与benchmark脉络、系统设计范式
+  Done when: 产出 `projects/multi-agent-survey-review/analysis/2026-03-26-ten-survey-cross-comparison.md`，并完成计划进度、自审与摘要文件
 
 - [ ] 输出一份中文Markdown最终报告，包含十篇综述分别的详述内容、对比分析，以及五个后续可做的研究idea（每个包含motivation、问题定义、方法设计、预期贡献与潜在风险）
   Done when: TBD

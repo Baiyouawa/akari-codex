@@ -1,0 +1,262 @@
+[
+  {
+    "paper_id": "10.1007/s44336-024-00009-2",
+    "title": "A survey on LLM-based multi-agent systems: workflow, infrastructure, and challenges",
+    "year": 2024,
+    "authors": "Li et al.",
+    "source_url": "https://link.springer.com/article/10.1007/s44336-024-00009-2",
+    "download_url": "https://link.springer.com/content/pdf/10.1007/s44336-024-00009-2.pdf",
+    "local_path": "projects/multi-agent-survey-review/literature/pdf/2024-li-et-al-a-survey-on-llm-based-multi-agent-systems-workflow-infrastructure-and-challenges-springer-10.1007-s44336-024-00009-2.pdf",
+    "format": "pdf",
+    "status": "downloaded",
+    "access_date": "2026-03-26T23:10:48+08:00",
+    "validation": {
+      "exists": true,
+      "readable": true,
+      "pdf_header": "%PDF-1.4",
+      "size_bytes": 3482567,
+      "pages": 43,
+      "sha256": "c39a7abf36a6df397138177cde5fe7015f120a9670438e91e357c6e1031555ce",
+      "title_snippet": "Li et al. Vicinagearth (2024) 1:9 https://doi.org/10.1007/s44336-024-00009-2 REVIEW Open Access"
+    },
+    "provenance": {
+      "download_method": "curl -L --fail",
+      "verification_method": "python3 + pypdf PdfReader",
+      "selection_source": "projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md"
+    }
+  },
+  {
+    "paper_id": "2402.01680",
+    "title": "Large Language Model based Multi-Agents: A Survey of Progress and Challenges",
+    "year": 2024,
+    "authors": "Guo et al.",
+    "source_url": "https://arxiv.org/abs/2402.01680",
+    "download_url": "https://arxiv.org/pdf/2402.01680.pdf",
+    "local_path": "projects/multi-agent-survey-review/literature/pdf/2024-guo-et-al-large-language-model-based-multi-agents-a-survey-of-progress-and-challenges-arxiv-2402.01680.pdf",
+    "format": "pdf",
+    "status": "downloaded",
+    "access_date": "2026-03-26T23:10:48+08:00",
+    "validation": {
+      "exists": true,
+      "readable": true,
+      "pdf_header": "%PDF-1.5",
+      "size_bytes": 1243493,
+      "pages": 15,
+      "sha256": "d3410856f2b8629ab7365af3bd62fe8291b1a595ec954f1feb859a2688c7179c",
+      "title_snippet": "Large Language Model based Multi-Agents: A Survey of Progress and Challenges"
+    },
+    "provenance": {
+      "download_method": "curl -L --fail",
+      "verification_method": "python3 + pypdf PdfReader",
+      "selection_source": "projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md"
+    }
+  },
+  {
+    "paper_id": "10.1007/s10458-023-09633-6",
+    "title": "A survey of multi-agent deep reinforcement learning with communication",
+    "year": 2024,
+    "authors": "Zhu et al.",
+    "source_url": "https://dblp.org/rec/journals/aamas/ZhuDW24",
+    "download_url": "https://link.springer.com/content/pdf/10.1007/S10458-023-09633-6.pdf",
+    "local_path": "projects/multi-agent-survey-review/literature/pdf/2024-zhu-et-al-a-survey-of-multi-agent-deep-reinforcement-learning-with-communication-doi-10.1007-s10458-023-09633-6.pdf",
+    "format": "pdf",
+    "status": "downloaded",
+    "access_date": "2026-03-26T23:10:48+08:00",
+    "validation": {
+      "exists": true,
+      "readable": true,
+      "pdf_header": "%PDF-1.4",
+      "size_bytes": 2154897,
+      "pages": 48,
+      "sha256": "dfef1dd599aa07ac794deda7e791f20b1024749229faa49f19fcd2087d408ec8",
+      "title_snippet": "A survey of multi-agent deep reinforcement learning with communication"
+    },
+    "provenance": {
+      "download_method": "curl -L --fail",
+      "verification_method": "python3 + pypdf PdfReader",
+      "selection_source": "projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md"
+    }
+  },
+  {
+    "paper_id": "2412.17481",
+    "title": "A Survey on LLM-based Multi-Agent System: Recent Advances and New Frontiers in Application",
+    "year": 2025,
+    "authors": "Chen et al.",
+    "source_url": "https://arxiv.org/abs/2412.17481",
+    "download_url": "https://arxiv.org/pdf/2412.17481.pdf",
+    "local_path": "projects/multi-agent-survey-review/literature/pdf/2025-chen-et-al-a-survey-on-llm-based-multi-agent-system-recent-advances-and-new-frontiers-in-application-arxiv-2412.17481.pdf",
+    "format": "pdf",
+    "status": "downloaded",
+    "access_date": "2026-03-26T23:10:48+08:00",
+    "validation": {
+      "exists": true,
+      "readable": true,
+      "pdf_header": "%PDF-1.5",
+      "size_bytes": 404537,
+      "pages": 13,
+      "sha256": "49d10613e28713573cef0da266f93bec222e550a0c4724001ac771778462ffb0",
+      "title_snippet": "A Survey on LLM-based Multi-Agent System: Recent Advances and New Frontiers in Application"
+    },
+    "provenance": {
+      "download_method": "curl -L --fail",
+      "verification_method": "python3 + pypdf PdfReader",
+      "selection_source": "projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md"
+    }
+  },
+  {
+    "paper_id": "2501.06322",
+    "title": "Multi-Agent Collaboration Mechanisms: A Survey of LLMs",
+    "year": 2025,
+    "authors": "Tran et al.",
+    "source_url": "https://arxiv.org/abs/2501.06322",
+    "download_url": "https://arxiv.org/pdf/2501.06322.pdf",
+    "local_path": "projects/multi-agent-survey-review/literature/pdf/2025-tran-et-al-multi-agent-collaboration-mechanisms-a-survey-of-llms-arxiv-2501.06322.pdf",
+    "format": "pdf",
+    "status": "downloaded",
+    "access_date": "2026-03-26T23:10:48+08:00",
+    "validation": {
+      "exists": true,
+      "readable": true,
+      "pdf_header": "%PDF-1.5",
+      "size_bytes": 2420086,
+      "pages": 35,
+      "sha256": "badaf8bb47535df96252be38c5a5b81d979478b860ed67c2c4ac0ebaa4483ae5",
+      "title_snippet": "Multi-Agent Collaboration Mechanisms: A Survey of LLMs"
+    },
+    "provenance": {
+      "download_method": "curl -L --fail",
+      "verification_method": "python3 + pypdf PdfReader",
+      "selection_source": "projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md"
+    }
+  },
+  {
+    "paper_id": "2502.14321",
+    "title": "Beyond Self-Talk: A Communication-Centric Survey of LLM-Based Multi-Agent Systems",
+    "year": 2025,
+    "authors": "Yan et al.",
+    "source_url": "https://arxiv.org/abs/2502.14321",
+    "download_url": "https://arxiv.org/pdf/2502.14321.pdf",
+    "local_path": "projects/multi-agent-survey-review/literature/pdf/2025-yan-et-al-beyond-self-talk-a-communication-centric-survey-of-llm-based-multi-agent-systems-arxiv-2502.14321.pdf",
+    "format": "pdf",
+    "status": "downloaded",
+    "access_date": "2026-03-26T23:10:48+08:00",
+    "validation": {
+      "exists": true,
+      "readable": true,
+      "pdf_header": "%PDF-1.5",
+      "size_bytes": 1147688,
+      "pages": 16,
+      "sha256": "cbeba3fa31e2cde155837c0791bfe169057a44f69443125a58d1552d9fa917ec",
+      "title_snippet": "Beyond Self-Talk: A Communication-Centric Survey of LLM-Based Multi-Agent Systems"
+    },
+    "provenance": {
+      "download_method": "curl -L --fail",
+      "verification_method": "python3 + pypdf PdfReader",
+      "selection_source": "projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md"
+    }
+  },
+  {
+    "paper_id": "2502.16804",
+    "title": "Multi-Agent Autonomous Driving Systems with Large Language Models: A Survey of Recent Advances",
+    "year": 2025,
+    "authors": "Wu et al.",
+    "source_url": "https://arxiv.org/abs/2502.16804",
+    "download_url": "https://arxiv.org/pdf/2502.16804.pdf",
+    "local_path": "projects/multi-agent-survey-review/literature/pdf/2025-wu-et-al-multi-agent-autonomous-driving-systems-with-large-language-models-a-survey-of-recent-advances-arxiv-2502.16804.pdf",
+    "format": "pdf",
+    "status": "downloaded",
+    "access_date": "2026-03-26T23:10:48+08:00",
+    "validation": {
+      "exists": true,
+      "readable": true,
+      "pdf_header": "%PDF-1.7",
+      "size_bytes": 2307367,
+      "pages": 18,
+      "sha256": "40ed6675033bf3fab4bc7cabb4e09027254eaa451ce24e261f4fddf8fe5b1d8c",
+      "title_snippet": "Multi-Agent Autonomous Driving Systems with Large Language Models: A Survey of Recent Advances, Resources, and Future Directions"
+    },
+    "provenance": {
+      "download_method": "curl -L --fail",
+      "verification_method": "python3 + pypdf PdfReader",
+      "selection_source": "projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md"
+    }
+  },
+  {
+    "paper_id": "2503.13415",
+    "title": "A Comprehensive Survey on Multi-Agent Cooperative Decision-Making: Scenarios, Approaches, Challenges and Perspectives",
+    "year": 2025,
+    "authors": "Jin et al.",
+    "source_url": "https://arxiv.org/abs/2503.13415",
+    "download_url": "https://arxiv.org/pdf/2503.13415.pdf",
+    "local_path": "projects/multi-agent-survey-review/literature/pdf/2025-misc-a-comprehensive-survey-on-multi-agent-cooperative-decision-making-scenarios-approaches-challenges-and-perspectives-arxiv-2503.13415.pdf",
+    "format": "pdf",
+    "status": "downloaded",
+    "access_date": "2026-03-26T23:10:48+08:00",
+    "validation": {
+      "exists": true,
+      "readable": true,
+      "pdf_header": "%PDF-1.5",
+      "size_bytes": 11793042,
+      "pages": 54,
+      "sha256": "219931f9f97fdf38896347ab7a4e4ddbea1b461f6c5d4c8855d6dc1cc4819e6d",
+      "title_snippet": "A Comprehensive Survey on Multi-Agent Cooperative Decision-Making: Scenarios, Approaches, Challenges and Perspectives"
+    },
+    "provenance": {
+      "download_method": "curl -L --fail",
+      "verification_method": "python3 + pypdf PdfReader",
+      "selection_source": "projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md"
+    }
+  },
+  {
+    "paper_id": "2505.21116",
+    "title": "Creativity in LLM-based Multi-Agent Systems: A Survey",
+    "year": 2025,
+    "authors": "Lin et al.",
+    "source_url": "https://arxiv.org/abs/2505.21116",
+    "download_url": "https://arxiv.org/pdf/2505.21116.pdf",
+    "local_path": "projects/multi-agent-survey-review/literature/pdf/2025-lin-et-al-creativity-in-llm-based-multi-agent-systems-a-survey-arxiv-2505.21116.pdf",
+    "format": "pdf",
+    "status": "downloaded",
+    "access_date": "2026-03-26T23:10:48+08:00",
+    "validation": {
+      "exists": true,
+      "readable": true,
+      "pdf_header": "%PDF-1.5",
+      "size_bytes": 1461659,
+      "pages": 23,
+      "sha256": "1c101540e6c319e6afd15c6d25732c0cd388b24ada180962d3c942d15bb48f34",
+      "title_snippet": "Creativity in LLM-based Multi-Agent Systems: A Survey"
+    },
+    "provenance": {
+      "download_method": "curl -L --fail",
+      "verification_method": "python3 + pypdf PdfReader",
+      "selection_source": "projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md"
+    }
+  },
+  {
+    "paper_id": "2602.11583",
+    "title": "The Five Ws of Multi-Agent Communication: Who Talks to Whom, When, What, and Why -- A Survey from MARL to Emergent Language and LLMs",
+    "year": 2026,
+    "authors": "Chen et al.",
+    "source_url": "https://arxiv.org/abs/2602.11583",
+    "download_url": "https://arxiv.org/pdf/2602.11583.pdf",
+    "local_path": "projects/multi-agent-survey-review/literature/pdf/2026-chen-et-al-the-five-ws-of-multi-agent-communication-who-talks-to-whom-when-what-and-why-a-survey-from-marl-to-emergent-language-and-llms-arxiv-2602.11583.pdf",
+    "format": "pdf",
+    "status": "downloaded",
+    "access_date": "2026-03-26T23:10:48+08:00",
+    "validation": {
+      "exists": true,
+      "readable": true,
+      "pdf_header": "%PDF-1.7",
+      "size_bytes": 3848111,
+      "pages": 143,
+      "sha256": "61b863e674bb45c86d545042e259645b207dc95640792e839dfa4aef25141204",
+      "title_snippet": "The Five Ws of Multi-Agent Communication: Who Talks to Whom, When, What, and Why A Survey from MARL to Emergent Language and LLMs"
+    },
+    "provenance": {
+      "download_method": "curl -L --fail",
+      "verification_method": "python3 + pypdf PdfReader",
+      "selection_source": "projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md"
+    }
+  }
+]
