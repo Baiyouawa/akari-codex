@@ -2320,6 +2320,14 @@
       "project": "zero-basics-plan",
       "claimed_at": 1774524411.7782443,
       "active": true
+    },
+    "claim-72e496fbdbf8": {
+      "task_id": "a2d95724e8fabd65",
+      "worker_id": "智乃-02",
+      "session_id": "智乃-02-1774524441-80ede7",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774524441.831817,
+      "active": true
     }
   }
 }
