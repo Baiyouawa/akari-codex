@@ -234,3 +234,12 @@ Notes: <any modifications or context>
 **Description:** Need approval or expanded allowlist to run `git commit` for completed task. I updated project files and session log, but current shell allowlist blocks `git add`/`git commit`, so I cannot satisfy the required commit step for session 侑-00-1774466296-d4f058 without tool-access approval.
 **Status:** pending
 
+
+---
+
+### [BLOCKING] tool-access
+
+**Requested:** 2026-03-26T12:29:00.039595+00:00
+**Description:** Need approval or expanded allowlist to run `git add` and `git commit` for the completed zero-basics-plan deliverables. Current shell allowlist only permits `git status`, `git log`, `git diff`, and `git branch`, so I cannot create the required commit message `[fleet/智乃-02-1774527450-6d087e] ...` despite having finished the task artifacts and task-state updates.
+**Status:** pending
+

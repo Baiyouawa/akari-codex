@@ -24,8 +24,8 @@
 - [x] 调研主题：VSCode连接远程服务器 + Linux入门。必须先使用 web_search，至少尝试 3 组不同关键词（如“VSCode 远程 SSH 新手 教程”“Linux 零基础 命令 入门 博客”“远程服务器 连接 踩坑 知乎”），收集不少于 10 条中文高质量来源，优先知乎/博客/经验帖；输出内容必须包含：来源标题、URL、适合零基础的原因、可用于课程的知识点、常见坑。最终写成一份 Markdown 调研笔记。
   Done when: 已产出 `analysis/2026-03-26-vscode-linux-beginner-resource-survey.md`，包含 3 组以上关键词检索结果、10+ 条中文来源、零基础适配理由、课程映射、常见坑与交叉校验说明。
 
-- [ ] 调研主题：Git + GitHub + 基础协作工作流。必须先使用 web_search，至少尝试 3 组不同关键词，收集不少于 10 条中文高质量来源，覆盖 git add/commit/push/pull/branch/merge、SSH 配置、仓库创建、常见报错与解决；输出 Markdown 调研笔记，附标题、URL、摘要、适合插入第几天课程。
-  Done when: TBD
+- [x] 调研主题：Git + GitHub + 基础协作工作流。必须先使用 web_search，至少尝试 3 组不同关键词，收集不少于 10 条中文高质量来源，覆盖 git add/commit/push/pull/branch/merge、SSH 配置、仓库创建、常见报错与解决；输出 Markdown 调研笔记，附标题、URL、摘要、适合插入第几天课程。
+  Done when: 已产出 `analysis/2026-03-26-git-github-basic-collaboration-research-note.md`，记录 3 组关键词检索、15 条中文来源、知识点覆盖映射、课程日程建议与常见报错排查资料。
 
 - [ ] 调研主题：vibe coding + Cursor + AI辅助编程工作流。必须先使用 web_search，至少尝试 3 组不同关键词，收集不少于 10 条中文高质量来源，优先实战教程、踩坑总结、提示词经验；输出 Markdown 调研笔记，包含来源、摘要、适合零基础者的切入方式、风险与误区。
   Done when: TBD
