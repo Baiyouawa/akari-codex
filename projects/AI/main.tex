@@ -1,0 +1,196 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{fontspec}
+\usepackage[a4paper,margin=2.0cm]{geometry}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{caption}
+\usepackage[table]{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\setmainfont{TeX Gyre Heros}
+\defaultfontfeatures{Ligatures=TeX}
+\fontsize{11}{14}\selectfont
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.08}
+\raggedbottom
+\setlength{\textfloatsep}{8pt plus 2pt minus 2pt}
+\setlength{\floatsep}{8pt plus 2pt minus 2pt}
+\setlength{\intextsep}{8pt plus 2pt minus 2pt}
+\captionsetup{font=small,labelfont=bf,skip=2pt}
+\titlespacing*{\section}{0pt}{5pt}{2pt}
+\titlespacing*{\subsection}{0pt}{4pt}{2pt}
+\setlist[itemize]{leftmargin=*,nosep}
+\setlist[enumerate]{leftmargin=*,nosep}
+\definecolor{coverblue}{HTML}{1F3A56}
+\definecolor{coverline}{HTML}{C6D3DF}
+
+\begin{document}
+
+\begin{titlepage}
+\thispagestyle{empty}
+\centering
+\vspace*{1.8cm}
+{\Large\color{coverblue}\textbf{CS2SD}}\\[0.25em]
+{\large Software Systems Design}
+
+\vspace{1.2cm}
+{\Huge\textbf{Stage 1 Report}}\\[0.45em]
+{\Large Amazon Enterprise Online POS System}\\[0.2em]
+{\large Use Case and Activity Design}
+
+\vspace{0.9cm}
+\color{coverline}\rule{0.82\textwidth}{1.2pt}
+\color{black}
+
+\vspace{0.9cm}
+\renewcommand{\arraystretch}{1.16}
+\setlength{\tabcolsep}{7pt}
+\begin{table}[h]
+\centering
+\normalsize
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{5.2cm}|X|}
+\hline
+\textbf{Module Code:} & CS2SD \\ \hline
+\textbf{Assignment Report Title:} & Stage 1 for design of the software system: user requirements \\ \hline
+\textbf{Student Number (e.g.\ 25098635):} & 32804061, 32803755, 32803720 \\ \hline
+\textbf{Actual hrs spent for the assignment:} & Approx.\ 20 hours \\ \hline
+\textbf{Which AI tools used (if applicable) and brief justification:} & AI-assisted wording refinement, report structuring, and consistency checking between the text and UML models; all scope decisions, diagram logic, and evaluation were produced and reviewed by the group. \\ \hline
+\end{tabularx}
+\end{table}
+\vfill
+{\small This report presents the Stage 1 OO analysis and design of an enterprise online POS system using UML use case and activity modelling.}
+\end{titlepage}
+
+\setcounter{page}{1}
+
+\section{Introduction}
+
+This report looks at an Amazon enterprise online POS system that supports guest shopping, registered checkout, seller marketplace operations, and administrative oversight within one business boundary. The domain includes both technical and social concerns (Sommerville, 2016). This makes it suitable for OOAD because several human and machine actors interact around the same transaction core, and issues such as privacy, accessibility, payment security, and stock control all affect the design (Booch, et al., 1999). The report has two main objectives: first, to define actors, functional requirements, and constraints through a Use Case Diagram; second, to validate the checkout workflow through an Activity Diagram. Social and ethical governance are treated as design constraints in both models. The Use Case Diagram sets out the functional scope, actors, mandatory dependencies, and optional extensions according to standard UML guidance (OMG, 2017; Dennis, et al., 2015). The Activity Diagram expands the checkout path and shows shipping choice, stock locking, fraud review, payment authorisation, and the final success or failure outcomes (Fowler, 2004).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth,trim=0cm 5.2cm 0cm 0.0cm,clip,page=1]{UML.drawio.pdf}
+\caption{Amazon Enterprise Online POS Use Case Diagram}
+\end{figure}
+\section{The OO Analysis and Design with UML Techniques}
+
+\subsection{The Design of Functional Requirements with Use Case Diagrams}
+
+Figure~1 models a platform that is broader than a simple basket system. It includes customer facing functions such as search, cart management, personalised recommendations, checkout, returns, privacy controls, accessibility preferences, and optional services such as gift wrapping, promo gift cards, MFA, and carbon neutral shipping. It also includes seller and administrative services because listing quality, stock consistency, fraud control, and reporting all affect the enterprise POS. This wide scope follows the OOAD principle that the system boundary should include every external entity that triggers or affects behaviour, not only the primary buyer (Dennis, et al., 2015).
+
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.04}
+\caption{Requirement Analysis Table for Amazon Enterprise Online POS}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{2.15cm}|>{\raggedright\arraybackslash}p{3.35cm}|>{\raggedright\arraybackslash}p{4.15cm}|>{\raggedright\arraybackslash}p{2.1cm}|>{\raggedright\arraybackslash}p{2.35cm}|}
+\hline
+\rowcolor[gray]{0.92}\textbf{List of Actors (Including Human Users, Machine Agents)} & \textbf{Functional Requirements} & \textbf{Rules/Conditions} & \textbf{Data Elements} & \textbf{Critique Notes} \\ \hline
+Guest Customer (Human) & \textit{Search \& Filter Products}; \textit{Manage Shopping Cart} & Guest access covers browsing and cart use only; no direct link to checkout is shown. & Search query, product details, cart session & Fits Figure~1 and keeps guest scope credible. \\ \hline
+Registered Customer (Human) & \textit{View Personalized Recs}; \textit{Proceed to Checkout}; \textit{Initiate Return Request}; \textit{Manage Data Privacy GDPR}; \textit{Set Accessibility Prefs} & Checkout includes shipping verification, fraud detection, and secure payment; privacy and accessibility remain visible user services. & Customer profile, basket data, address data, privacy settings, recommendation data & Strong actor-use-case alignment. \\ \hline
+Third-Party Seller (Human) & \textit{Manage Vendor Listings}; \textit{Sync Vendor Inventory} & Seller stock and listing data must remain consistent with platform inventory. & Listing record, SKU, stock quantity & Clear separation from customer actions. \\ \hline
+System Admin (Human) & \textit{Perform Fraud Detection}; \textit{Update Product Catalog}; \textit{Generate Sales Reports} & Admin links represent oversight, platform maintenance, and reporting rather than direct shopping activity. & Fraud indicators, catalogue data, sales metrics & Matches the actual diagram links. \\ \hline
+Inventory System (Machine) & Supports \textit{Proceed to Checkout}; \textit{Sync Vendor Inventory}; \textit{Process Refund} & Stock must be checked, synchronised, and updated when refunds change order state. & SKU, stock level, reservation state & Correctly tied to checkout, refund, and vendor sync. \\ \hline
+Payment Gateway (Machine) & Supports \textit{Process Secure Payment} & Payment authorisation is external and uses protected data exchange. & Payment token, transaction result, authorisation code & Keeps financial risk outside the POS core. \\ \hline
+Logistics API (Machine) & Supports \textit{Verify Shipping Address} and optional green shipping & Shipping validation depends on logistics data; carbon-neutral shipping is optional. & Address record, delivery option, carbon-shipping flag & Green shipping extends address verification in Figure~1. \\ \hline
+Analytics Engine (Machine) & Supports \textit{Generate Sales Reports} & Reporting is analytical rather than part of the live transaction path. & Report input, sales metrics, generated summary & Useful support system, but not part of checkout. \\ \hline
+\end{tabular}
+\end{table}
+
+Checkout is the core use case. It \texttt{<<include>>}s \textit{Verify Shipping Address}, \textit{Perform Fraud Detection}, and \textit{Process Secure Payment}, because these are mandatory preconditions for completing a purchase (OMG, 2017). Optional behaviour is modelled with \texttt{<<extend>>}: \textit{Request Gift Wrapping} extends checkout, \textit{Apply Promo Gift Card} extends secure payment, \textit{Select Carbon-Neutral Shipping} extends shipping verification, and \textit{Enable Multi-Factor Authentication (MFA)} extends privacy management. \textit{Process Refund} includes both secure payment and vendor inventory synchronisation, which is consistent with both money and stock correction.
+
+\smallskip\noindent\textbf{Use case specification: Proceed to Checkout.}\quad\textit{Primary actor:} Registered Customer.\;\textit{Supporting actors:} Inventory System, Payment Gateway, Logistics API.\;\textit{Preconditions:} customer authenticated; basket non-empty.\;\textit{Main flow:} (1)~confirm basket and select shipping; (2)~verify shipping address; (3)~perform fraud detection; (4)~process secure payment; (5)~confirm order and send notification.\;\textit{Alternative flows:} gift wrapping requested \textrightarrow\ add before payment; high fraud risk \textrightarrow\ escalate to manual review; payment declined \textrightarrow\ release stock and notify customer.\;\textit{Postconditions:} order confirmed with stock reserved, or transaction cancelled with stock released.
+\smallskip
+
+Several constraints are explicit. Only registered customers proceed to checkout, address validation depends on the Logistics API, stock remains synchronised through the Inventory System, and payment is routed through the Payment Gateway using tokenised channels compliant with PCI DSS v4.0 (PCI SSC, 2022). Accessibility preferences are treated as a required design feature consistent with WCAG~2.1 guidance (W3C, 2018), and fraud oversight follows the principle that high stakes automated decisions should still be checked by a human reviewer (ACM, 2018). Privacy, MFA, and these governance controls are shown as visible functions instead of background policy notes, which keeps the model aligned with the brief's requirement to state assumptions, conditions, constraints, and social or ethical considerations.
+
+
+At this level, Figure~1 is complete and defensible. Each actor has a clear service relationship, the \texttt{<<include>>} and \texttt{<<extend>>} links have specific reasons, and the external systems are tied to real dependencies rather than added for decoration (Booch, et al., 1999). The main issue is breadth versus readability: the diagram covers buying, returns, compliance, seller operations, and admin reporting in one frame. That is acceptable here because the use cases still group cleanly by role and remain readable. Applying the UML methodology for validation, the resulting use case model is \textit{complete} (every identified actor has at least one goal), \textit{accurate} (relationships match the actual system dependencies), and \textit{aligned with user requirements} (functional scope, constraints, and ethical considerations are traceable from Table~1 to Figure~1).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.72\textwidth,trim=0cm 9.6cm 0cm 0.6cm,clip,page=1]{ActivityDiagram.drawio.pdf}
+\caption{Activity Diagram for Checkout Confirmation, Shipping, and Payment}
+\end{figure}
+\subsection{The Design of Functional Behaviour with Activity Diagrams}
+
+Following the review of the use case model in Section~2.1, \textit{Proceed to Checkout} is selected as the scope for activity modelling because it is the most important transaction path. It brings together customer decisions, inventory control, payment authorisation, and ethical governance controls in a single workflow (Sommerville, 2016). The activity diagram in Figure~2 expands this path in detail. The customer confirms the order and chooses shipping. If green shipping is selected, the Inventory and Logistics lane calculates carbon credits before the flow rejoins stock verification and locking. If standard shipping is chosen, the model skips that extra step.
+
+
+Inside the Amazon POS lane, the system validates order information and then forks into two concurrent controls: an AI fraud risk scan and PCI DSS payment-data encryption (PCI SSC, 2022). Those branches join before the decision \textit{Fraud Risk?}. Low risk transactions proceed directly to payment authorisation. High risk transactions are routed to \textit{Human Oversight: Manual Review} and then to \textit{Approve?}, because financial decisions should not be fully handled by automation alone (ACM, 2018). The model also adds a 10-minute timeout around the bank-handshake step, which prevents the request from waiting indefinitely.
+
+The ending logic is clear. After \textit{Request Payment Auth}, the model tests \textit{Payment OK?}. Success generates an invoice and sends customer confirmation. Failure, or rejection during manual review, releases stock, cancels the order, and sends a failure alert. This termination discipline ensures that every path reaches a defined final state, which is a basic completeness requirement in UML activity modelling (Fowler, 2004). Figure~2 therefore matches Figure~1 closely: checkout is expanded into shipping choice, fraud control, secure payment, and a clean success/failure split, while still keeping ethical oversight in the flow. Applying UML validation, the activities, actors, decision sequences, guard conditions, and business rules identified in the use case analysis are correctly and completely represented in the activity model (OMG, 2017).
+
+\section{Conclusions and Recommendations}
+
+This report applied OOAD and UML to define the scope of an Amazon enterprise online POS system and to test its most important transaction path (Booch, et al., 1999). The use case model shows the responsibilities of customers, sellers, administrators, and machine agents in a clear structure (Dennis, et al., 2015). The activity model then shows how shipping choice, stock control, fraud review, payment authorisation, and customer feedback work together during checkout. Overall, the design shows that an enterprise POS must balance ease of use with security, accessibility, and ethical oversight, in line with current standards and professional guidance (PCI SSC, 2022; W3C, 2018; ACM, 2018).
+
+\textbf{Recommendations for future improvement:}
+\begin{enumerate}
+\item \textbf{Add explicit return-case behaviour modelling:} the use case diagram already includes \textit{Initiate Return Request} and \textit{Process Refund}, so a later stage should add an activity model for returns, refund approval, and stock reinstatement.
+\item \textbf{Strengthen admin-side fraud reporting:} the current models imply oversight, but a future revision could add a clearer reporting or alert workflow that shows how suspicious transactions are surfaced to administrators and audited over time.
+\end{enumerate}
+
+\begin{thebibliography}{9}
+\small
+\bibitem{acm2018} ACM (2018) \textit{ACM Code of Ethics and Professional Conduct}. Available at: \url{https://www.acm.org/code-of-ethics} (Accessed: 25 March 2026).
+\bibitem{booch1999} Booch G., Rumbaugh J. and Jacobson I. (1999) \textit{The Unified Modeling Language User Guide}, Addison-Wesley, ISBN: 0-201-57168-4.
+\bibitem{dennis2015} Dennis A., Wixom B.H. and Tegarden D. (2015) \textit{Systems Analysis and Design with UML}, 5th edn., John Wiley \& Sons, ISBN: 978-1-118-80436-1.
+\bibitem{fowler2004} Fowler M. (2004) \textit{UML Distilled: A Brief Guide to the Standard Object Modeling Language}, 3rd edn., Addison-Wesley, ISBN: 0-321-19368-7.
+\bibitem{omg2017} Object Management Group (2017) \textit{OMG Unified Modeling Language (UML) Version 2.5.1}. Available at: \url{https://www.omg.org/spec/UML/2.5.1} (Accessed: 25 March 2026).
+\bibitem{pcissc2022} PCI Security Standards Council (2022) \textit{Payment Card Industry Data Security Standard (PCI DSS) v4.0}. Available at: \url{https://www.pcisecuritystandards.org} (Accessed: 25 March 2026).
+\bibitem{sommerville2016} Sommerville I. (2016) \textit{Software Engineering}, 10th edn., Pearson, ISBN: 978-1-292-09613-1.
+\bibitem{w3c2018} W3C (2018) \textit{Web Content Accessibility Guidelines (WCAG) 2.1}. Available at: \url{https://www.w3.org/TR/WCAG21/} (Accessed: 25 March 2026).
+\end{thebibliography}
+
+\clearpage
+\section*{Effort Allocation Sheet}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|p{2.2cm}|X|c|c|p{1.8cm}|}
+\hline
+\rowcolor[gray]{0.92}\textbf{Name} & \textbf{Individual Contributions} & \textbf{Effort (\%)} & \textbf{Reflection (Y/N)} & \textbf{Signature} \\ \hline
+Fu Renjie (32804061) & Introduction, requirement analysis, coordination, report integration & 100\% & Y & \includegraphics[angle=90,width=1.2cm]{70d35bbee1d874cb9afc1c6688761d50.jpg} \\ \hline
+Wu Renxuan (32803720) & Use Case Diagram, use case validation, static-model consistency checking & 100\% & Y & \includegraphics[angle=90,width=1.2cm]{59da8176fa6de3c3e3eca260ecbd4da8.jpg} \\ \hline
+Cui Zhiqing (32803755) & Activity Diagram, behavioural validation, conclusion and recommendations & 100\% & Y & \includegraphics[width=1.5cm]{10ef88f5bd748f2e19d2fbe40340d64b.jpg} \\ \hline
+\end{tabularx}
+\end{table}
+
+\section*{Appendix: Individual Reflections}
+
+\textbf{Reflection by Fu Renjie (Coordination \& Analysis):} \\
+This project showed me that the hardest part often comes at the start. When we began to discuss the Amazon POS domain, almost every feature looked important. We talked about payment, logistics, privacy, recommendations, seller functions, and accessibility. My role was to coordinate the group and help lead the requirement analysis. Because of that, I spent a lot of time helping the team decide what should stay inside the Stage~1 scope and what should be left out.
+
+The main thing I learned was the value of consistency. When one part of the model changed, the table, the written explanation, and the other diagram often had to change as well. I became much more aware that coordination is not only about dividing tasks or checking deadlines. It is also about keeping the whole report aligned. Our draft discussions and feedback were useful here because they helped us notice gaps in the way we explained constraints and ethical issues.
+
+I used AI tools near the end to improve sentence structure and check whether key terms were used in the same way across sections. The actual scoping decisions and model logic came from our group discussions. This coursework improved my confidence in planning, abstraction, and team coordination.
+
+\bigskip
+\textbf{Reflection by Wu Renxuan (Static Modelling):} \\
+My main work was the Use Case Diagram and the requirement analysis table. At the beginning, I found it difficult to separate mandatory behaviour from optional behaviour. I first thought \texttt{<<include>>} and \texttt{<<extend>>} were mostly layout choices. After revising the diagram several times and discussing it with my teammates, I understood the difference more clearly. Include means the main use case depends on that action. Extend means the extra behaviour only happens in a certain situation.
+
+This changed the way I looked at the checkout model. I became more careful about which relationships were essential and which ones should stay optional. I also learned that a use case diagram cannot stand on its own. The actor names, use case names, and written explanation all need to match. When they do not match, the report looks weaker even if the diagram itself is technically correct.
+
+Early in the process I used AI to look at some examples of UML use case relationships. That helped me think of better questions, but it did not make the final decisions for us. The final model came from group discussion and repeated revision. This part of the coursework improved my understanding of UML accuracy, naming, and model consistency.
+
+\bigskip
+\textbf{Reflection by Cui Zhiqing (Dynamic Modelling):} \\
+The activity diagram was the part I revised the most. At first I thought the checkout flow would be easy to show, but it quickly became clear that the process was more complex. We had to show order validation, stock locking, fraud screening, payment authorisation, timeout handling, and two different end states. This made me realise that an activity diagram is not just a simple flowchart. It needs clear decisions, clear sequence, and clear responsibility for each step.
+
+Another thing I learned was how important layout is. In the early drafts, the flow looked crowded and some paths were hard to follow. After trying different swimlane layouts, I found that separating the POS core logic, the Inventory and Logistics lane, and the End Customer lane made the process easier to read. I used AI during this stage to try wording and layout ideas, but the actual flow and design choices came from our own discussion.
+
+The strongest lesson for me was the need to check the activity model against the use case model. If checkout included a behaviour, the activity diagram also needed to show it in a clear way. Our review sessions helped us find missing guard conditions and one wrong flow direction. Fixing them improved the model and taught me the value of careful checking in behavioural design.
+
+\end{document}
