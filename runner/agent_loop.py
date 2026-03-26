@@ -914,10 +914,8 @@ class AgentLoop:
     ) -> None:
         """Ensure project dir and TASKS.md exist, then append tasks for fleet scanner.
 
-        This bridges the gap between the delegate/multiagent_start action
-        (which carries a tasks list) and the fleet scheduler (which reads
-        TASKS.md on disk).  Without this, the scheduler starts but finds
-        0 ready tasks and never spawns workers.
+        Also auto-generates Humanize-style plan files for each task so that
+        Fleet Workers can follow the RLCR loop (Plan → Implement → Review → Fix).
         """
         repo = self.config.repo_home
         slug = re.sub(r"[^a-z0-9-]", "-", project.lower()).strip("-")
@@ -936,6 +934,9 @@ class AgentLoop:
             )
             (project_dir / "README.md").write_text(readme, encoding="utf-8")
 
+        plans_dir = project_dir / "plans"
+        plans_dir.mkdir(exist_ok=True)
+
         if not tasks_file.is_file():
             tasks_file.write_text(
                 f"# {project} — 任务列表\n\n", encoding="utf-8"
@@ -948,12 +949,104 @@ class AgentLoop:
             if not t or t in existing_content:
                 continue
             new_entries += f"- [ ] {t}\n  Done when: TBD\n\n"
+            self._auto_gen_plan(project_dir, t, reason)
 
         if new_entries:
             tasks_file.write_text(
                 existing_content.rstrip("\n") + "\n\n" + new_entries,
                 encoding="utf-8",
             )
+
+    def _auto_gen_plan(
+        self,
+        project_dir: Path,
+        task_text: str,
+        project_reason: str = "",
+    ) -> None:
+        """Auto-generate a Humanize-style plan file for a task using the LLM.
+
+        Follows the gen-plan skill output format: Goal, Acceptance Criteria,
+        Path Boundaries, Milestones.  Falls back to a template if LLM fails.
+        """
+        task_slug = re.sub(r"[^a-z0-9\u4e00-\u9fff]+", "-", task_text.lower())[:60].strip("-")
+        if not task_slug:
+            task_slug = "task"
+        plan_file = project_dir / "plans" / f"{task_slug}.md"
+        if plan_file.exists():
+            return
+
+        import time as _t
+        now = _t.strftime("%Y-%m-%d")
+
+        gen_prompt = (
+            f"你是一个任务规划专家。为以下任务生成一份结构化的实施计划。\n\n"
+            f"**任务**: {task_text}\n"
+            f"**项目背景**: {project_reason or '无额外背景'}\n\n"
+            f"请严格按以下 Markdown 格式输出，不要输出其他内容：\n\n"
+            f"# {task_text}\n\n"
+            f"Generated: {now}\n\n"
+            f"## Goal Description\n（清晰描述任务目标）\n\n"
+            f"## Acceptance Criteria\n\n"
+            f"- AC-1: （第一个验收标准）\n"
+            f"  - Positive Tests: （预期通过的情况）\n"
+            f"  - Negative Tests: （预期失败的情况）\n"
+            f"- AC-2: ...\n\n"
+            f"## Path Boundaries\n\n"
+            f"### Upper Bound (Maximum Scope)\n（最完整的方案）\n\n"
+            f"### Lower Bound (Minimum Scope)\n（最简可行方案）\n\n"
+            f"### Allowed Choices\n- Can use: ...\n- Cannot use: ...\n\n"
+            f"## Dependencies and Sequence\n\n"
+            f"### Milestones\n1. ...\n\n"
+            f"## Implementation Notes\n- 代码中不应包含 AC-、Milestone 等计划术语\n"
+        )
+
+        try:
+            from openai import OpenAI
+            client = OpenAI(
+                api_key=self.config.api_key,
+                base_url=self.config.base_url,
+                timeout=60.0,
+            )
+            stream = client.chat.completions.create(
+                model=self.config.model,
+                messages=[{"role": "user", "content": gen_prompt}],
+                stream=True,
+                temperature=0.4,
+                max_tokens=2048,
+            )
+            parts: list[str] = []
+            for chunk in stream:
+                if chunk.choices and chunk.choices[0].delta.content:
+                    parts.append(chunk.choices[0].delta.content)
+            plan_content = "".join(parts).strip()
+            if len(plan_content) < 50:
+                raise ValueError("LLM returned too short a plan")
+        except Exception as e:
+            import logging as _logging
+            _logging.getLogger("runner.agent_loop").warning(
+                "Auto gen-plan failed for '%s': %s, using template", task_text, e,
+            )
+            plan_content = (
+                f"# {task_text}\n\n"
+                f"Generated: {now}\n\n"
+                f"## Goal Description\n{task_text}\n\n"
+                f"## Acceptance Criteria\n\n"
+                f"- AC-1: 任务核心产出物存在且内容完整\n"
+                f"  - Positive Tests: 产出文件存在、内容非空、格式正确\n"
+                f"  - Negative Tests: 文件不存在或内容为空\n"
+                f"- AC-2: 证据链完整可追溯\n"
+                f"  - Positive Tests: 每个结论有来源\n"
+                f"  - Negative Tests: 存在无来源的断言\n\n"
+                f"## Path Boundaries\n\n"
+                f"### Upper Bound\n全面完成所有要求\n\n"
+                f"### Lower Bound\n最小可行产出\n\n"
+                f"## Dependencies and Sequence\n\n"
+                f"### Milestones\n1. 调研与信息收集\n2. 核心内容撰写\n3. 自审与修复\n"
+            )
+
+        plan_file.write_text(plan_content, encoding="utf-8")
+        import logging as _logging
+        _logging.getLogger("runner.agent_loop").info("Auto-generated plan: %s", plan_file)
 
     # ── 系统操作辅助 ──────────────────────────────────────────
 

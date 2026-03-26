@@ -244,17 +244,41 @@ class PostTaskReviewResult:
 
 
 _REVIEW_SYSTEM_PROMPT = """\
-你是一位严格的代码审查专家。对给定的文件变更进行审查，找出以下问题：
+你是一位严格的代码审查专家，按 Humanize RLCR 标准审查。
+
+## 审查维度
+
+### 1. 计划合规性（如果提供了计划文件）
+- 每个 AC（Acceptance Criteria）是否满足？逐条列出
+- 是否有 AC 被跳过或降级但未记录理由？
+- 产出物是否在 Path Boundaries 范围内？
+
+### 2. 代码/内容质量
 - [P0] 致命: 数据丢失、安全漏洞、死循环、未处理的异常导致崩溃
-- [P1] 严重: 逻辑错误、并发竞态、资源泄漏、违反核心约定
+- [P1] 严重: 逻辑错误、并发竞态、资源泄漏、违反核心约定、AC 未满足
 - [P2] 中等: 性能问题、错误处理不完整、命名混乱
 - [P3] 轻微: 风格问题、冗余代码、文档不足
 
-输出格式（每个问题一行）:
+### 3. 证据链完整性
+- 每个结论/断言是否有来源（URL、文件路径、搜索记录）？
+- 是否有凭空出现的数据或引用？
+
+### 4. 闭环验证
+- 声称"完成"的工作是否有验证证据？
+- 产出文件是否实际存在且内容非空？
+
+## 输出格式
+
+### AC 检查（如果有计划文件）:
+- [AC-1] ✅/❌ 说明
+- [AC-2] ✅/❌ 说明
+
+### 问题列表:
 - [P级别] 问题描述 - 文件:行号
 
-最后用一行总结: VERDICT: PASS 或 VERDICT: FAIL (存在 P0 或 P1 时 FAIL)
-如果没有发现问题，输出: VERDICT: PASS — 无问题"""
+### 总结:
+VERDICT: PASS 或 VERDICT: FAIL (存在 P0/P1 或有 AC 未满足时 FAIL)
+如果没有发现问题，输出: VERDICT: PASS — 所有 AC 满足，无质量问题"""
 
 
 def _review_via_api(
@@ -264,8 +288,13 @@ def _review_via_api(
     *,
     model: str = "",
     timeout: int = 120,
+    project: str = "",
 ) -> PostTaskReviewResult:
-    """Review deliverables using the project's own OpenAI API — no external tools needed."""
+    """Review deliverables using the project's own OpenAI API — no external tools needed.
+
+    Automatically loads plan files from the project's plans/ directory to
+    compare deliverables against Acceptance Criteria (RLCR standard).
+    """
     start = time.time()
 
     try:
@@ -298,7 +327,11 @@ def _review_via_api(
             duration_seconds=time.time() - start,
         )
 
-    user_msg = f"任务: {task_text}\n\n以下是本次变更的文件:\n\n" + "\n\n".join(file_contents)
+    plan_context = _load_plan_for_review(repo_root, project, task_text)
+    user_msg = f"任务: {task_text}\n\n"
+    if plan_context:
+        user_msg += f"## 任务计划（审查基准）\n\n{plan_context}\n\n"
+    user_msg += "以下是本次变更的文件:\n\n" + "\n\n".join(file_contents)
 
     try:
         from openai import OpenAI
@@ -342,21 +375,55 @@ def _review_via_api(
     )
 
 
+def _load_plan_for_review(
+    repo_root: Path,
+    project: str,
+    task_text: str,
+) -> str:
+    """Load the plan file for a task to use as review baseline."""
+    if not project:
+        return ""
+
+    import re as _re
+    plans_dir = repo_root / "projects" / project / "plans"
+    if not plans_dir.is_dir():
+        return ""
+
+    task_slug = _re.sub(r"[^a-z0-9\u4e00-\u9fff]+", "-", task_text.lower())[:60].strip("-")
+
+    exact = plans_dir / f"{task_slug}.md"
+    if exact.is_file():
+        content = exact.read_text(encoding="utf-8", errors="replace")
+        return content[:6000]
+
+    for f in sorted(plans_dir.glob("*.md"), key=lambda p: p.stat().st_mtime, reverse=True):
+        if f.stem.endswith("-self-review") or f.stem.endswith("-summary") or f.stem.endswith("-progress"):
+            continue
+        content = f.read_text(encoding="utf-8", errors="replace")[:500]
+        if task_text[:30] in content or task_slug[:20] in f.stem:
+            full_content = f.read_text(encoding="utf-8", errors="replace")
+            return full_content[:6000]
+
+    return ""
+
+
 def fleet_post_task_review(
     repo_root: Path,
     base_branch: str = "main",
     written_files: list[str] | None = None,
     task_text: str = "",
     *,
+    project: str = "",
     model: str = "gpt-5.4",
     effort: str = "medium",
     timeout: int = 600,
 ) -> PostTaskReviewResult:
     """Review after a Fleet worker completes ANY task (code or docs).
 
-    Strategy:
-      1. Try external `codex review` if Humanize CLI is available
-      2. Otherwise fall back to direct API review (always available)
+    Uses the Humanize RLCR review standard:
+      1. Load the task's plan file to compare deliverables against AC
+      2. Try external `codex review` if Humanize CLI is available
+      3. Otherwise fall back to direct API review with plan-aware prompt
     """
     if not written_files:
         return PostTaskReviewResult(
@@ -385,6 +452,7 @@ def fleet_post_task_review(
     return _review_via_api(
         written_files, repo_root, task_text,
         model=model, timeout=min(timeout, 120),
+        project=project,
     )
 
 

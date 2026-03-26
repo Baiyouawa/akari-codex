@@ -561,6 +561,7 @@ def _maybe_humanize_review(
             repo_root=Path(cwd),
             written_files=written_files,
             task_text=opts.task.text,
+            project=opts.task.project,
             model="gpt-5.4",
             effort="medium",
             timeout=600,
