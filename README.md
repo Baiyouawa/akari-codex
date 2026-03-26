@@ -1049,6 +1049,97 @@ python -m fleet.scheduler --max-workers 8
 
 ---
 
+## 自主学习与经验积累
+
+OpenAkari-Codex 不仅是任务执行器——它具备**自我总结经验、吸取教训、自主探索**的闭环能力。以下是各机制的工作方式和触发条件。
+
+### 三层记忆与反思
+
+**文件**: `runner/memory.py`
+
+| 层级 | 触发 | 说明 |
+|------|------|------|
+| **短期记忆** | 每轮对话自动 | 最近 50 轮对话（JSONL），超出滚动淘汰 |
+| **长期记忆** | 反思提炼 | 从对话中提取的重要事实/用户偏好（最多 200 条） |
+| **反思日志** | 每 10 轮自动 | LLM 自动总结近期对话的要点和洞察，提炼事实写入长期记忆 |
+
+反思 prompt 让 LLM 回答："有什么值得长期记住的新事实？"，提炼出的事实注入后续所有对话的 system prompt，实现跨会话学习。
+
+### 经验嵌入（compound）
+
+**文件**: `skills/compound/SKILL.md`
+
+**compound 是系统的"自我进化引擎"**。在每个工作 session 结束时调用，将本次 session 的发现固化为持久改进：
+
+| 检查项 | 动作 |
+|-------|------|
+| 发现非显而易见的事实 | 写入 AGENTS.md / Skill / 项目文件 |
+| 遇到未来应避免的失败模式 | 添加 gotcha/警告到相关 Skill |
+| 开发了有效的技术手段 | 记为 gravity 候选（可能基建化） |
+| 绕过了不适用的约定 | 更新约定以处理边界情况 |
+| 实验产出了隐含任务 | 创建 TASKS.md 条目 |
+| 识别到重复模式（3+ 次） | 标记为 `/gravity` 评估候选 |
+
+**自动调用场景**：
+- SessionRunner 的 Step 5（自主工作循环最后一步）
+- Fleet Worker 可在 idle_tasks 的 self-audit 中间接触发
+- 小白在 AgentLoop 中可通过 `use_skill: "compound"` 主动调用
+
+### 事后分析（postmortem）
+
+**文件**: `skills/postmortem/SKILL.md`
+
+当 Agent 产出了有缺陷的输出时，postmortem 追溯根因并产出预防措施：
+
+1. **识别缺陷** — 精确引用错误输出
+2. **追溯生产链** — 哪个环节引入了问题？输入是否足够？哪些检查被跳过了？
+3. **分类失败模式** — 8 种标准分类（设计即发现、层错位、惯性覆盖、锚定、心智模型缺失、上下文丢失、社会证明、无根据生成）
+4. **制定预防措施** — 新约定 / 新 Skill / 流水线变更 / 现有约定未遵守
+5. **任务桥接** — 将预防措施转化为 TASKS.md 条目，确保执行而非再次遗忘
+
+输出保存到 `projects/<project>/postmortem/` 目录。
+
+### 空闲探索（Fleet Idle）
+
+**文件**: `fleet/idle_tasks.py`
+
+当 Fleet 任务队列为空时，Worker 自动进行探索性工作：
+
+| 探索类型 | 权重 | 冷却 | 说明 |
+|---------|------|------|------|
+| `horizon-scan` | 3 | 6h | 扫描 GenAI 前沿动态，写入 `literature/` |
+| `open-question` | 2 | 6h | 调查项目 README 中的未解问题 |
+| `self-audit` | 1 | 6h | 对照 AGENTS.md 做合规自检 |
+| `stale-blocker-check` | 1 | 12h | 检查长期阻塞任务是否已解除 |
+
+**关键特性**：零提交也是正确行为——如果探索后没有新发现，不需要强制产出。
+
+### 治理溯源与 ADR
+
+**文件**: `runner/governance.py`, `decisions/`
+
+| 机制 | 说明 |
+|------|------|
+| **ProvenanceTracker** | 每个 session 自动记录：任务来源、模型、命令执行、文件读写、决策、审批、Token 用量、Humanize 审查结果 |
+| **ADR（架构决策记录）** | 69 条持久化决策（`decisions/0001-*.md` ~ `decisions/0068-*.md`），每个重要决策都有上下文、动机、结果记录 |
+| **ApprovalGate** | 三级审批门控：auto（只读操作）→ approval_required（危险操作）→ denied（永远阻止） |
+
+**总结：系统的自主学习闭环**
+
+```
+对话 → 短期记忆 → 每 10 轮反思 → 长期记忆 → 注入 system prompt
+                                                      ↑
+任务执行 → Humanize 审查 → 溯源记录 ─────────────────┘
+                                                      ↑
+Session 结束 → compound 经验嵌入 → 更新约定/Skill ────┘
+                                                      ↑
+Agent 失败 → postmortem 根因分析 → 预防措施 → TASKS.md ┘
+                                                      ↑
+Fleet 空闲 → horizon-scan / self-audit / open-question ┘
+```
+
+---
+
 ## QQ 机器人完整指南
 
 ### 多媒体交互
@@ -1177,55 +1268,6 @@ export SIP_CALLER_ID="+8612345678"
 | 列目录 | 允许 | 任意目录 |
 | 删除 | 需审批 | 写入 `APPROVAL_QUEUE.md`，主人手动确认后执行 |
 | 写入 | 仅仓库内 | 原子工具 `write_file` 限制在仓库根目录内 |
-
-### Humanize 代码审查
-
-**文件**: `runner/humanize_bridge.py`, `docs/sops/humanize-workflow.md`
-
-集成 Humanize (RLCR / Ask-Codex / PR-Loop) 实现独立 AI 代码审查：
-
-**三种审查模式**：
-
-| 模式 | 触发方式 | 说明 |
-|------|---------|------|
-| Ask-Codex | 小白 `humanize_review` 或手动 | 一次性代码审查 |
-| RLCR Loop | 小白 `humanize_rlcr_setup` 或手动 | 迭代开发循环: 实现 → 审查 → 修复 → 审查 |
-| Fleet Post-Task | Fleet executor 自动 | Worker 完成代码任务后自动触发 |
-
-**RLCR 工作原理**：
-
-```
-Plan (写计划文件 → gen-plan)
-  ↓
-Round 0: 实现代码 (Claude/小白)
-  ↓
-Codex Review: 独立审查 (找 P0-P4 问题)
-  ↓
-Round 1: 修复问题 (根据审查反馈)
-  ↓
-Codex Review: 再次审查
-  ↓
-... 重复直到所有验收标准通过或达到最大迭代
-```
-
-**Fleet 强制审查（每个任务必审，无例外）**：
-
-`fleet/executor.py` 在**每个 Worker 完成后**（无论是代码任务、文档任务还是空闲探索任务）都会强制执行审查。审查策略：
-
-1. 如果 Humanize/codex CLI 可用 → 使用 `codex review`（外部独立审查）
-2. 否则 → **自动回退到直接 OpenAI API 审查**（读取文件内容 → 让 LLM 审查 → 解析 P0-P3 级问题）
-
-这意味着审查**不依赖任何外部工具**，只要 `OPENAI_API_KEY` 可用就一定会执行。发现 P0/P1 级问题时标记任务为 `blocked`，通知主人定夺。审查记录写入 `governance.py` 的溯源系统。
-
-**手动使用**：
-
-```bash
-# Ask-Codex: 一次性咨询
-~/.cursor/skills/humanize/scripts/ask-codex.sh "审查 runner/agent_loop.py 的并发安全性"
-
-# RLCR: 迭代开发
-~/.cursor/skills/humanize/scripts/setup-rlcr-loop.sh plans/my-plan.md --max 10
-```
 
 ### GitHub Actions 集成
 
@@ -1576,14 +1618,16 @@ vim decisions/0070-my-decision.md
 
 | 理念 | 说明 |
 |------|------|
+| **Humanize 即质量** | 一切产出都经过 RLCR 审查循环，Plan → Implement → Review → Fix → Deliver |
 | **仓库即大脑** | Agent 在会话间无内存，仓库是持久记忆。发现、决策、状态全部落盘为文件 |
 | **Skill 即能力** | 原子工具、多步流程、系统操作统一为 Skill，Agent 通过 JSON action 调用 |
 | **Agent 即思考者** | 小白不是路由器，会 think → plan → execute → reflect，自主决定策略 |
+| **Compound 即进化** | 每个 session 的发现固化为约定/Skill/模式，线性进步变指数改进 |
 | **溯源优于断言** | 每个数值声明关联到脚本+数据文件或引用数据的内联算术 |
 | **约定优于配置** | 统一模式和 SOP 减少漂移 |
 | **知识产出优于任务完成** | 根本效率指标：**findings per dollar**（每美元产出的发现数） |
 | **角色即接口** | 不同用户看到不同的小白：主人=全能Agent，普通用户=聊天伙伴，角色用户=自定义人设 |
-| **渐进式失败** | 可选功能(Humanize/电话/TTS)不可用时静默降级，不影响核心 |
+| **渐进式失败** | 可选功能(电话/TTS)不可用时静默降级，不影响核心 |
 
 ---
 

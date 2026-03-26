@@ -2995,7 +2995,8 @@
       "session_id": "侑-00-1774533224-eb48da",
       "project": "zero-basics-plan",
       "claimed_at": 1774533224.7615156,
-      "active": true
+      "active": false,
+      "released_at": 1774533462.5096474
     },
     "claim-cf772bf7d4a2": {
       "task_id": "42d6d008b92c883f",
