@@ -6,14 +6,17 @@
 - [ ] 将筛选出的十篇综述尽可能下载到本地，保存PDF或可读文本，并整理准确本地路径清单
   Done when: TBD
 
+- [ ] 修复十篇综述统一样本集详读笔记，确保与最终筛选结果和下载 manifest 完全一致 [skill: govern]
+  Done when: 产出一份只覆盖 `projects/multi-agent-survey-review/literature/meta/2026-03-26-selected-10-download-manifest.json` 中 10 篇论文的详读笔记；不得混入 Aratchige 2025、Zeng 2025、Xu 2026、Yue 2026、Wang 2026 等非当前锁定样本
+
 - [x] 对十篇综述逐篇详读，提炼每篇的研究问题、分类框架、核心观点、方法谱系、评测设定、优缺点、局限、值得精读章节与关键图表
   Done when: 产出统一模板的十篇中文精读笔记，已写入 `projects/multi-agent-survey-review/analysis/2026-03-26-ten-survey-detailed-reading-notes.md`
 
 - [x] 交叉比较十篇综述，抽取共同趋势、分歧点、研究空白、数据集与benchmark脉络、系统设计范式
   Done when: 相关对比分析已整合进入 `projects/multi-agent-survey-review/analysis/2026-03-26-final-chinese-multi-agent-survey-report.md`
 
-- [x] 输出一份中文Markdown最终报告，包含十篇综述分别的详述内容、对比分析，以及五个后续可做的研究idea（每个包含motivation、问题定义、方法设计、预期贡献与潜在风险）
-  Done when: 产出 `projects/multi-agent-survey-review/analysis/2026-03-26-final-chinese-multi-agent-survey-report.md`，并完成对应计划的 progress/self-review/summary 文件
+- [ ] 基于最终筛选结果、下载 manifest 与交叉比较文件重写最终中文 Markdown 报告，并逐条校对样本集、主张与引用路径 [skill: govern]
+  Done when: 新报告只覆盖 `analysis/2026-03-26-latest-10-multi-agent-survey-selection.md` 与 `literature/meta/2026-03-26-selected-10-download-manifest.json` 锁定的 10 篇综述；报告头部显式声明样本集来源，并完成对应计划 progress/self-review/summary 文件
 
 - [x] 梳理 zero-basics-plan 相关的综述调研目标，聚焦与 28 天课程路线直接相关的主题边界与问题清单
   Done when: 产出 `projects/multi-agent-survey-review/analysis/2026-03-26-zero-basics-plan-survey-scope-for-28-day-route.md`，并完成 `projects/multi-agent-survey-review/plans/梳理-zero-basics-plan-相关的综述调研目标-聚焦与-28-天课程路线直接相关的主题边界与问题清单-progress.md`、`projects/multi-agent-survey-review/plans/梳理-zero-basics-plan-相关的综述调研目标-聚焦与-28-天课程路线直接相关的主题边界与问题清单-self-review.md`、`projects/multi-agent-survey-review/plans/梳理-zero-basics-plan-相关的综述调研目标-聚焦与-28-天课程路线直接相关的主题边界与问题清单-summary.md`
@@ -24,8 +27,8 @@
 - [x] 汇总已有最终结果与新检索证据，生成一版可用于课程路线增强的综述摘要，标注哪些内容可直接并入 zero-basics-plan
   Done when: 产出 `projects/multi-agent-survey-review/analysis/2026-03-26-course-route-enhancement-survey-summary-for-zero-basics-plan.md`，并完成 `projects/multi-agent-survey-review/plans/汇总已有最终结果与新检索证据-生成一版可用于课程路线增强的综述摘要-标注哪些内容可直接并入-zero-basics-pl-progress.md`、`projects/multi-agent-survey-review/plans/汇总已有最终结果与新检索证据-生成一版可用于课程路线增强的综述摘要-标注哪些内容可直接并入-zero-basics-pl-self-review.md`、`projects/multi-agent-survey-review/plans/汇总已有最终结果与新检索证据-生成一版可用于课程路线增强的综述摘要-标注哪些内容可直接并入-zero-basics-pl-summary.md`
 
-- [ ] 审查各 Worker 的证据链完整性与任务完成质量，发现偷懒或伪 blocked 立即重派
-  Done when: TBD
+- [x] 审查各 Worker 的证据链完整性与任务完成质量，发现偷懒或伪 blocked 立即重派
+  Done when: 产出 `projects/multi-agent-survey-review/analysis/2026-03-26-worker-audit-and-reassignment.md`，并完成 `projects/multi-agent-survey-review/plans/审查各-worker-的证据链完整性与任务完成质量-发现偷懒或伪-blocked-立即重派-progress.md`、`projects/multi-agent-survey-review/plans/审查各-worker-的证据链完整性与任务完成质量-发现偷懒或伪-blocked-立即重派-self-review.md`、`projects/multi-agent-survey-review/plans/审查各-worker-的证据链完整性与任务完成质量-发现偷懒或伪-blocked-立即重派-summary.md`
 
 - [ ] 筛选 2024-2026 年与 multi-agent 相关的最新 10 篇高质量综述论文，优先 arXiv/ACL/NeurIPS/ICML/ICLR/IEEE/ACM 等可信来源，并记录题目、年份、链接与筛选理由
   Done when: TBD
