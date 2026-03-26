@@ -145,7 +145,13 @@ def execute_fleet_worker(
         if codex_config is None:
             codex_config = CodexConfig.from_env()
 
-        scoped_config = codex_config.with_write_scope(
+        from dataclasses import replace as _dc_replace
+        worker_config = _dc_replace(
+            codex_config,
+            timeout_seconds=max(codex_config.timeout_seconds, 180),
+        )
+
+        scoped_config = worker_config.with_write_scope(
             f"projects/{opts.task.project}"
         )
         scoped_config = _override_turns(scoped_config, opts.max_turns)
@@ -441,7 +447,13 @@ def execute_idle_worker(
         if codex_config is None:
             codex_config = CodexConfig.from_env()
 
-        scoped_config = codex_config.with_write_scope(f"projects/{project}")
+        from dataclasses import replace as _dc_replace
+        idle_config = _dc_replace(
+            codex_config,
+            timeout_seconds=max(codex_config.timeout_seconds, 180),
+        )
+
+        scoped_config = idle_config.with_write_scope(f"projects/{project}")
         scoped_config = _override_turns(scoped_config, 32)
 
         tool_executor = ToolExecutor(scoped_config)

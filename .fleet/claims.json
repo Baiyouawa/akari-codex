@@ -2574,7 +2574,8 @@
       "session_id": "智乃-02-1774527450-6d087e",
       "project": "zero-basics-plan",
       "claimed_at": 1774527450.2949646,
-      "active": true
+      "active": false,
+      "released_at": 1774528229.9378383
     },
     "claim-569289ea9c32": {
       "task_id": "955c6abcc8422860",
@@ -2627,7 +2628,8 @@
       "session_id": "柑奈-02-1774527660-4c7688",
       "project": "zero-basics-plan",
       "claimed_at": 1774527660.59086,
-      "active": true
+      "active": false,
+      "released_at": 1774528275.7700572
     },
     "claim-579ab53c6f66": {
       "task_id": "20c1a1a42e0146de",
@@ -2635,7 +2637,8 @@
       "session_id": "智乃-02-1774527743-d7a06b",
       "project": "zero-basics-plan",
       "claimed_at": 1774527743.3298988,
-      "active": true
+      "active": false,
+      "released_at": 1774528260.7265613
     },
     "claim-e4885031bfef": {
       "task_id": "76852e1dfafd4c6f",
@@ -2659,7 +2662,8 @@
       "session_id": "结衣-03-1774527991-984469",
       "project": "zero-basics-plan",
       "claimed_at": 1774527991.010405,
-      "active": true
+      "active": false,
+      "released_at": 1774528256.9456203
     },
     "claim-490b38f8dd68": {
       "task_id": "955c6abcc8422860",
@@ -2676,6 +2680,284 @@
       "session_id": "岛村-01-1774528171-979a09",
       "project": "zero-basics-plan",
       "claimed_at": 1774528171.2456908,
+      "active": true
+    },
+    "claim-f16a258f6bd2": {
+      "task_id": "52f52e78bb2f249d",
+      "worker_id": "枫-05",
+      "session_id": "枫-05-1774528254-66f019",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774528254.0137022,
+      "active": true
+    },
+    "claim-6a75f4a608cd": {
+      "task_id": "20c1a1a42e0146de",
+      "worker_id": "智乃-02",
+      "session_id": "智乃-02-1774528261-93cdcc",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774528261.3621404,
+      "active": true
+    },
+    "claim-8a44189e265b": {
+      "task_id": "054bfa9c0aa5dbb6",
+      "worker_id": "结衣-03",
+      "session_id": "结衣-03-1774528291-cf572f",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774528291.407316,
+      "active": true
+    },
+    "claim-b11cb7ad6d9c": {
+      "task_id": "e88f12910fee4c3c",
+      "worker_id": "沙弥香-01",
+      "session_id": "沙弥香-01-1774529455-d881aa",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774529455.689826,
+      "active": false,
+      "released_at": 1774529774.2158506
+    },
+    "claim-c864d8ff2f9b": {
+      "task_id": "39a97a391210e552",
+      "worker_id": "柑奈-02",
+      "session_id": "柑奈-02-1774529455-9e2792",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774529455.728309,
+      "active": true
+    },
+    "claim-3ffa0569c192": {
+      "task_id": "7288297bf2fe800e",
+      "worker_id": "心奈-03",
+      "session_id": "心奈-03-1774529455-d14072",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774529455.7401674,
+      "active": false,
+      "released_at": 1774529664.6767294
+    },
+    "claim-82ef54596a01": {
+      "task_id": "23ea5256c741e96c",
+      "worker_id": "侑-00",
+      "session_id": "侑-00-1774529455-932a77",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774529455.7482529,
+      "active": false,
+      "released_at": 1774529703.0658073
+    },
+    "claim-de62aed85fb6": {
+      "task_id": "3b42730d946645d0",
+      "worker_id": "岛村-01",
+      "session_id": "岛村-01-1774529696-debd0a",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774529696.052932,
+      "active": true
+    },
+    "claim-70e4b8e4d11b": {
+      "task_id": "7288297bf2fe800e",
+      "worker_id": "千束-00",
+      "session_id": "千束-00-1774529704-56c11d",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774529704.84269,
+      "active": true
+    },
+    "claim-85d7fd1a40c3": {
+      "task_id": "c1cae2a01a40963d",
+      "worker_id": "千束-00",
+      "session_id": "千束-00-1774529735-ead673",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774529735.8813355,
+      "active": true
+    },
+    "claim-6670bd934174": {
+      "task_id": "f317dc59cf58a076",
+      "worker_id": "智乃-02",
+      "session_id": "智乃-02-1774529756-015c45",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774529756.1330206,
+      "active": true
+    },
+    "claim-9deb53fa60d0": {
+      "task_id": "e88f12910fee4c3c",
+      "worker_id": "沙弥香-01",
+      "session_id": "沙弥香-01-1774530284-272010",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774530284.128979,
+      "active": true
+    },
+    "claim-45773aff11bf": {
+      "task_id": "d08d6afa6795ac52",
+      "worker_id": "智乃-02",
+      "session_id": "智乃-02-1774530284-5989c4",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774530284.1523538,
+      "active": true
+    },
+    "claim-e6325a2cf4d1": {
+      "task_id": "e48bc6dd90dc1e37",
+      "worker_id": "结衣-03",
+      "session_id": "结衣-03-1774530284-91ef9c",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774530284.1588476,
+      "active": true
+    },
+    "claim-a5c6df220022": {
+      "task_id": "622ba009ceb9014d",
+      "worker_id": "侑-00",
+      "session_id": "侑-00-1774530284-cf7dfa",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774530284.1864421,
+      "active": false,
+      "released_at": 1774530438.3457983
+    },
+    "claim-dba6ff7682b1": {
+      "task_id": "622ba009ceb9014d",
+      "worker_id": "岛村-01",
+      "session_id": "岛村-01-1774530798-6cff19",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774530798.2141588,
+      "active": true
+    },
+    "claim-08da97b8d2c5": {
+      "task_id": "462bd14def55e013",
+      "worker_id": "智乃-02",
+      "session_id": "智乃-02-1774530798-d18386",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774530798.2635329,
+      "active": true
+    },
+    "claim-4712657e1945": {
+      "task_id": "f30ca4dd1841d8b2",
+      "worker_id": "心奈-03",
+      "session_id": "心奈-03-1774530798-b0a005",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774530798.282094,
+      "active": true
+    },
+    "claim-fdfeb88bbbb8": {
+      "task_id": "88ba5617503dbce8",
+      "worker_id": "侑-00",
+      "session_id": "侑-00-1774530798-0e7c4f",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774530798.291573,
+      "active": true
+    },
+    "claim-379ad98bc0eb": {
+      "task_id": "1e912ba4f6c1fcdd",
+      "worker_id": "岛村-01",
+      "session_id": "岛村-01-1774531120-abb2ea",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774531120.15288,
+      "active": false,
+      "released_at": 1774531209.4931319
+    },
+    "claim-6914cee4b4d2": {
+      "task_id": "100e57d7ac03bcd1",
+      "worker_id": "智乃-02",
+      "session_id": "智乃-02-1774531120-2b5536",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774531120.184891,
+      "active": false,
+      "released_at": 1774531207.0290754
+    },
+    "claim-deddbeb23368": {
+      "task_id": "4e71349f021f979f",
+      "worker_id": "结衣-03",
+      "session_id": "结衣-03-1774531120-acf936",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774531120.1934335,
+      "active": false,
+      "released_at": 1774531214.4411445
+    },
+    "claim-cdce9f9103d3": {
+      "task_id": "49fabfc463596e8d",
+      "worker_id": "侑-00",
+      "session_id": "侑-00-1774531120-5476fd",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774531120.2000287,
+      "active": false,
+      "released_at": 1774531255.3179371
+    },
+    "claim-28467df778b5": {
+      "task_id": "f90af88036386838",
+      "worker_id": "岛村-01",
+      "session_id": "岛村-01-1774531220-b16108",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774531220.3338704,
+      "active": false,
+      "released_at": 1774531237.0081983
+    },
+    "claim-bff2eed86729": {
+      "task_id": "4d92f44e047aa0be",
+      "worker_id": "智乃-02",
+      "session_id": "智乃-02-1774531220-a62b7f",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774531220.3421395,
+      "active": false,
+      "released_at": 1774531237.064443
+    },
+    "claim-d45c73171678": {
+      "task_id": "b6643cb663f9c269",
+      "worker_id": "柚子-01",
+      "session_id": "柚子-01-1774531993-222af4",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774531993.1276288,
+      "active": false,
+      "released_at": 1774532039.710114
+    },
+    "claim-dbd758d2b9f8": {
+      "task_id": "42d6d008b92c883f",
+      "worker_id": "安达-02",
+      "session_id": "安达-02-1774531993-9711da",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774531993.1551578,
+      "active": false,
+      "released_at": 1774532040.687746
+    },
+    "claim-b02409170c88": {
+      "task_id": "d8b75ff4f7385a38",
+      "worker_id": "结衣-03",
+      "session_id": "结衣-03-1774531993-793d08",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774531993.1658473,
+      "active": false,
+      "released_at": 1774532086.18425
+    },
+    "claim-e755a2b5f4a6": {
+      "task_id": "09ce19b7e0b23e87",
+      "worker_id": "侑-00",
+      "session_id": "侑-00-1774531993-c35fa8",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774531993.1742857,
+      "active": false,
+      "released_at": 1774532035.937268
+    },
+    "claim-8af10db74f04": {
+      "task_id": "511fd2b12bca1c7e",
+      "worker_id": "岛村-01",
+      "session_id": "岛村-01-1774532213-07a6a5",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774532213.468182,
+      "active": true
+    },
+    "claim-e78ad82b2260": {
+      "task_id": "126b222a5bd1ac63",
+      "worker_id": "智乃-02",
+      "session_id": "智乃-02-1774532213-dbc3c9",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774532213.4796023,
+      "active": true
+    },
+    "claim-f280edb3c537": {
+      "task_id": "d181b63c3b46aa1d",
+      "worker_id": "结衣-03",
+      "session_id": "结衣-03-1774532213-474982",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774532213.4937105,
+      "active": true
+    },
+    "claim-394aa326553f": {
+      "task_id": "aec0997f0f668b7e",
+      "worker_id": "侑-00",
+      "session_id": "侑-00-1774532213-b815bf",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774532213.5001612,
       "active": true
     }
   }

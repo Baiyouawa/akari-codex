@@ -70,11 +70,17 @@ class FleetScheduler:
         self,
         repo_root: Path,
         fleet_config: FleetConfig | None = None,
+        codex_config: Any | None = None,
     ):
         self.repo_root = repo_root
         self.config = fleet_config or FleetConfig.from_env()
         self.claims = TaskClaimStore(repo_root)
         self.metrics = FleetMetricsTracker(max_workers=self.config.max_workers)
+
+        from runner.config import CodexConfig
+        if codex_config is None:
+            codex_config = CodexConfig.from_env()
+        self._codex_config: Any = codex_config
 
         self._running = False
         self._draining = False
@@ -97,6 +103,9 @@ class FleetScheduler:
 
         self._blocked_notifications: list[dict[str, str]] = []
         self._blocked_lock = threading.Lock()
+
+        self._preassigned: list[FleetTask] = []
+        self._preassigned_lock = threading.Lock()
 
     def _next_worker_id(self, role: str = "default") -> str:
         with self._worker_counter_lock:
@@ -180,7 +189,13 @@ class FleetScheduler:
         logger.info("Fleet scheduler stopped")
 
     def _tick(self) -> None:
-        """One iteration of the refill loop (ADR 0042-v2 algorithm)."""
+        """One iteration of the refill loop.
+
+        Priority order:
+          1. Pre-assigned tasks from 小白 (explicit task→worker mapping, no conflict)
+          2. Scanned tasks from TASKS.md (original ADR 0042-v2 algorithm)
+          3. Idle exploration when queue is empty
+        """
         active_count = self.metrics.get_active_count()
 
         if active_count >= self.config.max_workers:
@@ -202,43 +217,82 @@ class FleetScheduler:
             )
             self._consecutive_failures = 0
 
-        available = scan_available_tasks(self.repo_root)
-        claimed_ids = self.claims.get_claimed_task_ids()
-        pf = self.config.project_filter
-        unclaimed = [
-            t for t in available
-            if t.task_id not in claimed_ids
-            and t.fleet_eligible
-            and not t.blocked
-            and (not pf or t.project in pf)
-        ]
-
-        project_active = self.metrics.get_active_per_project()
-        assignable = []
-        for task in unclaimed:
-            proj_count = project_active.get(task.project, 0)
-            if proj_count >= self.config.max_per_project:
-                self.metrics.record_concurrency_limit_hit(task.project)
-                continue
-            assignable.append(task)
-            project_active[task.project] = proj_count + 1
-
         slots = self.config.max_workers - active_count
-        to_launch = assignable[:slots]
+        launched = 0
 
-        for task in to_launch:
+        with self._preassigned_lock:
+            pre_batch = self._preassigned[:slots]
+            self._preassigned = self._preassigned[slots:]
+
+        for task in pre_batch:
             self._spawn_worker(task)
+            launched += 1
 
-        if not to_launch and active_count == 0 and self._has_ever_launched:
+        remaining_slots = slots - launched
+
+        if remaining_slots > 0:
+            available = scan_available_tasks(self.repo_root)
+            claimed_ids = self.claims.get_claimed_task_ids()
+            active_texts = self._get_active_task_texts()  # re-fetch after pre-assigned spawns
+            pf = self.config.project_filter
+            unclaimed = [
+                t for t in available
+                if t.task_id not in claimed_ids
+                and t.fleet_eligible
+                and not t.blocked
+                and (not pf or t.project in pf)
+                and t.text not in active_texts
+            ]
+
+            project_active = self.metrics.get_active_per_project()
+            assignable = []
+            for task in unclaimed:
+                proj_count = project_active.get(task.project, 0)
+                if proj_count >= self.config.max_per_project:
+                    self.metrics.record_concurrency_limit_hit(task.project)
+                    continue
+                assignable.append(task)
+                project_active[task.project] = proj_count + 1
+
+            to_launch = assignable[:remaining_slots]
+            for task in to_launch:
+                self._spawn_worker(task)
+                launched += 1
+
+        if launched == 0 and active_count == 0 and self._has_ever_launched:
+            with self._preassigned_lock:
+                has_pending = bool(self._preassigned)
+            if has_pending:
+                return
+            snap = self.metrics.get_snapshot()
+            if snap.total_completed == 0 and snap.total_launched > 0:
+                return
             logger.info("All tasks completed, no active workers — entering drain")
             self._draining = True
             return
 
-        remaining_slots = slots - len(to_launch)
-        if remaining_slots > 0 and to_launch and self.config.idle_exploration_enabled:
-            self._spawn_idle_workers(remaining_slots)
+        final_remaining = slots - launched
+        if final_remaining > 0 and launched > 0 and self.config.idle_exploration_enabled:
+            self._spawn_idle_workers(final_remaining)
 
         self._check_supply_warning()
+
+    def _get_active_task_texts(self) -> set[str]:
+        """获取当前正在执行的任务文本集合，用于防止重复分配。
+
+        从 metrics（主进程、可靠）读取，不依赖 Dashboard 的跨进程事件。
+        """
+        texts: set[str] = set()
+        snap = self.metrics.get_snapshot()
+        for w in snap.active_list:
+            t = w.get("task_text", "")
+            if t:
+                texts.add(t)
+        with self._preassigned_lock:
+            for t in self._preassigned:
+                if t.text:
+                    texts.add(t.text)
+        return texts
 
     def _spawn_worker(self, task: FleetTask) -> None:
         """认领任务并派遣工作Agent。"""
@@ -281,6 +335,7 @@ class FleetScheduler:
             session_id=session_id,
             project=task.project,
             task_id=task.task_id,
+            task_text=task.text,
         )
 
         if self._pool is None:
@@ -291,7 +346,7 @@ class FleetScheduler:
             opts,
             self.config,
             self.claims,
-            None,  # codex_config
+            self._codex_config,
             self._event_queue,
         )
 
@@ -341,7 +396,7 @@ class FleetScheduler:
                 self.repo_root,
                 self.config,
                 self.claims,
-                None,  # codex_config
+                self._codex_config,
                 self._event_queue,
             )
 
@@ -429,6 +484,22 @@ class FleetScheduler:
         except Exception:
             logger.exception("Branch cleanup failed")
 
+    def enqueue_preassigned(self, tasks: list[FleetTask]) -> int:
+        """小白预分配的任务直接进入优先队列，不经过 TASKS.md 扫描。
+
+        返回成功入队的数量。
+        """
+        with self._preassigned_lock:
+            seen_texts: set[str] = {t.text for t in self._preassigned}
+            added = 0
+            for t in tasks:
+                if t.text in seen_texts:
+                    continue
+                self._preassigned.append(t)
+                seen_texts.add(t.text)
+                added += 1
+            return added
+
     def add_project_filter(self, project: str) -> None:
         """Add a project to the filter set (thread-safe via frozen replace)."""
         from dataclasses import replace
@@ -498,11 +569,16 @@ def start_fleet(
     repo_root: Path | None = None,
     fleet_config: FleetConfig | None = None,
     background: bool = True,
+    codex_config: Any | None = None,
 ) -> FleetScheduler:
     """Start the fleet scheduler.
 
     If background=True, starts in a daemon thread.
     Returns the scheduler instance.
+
+    codex_config: pass the main-process CodexConfig so workers inherit
+    the same API key, base_url, and timeout — avoids re-reading env
+    in forked subprocesses where networking may differ.
     """
     global _scheduler_instance
 
@@ -515,7 +591,7 @@ def start_fleet(
     if repo_root is None:
         repo_root = Path(os.environ.get("OPENAKARI_HOME", str(Path.cwd())))
 
-    scheduler = FleetScheduler(repo_root, fleet_config)
+    scheduler = FleetScheduler(repo_root, fleet_config, codex_config=codex_config)
     _scheduler_instance = scheduler
 
     if background:

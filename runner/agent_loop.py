@@ -758,19 +758,159 @@ class AgentLoop:
 
     # ── Multi-Agent 调度 ──────────────────────────────────────
 
+    _delegate_phase: str = ""
+
+    def _notify(self, msg: str) -> None:
+        """向主人推送进度消息（如果有 progress_callback）。"""
+        if self.progress_callback:
+            self.progress_callback(msg)
+
     def _execute_delegate(self, action: dict[str, Any]) -> str:
-        """处理 delegate action：启动 Multi-Agent 系统执行任务。"""
+        """处理 delegate action：规划任务 → 生成 plan → 启动 Fleet 分配。
+
+        全程通过 progress_callback 向主人实时汇报每一步，不会静默等待。
+        流程：
+          1. 汇报：收到任务，开始规划
+          2. 创建项目目录和 TASKS.md
+          3. 逐个生成 plan 文件，每完成一个汇报一个
+          4. 汇报：规划完毕，开始分配
+          5. 启动 Fleet，展示分配表
+        """
         tasks = action.get("tasks", [])
         max_workers = action.get("max_workers", 4)
         project = action.get("project", "")
         reason = action.get("reason", "")
 
-        return self._sys_multiagent("multiagent_start", {
+        deduped = self._deduplicate_tasks(tasks)
+        if not deduped or not project:
+            return self._sys_multiagent("multiagent_start", {
+                "max_workers": max_workers,
+                "project": project,
+                "tasks": tasks,
+                "reason": reason,
+            })
+
+        # ── 阶段 1：汇报启动 ──
+        self._delegate_phase = "planning"
+        assignment_preview = self._format_assignment(deduped, project)
+        self._notify(
+            f"📋 收到！小白现在开始规划任务，共 {len(deduped)} 个子任务：\n\n"
+            f"{assignment_preview}\n\n"
+            f"⏳ 正在为每个任务生成执行计划（plan）..."
+        )
+
+        # ── 阶段 2：创建项目结构 ──
+        repo = self.config.repo_home
+        slug = re.sub(r"[^a-z0-9-]", "-", project.lower()).strip("-")
+        project_dir = repo / "projects" / slug
+        project_dir.mkdir(parents=True, exist_ok=True)
+        for sub in ("literature", "analysis", "plans", "logs"):
+            (project_dir / sub).mkdir(exist_ok=True)
+
+        if not (project_dir / "README.md").is_file():
+            import time as _t
+            now = _t.strftime("%Y-%m-%d")
+            (project_dir / "README.md").write_text(
+                f"# {project}\n\nPriority: high\nStatus: active\n"
+                f"Mission: {reason or project}\n\n## Log\n\n### {now}\n\n项目创建。\n",
+                encoding="utf-8",
+            )
+
+        tasks_file = project_dir / "TASKS.md"
+        if not tasks_file.is_file():
+            tasks_file.write_text(f"# {project} — 任务列表\n\n", encoding="utf-8")
+        existing_content = tasks_file.read_text(encoding="utf-8")
+
+        completed_tasks = {
+            m.group(1).strip()
+            for m in re.finditer(r"- \[x\]\s*(.+)", existing_content, re.IGNORECASE)
+        }
+        pending_tasks: list[str] = []
+        skipped_done: list[str] = []
+        for t in deduped:
+            if any(t.lower()[:40] in done.lower() for done in completed_tasks):
+                skipped_done.append(t)
+            else:
+                pending_tasks.append(t)
+
+        if skipped_done:
+            self._notify(
+                f"♻️ 检测到 {len(skipped_done)} 个已完成任务，自动跳过：\n"
+                + "\n".join(f"  ✅ {s[:60]}" for s in skipped_done)
+            )
+
+        if not pending_tasks:
+            self._delegate_phase = ""
+            return (
+                f"✅ 所有 {len(deduped)} 个任务已在之前完成，无需重新运行！\n"
+                + "\n".join(f"  ✅ {s[:60]}" for s in skipped_done)
+            )
+
+        new_entries = ""
+        for t in pending_tasks:
+            if t not in existing_content:
+                new_entries += f"- [ ] {t}\n  Done when: TBD\n\n"
+        if new_entries:
+            tasks_file.write_text(
+                existing_content.rstrip("\n") + "\n\n" + new_entries,
+                encoding="utf-8",
+            )
+
+        # ── 阶段 3：检查已有 plan，仅为缺失的生成新 plan ──
+        plans_dir = project_dir / "plans"
+        plan_results: list[str] = []
+        for i, t in enumerate(pending_tasks):
+            task_slug = re.sub(r"[^a-z0-9\u4e00-\u9fff]+", "-", t.lower())[:60].strip("-")
+            existing_plan = plans_dir / f"{task_slug}.md"
+            if existing_plan.exists():
+                line = f"  [{i+1}/{len(pending_tasks)}] {t[:50]}... ♻️ 已有 Plan（续做）"
+                plan_results.append(line)
+            else:
+                try:
+                    self._auto_gen_plan(project_dir, t, reason)
+                    status = "✅ 新建"
+                except Exception:
+                    status = "⚠️ 跳过（Worker 会自行创建）"
+                line = f"  [{i+1}/{len(pending_tasks)}] {t[:50]}... {status}"
+                plan_results.append(line)
+            if (i + 1) % 2 == 0 or i == len(pending_tasks) - 1:
+                self._notify(
+                    f"📝 Plan 检查/生成进度 ({i+1}/{len(pending_tasks)}):\n"
+                    + "\n".join(plan_results[-(min(i+1, 2)):])
+                )
+
+        # ── 阶段 4：汇报规划完毕，启动 Fleet ──
+        self._delegate_phase = "launching"
+        resumed_count = sum(1 for r in plan_results if "已有 Plan" in r)
+        new_count = len(pending_tasks) - resumed_count
+        self._notify(
+            f"✅ {len(pending_tasks)} 个任务的 Plan 已就绪"
+            f"（{resumed_count} 个续做, {new_count} 个新建）！\n"
+            f"🚀 正在启动 Multi-Agent 系统，分配任务给子 Agent..."
+        )
+
+        result = self._sys_multiagent("multiagent_start", {
             "max_workers": max_workers,
             "project": project,
-            "tasks": tasks,
+            "tasks": pending_tasks,
             "reason": reason,
+            "_skip_plan_gen": True,
         })
+
+        self._delegate_phase = ""
+
+        # ── 阶段 5：最终汇报 ──
+        skip_info = ""
+        if skipped_done:
+            skip_info = f"\n♻️ 已完成（跳过）: {len(skipped_done)} 个\n"
+        final_report = (
+            f"📝 规划阶段完成（{len(pending_tasks)} 个待执行, "
+            f"{resumed_count} 个续做, {new_count} 个新建）:\n"
+            + "\n".join(plan_results)
+            + skip_info
+            + "\n\n" + result
+        )
+        return final_report
 
     def _sys_multiagent(self, skill_name: str, args: dict[str, Any]) -> str:
         """Multi-Agent 系统操作。"""
@@ -787,12 +927,24 @@ class AgentLoop:
         if skill_name == "multiagent_start":
             project = args.get("project", "")
             tasks = args.get("tasks", [])
+            skip_plan = args.get("_skip_plan_gen", False)
 
-            if tasks and project:
+            if tasks and project and not skip_plan:
                 self._ensure_project_tasks(project, tasks, args.get("reason", ""))
+
+            deduped_tasks = self._deduplicate_tasks(tasks)
 
             existing = get_fleet_scheduler()
             if existing and existing._running and not existing._draining:
+                if deduped_tasks and project:
+                    fleet_tasks = self._build_fleet_tasks(project, deduped_tasks)
+                    added = existing.enqueue_preassigned(fleet_tasks)
+                    existing.add_project_filter(project)
+                    assignment = self._format_assignment(deduped_tasks, project)
+                    return (
+                        f"Multi-Agent 系统运行中，已追加 {added} 个任务到 {project}\n\n"
+                        f"{assignment}"
+                    )
                 if project:
                     existing.add_project_filter(project)
                     pf = existing.config.project_filter
@@ -806,25 +958,45 @@ class AgentLoop:
 
             fleet_config = FleetConfig.from_env()
             max_workers = args.get("max_workers")
-            n = int(max_workers) if max_workers else min(4, fleet_config.max_workers)
+            n = int(max_workers) if max_workers else min(
+                max(len(deduped_tasks), 2), fleet_config.max_workers
+            )
             proj_filter = frozenset({project}) if project else frozenset()
             fleet_config = dc_replace(
                 fleet_config,
                 max_workers=n,
                 project_filter=proj_filter,
                 idle_exploration_enabled=not bool(proj_filter),
+                poll_interval_seconds=min(fleet_config.poll_interval_seconds, 10),
             )
             scope = f" (仅 {project})" if project else " (所有项目)"
-            start_fleet(
+            scheduler = start_fleet(
                 repo_root=self.config.repo_home,
                 fleet_config=fleet_config,
                 background=True,
+                codex_config=self.config,
             )
+
+            if deduped_tasks and project:
+                fleet_tasks = self._build_fleet_tasks(project, deduped_tasks)
+                scheduler.enqueue_preassigned(fleet_tasks)
+
             import time as _time
             _time.sleep(1)
-            return f"Multi-Agent 系统已启动! {n} 个 Agent 出发{scope}\n\n{_fleet_status()}"
+
+            assignment = self._format_assignment(deduped_tasks, project) if deduped_tasks else ""
+            return (
+                f"Multi-Agent 系统已启动! {n} 个 Agent 出发{scope}\n\n"
+                f"{assignment}\n"
+                f"{_fleet_status()}"
+            )
 
         if skill_name == "multiagent_status":
+            if self._delegate_phase == "planning":
+                return "📝 小白正在规划任务、生成执行计划中，请稍等...计划生成完毕后会立刻启动子 Agent。"
+            if self._delegate_phase == "launching":
+                return "🚀 计划已就绪，正在启动 Multi-Agent 系统..."
+
             scheduler = get_fleet_scheduler()
             if not scheduler or not scheduler._running or scheduler._draining:
                 return "Multi-Agent 系统目前没有运行"
@@ -839,18 +1011,24 @@ class AgentLoop:
                 f"📊 已启动: {launched}, 已完成: {completed} (✅{ok} ❌{failed})",
             ]
 
+            if snap.active_list:
+                lines.append(f"\n👷 活跃 Agent ({len(snap.active_list)} 个):")
+                for i, w in enumerate(snap.active_list):
+                    idle_tag = " [自主探索]" if w["is_idle"] else ""
+                    task = w.get("task_text", "") or w["task_id"]
+                    task_display = task[:60] + ("..." if len(task) > 60 else "")
+                    elapsed = w["elapsed_seconds"]
+                    lines.append(
+                        f"  W{i} ({w['worker_id']}){idle_tag}:"
+                    )
+                    lines.append(f"    📋 任务: {task_display}")
+                    lines.append(f"    📂 项目: {w['project']}")
+                    lines.append(f"    ⏱️ 已运行: {elapsed:.0f}s")
+
             if scheduler._dashboard:
-                detail = self._render_worker_details(scheduler._dashboard)
+                detail = self._render_dashboard_chatter(scheduler._dashboard)
                 if detail:
                     lines.append(detail)
-            elif snap.active_list:
-                lines.append("\n👷 当前工作中:")
-                for w in snap.active_list:
-                    idle_tag = " [探索]" if w["is_idle"] else ""
-                    lines.append(
-                        f"  {w['worker_id']}: {w['project']}/{w['task_id']} "
-                        f"({w['elapsed_seconds']:.0f}s){idle_tag}"
-                    )
 
             if not snap.active_list and completed > 0:
                 lines.append("\n🏁 所有任务已完成。")
@@ -915,6 +1093,140 @@ class AgentLoop:
 
         return f"未知的 Multi-Agent 操作: {skill_name}"
 
+    # ── Fleet 任务分配辅助 ─────────────────────────────────────
+
+    @staticmethod
+    def _deduplicate_tasks(tasks: list[str]) -> list[str]:
+        """去重并过滤空任务，保持顺序。"""
+        seen: set[str] = set()
+        result: list[str] = []
+        for t in tasks:
+            t = t.strip()
+            if not t:
+                continue
+            key = t.lower()[:60]
+            if key in seen:
+                continue
+            seen.add(key)
+            result.append(t)
+        return result
+
+    def _build_fleet_tasks(self, project: str, task_texts: list[str]) -> list:
+        """将文本任务列表转为 FleetTask 对象，供 scheduler 预分配。"""
+        import hashlib
+        from fleet.config import FleetTask
+        fleet_tasks = []
+        for text in task_texts:
+            tid = hashlib.sha256(f"{project}:{text}".encode()).hexdigest()[:16]
+            fleet_tasks.append(FleetTask(
+                task_id=tid,
+                project=project,
+                text=text,
+                fleet_eligible=True,
+            ))
+        return fleet_tasks
+
+    @staticmethod
+    def _format_assignment(tasks: list[str], project: str) -> str:
+        """格式化任务分配表，展示小白的分配决策。"""
+        if not tasks:
+            return ""
+        lines = [f"📋 任务分配表 (项目: {project}, 共 {len(tasks)} 个任务):"]
+        lines.append("─" * 40)
+        for i, t in enumerate(tasks):
+            lines.append(f"  W{i}: {t[:80]}")
+        lines.append("─" * 40)
+        lines.append(f"每个 Agent 负责一个独立任务，互不干扰。")
+        return "\n".join(lines)
+
+    # ── Fleet Worker 详情渲染 ─────────────────────────────────
+
+    @staticmethod
+    def _render_dashboard_chatter(dashboard: Any) -> str:
+        """从 Dashboard 提取最近动态信息（补充 metrics 的静态数据）。"""
+        try:
+            dashboard._drain_events()
+        except Exception:
+            return ""
+
+        lines: list[str] = []
+
+        with dashboard._lock:
+            finished = [w for w in dashboard._workers.values() if w.finished]
+            if finished:
+                ok_count = sum(1 for w in finished if w.ok)
+                fail_count = len(finished) - ok_count
+                lines.append(f"\n🏁 已交付 ({len(finished)} 个, ✅{ok_count} ❌{fail_count}):")
+                for ws in finished[-5:]:
+                    short_id = ws.worker_id.replace("fleet-worker-", "W")
+                    icon = "✅" if ws.ok else "❌"
+                    task = ws.task_text[:40] + ("..." if len(ws.task_text) > 40 else "")
+                    dur = f"{ws.duration_seconds:.0f}s" if ws.duration_seconds else "?"
+                    lines.append(f"  {icon} {short_id}: {task} ({dur})")
+                    if ws.deliverables:
+                        for d in ws.deliverables[:3]:
+                            lines.append(f"     📄 {d}")
+
+            chatter = dashboard._recent_chatter[-6:] if dashboard._recent_chatter else []
+            if chatter:
+                lines.append(f"\n💬 最近动态:")
+                for wid, icon, msg in chatter:
+                    short = wid.replace("fleet-worker-", "W")
+                    lines.append(f"  {icon} [{short}] {msg[:60]}")
+
+        return "\n".join(lines)
+
+    @staticmethod
+    def _render_single_worker(dashboard: Any, worker_id: str) -> str:
+        """渲染单个 Worker 的详细信息（先查 metrics，再补充 dashboard）。"""
+        from fleet.scheduler import get_fleet_scheduler
+        scheduler = get_fleet_scheduler()
+        if not scheduler:
+            return "Fleet 未运行"
+
+        snap = scheduler.metrics.get_snapshot()
+        target = None
+        for i, w in enumerate(snap.active_list):
+            wid = w["worker_id"]
+            if worker_id in (wid, f"W{i}", wid.replace("fleet-worker-", "W")):
+                target = w
+                break
+
+        if not target:
+            return f"找不到 Worker: {worker_id}"
+
+        import time as _time
+        task = target.get("task_text", "") or target["task_id"]
+        lines = [
+            f"Worker {target['worker_id']} 详情:",
+            f"  📋 任务: {task}",
+            f"  📂 项目: {target['project']}",
+            f"  📍 状态: 🔄执行中",
+            f"  ⏱️ 已运行: {target['elapsed_seconds']:.0f}s",
+        ]
+
+        if dashboard:
+            try:
+                dashboard._drain_events()
+                with dashboard._lock:
+                    for ws in dashboard._workers.values():
+                        if ws.worker_id == target["worker_id"]:
+                            pct = min(ws.turn / max(ws.max_turns, 1) * 100, 99)
+                            lines.append(f"  📊 进度: {pct:.0f}% (第{ws.turn}轮/{ws.max_turns}轮)")
+                            if ws.phase == "tool_exec" and ws.tool_name:
+                                lines.append(f"  🔧 正在使用工具: {ws.tool_name}")
+                            if ws.last_message:
+                                lines.append(f"  💬 最新状态: {ws.last_message}")
+                            if ws.deliverables:
+                                lines.append("  📄 产出物:")
+                                for d in ws.deliverables:
+                                    lines.append(f"    - {d}")
+                            break
+            except Exception:
+                pass
+
+        return "\n".join(lines)
+
     # ── Fleet 任务落盘 ─────────────────────────────────────────
 
     def _ensure_project_tasks(
@@ -960,7 +1272,6 @@ class AgentLoop:
             if not t or t in existing_content:
                 continue
             new_entries += f"- [ ] {t}\n  Done when: TBD\n\n"
-            self._auto_gen_plan(project_dir, t, reason)
 
         if new_entries:
             tasks_file.write_text(

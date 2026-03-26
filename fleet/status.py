@@ -25,6 +25,7 @@ class _ActiveWorker:
     started_at: float
     is_idle: bool = False
     exploration_type: str | None = None
+    task_text: str = ""
 
 
 class FleetMetricsTracker:
@@ -53,6 +54,7 @@ class FleetMetricsTracker:
         task_id: str,
         is_idle: bool = False,
         exploration_type: str | None = None,
+        task_text: str = "",
     ) -> None:
         with self._lock:
             self._active[worker_id] = _ActiveWorker(
@@ -63,6 +65,7 @@ class FleetMetricsTracker:
                 started_at=time.time(),
                 is_idle=is_idle,
                 exploration_type=exploration_type,
+                task_text=task_text,
             )
             self._total_launched += 1
             self._launch_times.append(time.time())
@@ -152,6 +155,7 @@ class FleetMetricsTracker:
                     "session_id": w.session_id,
                     "project": w.project,
                     "task_id": w.task_id[:12],
+                    "task_text": w.task_text,
                     "elapsed_seconds": round(elapsed, 1),
                     "is_idle": w.is_idle,
                 })

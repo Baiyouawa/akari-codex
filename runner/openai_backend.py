@@ -91,6 +91,7 @@ class CodexBackend:
             api_key=config.api_key,
             base_url=config.base_url,
             timeout=config.timeout_seconds,
+            max_retries=5,
         )
         self.tool_executor = tool_executor
 
