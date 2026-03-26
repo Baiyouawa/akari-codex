@@ -3069,7 +3069,8 @@
       "session_id": "侑-00-1774533825-b3723b",
       "project": "zero-basics-plan",
       "claimed_at": 1774533825.6065464,
-      "active": true
+      "active": false,
+      "released_at": 1774534616.9324424
     },
     "claim-55e676f3d6e9": {
       "task_id": "d03a37766039afc4",
@@ -3085,7 +3086,8 @@
       "session_id": "智乃-02-1774534356-6783b6",
       "project": "zero-basics-plan",
       "claimed_at": 1774534356.263993,
-      "active": true
+      "active": false,
+      "released_at": 1774534670.1154926
     },
     "claim-2ad2facd295a": {
       "task_id": "97e1234cc9a54ade",
