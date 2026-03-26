@@ -1,0 +1,93 @@
+[
+  {
+    "url": "http://home.u",
+    "status": null,
+    "final_url": null,
+    "title": "",
+    "error": "RemoteDisconnected: Remote end closed connection without response"
+  },
+  {
+    "url": "https://documentation.ubuntu.com/de",
+    "status": null,
+    "final_url": null,
+    "title": "",
+    "error": "HTTPError: HTTP Error 404: Not Found"
+  },
+  {
+    "url": "https://linuxcommand.org/lc3_learning_the_",
+    "status": null,
+    "final_url": null,
+    "title": "",
+    "error": "HTTPError: HTTP Error 404: Not Found"
+  },
+  {
+    "url": "https://mi",
+    "status": null,
+    "final_url": null,
+    "title": "",
+    "error": "URLError: <urlopen error [Errno -3] Temporary failure in name resolution>"
+  },
+  {
+    "url": "https://overthewire.org/wargame",
+    "status": null,
+    "final_url": null,
+    "title": "",
+    "error": "HTTPError: HTTP Error 404: Not Found"
+  },
+  {
+    "url": "https://www.runoob.com/linux/linux-",
+    "status": 200,
+    "final_url": "https://www.runoob.com/linux/linux-tutorial.html",
+    "title": "Linux 教程 | 菜鸟教程",
+    "error": ""
+  },
+  {
+    "url": "https://www.runoob.com/linux/linux-comm-apt.html\n- 适合程度：**高**\n- 难度：**低**\n- 覆盖主题：软件安装、更新、删除、查询\n- 适合原因：把 ",
+    "status": null,
+    "final_url": null,
+    "title": "",
+    "error": "InvalidURL: URL can't contain control characters. '/linux/linux-comm-apt.html\\n- 适合程度：**高**\\n- 难度：**低**\\n- 覆盖主题：软件安装、更新、删除、查询\\n- 适合原因：把' (found at least '\\n')"
+  },
+  {
+    "url": "https://www.runoob.com/linux/linux-comm-apt.html\n7. 菜鸟教程 — Shell 教程  \n   URL: http",
+    "status": null,
+    "final_url": null,
+    "title": "",
+    "error": "InvalidURL: URL can't contain control characters. '/linux/linux-comm-apt.html\\n7. 菜鸟教程 — Shell 教程  \\n   URL: http' (found at least '\\n')"
+  },
+  {
+    "url": "https://www.runoob.com/linux/linux-command-manual.html\n- 适合程度：**中**\n- 难度：**低**\n- 覆盖主题：命令检索\n- 适合原因：适合做课程附录和查漏补缺，不适合独立作为主教材。\n- 局限：偏索引，不适合作为零基础第一手教程。\n- 证据摘录：",
+    "status": null,
+    "final_url": null,
+    "title": "",
+    "error": "InvalidURL: URL can't contain control characters. '/linux/linux-command-manual.html\\n- 适合程度：**中**\\n- 难度：**低**\\n- 覆盖主题：命令检索\\n- 适合原因：适合做课程附录和查漏补缺，不适合独立作为主教材。\\n- 局限：偏索引，不适合作为零基础第一手教程。\\n- 证据摘录：' (found at least '\\n')"
+  },
+  {
+    "url": "https://www.runoob.com/linux/linux-command-manual.html\n9. MIT Mi",
+    "status": null,
+    "final_url": null,
+    "title": "",
+    "error": "InvalidURL: URL can't contain control characters. '/linux/linux-command-manual.html\\n9. MIT Mi' (found at least '\\n')"
+  },
+  {
+    "url": "https://www.runoob.com/linux/linux-file-attr-permi",
+    "status": null,
+    "final_url": null,
+    "title": "",
+    "error": "HTTPError: HTTP Error 404: Not Found"
+  },
+  {
+    "url": "https://www.runoob.com/linux/linux-file-content-manage.html\n- 适合程度：**高**\n- 难度：**低**\n- 覆盖主题：文件系统、路径、目录操作、文件复制移动删除\n- 适合原因：直接列出 ",
+    "status": null,
+    "final_url": null,
+    "title": "",
+    "error": "InvalidURL: URL can't contain control characters. '/linux/linux-file-content-manage.html\\n- 适合程度：**高**\\n- 难度：**低**\\n- 覆盖主题：文件系统、路径、目录操作、文件复制移动删除\\n- 适合原因：直接列出' (found at least '\\n')"
+  },
+  {
+    "url": "https://www.runoob.com/linux/linux-file-content-manage.html\n5. 菜鸟教程 — Linux 文件基本属性  \n   URL: http",
+    "status": null,
+    "final_url": null,
+    "title": "",
+    "error": "InvalidURL: URL can't contain control characters. '/linux/linux-file-content-manage.html\\n5. 菜鸟教程 — Linux 文件基本属性  \\n   URL: http' (found at least '\\n')"
+  }
+]

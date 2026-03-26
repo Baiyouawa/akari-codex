@@ -1,0 +1,51 @@
+[
+  {
+    "url": "https://brew",
+    "status": null,
+    "final_url": null,
+    "title": "",
+    "error": "URLError: <urlopen error [Errno -3] Temporary failure in name resolution>"
+  },
+  {
+    "url": "https://code.vi",
+    "status": null,
+    "final_url": null,
+    "title": "",
+    "error": "URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1007)>"
+  },
+  {
+    "url": "https://cur",
+    "status": null,
+    "final_url": null,
+    "title": "",
+    "error": "URLError: <urlopen error [Errno -3] Temporary failure in name resolution>"
+  },
+  {
+    "url": "https://doc",
+    "status": null,
+    "final_url": null,
+    "title": "",
+    "error": "URLError: <urlopen error [Errno -3] Temporary failure in name resolution>"
+  },
+  {
+    "url": "https://learn.micro",
+    "status": null,
+    "final_url": null,
+    "title": "",
+    "error": "URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1007)>"
+  },
+  {
+    "url": "https://manpage",
+    "status": null,
+    "final_url": null,
+    "title": "",
+    "error": "URLError: <urlopen error [Errno -3] Temporary failure in name resolution>"
+  },
+  {
+    "url": "https://ubuntu.com/tutorial",
+    "status": null,
+    "final_url": null,
+    "title": "",
+    "error": "HTTPError: HTTP Error 404: Not Found"
+  }
+]
