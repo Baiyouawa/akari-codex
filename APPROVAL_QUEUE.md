@@ -279,3 +279,12 @@ Notes: <any modifications or context>
 **Description:** Need permission to run a git commit for completed fleet task results. Current shell allowlist permits git status/log/diff/branch but blocks git add/git commit, while session protocol and task instructions require a commit containing [fleet/岛村-01-1774537986-2e6431]. Files are already written: project README/TASKS, RLCR progress/self-review/summary, and session log under projects/multi-agent-survey-review/.
 **Status:** pending
 
+
+---
+
+### [BLOCKING] tool-access
+
+**Requested:** 2026-03-26T15:19:11.074382+00:00
+**Description:** 需要执行 `git add` 和 `git commit` 以完成会话协议要求的提交收尾。当前 shell allowlist 不允许 git add/commit，导致无法以 [fleet/侑-00-1774537746-ba0625] 规范完成本次已写入成果的提交。相关文件已全部落盘，仅缺提交步骤。
+**Status:** pending
+
