@@ -1,7 +1,7 @@
 # zero-basics-plan — 任务列表
 
-- [ ] 设计整体课程框架：将教程拆分为 4 周共 28 天，每天有明确学习目标、实操任务、配套资料；每周末安排一次系统课程复盘与整合训练。
-  Done when: TBD
+- [x] 设计整体课程框架：将教程拆分为 4 周共 28 天，每天有明确学习目标、实操任务、配套资料；每周末安排一次系统课程复盘与整合训练。
+  Done when: 形成课程总表，覆盖 4 周 / 28 天 / 每日学习目标 / 实操任务 / 配套资料 / 每周末系统复盘；见 `projects/zero-basics-plan/analysis/2026-03-26-28-day-course-framework.md`
 
 - [x] 调研 Linux 零基础入门资料：覆盖文件系统、常用命令、权限、软件安装、Shell 基础、实战练习，筛选适合初学者的高质量中文或英文资料并记录来源。
   Done when: 形成带来源的调研笔记，包含资料清单、主题映射、课程拆分建议与练习设计；见 `projects/zero-basics-plan/analysis/2026-03-26-linux-beginner-resource-survey.md`
@@ -15,8 +15,8 @@
 - [ ] 调研 VibeCoding / AI 辅助编程资料：说明概念、工作流、提示词基础、如何与 Cursor 配合完成小项目、常见误区与安全注意事项。
   Done when: TBD
 
-- [ ] 调研 Python 与编程基础资料：覆盖语法、数据结构、函数、模块、文件读写、虚拟环境，为后续 AI / 深度学习学习做铺垫。
-  Done when: TBD
+- [x] 调研 Python 与编程基础资料：覆盖语法、数据结构、函数、模块、文件读写、虚拟环境，为后续 AI / 深度学习学习做铺垫。
+  Done when: 形成带来源的调研笔记，覆盖语法 / 数据结构 / 函数 / 模块 / 文件读写 / 虚拟环境，并给出课程映射、练习设计与最小资料包建议；见 `projects/zero-basics-plan/analysis/2026-03-26-python-programming-basics-research.md`
 
 - [ ] 调研基础深度学习入门资料：覆盖 Python 科学计算、NumPy、PyTorch 基础、张量、自动求导、简单神经网络、训练与推理概念，保证零基础可理解。
   Done when: TBD
