@@ -12,8 +12,8 @@
 - [x] 调研开发工具链资料：覆盖 Cursor、VS Code、终端、包管理、环境配置、基本调试方法，重点整理适合零基础的 VibeCoding 入门实践资料。
   Done when: 形成带来源的调研笔记，覆盖 Cursor / VS Code / 终端 / 包管理 / 环境配置 / 调试 / VibeCoding 入门实践，并给出课程落地建议；见 `projects/zero-basics-plan/analysis/dev-toolchain-beginner-research.md`
 
-- [ ] 调研 VibeCoding / AI 辅助编程资料：说明概念、工作流、提示词基础、如何与 Cursor 配合完成小项目、常见误区与安全注意事项。
-  Done when: TBD
+- [x] 调研 VibeCoding / AI 辅助编程资料：说明概念、工作流、提示词基础、如何与 Cursor 配合完成小项目、常见误区与安全注意事项。
+  Done when: 形成带来源的调研笔记，覆盖概念 / 工作流 / 提示词基础 / Cursor 小项目流程 / 常见误区 / 安全注意事项，并给出课程落地建议；见 `projects/zero-basics-plan/analysis/2026-03-26-vibecoding-ai-assisted-programming-research.md`
 
 - [x] 调研 Python 与编程基础资料：覆盖语法、数据结构、函数、模块、文件读写、虚拟环境，为后续 AI / 深度学习学习做铺垫。
   Done when: 形成带来源的调研笔记，覆盖语法 / 数据结构 / 函数 / 模块 / 文件读写 / 虚拟环境，并给出课程映射、练习设计与最小资料包建议；见 `projects/zero-basics-plan/analysis/2026-03-26-python-programming-basics-research.md`
