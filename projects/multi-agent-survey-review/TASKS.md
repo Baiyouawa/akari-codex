@@ -45,8 +45,8 @@
 - [x] 筛选 2024-2026 年与 multi-agent 相关的最新 10 篇高质量综述论文，优先覆盖 arXiv、ACL Anthology、OpenReview、期刊与顶会教程/综述
   Done when: 产出 `projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md`，并完成 `projects/multi-agent-survey-review/plans/筛选-2024-2026-年与-multi-agent-相关的最新-10-篇高质量综述论文-优先覆盖-arxiv-acl-progress.md`、`projects/multi-agent-survey-review/plans/筛选-2024-2026-年与-multi-agent-相关的最新-10-篇高质量综述论文-优先覆盖-arxiv-acl-self-review.md`、`projects/multi-agent-survey-review/plans/筛选-2024-2026-年与-multi-agent-相关的最新-10-篇高质量综述论文-优先覆盖-arxiv-acl-summary.md`
 
-- [ ] 下载并整理这 10 篇综述到本地项目目录，记录论文标题、年份、来源链接、PDF 路径与获取状态
-  Done when: TBD
+- [x] 下载并整理这 10 篇综述到本地项目目录，记录论文标题、年份、来源链接、PDF 路径与获取状态
+  Done when: 产出 `projects/multi-agent-survey-review/literature/meta/2026-03-26-selected-10-download-manifest.json` 与 `projects/multi-agent-survey-review/literature/meta/2026-03-26-selected-10-local-paths.md`，并完成 `projects/multi-agent-survey-review/plans/下载并整理这-10-篇综述到本地项目目录-记录论文标题-年份-来源链接-pdf-路径与获取状态-progress.md`、`projects/multi-agent-survey-review/plans/下载并整理这-10-篇综述到本地项目目录-记录论文标题-年份-来源链接-pdf-路径与获取状态-self-review.md`、`projects/multi-agent-survey-review/plans/下载并整理这-10-篇综述到本地项目目录-记录论文标题-年份-来源链接-pdf-路径与获取状态-summary.md`
 
 - [ ] 交叉比较 10 篇综述的主题覆盖、方法谱系、研究空白与趋势，形成统一分析框架
   Done when: TBD
