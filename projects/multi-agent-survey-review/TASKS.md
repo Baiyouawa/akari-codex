@@ -3,8 +3,8 @@
 - [x] 检索并筛选与multi-agent相关的最新十篇综述论文，优先覆盖2024-2026，记录题目、年份、链接、来源与入选理由
   Done when: 产出 `projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md`，并完成计划进度、自审与摘要文件
 
-- [ ] 将筛选出的十篇综述尽可能下载到本地，保存PDF或可读文本，并整理准确本地路径清单
-  Done when: TBD
+- [x] 将筛选出的十篇综述尽可能下载到本地，保存PDF或可读文本，并整理准确本地路径清单
+  Done when: 产出 `projects/multi-agent-survey-review/literature/meta/2026-03-26-selected-10-download-manifest.json` 与 `projects/multi-agent-survey-review/literature/meta/2026-03-26-selected-10-local-paths.md`，并完成 `projects/multi-agent-survey-review/plans/将筛选出的十篇综述尽可能下载到本地-保存pdf或可读文本-并整理准确本地路径清单-progress.md`、`projects/multi-agent-survey-review/plans/将筛选出的十篇综述尽可能下载到本地-保存pdf或可读文本-并整理准确本地路径清单-self-review.md`、`projects/multi-agent-survey-review/plans/将筛选出的十篇综述尽可能下载到本地-保存pdf或可读文本-并整理准确本地路径清单-summary.md`
 
 - [x] 修复十篇综述统一样本集详读笔记，确保与最终筛选结果和下载 manifest 完全一致 [skill: govern]
   Done when: 产出只覆盖 `projects/multi-agent-survey-review/literature/meta/2026-03-26-selected-10-download-manifest.json` 中 10 篇论文的详读笔记 `projects/multi-agent-survey-review/analysis/2026-03-26-ten-survey-detailed-reading-notes.md`，并完成对应计划 progress/self-review/summary 文件
@@ -28,10 +28,10 @@
   Done when: 产出 `projects/multi-agent-survey-review/analysis/2026-03-26-course-route-enhancement-survey-summary-for-zero-basics-plan.md`，并完成 `projects/multi-agent-survey-review/plans/汇总已有最终结果与新检索证据-生成一版可用于课程路线增强的综述摘要-标注哪些内容可直接并入-zero-basics-pl-progress.md`、`projects/multi-agent-survey-review/plans/汇总已有最终结果与新检索证据-生成一版可用于课程路线增强的综述摘要-标注哪些内容可直接并入-zero-basics-pl-self-review.md`、`projects/multi-agent-survey-review/plans/汇总已有最终结果与新检索证据-生成一版可用于课程路线增强的综述摘要-标注哪些内容可直接并入-zero-basics-pl-summary.md`
 
 - [x] 审查各 Worker 的证据链完整性与任务完成质量，发现偷懒或伪 blocked 立即重派
-  Done when: 产出 `projects/multi-agent-survey-review/analysis/2026-03-26-worker-audit-and-reassignment.md`，并完成 `projects/multi-agent-survey-review/plans/审查各-worker-的证据链完整性与任务完成质量-发现偷懒或伪-blocked-立即重派-progress.md`、`...-self-review.md`、`...-summary.md`
+  Done when: 产出 `projects/multi-agent-survey-review/analysis/2026-03-26-worker-audit-and-reassignment.md`，并完成 `projects/multi-agent-survey-review/plans/审查各-worker-的证据链完整性与任务完成质量-发现偷懒或伪-blocked-立即重派-progress.md`、`projects/multi-agent-survey-review/plans/审查各-worker-的证据链完整性与任务完成质量-发现偷懒或伪-blocked-立即重派-self-review.md`、`projects/multi-agent-survey-review/plans/审查各-worker-的证据链完整性与任务完成质量-发现偷懒或伪-blocked-立即重派-summary.md`
 
-- [x] 筛选 2024-2026 年与 multi-agent 相关的最新 10 篇高质量综述论文，优先 arXiv/ACL/NeurIPS/ICML/ICLR/IEEE/ACM 等可信来源，并记录题目、年份、链接与筛选理由
-  Done when: 复用并复核 `projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md`、`projects/multi-agent-survey-review/plans/筛选-2024-2026-年与-multi-agent-相关的最新-10-篇高质量综述论文-优先-arxiv-acl-n-progress.md`、`projects/multi-agent-survey-review/plans/筛选-2024-2026-年与-multi-agent-相关的最新-10-篇高质量综述论文-优先-arxiv-acl-n-self-review.md`、`projects/multi-agent-survey-review/plans/筛选-2024-2026-年与-multi-agent-相关的最新-10-篇高质量综述论文-优先-arxiv-acl-n-summary.md`，且 10 篇样本与 `projects/multi-agent-survey-review/literature/meta/2026-03-26-selected-10-download-manifest.json` 一致
+- [ ] 筛选 2024-2026 年与 multi-agent 相关的最新 10 篇高质量综述论文，优先 arXiv/ACL/NeurIPS/ICML/ICLR/IEEE/ACM 等可信来源，并记录题目、年份、链接与筛选理由
+  Done when: TBD
 
 - [x] 将这 10 篇综述论文下载到本地，按统一目录结构整理 PDF 与元数据，确保文件可追溯到原始来源
   Done when: 产出 `projects/multi-agent-survey-review/literature/papers/` 标准归档目录、`projects/multi-agent-survey-review/literature/indexes/papers_index.jsonl`、`projects/multi-agent-survey-review/literature/indexes/papers_index.csv`、`projects/multi-agent-survey-review/literature/meta/2026-03-26-ingest-summary.json`，并完成对应计划的 progress/self-review/summary 文件
