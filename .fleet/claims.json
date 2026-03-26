@@ -3214,7 +3214,8 @@
       "session_id": "智乃-02-1774538286-bdbac4",
       "project": "multi-agent-survey-review",
       "claimed_at": 1774538286.8822868,
-      "active": true
+      "active": false,
+      "released_at": 1774538657.371745
     },
     "claim-2ab46d718366": {
       "task_id": "e8198990fbd7d0eb",
@@ -3230,7 +3231,8 @@
       "session_id": "侑-00-1774538417-42c962",
       "project": "multi-agent-survey-review",
       "claimed_at": 1774538417.0572774,
-      "active": true
+      "active": false,
+      "released_at": 1774538838.2352517
     },
     "claim-1d8bbfe7630b": {
       "task_id": "efc9919e95cb92e4",
@@ -3238,6 +3240,48 @@
       "session_id": "岛村-01-1774538427-585385",
       "project": "multi-agent-survey-review",
       "claimed_at": 1774538427.0824993,
+      "active": false,
+      "released_at": 1774538656.0785677
+    },
+    "claim-fc19ff58954a": {
+      "task_id": "eab015b082455db5",
+      "worker_id": "智乃-02",
+      "session_id": "智乃-02-1774538667-961907",
+      "project": "multi-agent-survey-review",
+      "claimed_at": 1774538667.393797,
+      "active": false,
+      "released_at": 1774538774.4773648
+    },
+    "claim-06def429a7c4": {
+      "task_id": "452802cedf83d9b3",
+      "worker_id": "结衣-03",
+      "session_id": "结衣-03-1774538677-39b1b3",
+      "project": "multi-agent-survey-review",
+      "claimed_at": 1774538677.4265802,
+      "active": true
+    },
+    "claim-dd75529d79f3": {
+      "task_id": "787116a4dc9bb644",
+      "worker_id": "侑-00",
+      "session_id": "侑-00-1774538687-850851",
+      "project": "multi-agent-survey-review",
+      "claimed_at": 1774538687.4566677,
+      "active": true
+    },
+    "claim-3ed7ead57e6a": {
+      "task_id": "5d0bd2d6f4a13468",
+      "worker_id": "岛村-01",
+      "session_id": "岛村-01-1774538697-818b5e",
+      "project": "multi-agent-survey-review",
+      "claimed_at": 1774538697.4877632,
+      "active": true
+    },
+    "claim-80dd11159a49": {
+      "task_id": "eab015b082455db5",
+      "worker_id": "智乃-02",
+      "session_id": "智乃-02-1774538787-3c8a1c",
+      "project": "multi-agent-survey-review",
+      "claimed_at": 1774538787.609288,
       "active": true
     }
   }
