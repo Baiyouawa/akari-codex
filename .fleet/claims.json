@@ -2970,7 +2970,8 @@
       "session_id": "岛村-01-1774532884-7630de",
       "project": "zero-basics-plan",
       "claimed_at": 1774532884.3207953,
-      "active": true
+      "active": false,
+      "released_at": 1774533806.0827186
     },
     "claim-9d4969e4eb69": {
       "task_id": "c9c89b59bd2dc5d4",
@@ -3014,7 +3015,8 @@
       "session_id": "智乃-02-1774533545-1f6499",
       "project": "zero-basics-plan",
       "claimed_at": 1774533545.204833,
-      "active": true
+      "active": false,
+      "released_at": 1774533845.0902274
     },
     "claim-449e65cb89ea": {
       "task_id": "09ce19b7e0b23e87",
@@ -3022,7 +3024,8 @@
       "session_id": "结衣-03-1774533555-8b6815",
       "project": "zero-basics-plan",
       "claimed_at": 1774533555.2254193,
-      "active": true
+      "active": false,
+      "released_at": 1774533797.7062092
     },
     "claim-85aa67b4f8d6": {
       "task_id": "42d6d008b92c883f",
@@ -3030,6 +3033,39 @@
       "session_id": "千束-00-1774533565-dad024",
       "project": "zero-basics-plan",
       "claimed_at": 1774533565.2458289,
+      "active": false,
+      "released_at": 1774533795.8818107
+    },
+    "claim-2a78f32d5c19": {
+      "task_id": "42d6d008b92c883f",
+      "worker_id": "柚子-01",
+      "session_id": "柚子-01-1774533815-8cc540",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774533815.564159,
+      "active": true
+    },
+    "claim-61360d78c40f": {
+      "task_id": "09ce19b7e0b23e87",
+      "worker_id": "智乃-02",
+      "session_id": "智乃-02-1774533815-d74104",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774533815.5713632,
+      "active": true
+    },
+    "claim-2034ec5830dc": {
+      "task_id": "915194c7e8b90393",
+      "worker_id": "结衣-03",
+      "session_id": "结衣-03-1774533825-9fee61",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774533825.59971,
+      "active": true
+    },
+    "claim-42ab519fd262": {
+      "task_id": "a088cb1e04906cc5",
+      "worker_id": "侑-00",
+      "session_id": "侑-00-1774533825-b3723b",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774533825.6065464,
       "active": true
     }
   }
