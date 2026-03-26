@@ -535,7 +535,15 @@ Codex Review: 二次审查
 
 ### gen-plan 任务规划
 
-小白在 `delegate` 分配任务前，会为每个子任务生成 Humanize 风格的结构化计划：
+小白在 `delegate` 分配任务前，会**先扫描项目现状再智能复用**：
+
+1. 统计 `projects/<project>/TASKS.md` 待办条数和 `plans/` 下已有主 Plan 数量
+2. 将本轮 delegate 的任务文本与 `TASKS.md` 中已有条目做**相似度对齐**（阈值 ≥0.73），避免措辞微差导致生成重复 Plan
+3. 逐个检查 Plan：先精确匹配 slug 文件名 → 再读 Plan 标题模糊匹配（≥0.78），**命中则标记"续做"**
+4. **仅对缺失 Plan 的任务**调用 LLM 生成新 Plan
+5. 向主人实时汇报：扫描结果、对齐情况、Plan 检查/生成进度
+
+每个子任务的 Plan 采用 Humanize 风格结构化计划：
 
 ```markdown
 # 计划标题
@@ -592,7 +600,7 @@ Codex Review: 二次审查
 
 ## 统一 Skill 体系
 
-小白的一切能力都统一在 `SkillRegistry` 中（共 76+ 个）。启动时自动扫描注册，通过 JSON action 统一调用。
+小白的一切能力都统一在 `SkillRegistry` 中（共 86+ 个）。启动时自动扫描注册，通过 JSON action 统一调用。
 
 ### 原子 Skill（12 个）
 
@@ -676,7 +684,7 @@ Codex Review: 二次审查
 5. 每完成一步，用 `progress` 播报进展
 6. 全部完成后，用 `reply` 汇报最终结果
 
-### 系统 Skill（38 个）
+### 系统 Skill（48 个）
 
 Python 直接执行的内部操作，不经过工具循环。
 
@@ -696,18 +704,19 @@ Python 直接执行的内部操作，不经过工具循环。
 | `clear_persona` | 清除用户角色人设 |
 | `list_personas` | 列出所有角色扮演 |
 
-**Multi-Agent 操控（6 个）**：
+**Multi-Agent 操控（7 个）**：
 
 | Skill | 说明 |
 |-------|------|
 | `multiagent_start` | 启动 Fleet 并行执行. 参数: `project`, `tasks`, `max_workers`, `reason` |
-| `multiagent_status` | 查看运行状态 + Dashboard |
+| `multiagent_status` | **固定格式汇报**：小白 Plan 阶段、Fleet 事实状态、预分配队列、各 Agent 任务与状态、产出路径与最新日志；若 Fleet 未运行且有待办任务会**自动启动**（可用 `no_autostart:true` 关闭） |
+| `multiagent_worker_detail` | 查看某个具体 Worker 的详细信息. 参数: `worker_id`（如 W0, W1） |
 | `multiagent_stop` | 停止 Fleet |
 | `multiagent_report` | 查看执行报告 |
 | `multiagent_scale` | 调整 Worker 数量 |
 | `multiagent_tasks` | 列出可执行任务 |
 
-**多媒体（7 个）**：
+**多媒体（9 个）**：
 
 | Skill | 说明 | 输出标签 |
 |-------|------|---------|
@@ -716,6 +725,8 @@ Python 直接执行的内部操作，不经过工具循环。
 | `send_voice` | TTS 合成 → 发送语音 | `[VOICE:文字]` |
 | `recognize_speech` | 语音转文字（Google Web Speech 免费 → Whisper API 回退） | — |
 | `send_file` | 发送本机文件 | `[FILE:路径]` |
+| `pack_for_qq_send` | 将目录或文件打包后通过 QQ 发送（自动 zip，排除 .git 等） | — |
+| `send_project_zip` | 把仓库内 `projects/<项目名>` 打包成 zip 发送 | — |
 | `send_emoji` | 发送 QQ 表情 | `[FACE:ID]` |
 | `tts_generate` | 生成 mp3 语音文件 | — |
 
@@ -755,6 +766,14 @@ Python 直接执行的内部操作，不经过工具循环。
 | `media_pinned_list` | 列出所有被标记为重要的文件 |
 | `media_cache_stats` | 查看缓存统计（文件数/大小/清理策略/表情包独立存储） |
 | `media_cleanup_now` | 立即执行一次缓存清理（主人专用） |
+
+**表情包管理（3 个）**：
+
+| Skill | 说明 |
+|-------|------|
+| `sticker_send` | 从收藏中选择匹配情绪的表情包发送。参数: `mood`（如"开心/卖萌/无语"） |
+| `sticker_save` | 把最近收到的图片存为表情包（"存表情包"/"偷这个表情"） |
+| `sticker_tag` | 给表情包添加标签。参数: `id`, `tags` |
 
 > 语音、图片等临时缓存文件超过 **2 天**自动清理。表情包收藏（`logs/xiaobai/stickers/`）独立存储，不受清理影响。主人说"保存这张图"/"这个很重要"，小白自动标记为永久保留。
 
@@ -1025,7 +1044,7 @@ python -m fleet.scheduler --max-workers 8
 ```
 "启动8个Agent跑任务"           → multiagent_start(max_workers=8)
 "启动4个Agent只跑moe项目"      → multiagent_start(project="moe", max_workers=4)
-"Multi-Agent 状态"              → multiagent_status
+"Multi-Agent 状态"              → multiagent_status (固定格式汇报, 未运行时自动启动)
 "伙伴们在干嘛"                  → multiagent_status
 "调整到12个Agent"               → multiagent_scale(count=12)
 "看看报告"                      → multiagent_report
@@ -1040,7 +1059,7 @@ python -m fleet.scheduler --max-workers 8
 ```json
 {
   "action": "delegate",
-  "project": "multi-agent-review-survey",
+  "project": "multi-agent-survey-review",
   "max_workers": 4,
   "tasks": ["下载论文 2501.06322", "整理文献笔记"],
   "reason": "多论文调研适合并行执行"
