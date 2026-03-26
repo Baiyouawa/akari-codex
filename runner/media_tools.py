@@ -29,9 +29,9 @@ _DOWNLOAD_TIMEOUT = 30
 _MEDIA_CACHE_DIR: Path | None = None
 _LAST_CLEANUP_TS: float = 0.0
 
-CACHE_TTL_SECONDS = int(os.environ.get("MEDIA_CACHE_TTL", 3600))
+CACHE_TTL_SECONDS = int(os.environ.get("MEDIA_CACHE_TTL", 172800))  # 2 天
 CACHE_MAX_SIZE_MB = int(os.environ.get("MEDIA_CACHE_MAX_MB", 500))
-CACHE_CLEANUP_INTERVAL = 300  # 两次清理之间最少间隔 5 分钟
+CACHE_CLEANUP_INTERVAL = 21600  # 两次清理之间最少间隔 6 小时
 
 _log = logging.getLogger(__name__)
 
@@ -102,8 +102,13 @@ def cleanup_media_cache(force: bool = False) -> dict[str, Any]:
     """清理过期或超出容量限制的缓存文件。
 
     清理策略：
-    1. 删除超过 TTL（默认1小时）的非白名单文件
+    1. 删除超过 TTL（默认2天/172800秒）的非白名单文件
     2. 若总大小仍超过上限（默认500MB），从最旧开始删除直到低于阈值
+
+    保护范围（不会被清理）：
+    - 主人用 pin_media_file 标记为"重要"的文件
+    - _pinned.json 本身
+    - 表情包在独立目录 logs/xiaobai/stickers/，不受此函数影响
 
     Args:
         force: 为 True 时忽略清理间隔限制，立即执行
@@ -192,6 +197,44 @@ def _maybe_cleanup() -> None:
         cleanup_media_cache(force=False)
     except Exception as e:
         _log.warning("auto cache cleanup failed: %s", e)
+
+
+_cleanup_daemon_started = False
+
+
+def start_cleanup_daemon() -> None:
+    """启动后台守护线程，每隔 CACHE_CLEANUP_INTERVAL 秒执行一次清理。
+
+    在 onebot_client / CLI 启动时调用一次即可，重复调用无副作用。
+    首次调用会立即执行一次强制清理。
+    """
+    global _cleanup_daemon_started
+    if _cleanup_daemon_started:
+        return
+    _cleanup_daemon_started = True
+
+    import threading
+
+    def _daemon_loop() -> None:
+        _log.info(
+            "media cache cleanup daemon started (ttl=%ds / %.1f天, interval=%ds)",
+            CACHE_TTL_SECONDS, CACHE_TTL_SECONDS / 86400, CACHE_CLEANUP_INTERVAL,
+        )
+        try:
+            result = cleanup_media_cache(force=True)
+            _log.info("startup cleanup: %s", result)
+        except Exception as e:
+            _log.warning("startup cleanup failed: %s", e)
+
+        while True:
+            time.sleep(CACHE_CLEANUP_INTERVAL)
+            try:
+                cleanup_media_cache(force=True)
+            except Exception as e:
+                _log.warning("daemon cleanup failed: %s", e)
+
+    t = threading.Thread(target=_daemon_loop, daemon=True, name="media-cache-cleaner")
+    t.start()
 
 
 def get_cache_stats() -> dict[str, Any]:
@@ -385,31 +428,109 @@ def recognize_image(
         image_url = f"data:{mime};base64,{b64}"
 
     from openai import OpenAI
-    client = OpenAI(api_key=api_key, base_url=base_url)
+    client = OpenAI(api_key=api_key, base_url=base_url, timeout=30.0)
 
-    try:
-        stream = client.chat.completions.create(
-            model=model,
-            messages=[{
-                "role": "user",
-                "content": [
-                    {"type": "text", "text": prompt},
-                    {"type": "image_url", "image_url": {"url": image_url}},
-                ],
-            }],
-            max_tokens=1024,
-            stream=True,
-        )
-        parts: list[str] = []
-        for chunk in stream:
-            if chunk.choices and chunk.choices[0].delta.content:
-                parts.append(chunk.choices[0].delta.content)
-        return "".join(parts) or "(无识别结果)"
-    except Exception as e:
-        return f"图片识别失败: {type(e).__name__}: {e}"
+    last_err = None
+    for attempt in range(2):
+        try:
+            stream = client.chat.completions.create(
+                model=model,
+                messages=[{
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": prompt},
+                        {"type": "image_url", "image_url": {"url": image_url}},
+                    ],
+                }],
+                max_tokens=512,
+                stream=True,
+            )
+            parts: list[str] = []
+            for chunk in stream:
+                if chunk.choices and chunk.choices[0].delta.content:
+                    parts.append(chunk.choices[0].delta.content)
+            result = "".join(parts)
+            if result:
+                return result
+        except Exception as e:
+            last_err = e
+            if attempt == 0:
+                import time as _time
+                _time.sleep(2)
+    return f"图片识别失败: {type(last_err).__name__}: {last_err}" if last_err else "(无识别结果)"
 
 
 # ─── 语音识别（STT）──────────────────────────────────────────
+#
+# 策略（按优先级）：
+#   1. Google Web Speech API（免费，无需 Key，通过 Clash 代理访问）
+#   2. Whisper API 回退（需要 WHISPER_API_KEY 或 OPENAI_API_KEY）
+#
+
+_GOOGLE_STT_URL = (
+    "http://www.google.com/speech-api/v2/recognize"
+    "?output=json&lang=zh-CN"
+    "&key=AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw"
+)
+
+
+def _google_stt(flac_data: bytes) -> str:
+    """用 Google Web Speech API 做语音识别（免费，无需 Key）。"""
+    req = urllib.request.Request(
+        _GOOGLE_STT_URL,
+        data=flac_data,
+        headers={
+            "Content-Type": "audio/x-flac; rate=16000",
+            "User-Agent": _UA,
+        },
+    )
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        raw = resp.read().decode("utf-8")
+
+    for line in raw.strip().split("\n"):
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            obj = json.loads(line)
+            results = obj.get("result", [])
+            for r in results:
+                alts = r.get("alternative", [])
+                if alts:
+                    return alts[0].get("transcript", "")
+        except json.JSONDecodeError:
+            continue
+    return "(无识别结果)"
+
+
+def _convert_audio(audio_path: Path, target_fmt: str = "flac") -> bytes:
+    """将 amr/silk/mp3 等格式转为 FLAC 或 WAV（16kHz, mono）。
+
+    QQ 语音通常是 amr 或 silk 格式，需要转换后才能送 STT。
+    """
+    import subprocess
+    import shutil
+
+    out_path = audio_path.with_suffix(f".{target_fmt}")
+
+    if shutil.which("ffmpeg"):
+        cmd = ["ffmpeg", "-y", "-i", str(audio_path), "-ar", "16000", "-ac", "1"]
+        if target_fmt == "wav":
+            cmd += ["-sample_fmt", "s16"]
+        cmd.append(str(out_path))
+        subprocess.run(cmd, capture_output=True, timeout=30)
+        if out_path.is_file() and out_path.stat().st_size > 44:
+            return out_path.read_bytes()
+
+    suffix = audio_path.suffix.lower()
+    if suffix == f".{target_fmt}":
+        return audio_path.read_bytes()
+
+    raise RuntimeError(
+        f"无法转换音频格式 ({suffix} → {target_fmt})。"
+        "请安装 ffmpeg: sudo apt-get install ffmpeg"
+    )
+
 
 def recognize_speech(
     audio_path: str,
@@ -418,9 +539,27 @@ def recognize_speech(
 ) -> str:
     """语音转文字。
 
-    优先使用独立的 WHISPER_API_KEY / WHISPER_BASE_URL 配置，
-    回退到通用 OPENAI_API_KEY / OPENAI_BASE_URL。
+    策略：
+      1. 先用 Google Web Speech API（免费，无需 Key）
+      2. 失败则回退到 Whisper API（如果配了 WHISPER_API_KEY）
     """
+    p = Path(audio_path)
+    if not p.is_file():
+        return f"音频文件不存在: {audio_path}"
+
+    # ── 策略 1：Google Web Speech 免费 STT ──
+    for attempt in range(2):
+        try:
+            flac_data = _convert_audio(p, "flac")
+            result = _google_stt(flac_data)
+            _log.info("Google STT 成功 (%d bytes 音频): %s", len(flac_data), result[:50])
+            return result
+        except Exception as e:
+            _log.warning("Google STT 第 %d 次失败: %s", attempt + 1, e)
+            if attempt == 0:
+                time.sleep(1)
+
+    # ── 策略 2：Whisper API 回退 ──
     if not api_key:
         api_key = (
             os.environ.get("WHISPER_API_KEY")
@@ -433,23 +572,19 @@ def recognize_speech(
         )
     whisper_model = os.environ.get("WHISPER_MODEL", "whisper-1")
 
-    p = Path(audio_path)
-    if not p.is_file():
-        return f"音频文件不存在: {audio_path}"
+    if api_key:
+        try:
+            from openai import OpenAI
+            client = OpenAI(api_key=api_key, base_url=base_url)
+            with open(p, "rb") as f:
+                transcript = client.audio.transcriptions.create(
+                    model=whisper_model, file=f, language="zh",
+                )
+            return transcript.text or "(无识别结果)"
+        except Exception as e:
+            return f"语音识别失败 (Bing+Whisper 均不可用): {e}"
 
-    from openai import OpenAI
-    client = OpenAI(api_key=api_key, base_url=base_url)
-
-    try:
-        with open(p, "rb") as f:
-            transcript = client.audio.transcriptions.create(
-                model=whisper_model,
-                file=f,
-                language="zh",
-            )
-        return transcript.text or "(无识别结果)"
-    except Exception as e:
-        return f"语音识别失败: {type(e).__name__}: {e}"
+    return "语音识别暂不可用（Google STT 连接失败，且未配置 Whisper API）"
 
 
 # ─── 全系统文件访问（只读 + 删除审批）────────────────────────

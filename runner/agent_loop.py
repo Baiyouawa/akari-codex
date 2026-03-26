@@ -400,6 +400,9 @@ class AgentLoop:
                 lines.append(f"  {target} → {desc[:60]}")
             return "\n".join(lines)
 
+        if skill_name.startswith("media_"):
+            return self._sys_media(skill_name, args)
+
         if skill_name.startswith("sticker_"):
             return self._sys_sticker(skill_name, args)
 
@@ -557,6 +560,65 @@ class AgentLoop:
 
         return f"未知的电话 Skill: {skill_name}"
 
+    # ── 缓存管理 Skill ─────────────────────────────────────────
+
+    def _sys_media(self, skill_name: str, args: dict[str, Any]) -> str:
+        """媒体缓存管理：标记重要文件、查看统计、手动清理。"""
+        from runner.media_tools import (
+            pin_media_file, unpin_media_file, list_pinned_files,
+            get_cache_stats, cleanup_media_cache,
+        )
+
+        if skill_name == "media_pin":
+            filename = args.get("filename", "")
+            if not filename:
+                stats = get_cache_stats()
+                return (
+                    f"请指定要标记的文件名。当前缓存 {stats['file_count']} 个文件，"
+                    f"其中 {stats['pinned_count']} 个已标记为重要。"
+                )
+            return pin_media_file(filename)
+
+        if skill_name == "media_unpin":
+            filename = args.get("filename", "")
+            if not filename:
+                return "请指定要取消标记的文件名"
+            return unpin_media_file(filename)
+
+        if skill_name == "media_pinned_list":
+            pinned = list_pinned_files()
+            if not pinned:
+                return "没有文件被标记为重要"
+            lines = [f"共 {len(pinned)} 个重要文件："]
+            for f in pinned:
+                lines.append(f"  {f}")
+            return "\n".join(lines)
+
+        if skill_name == "media_cache_stats":
+            stats = get_cache_stats()
+            ttl_days = stats["ttl_seconds"] / 86400
+            return (
+                f"缓存目录: {stats['directory']}\n"
+                f"文件数: {stats['file_count']}\n"
+                f"总大小: {stats['total_size_mb']} MB\n"
+                f"重要文件数: {stats['pinned_count']}\n"
+                f"自动清理策略: 超过 {ttl_days:.1f} 天的文件自动删除\n"
+                f"容量上限: {stats['max_size_mb']} MB\n"
+                f"注意: 表情包收藏独立存储，不受清理影响"
+            )
+
+        if skill_name == "media_cleanup_now":
+            result = cleanup_media_cache(force=True)
+            if result.get("skipped"):
+                return f"跳过: {result['reason']}"
+            return (
+                f"清理完成！删除了 {result['deleted_count']} 个文件，"
+                f"释放 {result['deleted_mb']} MB 空间。"
+                f"保留了 {result['pinned_count']} 个重要文件。"
+            )
+
+        return f"未知的缓存管理 Skill: {skill_name}"
+
     # ── 表情包 Skill ───────────────────────────────────────────
 
     def _sys_sticker(self, skill_name: str, args: dict[str, Any]) -> str:
@@ -573,10 +635,23 @@ class AgentLoop:
                 return "表情包文件丢失了"
             return f"[IMG:{path}]"
 
+        if skill_name == "sticker_save":
+            url = args.get("url", "")
+            if not url:
+                recent = self._find_recent_image_url()
+                if not recent:
+                    return "找不到最近的图片，请指定图片 URL"
+                url = recent
+            entry = sm.save_sticker_from_url(url, source_user="owner")
+            if entry:
+                sm.auto_tag_sticker(entry["id"])
+                return f"已存为表情包！ID: {entry['id']}"
+            return "存储失败（可能是重复的或图片无法下载）"
+
         if skill_name == "sticker_list":
             stickers = sm.list_stickers()
             if not stickers:
-                return "收藏夹是空的~还没有偷到过表情包"
+                return "收藏夹是空的~还没有收藏过表情包"
             lines = [f"共收藏 {len(stickers)} 个表情包："]
             for s in stickers[-20:]:
                 tags = ", ".join(s.get("tags", [])) or "未标注"
@@ -596,6 +671,25 @@ class AgentLoop:
             return f"已标注！" if ok else f"找不到 id={sid} 的表情包"
 
         return f"未知的表情包 Skill: {skill_name}"
+
+    def _find_recent_image_url(self) -> str | None:
+        """从对话历史中倒查最近的图片 URL 或本地路径。"""
+        import re
+        img_re = re.compile(r"\[CQ:image,[^\]]*url=([^\],]+)|https?://\S+\.(?:jpg|jpeg|png|gif|webp)\b", re.IGNORECASE)
+        cache_dir = self.config.repo_home / "logs" / "media_cache"
+        for msg in reversed(self.messages):
+            content = msg.get("content", "")
+            if isinstance(content, str):
+                m = img_re.search(content)
+                if m:
+                    return m.group(1) or m.group(0)
+        if cache_dir.is_dir():
+            images = sorted(cache_dir.glob("*.jpg"), key=lambda p: p.stat().st_mtime, reverse=True)
+            if not images:
+                images = sorted(cache_dir.glob("*.png"), key=lambda p: p.stat().st_mtime, reverse=True)
+            if images:
+                return str(images[0])
+        return None
 
     # ── Humanize 代码审查 ─────────────────────────────────────
 

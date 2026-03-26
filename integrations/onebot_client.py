@@ -210,7 +210,7 @@ async def _recognize_image(url: str, ws=None, file_id: str = "") -> str:
         try:
             result = await asyncio.to_thread(
                 recognize_image, clean_url,
-                "请详细描述这张图片的内容。如果有文字请完整识别出来。",
+                "用一句话简短描述这张图片是什么。",
             )
             return result
         except Exception as e:
@@ -223,7 +223,7 @@ async def _recognize_image(url: str, ws=None, file_id: str = "") -> str:
     try:
         result = await asyncio.to_thread(
             recognize_image, str(local_path),
-            "请详细描述这张图片的内容。如果有文字请完整识别出来。",
+            "用一句话简短描述这张图片是什么。",
         )
         return result
     except Exception as e:
@@ -730,18 +730,6 @@ async def _handle_message(ws, event: dict, config: OneBotConfig) -> None:
         len(media["files"]),
     )
 
-    is_sticker_only = bool(media["images"]) and not text_only and not media["records"] and not media["files"]
-
-    if is_sticker_only:
-        for img in media["images"]:
-            url = img.get("url") or img.get("file", "")
-            if url:
-                asyncio.create_task(_steal_sticker(url, str(user_id), str(group_id or "")))
-        logger.info("纯表情包/图片，偷存并回一个表情包（不识别、不描述）")
-        await asyncio.sleep(random.uniform(0.3, 1.0))
-        await _send_random_sticker(ws, msg_type, user_id, group_id)
-        return
-
     media_context_parts: list[str] = []
     for img in media["images"]:
         url = img.get("url") or img.get("file", "")
@@ -1090,6 +1078,9 @@ async def _run(config: OneBotConfig) -> None:
 
 
 def main() -> None:
+    from runner.media_tools import start_cleanup_daemon
+    start_cleanup_daemon()
+
     config = OneBotConfig.from_env()
     try:
         asyncio.run(_run(config))

@@ -189,43 +189,32 @@ class ChatBot:
 
         reply = ""
         for _round in range(_PUBLIC_TOOL_CALL_MAX + 1):
-            try:
-                resp = self.client.chat.completions.create(
-                    model=self.config.model,
-                    messages=messages,
-                    tools=tools if tools else None,
-                    temperature=0.8,
-                    max_tokens=1024,
-                )
-            except Exception:
-                break
+            content_text, tool_calls_list = self._stream_public(messages, tools)
 
-            choice = resp.choices[0] if resp.choices else None
-            if not choice:
-                break
-
-            msg = choice.message
-
-            if msg.tool_calls:
-                messages.append(msg.model_dump(exclude_none=True))
-                for tc in msg.tool_calls:
-                    fn_name = tc.function.name
+            if tool_calls_list:
+                messages.append({
+                    "role": "assistant",
+                    "content": content_text or None,
+                    "tool_calls": tool_calls_list,
+                })
+                for tc in tool_calls_list:
+                    fn_name = tc["function"]["name"]
                     if fn_name not in _PUBLIC_TOOLS_WHITELIST:
                         result = f"工具 {fn_name} 不可用"
                     else:
                         try:
-                            fn_args = json.loads(tc.function.arguments)
+                            fn_args = json.loads(tc["function"]["arguments"])
                         except json.JSONDecodeError:
                             fn_args = {}
                         result = tool_exec.execute(fn_name, fn_args)
                     messages.append({
                         "role": "tool",
-                        "tool_call_id": tc.id,
+                        "tool_call_id": tc["id"],
                         "content": result[:4000],
                     })
                 continue
 
-            reply = msg.content or ""
+            reply = content_text
             break
 
         history.append({"role": "user", "content": user_message})
@@ -237,6 +226,62 @@ class ChatBot:
             history.pop(0)
 
         return reply
+
+    def _stream_public(
+        self,
+        messages: list[dict[str, Any]],
+        tools: list[dict[str, Any]],
+    ) -> tuple[str, list[dict[str, Any]]]:
+        """流式调用 API（public 用户），返回 (content, tool_calls)。"""
+        last_err = None
+        for attempt in range(1, _API_MAX_RETRIES + 1):
+            try:
+                kwargs: dict[str, Any] = dict(
+                    model=self.config.model,
+                    messages=messages,
+                    stream=True,
+                    temperature=0.8,
+                    max_tokens=1024,
+                )
+                if tools:
+                    kwargs["tools"] = tools
+                stream = self.client.chat.completions.create(**kwargs)
+
+                content_parts: list[str] = []
+                tc_map: dict[int, dict[str, Any]] = {}
+
+                for chunk in stream:
+                    delta = chunk.choices[0].delta if chunk.choices else None
+                    if not delta:
+                        continue
+                    if delta.content:
+                        content_parts.append(delta.content)
+                    if delta.tool_calls:
+                        for tc_delta in delta.tool_calls:
+                            idx = tc_delta.index
+                            if idx not in tc_map:
+                                tc_map[idx] = {
+                                    "id": tc_delta.id or "",
+                                    "type": "function",
+                                    "function": {"name": "", "arguments": ""},
+                                }
+                            entry = tc_map[idx]
+                            if tc_delta.id:
+                                entry["id"] = tc_delta.id
+                            if tc_delta.function:
+                                if tc_delta.function.name:
+                                    entry["function"]["name"] += tc_delta.function.name
+                                if tc_delta.function.arguments:
+                                    entry["function"]["arguments"] += tc_delta.function.arguments
+
+                tool_calls = [tc_map[i] for i in sorted(tc_map)] if tc_map else []
+                return "".join(content_parts), tool_calls
+            except Exception as e:
+                last_err = e
+                if attempt < _API_MAX_RETRIES:
+                    print(f"  [重试 {attempt}/{_API_MAX_RETRIES}] public API 连接问题: {e}")
+                    time.sleep(_API_RETRY_DELAY * attempt)
+        return "", []
 
     # ── 反思 ──────────────────────────────────────────────────
 
@@ -404,6 +449,9 @@ def main() -> None:
     except EnvironmentError as e:
         print(f"配置错误: {e}", file=sys.stderr)
         sys.exit(1)
+
+    from runner.media_tools import start_cleanup_daemon
+    start_cleanup_daemon()
 
     bot = ChatBot(config)
 

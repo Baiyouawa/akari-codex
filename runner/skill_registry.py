@@ -152,6 +152,15 @@ class SkillRegistry:
             ("phone_call_realtime", "拨打实时语音对话电话（双向，AI 与对方实时通话）。参数: phone_number, system_prompt(可选)"),
             ("phone_call_status", "查询通话状态。参数: call_id"),
             ("phone_recent_calls", "列出最近通话记录"),
+            # ── 缓存管理 Skill ────────────────────────────
+            ("media_pin", "标记当前/最近的图片或语音为'重要'，不会被自动清理。参数: filename(可选, 不填则标记最近一条)"),
+            ("media_unpin", "取消文件的'重要'标记。参数: filename"),
+            ("media_pinned_list", "列出所有被标记为重要的文件"),
+            ("media_cache_stats", "查看媒体缓存统计（大小、文件数、清理策略）"),
+            ("media_cleanup_now", "立即执行一次缓存清理（主人专用）"),
+            # ── 表情包管理 Skill ────────────────────────────
+            ("sticker_save", "把最近收到的图片存为表情包。当主人说'存表情包'、'这个是表情包'、'偷这个表情'时使用"),
+            ("sticker_list", "列出当前收藏的表情包数量和最近几张"),
         ]
         for name, desc in system_skills:
             self._skills[name] = SkillDescriptor(
