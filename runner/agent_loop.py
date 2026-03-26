@@ -96,66 +96,65 @@ class AgentLoop:
                 result.error = "LLM returned empty response"
                 break
 
-            action = self._parse_action(raw_text)
-            if not action:
-                result.reply = raw_text
+            action_queue = self._parse_all_actions(raw_text)
+            if not action_queue:
+                result.reply = self._fallback_reply(raw_text)
                 break
 
-            action_type = action.get("action", "")
-
-            if action_type == "reply":
-                result.reply = action.get("message", raw_text)
-                break
-
-            if action_type == "think":
-                thought = action.get("thought", "")
-                messages.append({"role": "assistant", "content": raw_text})
-                messages.append({
-                    "role": "user",
-                    "content": f"[系统] 好的，继续。根据你的分析决定下一步行动。",
-                })
-                continue
-
-            if action_type == "progress":
-                msg = action.get("message", "")
-                result.progress_log.append(msg)
-                if self.progress_callback:
-                    self.progress_callback(msg)
-                messages.append({"role": "assistant", "content": raw_text})
-                messages.append({
-                    "role": "user",
-                    "content": "[系统] 已播报进展，继续执行。",
-                })
-                continue
-
-            if action_type == "use_skill":
-                skill_name = action.get("skill", "")
-                skill_args = action.get("args", {})
-                result.skills_used.append(skill_name)
-
-                messages.append({"role": "assistant", "content": raw_text})
-                skill_result = self._execute_skill(skill_name, skill_args, messages)
-                messages.append({
-                    "role": "user",
-                    "content": f"[Skill 执行结果: {skill_name}]\n\n{skill_result}",
-                })
-                continue
-
-            if action_type == "delegate":
-                result.delegated = True
-                messages.append({"role": "assistant", "content": raw_text})
-                delegate_result = self._execute_delegate(action)
-                messages.append({
-                    "role": "user",
-                    "content": f"[Multi-Agent 调度结果]\n\n{delegate_result}",
-                })
-                continue
-
+            # 整段模型输出只记一次 assistant，避免重复；多段 JSON 在下方队列中顺序执行
             messages.append({"role": "assistant", "content": raw_text})
-            messages.append({
-                "role": "user",
-                "content": f"[系统] 未知的 action: {action_type}，请输出有效的 action。",
-            })
+
+            while action_queue:
+                action = action_queue.pop(0)
+                action_type = action.get("action", "")
+
+                if action_type == "reply":
+                    result.reply = action.get("message", "")
+                    return result
+
+                if action_type == "think":
+                    messages.append({
+                        "role": "user",
+                        "content": f"[系统] 好的，继续。根据你的分析决定下一步行动。",
+                    })
+                    break
+
+                if action_type == "progress":
+                    msg = action.get("message", "")
+                    result.progress_log.append(msg)
+                    if self.progress_callback:
+                        self.progress_callback(msg)
+                    messages.append({
+                        "role": "user",
+                        "content": "[系统] 已播报进展，继续执行。",
+                    })
+                    continue
+
+                if action_type == "use_skill":
+                    skill_name = action.get("skill", "")
+                    skill_args = action.get("args", {})
+                    result.skills_used.append(skill_name)
+
+                    skill_result = self._execute_skill(skill_name, skill_args, messages)
+                    messages.append({
+                        "role": "user",
+                        "content": f"[Skill 执行结果: {skill_name}]\n\n{skill_result}",
+                    })
+                    continue
+
+                if action_type == "delegate":
+                    result.delegated = True
+                    delegate_result = self._execute_delegate(action)
+                    messages.append({
+                        "role": "user",
+                        "content": f"[Multi-Agent 调度结果]\n\n{delegate_result}",
+                    })
+                    continue
+
+                messages.append({
+                    "role": "user",
+                    "content": f"[系统] 未知的 action: {action_type}，请输出有效的 action。",
+                })
         else:
             if not result.reply:
                 result.reply = "小白想了太久了，先把目前的结果告诉你~"
@@ -207,45 +206,89 @@ class AgentLoop:
 
     # ── Action 解析 ───────────────────────────────────────────
 
-    def _parse_action(self, text: str) -> dict[str, Any] | None:
-        """从 LLM 输出中提取 JSON action。
+    @staticmethod
+    def _extract_first_json_object(text: str) -> str | None:
+        """从 text 中第一个 `{` 起做括号配平，提取完整 JSON 对象子串。
 
-        支持多种格式：纯 JSON、markdown code block 包裹、或混合文本中的 JSON。
-        如果完全没有 JSON，视为直接 reply。
+        处理嵌套对象与字符串内的引号/反斜杠，避免旧正则 `[^{}]*` 无法匹配
+        `{"args":{"path":"."}}` 而导致解析失败并把原始 JSON 泄漏给用户回复。
+        """
+        start = text.find("{")
+        if start < 0:
+            return None
+        depth = 0
+        i = start
+        in_str = False
+        esc = False
+        while i < len(text):
+            c = text[i]
+            if in_str:
+                if esc:
+                    esc = False
+                elif c == "\\":
+                    esc = True
+                elif c == '"':
+                    in_str = False
+                i += 1
+                continue
+            if c == '"':
+                in_str = True
+            elif c == "{":
+                depth += 1
+            elif c == "}":
+                depth -= 1
+                if depth == 0:
+                    return text[start : i + 1]
+            i += 1
+        return None
+
+    def _parse_all_actions(self, text: str) -> list[dict[str, Any]]:
+        """解析 LLM 输出中的全部 JSON action（支持多个对象首尾拼接）。
+
+        模型有时会一次输出 `{"action":"use_skill",...}{"action":"use_skill",...}`，
+        必须逐个执行，且不能把整段字符串当作最终 reply 发给用户。
         """
         cleaned = text.strip()
-
         if cleaned.startswith("```"):
             cleaned = re.sub(r"^```\w*\n?", "", cleaned)
             cleaned = re.sub(r"\n?```$", "", cleaned)
             cleaned = cleaned.strip()
 
-        try:
-            obj = json.loads(cleaned)
-            if isinstance(obj, dict) and "action" in obj:
-                return obj
-        except json.JSONDecodeError:
-            pass
-
-        match = re.search(r"\{[^{}]*\"action\"\s*:[^{}]*\}", text)
-        if match:
+        actions: list[dict[str, Any]] = []
+        rest = cleaned
+        while True:
+            i = rest.find("{")
+            if i < 0:
+                break
+            rest = rest[i:]
+            chunk = self._extract_first_json_object(rest)
+            if not chunk:
+                break
             try:
-                obj = json.loads(match.group())
-                if isinstance(obj, dict) and "action" in obj:
-                    return obj
+                obj = json.loads(chunk)
             except json.JSONDecodeError:
-                pass
+                break
+            if not isinstance(obj, dict) or "action" not in obj:
+                break
+            actions.append(obj)
+            rest = rest[len(chunk) :].lstrip()
 
-        match = re.search(r"\{[\s\S]*\"action\"\s*:[\s\S]*\}", text)
-        if match:
-            try:
-                obj = json.loads(match.group())
-                if isinstance(obj, dict) and "action" in obj:
-                    return obj
-            except json.JSONDecodeError:
-                pass
+        return actions
 
-        return None
+    def _fallback_reply(self, raw_text: str) -> str:
+        """无法解析出任何合法 action 时的用户可见回复（禁止泄漏原始 JSON）。"""
+        t = raw_text.strip()
+        if not t:
+            return "小白脑子短路了一下...(｡•́︿•̀｡)"
+        # 明显是结构化输出失败，不要直接把 JSON 发到 QQ
+        if '"action"' in t and (t.startswith("{") or "```" in t[:20]):
+            return "小白这边解析响应时出了点小问题，麻烦你再说一次或说简单一点～"
+        return t
+
+    def _parse_action(self, text: str) -> dict[str, Any] | None:
+        """从 LLM 输出中提取第一个 JSON action（兼容单测与外部调用）。"""
+        actions = self._parse_all_actions(text)
+        return actions[0] if actions else None
 
     # ── Skill 执行 ───────────────────────────────────────────
 

@@ -1,7 +1,7 @@
 # 第 3 周资料调研：GitHub 协作、分支/PR、项目阅读、基础工程实践、Cursor 与 AI 编程工作流入门
 
 - 生成时间：2026-03-26
-- 访问日期：2026-03-26（北京时间，见 `get_current_time`）
+- 访问日期：2026-03-26（北京时间，见 `get_current_time`）；中文补充核验追加于 2026-03-26T22:06:04+08:00
 - 调研范围：GitHub 协作流程、分支/PR、开源项目阅读方法、基础工程实践、Cursor 入门、AI 编程工作流入门
 - 记录目的：为 `zero-basics-plan` 的第 3 周教程设计提供可直接复用的资料清单、章节候选、每日安排与引用来源
 
@@ -40,10 +40,12 @@
 | GH-COL-03 | Helping others review your changes | GitHub Docs | GitHub | https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/getting-started/helping-others-review-your-changes | 页面未抓到显式时间 | English | PR, review, communication | 官方 | 入门必读 | 文档给出让 PR 更容易被 review 的实践，包括写小而聚焦的 PR、提供清晰上下文、主动说明为什么改、及时同步团队信息。适合从“提交流程”过渡到“协作礼仪”。 | 能直接支撑教程中的 PR 描述模板与 review checklist。 | 可提炼为“好 PR 的 5 条规则”。 |
 | GH-COL-04 | About Projects | GitHub Docs | GitHub | https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects | 页面未抓到显式时间 | English | GitHub Projects, planning, issue tracking | 官方 | 进阶参考 | GitHub Projects 官方页说明 Projects 是把 issues 和 pull requests 作为项目计划、看板与路线图进行管理的工具，可切换 table、board、roadmap 等视图。适合为“多人协作如何看任务状态”补充上层概念。 | 与 issue/PR 协作天然衔接，适合做“轻量项目管理”入门。 | 第 3 周只需讲到 board/table 视图即可，不必深挖自动化。 |
 | GH-COL-05 | Contributing to open source | GitHub Docs | GitHub | https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-open-source | 页面未抓到显式时间 | English | open source, contribution, collaboration | 官方 | 补充阅读 | 文档面向 GitHub 用户解释如何找到项目、理解贡献方式、开始参与开源。它不是专门的 PR 教程，但能帮助初学者建立“协作=参与项目”的整体视角。 | 适合在“为什么要学 GitHub 协作”部分使用。 | 更偏心智建立，不是具体命令教程。 |
+| GH-COL-ZH-01 | 协作处理拉取请求 | GitHub 文档 | GitHub | https://docs.github.com/zh/pull-requests/collaborating-with-pull-requests | 页面未抓到显式时间 | 中文 | GitHub, 协作, PR, 中文 | 官方 | 入门必读 | GitHub 中文页把“跟踪和讨论议题更改，然后提出和审查拉取请求中的更改”作为主线，并将协作拆成复刻、状态检查、提议更改、解决冲突、审查与合并几个模块。对中文学习者来说，这个总入口能显著降低第一次接触 GitHub 协作时的语言门槛。 | 适合替代英文目录页作为中文总导航。 | `web_fetch` 于 2026-03-26 抓取到页面导航与导语。 |
+| GH-COL-ZH-02 | Hello World | GitHub 文档 | GitHub | https://docs.github.com/zh/get-started/start-your-journey/hello-world | 页面未抓到显式时间 | 中文 | GitHub Flow, branch, pull request, 中文 | 官方 | 入门必读 | GitHub 中文版 Hello World 用一步步练习的方式带读者完成“创建仓库 → 创建分支 → 提交更改 → 打开 PR → 合并 PR”的完整闭环，并明确说明分支是为了在不更改主线时安全试验。它比抽象概念页更适合零基础教学。 | 非常适合 Day 15–16 做第一个中文操作演示。 | `web_fetch` 抓取到五步流程与分支说明。 |
 
 ### 小结
 
-- 主参考优先级：`GH-COL-01` → `GH-COL-02` → `GH-COL-03`
+- 主参考优先级：`GH-COL-ZH-02` → `GH-COL-01` → `GH-COL-02` → `GH-COL-ZH-01`
 - 第 3 周正文可直接写入的章节候选：
   - 认识 GitHub 协作：共享仓库 vs Fork
   - Pull Request 页面怎么读
@@ -78,10 +80,12 @@
 | BR-PR-03 | About pull requests | GitHub Docs | GitHub | https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests | 页面未抓到显式时间 | English | PR, merge, checks | 官方 | 入门必读 | 该文档对 PR 结构、讨论、自动检查、合并前把关有直接定义。适合和 feature branch workflow 一起讲，形成“分支 → PR → 合并”的闭环。 | 可直接对应实践任务：新建分支、提交 PR、观察 Checks。 | 与 GH-COL-02 重合，但在此主题仍需保留作为主参考。 |
 | BR-PR-04 | Helping others review your changes | GitHub Docs | GitHub | https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/getting-started/helping-others-review-your-changes | 页面未抓到显式时间 | English | PR review, reviewability | 官方 | 进阶参考 | 文档强调小 PR、清晰上下文、分步说明、减少 reviewer 负担。可作为“如何让 review 更顺滑”的协作规范补充。 | 适合把“技术流程”延伸到“工程沟通质量”。 | 与 BR-PR-03 配套。 |
 | BR-PR-05 | Contributing to Open Source（Quick Tip for Beginners） | Open Source Guides | GitHub | https://opensource.guide/how-to-contribute/ | 页面未抓到显式时间 | 多语言，含中文入口 | branching, commits, PR habits | 半官方 | 补充阅读 | 指南中给出适合新手的协作建议，包括创建新分支、写清楚提交信息、在提交 PR 前先本地验证。比纯工具文档更像“贡献者行为准则”。 | 非常适合做新手习惯养成补充。 | GitHub 维护的开放指南，可信度较高。 |
+| BR-PR-ZH-01 | 创建拉取请求 | GitHub 文档 | GitHub | https://docs.github.com/zh/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request | 页面未抓到显式时间 | 中文 | PR, head, base, 中文 | 官方 | 入门必读 | 中文页直接说明“这些更改在分支中提议，以确保默认分支只包含已完成和已批准的工作”，并解释 base branch 与 head branch 的含义，以及 PR 可关联 issue。适合把英文术语翻译成更容易教学的中文概念。 | 很适合配合实际仓库截图讲 base / head。 | `web_fetch` 于 2026-03-26 抓取到定义与注意事项。 |
+| BR-PR-ZH-02 | 开始使用 Git | GitHub 文档 | GitHub | https://docs.github.com/zh/get-started/learning-to-code/getting-started-with-git | 页面未抓到显式时间 | 中文 | git, branch, repository, GitHub Desktop, 中文 | 官方 | 进阶参考 | 该中文教程从版本控制、仓库、远程仓库、分支的角度讲 Git 最基础的日常工作流，并用 GitHub Desktop 的可视化界面降低入门门槛。虽然不是纯命令行路线，但很适合零基础学员理解“分支是安全空间”。 | 可作为命令行之外的平行解释材料。 | `web_fetch` 抓取到仓库、远程仓库、分支的中文定义。 |
 
 ### 小结
 
-- 主参考优先级：`BR-PR-02` → `BR-PR-03` → `BR-PR-01`
+- 主参考优先级：`BR-PR-ZH-01` → `BR-PR-02` → `BR-PR-03` → `BR-PR-ZH-02`
 - 第 3 周正文可直接写入的章节候选：
   - 为什么要用功能分支
   - 从一个小任务走完整个 PR 流程
@@ -115,6 +119,7 @@
 | PROJ-READ-03 | Visual Studio Code README | GitHub 仓库原始文档 | Microsoft | https://raw.githubusercontent.com/microsoft/vscode/main/README.md | 仓库当前 main 分支内容；抓取时未记录 commit SHA | English | README, real project, repository orientation | 官方 | 进阶参考 | VS Code README 展示了一个大型开源项目如何用 README 说明仓库定位、路线图、贡献入口、文档位置。适合作为“大仓库怎么从 README 获取全局图”的案例。 | 真实度高，能演示从 README 提取项目信息。 | 可提醒学员：大型项目不要一上来就啃源码。 |
 | PROJ-READ-04 | Visual Studio Code CONTRIBUTING | GitHub 仓库原始文档 | Microsoft | https://raw.githubusercontent.com/microsoft/vscode/main/CONTRIBUTING.md | 仓库当前 main 分支内容；抓取时未记录 commit SHA | English | CONTRIBUTING, issue triage, project workflow | 官方 | 进阶参考 | 文档详细说明如何提问、反馈、报 issue、寻找已有 issue、定位仓库边界。适合说明“CONTRIBUTING 文件比源码更能快速告诉你项目怎么运作”。 | 是项目阅读中常被忽视但极高价值的入口。 | 适合作为教学中的“第二个必看文件”。 |
 | PROJ-READ-05 | Flask README | GitHub 仓库原始文档 | Pallets | https://raw.githubusercontent.com/pallets/flask/main/README.md | 仓库当前 main 分支内容；抓取时未记录 commit SHA | English | small project, README, framework repo | 官方 | 补充阅读 | Flask README 是相对中小型项目案例，能展示与 VS Code 这种大型仓库不同的阅读方式：先看用途、示例、安装与文档，再看贡献入口。适合给初学者一个较低心理门槛的案例。 | 可与 VS Code 案例形成“大项目/中项目”对照。 | 若课程时间有限，可二选一。 |
+| PROJ-READ-ZH-01 | 标准中文 README | ChineseREADME | Andy（基于 Richard Litt 的 standard-readme） | https://sunyctf.github.io/ChineseREADME/ | 页面未抓到显式时间 | 中文 | README, 文档结构, 中文 | 社区实践 | 入门必读 | 该页面以中文列出 README 常见结构：背景、安装、用法、相关项目、参与贡献方式、开源协议等，并明确 README 是代码的第一个入口点。对于初学者，这是把“看 README”落到可执行检查项的好材料。 | 可直接转成“读 README 时重点看哪几段”的教学卡片。 | `web_fetch` 抓取到结构清单与用途说明；属社区实践，不能替代官方仓库文档。 |
 
 ### 项目阅读方法清单
 
@@ -126,7 +131,7 @@
 
 ### 小结
 
-- 主参考优先级：`PROJ-READ-02` → `PROJ-READ-03` → `PROJ-READ-04`
+- 主参考优先级：`PROJ-READ-02` → `PROJ-READ-ZH-01` → `PROJ-READ-03` → `PROJ-READ-04`
 - 第 3 周正文可直接写入的章节候选：
   - 第一次读开源项目，先看什么
   - README 和 CONTRIBUTING 是两个最高回报入口
@@ -158,8 +163,9 @@
 | ENG-PRAC-01 | What is Prettier? | Prettier Docs | Prettier 团队 | https://prettier.io/docs/ | 页面抓取为文档站当前 stable 版本 | English | formatter, style, consistency | 官方 | 入门必读 | Prettier 官方文档解释它是“有明确风格立场的代码格式化工具”，目标是让代码风格一致、减少格式争论。非常适合给新手建立“格式交给工具”的观念。 | 概念清楚，门槛低，适合作为 formatter 的唯一主资料。 | 更偏 JavaScript 生态，但理念通用。 |
 | ENG-PRAC-02 | Getting Started with ESLint | ESLint Docs | ESLint 团队 | https://eslint.org/docs/latest/use/getting-started | 页面抓取为 v10/v9 文档导航页 | English | linter, code quality, rules | 官方 | 入门必读 | ESLint 官方入门页展示如何把 lint 接入项目，强调它是可插拔的 JavaScript Linter。适合解释 formatter 与 linter 的分工不同：一个统一格式，一个发现潜在问题。 | 能直接支撑“格式化 ≠ 静态检查”的核心知识点。 | 课程中只讲理念与最小使用即可。 |
 | ENG-PRAC-03 | Logging HOWTO | Python Docs | Python Software Foundation / Vinay Sajip | https://docs.python.org/3/howto/logging.html | 抓取页面为 Python 3.14.3 文档 | English | logging, debugging, observability | 官方 | 入门必读 | Python 官方文档从“什么时候用 logging”切入，直接对比 `print()`、`warnings.warn()`、异常与 logger 的使用场景。对初学者理解“日志是排错基础设施”很有帮助。 | 内容结构极适合转成中文教程中的“什么时候该打日志”。 | 尽管是 Python 文档，但原则通用。 |
-| ENG-PRAC-04 | Open Source Guides CONTRIBUTING | GitHub 仓库原始文档 | GitHub | https://raw.githubusercontent.com/github/opensource.guide/main/CONTRIBUTING.md | 仓库当前 main 分支内容；抓取时未记录 commit SHA | English | contributing, commit message, test locally | 半官方 | 进阶参考 | 文档给了很适合新手的 quick tips：新分支、清晰 commit message、本地测试、遵循 style guide。虽然面向该项目自身，但这些规则本身就是基础工程实践。 | 非常适合做“提交前自查清单”的参考。 | 可与 GitHub PR 规范合并讲。 |
+| ENG-PRAC-04 | Open Source Guides CONTRIBUTING | GitHub 仓库原始文档 | GitHub | https://raw.githubusercontent.com/github/opensource.guide/main/CONTRIBUTING.md | 仓库当前 main 分支内容；抓取时未记录 commit SHA | 半官方 | contributing, commit message, test locally | 半官方 | 进阶参考 | 文档给了很适合新手的 quick tips：新分支、清晰 commit message、本地测试、遵循 style guide。虽然面向该项目自身，但这些规则本身就是基础工程实践。 | 非常适合做“提交前自查清单”的参考。 | 可与 GitHub PR 规范合并讲。 |
 | ENG-PRAC-05 | Visual Studio Code CONTRIBUTING | GitHub 仓库原始文档 | Microsoft | https://raw.githubusercontent.com/microsoft/vscode/main/CONTRIBUTING.md | 仓库当前 main 分支内容；抓取时未记录 commit SHA | English | issue reporting, workflow, reproducibility | 官方 | 补充阅读 | VS Code 的贡献文档强调复现问题、先搜已有 issue、准确描述环境与问题。对“写 issue / 写 bug 报告也是工程实践”这一点有很强示范意义。 | 可让学员看到成熟项目如何要求信息完整性。 | 更适合补充，不是入门唯一主资料。 |
+| ENG-PRAC-ZH-01 | 实践：新手使用 ESLint 进行项目代码检测与格式化 | Corner Blog | Corner Blog | https://blog.ymzhao.work/front-end/engineering/uniform-code-style | 页面未抓到显式时间 | 中文 | ESLint, Prettier, formatting, 中文 | 社区实践 | 补充阅读 | 文章从“新手为什么会被繁多配置劝退”切入，用中文解释 ESLint 与 Prettier 的分工：一个关注语法与潜在问题，一个关注格式统一，并强调“统一代码风格与格式化是一个开头难、一次配置长期收益的事情”。对于初学者理解工程实践的动机很友好。 | 适合作为中文教学解释材料，与官方文档交叉使用。 | `web_fetch` 抓取到功能对比与新手痛点描述；配置细节不建议原样照搬。 |
 
 ### 基础工程实践最小清单
 
@@ -172,7 +178,7 @@
 
 ### 小结
 
-- 主参考优先级：`ENG-PRAC-01` → `ENG-PRAC-02` → `ENG-PRAC-03`
+- 主参考优先级：`ENG-PRAC-01` → `ENG-PRAC-02` → `ENG-PRAC-ZH-01` → `ENG-PRAC-03`
 - 第 3 周正文可直接写入的章节候选：
   - 为什么要把代码风格交给工具
   - formatter、linter、logging 各管什么
@@ -206,10 +212,11 @@
 | CUR-03 | Agent | Cursor 文档 | Cursor | https://docs.cursor.ac.cn/chat/agent | 页面未抓到显式时间 | 中文 | agent, tools, terminal, yolo | 官方 | 入门必读 | 文档说明 Agent 可读写代码、搜索代码库、调用 MCP、运行终端、自动网页搜索，并说明 25 次工具调用上限、终端配置文件选择、Yolo 模式与命令防护栏。适合讲“Agent 能做什么、不能盲放什么权限”。 | 直接支撑“Cursor Agent 入门与风险”章节。 | 强时效内容，正文应提示版本变化。 |
 | CUR-04 | AI 规则 | Cursor 文档 | Cursor | https://docs.cursor.ac.cn/context/rules-for-ai | 页面未抓到显式时间 | 中文 | rules, .cursor/rules, global rules | 官方 | 入门必读 | 文档系统解释项目规则与全局规则的区别，明确推荐把项目规则放在 `.cursor/rules` 中并通过 glob 与语义描述自动附加。非常适合讲“如何让 AI 按团队约定工作”。 | 是把 Cursor 从“会聊天”升级到“能协作”的关键资料。 | 需提醒 `.cursorrules` 为兼容方案，官方建议迁移。 |
 | CUR-05 | Chat 概述中的 迭代 lint / 自动上下文 说明 | Cursor 文档 | Cursor | https://docs.cursor.ac.cn/chat/overview | 页面未抓到显式时间 | 中文 | lint, context, workflow | 官方 | 补充阅读 | 同一页面中关于自动上下文、检查点、lint 迭代的说明，能帮助初学者理解为什么 Cursor 适合做“小步迭代 + 看 diff + 回滚”。 | 很适合转成“先让 AI 改，再看 diff 再决定”的工作流建议。 | 与 CUR-02 同页，可在正文中合并引用。 |
+| CUR-ZH-01 | 规则 | Cursor Docs | Cursor | https://cursor.com/cn/docs/rules | 页面抓取仅返回标题 | 中文 | rules, 中文入口 | 官方 | 补充阅读 | 该页面至少确认 Cursor 官方站点已提供中文规则入口，可在课程中优先把中文官网入口给到学习者，减少在第三方镜像间切换。虽然当前抓取正文不足，但其入口价值明确。 | 可作为中文官网稳定入口补充。 | `web_fetch` 返回标题级内容，正文信息量不足，因此仅作为入口保留。 |
 
 ### 小结
 
-- 主参考优先级：`CUR-02` → `CUR-03` → `CUR-04`
+- 主参考优先级：`CUR-02` → `CUR-03` → `CUR-04` → `CUR-ZH-01`
 - 第 3 周正文可直接写入的章节候选：
   - Ask、Edit、Agent 有什么区别
   - Cursor Agent 能帮你做哪些事
@@ -244,6 +251,7 @@
 | AIWF-03 | Chat 概述 | Cursor 文档 | Cursor | https://docs.cursor.ac.cn/chat/overview | 页面未抓到显式时间 | 中文 | AI workflow, context, diff, checkpoints | 官方 | 入门必读 | 该文档说明 Cursor 支持自动上下文、检查点、应用更改、lint 迭代，本质上就是“AI 生成 → 看变更 → 回滚/接受 → 再修”的 IDE 工作流。非常适合把抽象 AI 编程流程落到具体工具上。 | 比抽象 prompt 教程更贴近实际操作。 | 可与 AIWF-04 组合。 |
 | AIWF-04 | Agent | Cursor 文档 | Cursor | https://docs.cursor.ac.cn/chat/agent | 页面未抓到显式时间 | 中文 | AI coding agent, terminal, guardrails | 官方 | 入门必读 | 文档说明 Agent 有工具调用能力，但也有调用上限、终端配置、Yolo 模式和防护栏等边界。适合告诉学员：AI 能自动做很多事，但必须设置验证与权限边界。 | 能把“AI 协助”与“安全边界”同时讲清楚。 | 是 AI 工具风险教育的重要来源。 |
 | AIWF-05 | AI 规则 | Cursor 文档 | Cursor | https://docs.cursor.ac.cn/context/rules-for-ai | 页面未抓到显式时间 | 中文 | rules, system guidance, repeatability | 官方 | 进阶参考 | 规则系统本质上是在把团队约定、代码风格、架构偏好前置为系统提示。适合说明“让 AI 稳定输出，关键不是多问，而是事先写规则”。 | 对团队协作和长期复用价值高。 | 与 `.cursor/rules` 实操非常贴合。 |
+| AIWF-ZH-01 | Hello World | GitHub 文档 | GitHub | https://docs.github.com/zh/get-started/start-your-journey/hello-world | 页面未抓到显式时间 | 中文 | workflow, branch, PR, 中文实践 | 官方 | 补充阅读 | 虽然它不是 AI 文档，但作为中文可操作工作流示例，它清楚展示了“创建仓库、创建分支、提交更改、打开 PR、合并 PR”的人类协作闭环。把这一条与 Cursor 的 diff / agent 能力结合后，就能自然过渡到“AI 只是加速某些环节，而不是替代验证与合并流程”。 | 适合用来说明 AI 工作流仍应嵌入传统代码协作闭环。 | 该条用于工作流骨架，不用于提示词细节。 |
 
 ### AI 编程工作流最小闭环
 
@@ -257,7 +265,7 @@
 
 ### 小结
 
-- 主参考优先级：`AIWF-03` → `AIWF-04` → `AIWF-01`
+- 主参考优先级：`AIWF-03` → `AIWF-04` → `AIWF-05` → `AIWF-ZH-01` → `AIWF-01`
 - 第 3 周正文可直接写入的章节候选：
   - AI 编程最小闭环：说清楚、看 diff、做验证
   - 什么时候该让 Agent 自动跑，什么时候不该
@@ -269,24 +277,25 @@
 
 ### 优先保留
 
-- GitHub Docs：协作模型、PR、review、Projects
+- GitHub Docs：协作模型、PR、review、Projects，以及中文 `Hello World` / `协作处理拉取请求` / `创建拉取请求`
 - Git 官方 / Pro Git：分支工作流原理
-- Cursor 官方文档：Chat、Agent、Rules
+- Cursor 官方文档：Chat、Agent、Rules，以及中文站入口
 - Python / Prettier / ESLint 官方文档：基础工程实践
 - 真实开源仓库 README / CONTRIBUTING：项目阅读案例
+- 中文补充：ChineseREADME、Corner Blog 的新手解释型文章
 
 ### 降级为补充阅读
 
 - Open Source Guides：方法论与新手习惯很好，但不替代官方工具文档
 - 大型仓库 README/CONTRIBUTING：适合案例演示，不必全部逐字读
+- 仅返回标题、正文抓取较少的入口页：保留为导航，不作为核心论据
 
 ### 当前缺口
 
-- 缺少高质量、可直接引用的中文 GitHub Projects 教程；当前以 GitHub Docs 英文版为主
+- GitHub 协作与分支/PR 的中文官方资料已补到“能直接用于教学演示”的程度，但 GitHub Projects 的高质量中文主资料仍不足，当前仍以英文官方页为主
 - OpenAI 官方 prompt engineering 正文因 403 未成功抓取，后续若要大篇幅引用需补做下载或人工核验
-- 暂未补充视频类资料；当前以文档型资料为主，更利于准确引用，但若最终教程需要“视频辅助”，需补采 B 站或 YouTube 官方演讲
-
----
+- 暂未补充高质量中文视频类资料；当前以文档型资料为主，更利于准确引用，但若最终教程需要“视频辅助”，需补采 B 站或 YouTube 官方演讲
+- AI 编程工作流的高可信中文官方材料目前仍主要依赖 Cursor 中文文档；通用方法论中文资料仍偏社区经验
 
 ## 8. 面向第 3 周教程的骨架映射
 
@@ -294,13 +303,13 @@
 
 | 天数 | 学习主题 | 核心目标 | 主要资料 |
 |---|---|---|---|
-| Day 15 | GitHub 协作全景 | 理解 issue、PR、fork、shared repo 的关系 | GH-COL-01, GH-COL-02 |
-| Day 16 | 分支与 PR 实操 | 学会 feature branch → commit → PR 的闭环 | BR-PR-02, BR-PR-03, BR-PR-04 |
-| Day 17 | 如何阅读一个开源项目 | 学会 README → CONTRIBUTING → 目录 → issue/PR 的阅读路径 | PROJ-READ-02, PROJ-READ-03, PROJ-READ-04 |
-| Day 18 | 基础工程实践 1 | 理解 formatter / linter 的作用与分工 | ENG-PRAC-01, ENG-PRAC-02 |
+| Day 15 | GitHub 协作全景 | 理解 issue、PR、fork、shared repo 的关系 | GH-COL-ZH-02, GH-COL-01, GH-COL-02 |
+| Day 16 | 分支与 PR 实操 | 学会 feature branch → commit → PR 的闭环 | BR-PR-ZH-01, BR-PR-02, BR-PR-03 |
+| Day 17 | 如何阅读一个开源项目 | 学会 README → CONTRIBUTING → 目录 → issue/PR 的阅读路径 | PROJ-READ-ZH-01, PROJ-READ-02, PROJ-READ-03 |
+| Day 18 | 基础工程实践 1 | 理解 formatter / linter 的作用与分工 | ENG-PRAC-01, ENG-PRAC-02, ENG-PRAC-ZH-01 |
 | Day 19 | 基础工程实践 2 | 理解 logging、最小验证、提交流程 | ENG-PRAC-03, ENG-PRAC-04 |
 | Day 20 | Cursor 入门 | 会区分 Ask/Edit/Agent，会用上下文与规则 | CUR-02, CUR-03, CUR-04 |
-| Day 21 | AI 编程工作流入门 + 周复盘 | 形成“拆任务 → 生成 → 看 diff → 验证”的闭环 | AIWF-03, AIWF-04, AIWF-01 |
+| Day 21 | AI 编程工作流入门 + 周复盘 | 形成“拆任务 → 生成 → 看 diff → 验证”的闭环 | AIWF-03, AIWF-04, AIWF-05, AIWF-ZH-01 |
 
 ### 章节候选标题
 
@@ -325,7 +334,7 @@
 
 - **官方优先**：GitHub Docs、Git/Pro Git、Cursor Docs、Python Docs、Prettier Docs、ESLint Docs
 - **半官方/高可信补充**：Open Source Guides、Atlassian Git Tutorials
-- **社区经验暂未大量引入**：本轮优先保证稳定、可追溯、便于团队复核
+- **社区经验有限引入**：ChineseREADME、Corner Blog 仅用于中文解释增强，不承担唯一事实依据
 - **高时效风险主题**：Cursor、Agent、AI prompt engineering
   - 使用建议：正文中标注“界面和能力可能迭代，请以当前官方文档为准”
   - 使用建议：避免把工具调用次数、支持模型列表等写成长期不变事实
@@ -333,6 +342,10 @@
 ## 10. 来源记录（按本次调研实际使用）
 
 - GitHub Docs: https://docs.github.com/
+- GitHub Docs（中文协作总入口）: https://docs.github.com/zh/pull-requests/collaborating-with-pull-requests
+- GitHub Docs（中文 Hello World）: https://docs.github.com/zh/get-started/start-your-journey/hello-world
+- GitHub Docs（中文创建拉取请求）: https://docs.github.com/zh/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request
+- GitHub Docs（中文开始使用 Git）: https://docs.github.com/zh/get-started/learning-to-code/getting-started-with-git
 - Git / Pro Git: https://git-scm.com/book/en/v2/Git-Branching-Branching-Workflows
 - Atlassian Git Tutorial: https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow
 - Open Source Guides: https://opensource.guide/how-to-contribute/
@@ -343,9 +356,20 @@
 - Python Logging HOWTO: https://docs.python.org/3/howto/logging.html
 - Prettier Docs: https://prettier.io/docs/
 - ESLint Docs: https://eslint.org/docs/latest/use/getting-started
+- Corner Blog（中文 ESLint/Prettier 新手实践）: https://blog.ymzhao.work/front-end/engineering/uniform-code-style
+- ChineseREADME: https://sunyctf.github.io/ChineseREADME/
 - Cursor Docs: https://cursor.com/docs
+- Cursor 中文规则入口: https://cursor.com/cn/docs/rules
 - Cursor Chat 概述: https://docs.cursor.ac.cn/chat/overview
 - Cursor Agent: https://docs.cursor.ac.cn/chat/agent
 - Cursor AI 规则: https://docs.cursor.ac.cn/context/rules-for-ai
 - OpenAI Prompt Engineering: https://platform.openai.com/docs/guides/prompt-engineering
 - OpenAI Prompt Engineering PDF: https://platform.openai.com/assets/prompt-engineering-best-practices-2025.pdf
+
+## 11. 中文补充核验摘要（2026-03-26T22:06:04+08:00）
+
+- 已补入 7 条中文或中文入口资料：`GH-COL-ZH-01`、`GH-COL-ZH-02`、`BR-PR-ZH-01`、`BR-PR-ZH-02`、`PROJ-READ-ZH-01`、`ENG-PRAC-ZH-01`、`CUR-ZH-01`。
+- 其中 5 条来自官方中文文档或官方中文入口：GitHub Docs 中文页 4 条、Cursor 中文入口 1 条。
+- 另外 2 条来自社区实践，用于补足中文教学解释：ChineseREADME、Corner Blog。
+- 因 OpenAI 官方文档抓取限制，AI 编程工作流的中文高可信来源目前仍以 Cursor 中文文档与 GitHub 中文工作流演练为主，后续如需更强“提示词工程”中文主资料，仍建议单独补采。
+- 本次中文补充的目标不是替换英文官方主资料，而是把第 3 周教程扩写时最容易卡住的术语、流程和操作路径补成“中英双轨可讲”。

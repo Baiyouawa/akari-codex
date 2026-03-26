@@ -278,56 +278,327 @@
 
 # 第 2 周：Linux 实战深化与 Git 入门
 
-## Day 8｜环境变量、重定向与包管理
+## Day 8｜Linux 文件系统、路径与目录导航
 
 ### 学习目标
-- 理解 shell 变量与环境变量的区别。
-- 会使用 `export`、重定向和基础包管理命令。
-- 知道 `apt` 与 `apt-get` 的使用差异。
+- 理解 Linux 文件系统是“从 `/` 开始的一棵树”。
+- 认识 `/home`、`/etc`、`/var`、`/tmp`、`/usr` 等常见目录用途。
+- 掌握 `pwd`、`ls`、`cd`、`mkdir`、`touch` 的最小导航与建文件流程。
+
+### 先理解：今天到底在学什么
+Linux 不像 Windows 那样按“C 盘、D 盘”作为主要入口。对新手来说，先把它想成一棵从根目录 `/` 长出来的目录树更容易。
+
+常见目录可以先这样理解：
+- `/`：整棵文件树的起点。
+- `/home`：普通用户的家目录，自己的练习文件通常放这里。
+- `/etc`：系统配置文件常见位置，例如网络、服务配置。
+- `/var`：经常变化的数据，例如日志、缓存、队列。
+- `/tmp`：临时文件目录，通常重启后可能被清理。
+- `/usr`：大量应用程序、库和共享资源所在位置。
+
+### 核心概念
+- **绝对路径**：从 `/` 开始写的完整路径，例如 `/home/akari/notes/todo.txt`。
+- **相对路径**：相对于“当前所在目录”写的路径，例如 `notes/todo.txt`。
+- **当前目录**：你现在所在的位置，可用 `pwd` 查看。
 
 ### 任务安排
-- 设置并查看一个环境变量。
-- 练习标准输出与错误输出重定向。
-- 安装一个小工具，如 `tree`。
+- 看清当前所在目录。
+- 建一个安全练习区。
+- 在练习区里创建目录和文件。
+- 练习绝对路径与相对路径切换。
 
 ### 操作步骤
-1. 执行 `export DEMO=hello`，再 `echo $DEMO`。
-2. 用 `env | grep '^DEMO='` 查看环境变量。
-3. 用 `ls > out.txt 2>&1` 保存输出。
-4. 执行 `sudo apt update`。
-5. 执行 `sudo apt install tree`，安装后运行 `tree -L 2`。
+> 默认环境：任意 Debian/Ubuntu、CentOS、Rocky、Fedora、WSL 或虚拟机 Linux。
+> 为了安全，今天的练习尽量都放在自己的家目录下，不要在 `/etc`、`/usr`、`/var` 里乱改文件。
+
+1. 查看当前目录：
+   ```bash
+   pwd
+   ```
+   预期现象：会输出类似 `/home/你的用户名`。
+
+2. 看看当前目录里有什么：
+   ```bash
+   ls
+   ls -la
+   ```
+   预期现象：`ls -la` 会显示隐藏文件，例如 `.bashrc`、`.ssh`。
+
+3. 在家目录创建本周练习区：
+   ```bash
+   mkdir -p ~/week2-lab/day8
+   cd ~/week2-lab/day8
+   pwd
+   ```
+   预期现象：最后一条命令应输出类似 `/home/你的用户名/week2-lab/day8`。
+
+4. 创建两个测试文件：
+   ```bash
+   touch notes.txt todo.txt
+   ls -l
+   ```
+   预期现象：目录中会出现两个空文件。
+
+5. 练习目录跳转：
+   ```bash
+   cd ..
+   pwd
+   cd day8
+   pwd
+   cd ~
+   pwd
+   ```
+   说明：`..` 表示上一级目录，`~` 表示当前用户家目录。
+
+6. 用绝对路径与相对路径分别进入同一个目录：
+   ```bash
+   cd /home/$USER/week2-lab/day8
+   pwd
+   cd ~/week2-lab
+   cd day8
+   pwd
+   ```
+
+### 常见坑与提醒
+- `cd /tmp` 不是进入“桌面”，而是进入临时目录。
+- 不要因为看到系统目录就随便 `cd /etc` 后乱编辑文件。
+- 在删除或移动文件前，先用 `pwd` 和 `ls` 确认自己在哪。
+
+### 练习
+1. **基础练习**：在 `~/week2-lab/day8` 下再创建一个 `images/` 目录和一个 `readme.md` 文件。  
+   验证方式：执行 `ls -la ~/week2-lab/day8`，应能看到 `images` 和 `readme.md`。
+2. **路径练习**：先回到家目录，再只用相对路径进入 `~/week2-lab/day8/images`。  
+   参考验证：如果最后 `pwd` 输出以 `/week2-lab/day8/images` 结尾，说明成功。
 
 ### 推荐资料
-- **必读｜官方语义**：Bash Manual: Environment  
-  来源链接：https://www.gnu.org/software/bash/manual/html_node/Environment.html
-- **必读｜官方语义**：Bash Manual: Redirections  
-  来源链接：https://www.gnu.org/software/bash/manual/html_node/Redirections.html
-- **选读｜Debian/Ubuntu 包管理**：The Debian Administrator's Handbook: aptitude, apt-get, and apt  
-  来源链接：https://www.debian.org/doc/manuals/debian-handbook/sect.apt-get.el.html
+- **必读｜文件系统标准**：Filesystem Hierarchy Standard 3.0  
+  来源链接：https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html
+- **必读｜目录层级手册**：file-hierarchy(7)  
+  来源链接：https://www.man7.org/linux/man-pages/man7/file-hierarchy.7.html
+- **选读｜命令行入门**：The Linux command line for beginners  
+  来源链接：https://ubuntu.com/tutorials/command-line-for-beginners
 
 ### 当日产出
-- `notes/day8-env-and-apt.md`
+- `notes/day8-filesystem.md`
 
 ---
 
-## Day 9｜文件权限：rwx、chmod、chown
+## Day 9｜文件查看、复制移动、查找与安全删除
 
 ### 学习目标
-- 理解 owner / group / others。
-- 看懂 `-rw-r--r--` 这类权限表示。
-- 会使用 `chmod` 与 `chown` 的基础形式。
+- 掌握 `cat`、`less`、`cp`、`mv`、`rm`、`find` 的基础使用。
+- 理解“查看文件”和“查找文件”是两个不同动作。
+- 建立删除前先确认路径的习惯。
+
+### 先理解：为什么这一课重要
+很多初学者会把“找文件”“看内容”“移动文件”“删文件”混在一起。今天的目标就是把这些动作拆清楚：
+- **看内容**：`cat`、`less`
+- **复制/移动**：`cp`、`mv`
+- **查找位置**：`find`
+- **删除**：`rm`
 
 ### 任务安排
-- 查看练习目录下文件权限。
-- 修改脚本执行权限。
-- 记录为什么不应把 `777` 当万能方案。
+- 在练习目录里写入几行文本。
+- 练习查看、复制、重命名。
+- 学会按名字查找文件。
+- 理解为什么 `rm -rf` 不能乱用。
 
 ### 操作步骤
-1. 执行 `ls -l` 观察权限位。
-2. 创建 `script.sh`，写入 `echo hi`。
-3. 用 `chmod u+x script.sh` 赋予执行权限。
-4. 用 `chmod 644 notes.txt` 体验数字权限。
-5. 阅读 `chown user:group file` 的语法，先理解再操作。
+1. 进入昨天的练习目录：
+   ```bash
+   cd ~/week2-lab/day8
+   ```
+
+2. 写入测试内容：
+   ```bash
+   echo 'hello linux' > notes.txt
+   echo 'line 2' >> notes.txt
+   cat notes.txt
+   ```
+   预期现象：`cat` 应打印两行文本。
+
+3. 用 `less` 查看文件：
+   ```bash
+   less notes.txt
+   ```
+   说明：按 `q` 退出。`less` 适合看长文本，`cat` 更适合看短文件。
+
+4. 复制与重命名文件：
+   ```bash
+   cp notes.txt notes-copy.txt
+   mv todo.txt todo-old.txt
+   ls -l
+   ```
+
+5. 建一个子目录并移动文件进去：
+   ```bash
+   mkdir -p archive
+   mv notes-copy.txt archive/
+   ls -l archive
+   ```
+
+6. 用 `find` 查找文件：
+   ```bash
+   find ~/week2-lab -name 'notes.txt'
+   find ~/week2-lab -name '*.txt'
+   ```
+   预期现象：第一条会找到具体文件，第二条会列出所有 `.txt` 文件。
+
+7. 删除一个明确知道用途的测试文件：
+   ```bash
+   rm todo-old.txt
+   ls -l
+   ```
+
+### 常见坑与提醒
+- `rm` 删除后默认不会进回收站。
+- `rm -rf` 破坏性非常强，不要在教程练习里把它当默认手段。
+- `mv` 既可以“移动”，也可以“重命名”，看目标写法而定。
+- `find` 是查位置，不是查看内容。
+
+### 练习
+1. **基础练习**：把 `notes.txt` 复制到 `archive/notes-backup.txt`。  
+   验证方式：执行 `ls -l archive`，应能看到 `notes-backup.txt`。
+2. **进阶练习**：在 `~/week2-lab` 下创建 `day9/logs/app.log`，再用 `find` 找到它。  
+   参考答案：
+   ```bash
+   mkdir -p ~/week2-lab/day9/logs
+   touch ~/week2-lab/day9/logs/app.log
+   find ~/week2-lab -name 'app.log'
+   ```
+
+### 推荐资料
+- **必读｜命令行入门**：Linux Journey  
+  来源链接：https://linuxjourney.com/
+- **必读｜官方教程**：The Linux command line for beginners  
+  来源链接：https://ubuntu.com/tutorials/command-line-for-beginners
+- **选读｜中文命令整理**：Linux 常用基础命令（2024 年最新篇）  
+  来源链接：https://cloud.tencent.com/developer/article/2424112
+
+### 当日产出
+- `notes/day9-file-ops-and-find.md`
+
+---
+
+## Day 10｜权限、用户组与 Permission denied
+
+### 学习目标
+- 看懂 `ls -l` 输出中的权限位。
+- 理解文件与目录的 `rwx` 含义不同。
+- 会使用 `chmod`、`chown`、`chgrp` 的基础形式。
+- 能排查最常见的 `Permission denied`。
+
+### 先理解：权限到底在控制什么
+Linux 会从“谁在操作”和“操作什么对象”两个方向判断权限。
+
+最常见的三类身份：
+- **owner**：文件所有者
+- **group**：所属用户组
+- **others**：其他用户
+
+最常见的三类权限：
+- `r`：读
+- `w`：写
+- `x`：执行
+
+### `ls -l` 怎么看
+例如：
+```bash
+-rwxr-xr-- 1 akari dev 25 Mar 26 10:00 script.sh
+```
+可以先只拆成四块：
+- 第一位 `-`：普通文件；如果是 `d` 表示目录。
+- `rwx`：owner 权限。
+- `r-x`：group 权限。
+- `r--`：others 权限。
+
+### 文件和目录权限的区别
+- 对**文件**来说：
+  - `r`：可读内容
+  - `w`：可改内容
+  - `x`：可执行
+- 对**目录**来说：
+  - `r`：可列出目录内容
+  - `w`：可在目录内创建、删除、改名
+  - `x`：可进入目录
+
+这就是为什么“目录没有 `x`，你可能连 `cd` 进去都不行”。
+
+### 任务安排
+- 创建一个脚本并赋执行权限。
+- 分别体验数字法和符号法。
+- 学会读懂 `Permission denied` 的最小排查顺序。
+
+### 操作步骤
+1. 进入练习区并创建脚本：
+   ```bash
+   cd ~/week2-lab
+   mkdir -p day10
+   cd day10
+   printf '#!/bin/bash\necho hello permission\n' > script.sh
+   ls -l script.sh
+   ```
+   预期现象：刚创建时通常还没有执行权限。
+
+2. 尝试直接执行：
+   ```bash
+   ./script.sh
+   ```
+   可能现象：会看到 `Permission denied`。
+
+3. 赋执行权限后再运行：
+   ```bash
+   chmod u+x script.sh
+   ls -l script.sh
+   ./script.sh
+   ```
+   预期现象：能输出 `hello permission`。
+
+4. 用数字法设置普通文本文件权限：
+   ```bash
+   touch notes.txt
+   chmod 644 notes.txt
+   ls -l notes.txt
+   ```
+   说明：`644` 常见含义是 owner 可读写，group 和 others 只读。
+
+5. 认识组权限修改：
+   ```bash
+   chgrp $(id -gn) notes.txt
+   ls -l notes.txt
+   ```
+   说明：这里把文件组改成你当前用户所在的主组，适合安全演示。
+
+6. 只读理解 `chown` 语法，不强求在普通用户环境执行：
+   ```bash
+   chown user:group file
+   ```
+   说明：通常需要 root 或 `sudo`。如果你不是管理员，知道语法和使用边界就够了。
+
+### `Permission denied` 最小排查顺序
+1. 我是不是在操作一个需要更高权限的位置？
+2. 我是读失败、写失败，还是执行失败？
+3. `ls -l` 看看文件或目录权限是什么？
+4. 我是不是用错了用户，或者本来就不该改这个文件？
+5. 只有在明确知道原因时才考虑 `sudo`。
+
+### 常见坑与提醒
+- 不要把 `chmod -R 777` 当成万能修复。
+- `sudo` 不是“遇错就加”的魔法按钮。
+- 修改目录权限要比修改单个文件更谨慎。
+- `chown` 可能需要管理员权限，不要在系统目录里盲改所有权。
+
+### 练习
+1. **基础练习**：新建 `runme.sh`，写一行 `echo run ok`，让它从不能执行变成能执行。  
+   验证方式：执行前报错，`chmod u+x runme.sh` 后可以正常输出。
+2. **进阶练习**：创建目录 `private-dir`，设置为只有自己可访问。  
+   参考答案：
+   ```bash
+   mkdir private-dir
+   chmod 700 private-dir
+   ls -ld private-dir
+   ```
+   自检：权限应类似 `drwx------`。
 
 ### 推荐资料
 - **必读｜官方文档**：GNU Coreutils: chmod invocation  
@@ -338,170 +609,481 @@
   来源链接：https://www.digitalocean.com/community/tutorials/an-introduction-to-linux-permissions
 
 ### 当日产出
-- `notes/day9-permissions.md`
+- `notes/day10-permissions.md`
 
 ---
 
-## Day 10｜进程观察与前后台任务
+## Day 11｜进程、前后台任务与服务状态查看
 
 ### 学习目标
-- 理解进程、PID、前台任务、后台任务。
-- 会使用 `ps`、`top`、`jobs`、`kill`。
-- 理解为什么优先 `TERM`，不要一上来就 `kill -9`。
+- 理解进程、PID、前台任务、后台任务、服务的区别。
+- 会使用 `ps`、`top`、`grep`、`kill`、`jobs`、`bg`、`fg`、`&`。
+- 知道 `systemctl status` 是看服务状态，不是看所有普通进程。
+
+### 先理解：进程和服务不是一回事
+- **进程**：正在运行中的程序实例，每个进程有自己的 PID。
+- **前台任务**：当前终端正在直接占用的任务。
+- **后台任务**：任务仍在跑，但终端暂时能做别的事。
+- **服务**：通常由系统统一管理的长期运行程序，例如 `sshd`、`nginx`。
 
 ### 任务安排
-- 观察系统进程。
-- 启动一个后台任务并结束它。
-- 写下“安全终止进程”的最小规则。
+- 先学会看进程，再学会结束进程。
+- 练习前后台切换。
+- 认识系统服务状态查看命令。
 
 ### 操作步骤
-1. 执行 `ps -ef | head`。
-2. 执行 `top`，观察 CPU 和内存变化。
-3. 用 `sleep 300 &` 建立后台任务。
-4. 用 `jobs` 查看任务，再用 `kill PID` 结束。
-5. 在笔记里写明：默认 `kill` 发送 `TERM`，`kill -9` 只作最后手段。
+1. 查看系统进程快照：
+   ```bash
+   ps -ef | head
+   ```
+   说明：`ps` 更像“拍一张快照”。
+
+2. 查找某个进程：
+   ```bash
+   ps -ef | grep ssh
+   ```
+   说明：通常会连 `grep ssh` 自己也显示出来，这是正常现象。
+
+3. 实时观察系统状态：
+   ```bash
+   top
+   ```
+   说明：按 `q` 退出。`top` 更像“实时监控画面”。
+
+4. 启动一个后台任务：
+   ```bash
+   sleep 300 &
+   jobs
+   ```
+   预期现象：`jobs` 会显示一个后台任务。
+
+5. 找到这个任务对应的 PID：
+   ```bash
+   ps -ef | grep sleep
+   ```
+
+6. 优先用正常方式结束：
+   ```bash
+   kill PID
+   ```
+   说明：默认发送的是 `TERM`，表示“请正常退出”。
+
+7. 体验前后台切换：
+   ```bash
+   sleep 300
+   ```
+   运行后按 `Ctrl+Z` 暂停，再执行：
+   ```bash
+   jobs
+   bg %1
+   jobs
+   fg %1
+   ```
+
+8. 看一个系统服务状态：
+   ```bash
+   systemctl status ssh
+   ```
+   或者在部分系统里：
+   ```bash
+   systemctl status sshd
+   ```
+   说明：不同发行版服务名可能不同；Ubuntu 常见 `ssh`，RHEL 系常见 `sshd`。
+
+### 安全提醒
+- `kill -9` 是最后手段，不是默认手段。
+- 不要随便 `kill` 掉看不懂的系统进程。
+- 后台任务不等于“永远不会断”；关闭终端后，许多任务仍可能结束。后续若要学长任务保活，再补 `nohup` / `tmux`。
+
+### 练习
+1. **基础练习**：启动一个 `sleep 120 &`，再用 `jobs` 和 `kill` 把它结束。  
+   验证方式：结束后再执行 `jobs`，该任务应消失。
+2. **进阶练习**：尝试查看 SSH 服务状态。  
+   验证方式：`systemctl status ssh` 或 `systemctl status sshd` 至少有一个能返回服务状态信息；若提示服务名不存在，记录你所在系统的正确服务名即可。
 
 ### 推荐资料
 - **必读｜手册页**：ps(1)  
   来源链接：https://www.man7.org/linux/man-pages/man1/ps.1.html
 - **必读｜手册页**：kill(1)  
   来源链接：https://www.man7.org/linux/man-pages/man1/kill.1.html
-- **选读｜作业控制**：Job Control Basics  
+- **必读｜作业控制**：Job Control Basics  
   来源链接：https://www.gnu.org/software/bash/manual/html_node/Job-Control-Basics.html
+- **选读｜流程化教程**：How To Use ps, kill, and nice to Manage Processes in Linux  
+  来源链接：https://www.digitalocean.com/community/tutorials/how-to-use-ps-kill-and-nice-to-manage-processes-in-linux
 
 ### 当日产出
-- `notes/day10-processes.md`
+- `notes/day11-process-and-service.md`
 
 ---
 
-## Day 11｜SSH 常用操作：密钥、scp、rsync
+## Day 12｜软件安装与包管理：apt、dnf、yum
 
 ### 学习目标
-- 理解密码登录与密钥登录的区别。
-- 会使用 `scp` 上传下载文件。
-- 理解 `rsync` 更适合目录同步。
+- 理解包管理器是“安装、升级、删除软件”的标准入口。
+- 至少认识 Debian/Ubuntu 常见的 `apt`，以及 RHEL/Fedora 系常见的 `dnf` / `yum`。
+- 会做更新、搜索、安装、卸载和安装后验证。
+
+### 先理解：为什么不能到处手动下载二进制
+Linux 里很多软件都可以通过包管理器安装。好处是：
+- 依赖关系更容易处理。
+- 升级和卸载更统一。
+- 更容易复现别人给你的教程步骤。
+
+### 发行版差异先记住
+- **Debian / Ubuntu 常用**：`apt`
+- **Fedora / RHEL 8+ / Rocky / AlmaLinux 常用**：`dnf`
+- **较老的 CentOS / RHEL 7 资料中常见**：`yum`
 
 ### 任务安排
-- 生成一对 SSH key。
-- 测试 `scp` 传输文件。
-- 了解 `rsync` 的基本命令形式。
+- 确认自己是哪类系统。
+- 学会更新索引、搜索包、安装包、删除包。
+- 安装后用 `--version` 或运行命令验证。
 
 ### 操作步骤
-1. 执行 `ssh-keygen` 生成 SSH key。
-2. 把公钥加入目标主机或 GitHub。
-3. 使用 `scp local.txt user@host:/tmp/` 传一个文件。
-4. 尝试阅读 `rsync -avz` 的命令结构。
-5. 记录 `known_hosts`、host key 校验的作用。
+1. 先看系统大概属于哪一类：
+   ```bash
+   cat /etc/os-release
+   ```
+
+2. 如果你是 Debian / Ubuntu：
+   ```bash
+   sudo apt update
+   apt search tree
+   sudo apt install tree
+   tree --version
+   sudo apt remove tree
+   ```
+   说明：`apt(8)` 说明 `apt` 是更偏交互式的高层命令接口，适合终端手工操作。
+
+3. 如果你是 Fedora / RHEL / Rocky / AlmaLinux：
+   ```bash
+   sudo dnf search tree
+   sudo dnf install tree
+   tree --version
+   sudo dnf remove tree
+   ```
+   如果系统较旧，也可能看到：
+   ```bash
+   sudo yum install tree
+   ```
+
+4. 安装 `curl` 或 `git` 时也可以用同样思路：
+   ```bash
+   curl --version
+   git --version
+   ```
+   说明：安装后一定要做版本检查或实际运行，不能只看“安装命令没报错”。
+
+### 常见坑与提醒
+- `update` 往往是更新软件包索引，不等于“系统已经升级完”。
+- 没有 `sudo` 权限时，很多安装命令会失败，这不是命令错了，而是权限不够。
+- 网络源不可达时，可能会出现下载失败或超时。
+- 不同系统命令不同，不要把 `apt install` 硬套到 RHEL 系发行版上。
+
+### 练习
+1. **基础练习**：确认你的系统应该用 `apt` 还是 `dnf/yum`。  
+   验证方式：查看 `cat /etc/os-release` 输出中的 `ID` 或 `ID_LIKE`。
+2. **实操练习**：安装一个小工具（如 `tree` 或 `curl`），再验证版本。  
+   参考验证：如果 `tree --version` 或 `curl --version` 有输出，说明安装成功。
+
+### 推荐资料
+- **必读｜Debian 手册页**：apt(8)  
+  来源链接：https://manpages.debian.org/apt
+- **必读｜Debian Handbook**：The APT Tools  
+  来源链接：https://debian-handbook.info/browse/stable/apt.html
+- **必读｜Red Hat 文档**：DNF commands list  
+  来源链接：https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/10/html/managing_software_with_the_dnf_tool/dnf-commands-list
+- **选读｜Fedora Docs**：Using the DNF software package manager  
+  来源链接：https://docs.fedoraproject.org/en-US/quick-docs/dnf/
+
+### 当日产出
+- `notes/day12-package-manager.md`
+
+---
+
+## Day 13｜SSH 基础：连接、端口、密钥与 known_hosts
+
+### 学习目标
+- 会读懂 `ssh user@host` 这类连接命令。
+- 理解密码登录与密钥登录的差异。
+- 认识 `~/.ssh`、公钥、私钥、`known_hosts` 的作用。
+- 会用 `-p` 指定端口、用 `-i` 指定私钥。
+
+### 先理解：SSH 命令长什么样
+最常见形式：
+```bash
+ssh user@host
+```
+可以拆成两部分：
+- `user`：远程主机上的用户名
+- `host`：远程主机地址，可以是 IP 或域名
+
+如果不是默认 22 端口，可以写：
+```bash
+ssh -p 2222 user@host
+```
+如果想显式指定私钥：
+```bash
+ssh -i ~/.ssh/id_ed25519 user@host
+```
+
+### 密码登录 vs 密钥登录
+- **密码登录**：输入远程账户密码。
+- **密钥登录**：本地保存私钥，远程保存对应公钥。通常更方便，也更适合长期使用。
+
+推荐密钥登录的原因：
+- 不用每次手输密码。
+- 可以配合更严格的服务端策略。
+- 更适合和 GitHub 等平台集成。
+
+### `~/.ssh` 里常见的文件
+- `id_ed25519`：私钥，**不能泄露**。
+- `id_ed25519.pub`：公钥，可以发给服务器或平台。
+- `known_hosts`：你连接过的主机指纹记录。
+- `config`：SSH 客户端配置文件。
+
+### 任务安排
+- 生成一对 SSH 密钥。
+- 学会首次连接时的确认逻辑。
+- 认识 host key 校验为什么重要。
+
+### 操作步骤
+1. 查看本地 SSH 目录：
+   ```bash
+   ls -la ~/.ssh
+   ```
+   如果目录不存在可先创建：
+   ```bash
+   mkdir -p ~/.ssh
+   chmod 700 ~/.ssh
+   ```
+
+2. 生成一对新密钥：
+   ```bash
+   ssh-keygen -t ed25519 -C "your_email@example.com"
+   ```
+   预期现象：会提示保存路径，默认通常是 `~/.ssh/id_ed25519`。
+
+3. 查看公钥内容：
+   ```bash
+   cat ~/.ssh/id_ed25519.pub
+   ```
+   说明：复制的是 `.pub`，不是私钥文件本体。
+
+4. 首次连接远程主机：
+   ```bash
+   ssh user@host
+   ```
+   可能会看到：
+   ```text
+   The authenticity of host 'host (x.x.x.x)' can't be established.
+   Are you sure you want to continue connecting (yes/no/[fingerprint])?
+   ```
+   说明：这不是报错，而是在让你确认主机指纹。
+
+5. 指定端口连接：
+   ```bash
+   ssh -p 2222 user@host
+   ```
+
+6. 连接 GitHub 测试 SSH：
+   ```bash
+   ssh -T git@github.com
+   ```
+   预期现象：首次也会有 host key 确认；成功后通常会看到认证提示信息。
+
+### 安全提醒
+- 私钥文件不要发给别人，也不要提交到 Git 仓库。
+- 不要把“关闭 host key 校验”写成默认方案。
+- `ssh -A` 是 agent forwarding，官方手册明确提示要谨慎使用。
+
+### 练习
+1. **基础练习**：确认你的 `~/.ssh` 目录权限是安全的。  
+   验证方式：执行 `ls -ld ~/.ssh`，推荐看到 `drwx------` 或等价的 700 权限。
+2. **实操练习**：如果你有 GitHub 账号，尝试执行 `ssh -T git@github.com`。  
+   验证方式：看到主机指纹确认或认证反馈即可；如果失败，把完整报错抄到笔记中，第二天继续排查。
 
 ### 推荐资料
 - **必读｜手册页**：ssh(1)  
   来源链接：https://www.man7.org/linux/man-pages/man1/ssh.1.html
-- **必读｜手册页**：scp(1)  
-  来源链接：https://www.man7.org/linux/man-pages/man1/scp.1.html
-- **选读｜同步实战**：How To Use Rsync to Sync Local and Remote Directories  
-  来源链接：https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories
-
-### 当日产出
-- `notes/day11-ssh-files.md`
-
----
-
-## Day 12｜Git 起步：仓库、提交、历史
-
-### 学习目标
-- 理解 Git 是版本控制系统，而不只是“备份工具”。
-- 会完成 `init → add → commit`。
-- 理解工作区、暂存区、提交历史的关系。
-
-### 任务安排
-- 创建一个本地仓库。
-- 添加 README 并提交。
-- 查看状态与历史。
-
-### 操作步骤
-1. 在 `projects/` 下创建一个练习目录。
-2. 执行 `git init` 初始化仓库。
-3. 新建 `README.md`，写入项目说明。
-4. 执行 `git add .` 和 `git commit -m "init"`。
-5. 用 `git status` 与 `git log --oneline` 查看结果。
-
-### 推荐资料
-- **必读｜官方教程**：gittutorial  
-  来源链接：https://git-scm.com/docs/gittutorial
-- **必读｜中文主教材**：Pro Git 中文版  
-  来源链接：https://git-scm.com/book/zh/v2
-- **选读｜中文解释**：Git 是什么  
-  来源链接：https://www.liaoxuefeng.com/wiki/896043488029600/896067008724000
-
-### 当日产出
-- 一个本地 Git 仓库
-- `notes/day12-git-init.md`
-
----
-
-## Day 13｜连接 GitHub：远程仓库与 push
-
-### 学习目标
-- 理解本地仓库与远程仓库的关系。
-- 会把本地改动推送到 GitHub。
-- 知道 `origin`、`main`、SSH 认证的基本意义。
-
-### 任务安排
-- 创建 GitHub 仓库。
-- 关联本地仓库和远程仓库。
-- 完成第一次 push。
-
-### 操作步骤
-1. 在 GitHub 上创建一个新仓库。
-2. 执行 `git remote add origin <url>`。
-3. 如有需要执行 `git branch -M main`。
-4. 执行 `git push -u origin main`。
-5. 在网页端确认 README 已同步成功。
-
-### 推荐资料
-- **必读｜官方文档**：About remote repositories  
-  来源链接：https://docs.github.com/en/get-started/git-basics/about-remote-repositories
-- **必读｜官方文档**：Pushing commits to a remote repository  
-  来源链接：https://docs.github.com/en/get-started/using-git/pushing-commits-to-a-remote-repository
-- **选读｜GitHub SSH 连接**：Connecting to GitHub with SSH  
+- **必读｜GitHub 官方**：Connecting to GitHub with SSH  
   来源链接：https://docs.github.com/en/authentication/connecting-to-github-with-ssh
+- **选读｜SSH 入门**：SSH Essentials  
+  来源链接：https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys
 
 ### 当日产出
-- 一个已同步到 GitHub 的练习仓库
-- `notes/day13-github-remote.md`
+- `notes/day13-ssh-basic.md`
 
 ---
 
-## Day 14｜系统课程 2：从终端到 GitHub 的完整工作流
+## Day 14｜系统课程 2：SSH 常见报错排查与第 2 周综合练习
 
 ### 学习目标
-- 把 Linux 操作、SSH 与 Git / GitHub 串成一条最小开发链路。
-- 检查自己是否能独立完成“改文件—提交—推送”。
+- 按固定顺序排查 SSH 常见错误，而不是乱试命令。
+- 识别 `Connection timed out`、`Connection refused`、`Permission denied`、`REMOTE HOST IDENTIFICATION HAS CHANGED` 等常见报错。
+- 用一套综合练习把“文件系统、权限、进程、包管理、SSH”串起来。
 
-### 系统课程内容
-- 回顾环境变量、权限、进程、SSH 文件传输、Git 初始化、提交、推送。
-- 演示完整闭环：在远程 Linux 上修改文件 → 本地或远程提交 → 推送 GitHub。
-- 总结常见问题：用户名邮箱未配置、push 被拒、权限不足、分支名称混乱。
+### 先记住这套排查顺序
+遇到 SSH 问题时，先按顺序查，不要一上来就删配置：
+1. 网络是否通？主机地址是否写对？
+2. 端口是否对？
+3. SSH 服务是否在运行？
+4. 用户名是否对？
+5. 认证方式是否对？是密码、密钥，还是私钥路径错了？
+6. 私钥与 `~/.ssh` 权限是否合理？
+7. 是不是主机指纹变化了？
 
-### 操作步骤
-1. 新建一个小仓库并加入两个文件。
-2. 完成两次提交，第二次提交修改其中一个文件。
-3. 创建远程仓库并 push。
-4. 截图或记录成功页面。
-5. 写一份《从终端到 GitHub 的一条完整工作流》。
+### 常见报错速查表
+
+#### 1. `Connection timed out`
+**现象**：长时间无响应，最后超时。  
+**常见原因**：
+- IP 或域名写错
+- 网络不通
+- 目标端口被防火墙拦住
+- 目标主机没开机或不在网
+
+**怎么确认**：
+- 先检查地址和端口是不是填错
+- 如果你有服务器控制台权限，确认机器在线
+- 如可登录另一台跳板机，可从那边再测网络
+
+**怎么修复**：
+- 改正主机地址
+- 确认安全组/防火墙开放了 SSH 端口
+- 确认正确使用 `-p 端口`
+
+**修复后如何验证**：
+```bash
+ssh -p 端口 user@host
+```
+能进入密码提示、指纹确认或认证阶段，通常就比“超时”更前进了一步。
+
+#### 2. `Connection refused`
+**现象**：很快返回拒绝连接。  
+**常见原因**：
+- 主机在线，但该端口没有 SSH 服务监听
+- SSH 服务未启动
+- 端口写错，例如服务实际跑在 2222，你却连 22
+
+**怎么确认**：
+- 在服务器本机执行：
+  ```bash
+  systemctl status ssh
+  ```
+  或：
+  ```bash
+  systemctl status sshd
+  ```
+- 核对 SSH 端口配置
+
+**怎么修复**：
+- 启动 SSH 服务
+- 用正确端口重连
+
+**修复后如何验证**：
+再次执行 `ssh -p 端口 user@host`，若不再出现 refused，说明服务或端口问题已改善。
+
+#### 3. `Permission denied` / `Permission denied (publickey)`
+**现象**：连得上，但认证失败。  
+**常见原因**：
+- 用户名写错
+- 私钥路径不对
+- 远程没放对应公钥
+- 本地 `~/.ssh` 或私钥权限太宽松
+- 服务器只允许密钥登录，而你还在尝试密码
+
+**怎么确认**：
+- 检查用户名是不是远程真实存在的账户
+- 检查本地有没有对应私钥：
+  ```bash
+  ls -la ~/.ssh
+  ```
+- 必要时显式指定私钥：
+  ```bash
+  ssh -i ~/.ssh/id_ed25519 user@host
+  ```
+
+**怎么修复**：
+- 改正用户名
+- 重新上传公钥到远程主机或 GitHub
+- 修正权限：
+  ```bash
+  chmod 700 ~/.ssh
+  chmod 600 ~/.ssh/id_ed25519
+  chmod 644 ~/.ssh/id_ed25519.pub
+  ```
+
+**修复后如何验证**：
+重新连接，若进入 shell 或得到平台认证成功提示，说明问题已解决。
+
+#### 4. `REMOTE HOST IDENTIFICATION HAS CHANGED`
+**现象**：SSH 明确警告远程主机指纹变化。  
+**这意味着什么**：
+- 目标机器可能重装过系统
+- 你连到的主机不是之前那台
+- 也可能存在中间人风险，所以不能无脑忽略
+
+**怎么确认**：
+- 先确认服务器是否真的重建、换机、换 IP
+- 与可信渠道提供的主机指纹核对
+
+**怎么修复**：
+在确认主机变化是可信且正常之后，再删除旧记录，例如：
+```bash
+ssh-keygen -R host
+```
+如果你用的是 IP，也可写 IP：
+```bash
+ssh-keygen -R x.x.x.x
+```
+然后重新连接，让 SSH 记录新的主机指纹。
+
+**不要这么做**：
+- 不要没确认来源就随便删除 `known_hosts` 全文件
+- 不要把“关闭 host key 校验”当成教程默认答案
+
+### 第 2 周综合练习
+
+#### 练习 A：本地 Linux 基础闭环
+1. 在 `~/week2-lab/final` 下创建 `docs/`、`scripts/`、`logs/` 三个目录。
+2. 创建 `docs/README.md` 并写 3 行文字。
+3. 创建 `scripts/check.sh`，内容为：
+   ```bash
+   #!/bin/bash
+   echo week2 check ok
+   ```
+4. 给脚本执行权限并运行。
+5. 用 `find` 找到所有 `.sh` 文件。
+6. 安装一个小工具（如 `tree`）并验证版本。
+
+**自检答案**：
+- `ls -l scripts/check.sh` 应显示可执行位。
+- `./scripts/check.sh` 应输出 `week2 check ok`。
+- `find ~/week2-lab/final -name '*.sh'` 应至少找到 `check.sh`。
+
+#### 练习 B：SSH 排障记录练习
+1. 尝试执行一次 `ssh user@host` 或 `ssh -T git@github.com`。
+2. 如果成功，记录成功前出现了什么提示。
+3. 如果失败，把完整报错原文抄到笔记里。
+4. 按“网络 → 端口 → 服务 → 用户名 → 认证方式 → 密钥权限 → 主机指纹”的顺序写排查笔记。
+
+**验证方式**：
+- 笔记里必须出现完整报错原文，而不是只写“连不上”。
+- 笔记里必须出现至少 3 个你已经检查过的点。
 
 ### 推荐资料
-- **必读｜官方演练**：Hello World  
-  来源链接：https://docs.github.com/en/get-started/start-your-journey/hello-world
-- **必读｜官方教程**：gittutorial  
-  来源链接：https://git-scm.com/docs/gittutorial
-- **选读｜中文主教材**：Pro Git 中文版  
-  来源链接：https://git-scm.com/book/zh/v2
+- **必读｜手册页**：ssh(1)  
+  来源链接：https://www.man7.org/linux/man-pages/man1/ssh.1.html
+- **必读｜GitHub 官方**：Connecting to GitHub with SSH  
+  来源链接：https://docs.github.com/en/authentication/connecting-to-github-with-ssh
+- **选读｜SSH 入门与排障补充**：SSH Essentials  
+  来源链接：https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys
 
 ### 复盘作业
-- 用自己的话解释：工作区、暂存区、提交、远程仓库分别是什么。
-- 列出 5 条你最常用的 Git 命令和使用场景。
-- 如果 push 失败过，记录错误信息和解决过程。
+- 用自己的话解释：绝对路径、`chmod 755`、PID、包管理器、公钥/私钥、`known_hosts` 分别是什么。
+- 列出你本周最常用的 8 条命令，并为每条命令写一个场景。
+- 如果本周出现过 `Permission denied` 或 SSH 报错，记录原文、原因、修复方法、修复后验证方法。
 
 ### 当日产出
 - `notes/week2-review.md`
