@@ -39,8 +39,8 @@
 - [x] 对 10 篇综述分别进行详读，提炼每篇的研究背景、问题定义、分类框架、核心观点、方法脉络、数据集/benchmark、局限性与未来方向
   Done when: 产出 `projects/multi-agent-survey-review/analysis/2026-03-26-ten-survey-background-problem-framework-notes.md`，并完成 `projects/multi-agent-survey-review/plans/对-10-篇综述分别进行详读-提炼每篇的研究背景-问题定义-分类框架-核心观点-方法脉络-数据集-benchmark-局-progress.md`、`projects/multi-agent-survey-review/plans/对-10-篇综述分别进行详读-提炼每篇的研究背景-问题定义-分类框架-核心观点-方法脉络-数据集-benchmark-局-self-review.md`、`projects/multi-agent-survey-review/plans/对-10-篇综述分别进行详读-提炼每篇的研究背景-问题定义-分类框架-核心观点-方法脉络-数据集-benchmark-局-summary.md`
 
-- [ ] 对 10 篇综述做交叉比较，总结 multi-agent 研究的共同主题、主要分歧、演化趋势与研究空白
-  Done when: TBD
+- [x] 对 10 篇综述做交叉比较，总结 multi-agent 研究的共同主题、主要分歧、演化趋势与研究空白
+  Done when: 产出 `projects/multi-agent-survey-review/analysis/2026-03-26-ten-survey-cross-comparison.md`，并完成 `projects/multi-agent-survey-review/plans/对-10-篇综述做交叉比较-总结-multi-agent-研究的共同主题-主要分歧-演化趋势与研究空白-progress.md`、`projects/multi-agent-survey-review/plans/对-10-篇综述做交叉比较-总结-multi-agent-研究的共同主题-主要分歧-演化趋势与研究空白-self-review.md`、`projects/multi-agent-survey-review/plans/对-10-篇综述做交叉比较-总结-multi-agent-研究的共同主题-主要分歧-演化趋势与研究空白-summary.md`
 
 - [ ] 最终输出一份中文 Markdown 报告，包含 10 篇综述逐篇详述内容，并给出 5 个后续可做的 research idea，每个 idea 需包含 motivation 和方法设计
   Done when: TBD
