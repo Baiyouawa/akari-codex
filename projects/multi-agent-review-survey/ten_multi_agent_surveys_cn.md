@@ -10,6 +10,7 @@
 - Cross-review evidence: `projects/multi-agent-review-survey/analysis/2026-03-26-cross-review-record.md`
 
 > 说明：本文不新增未经核验的论文事实，只把项目内已经 cross-review 对齐过的 10 篇综述，整理成更适合快速浏览的中文 Markdown。年份分布、页数、PDF 路径、题目与作者均以 `analysis/2026-03-26-ten-paper-metadata.md` 与 `analysis/2026-03-26-basic-info-for-10-papers.md` 为准；逐篇判断与 benchmark/主题摘要以 `analysis/2026-03-26-ten-survey-structured-reading-notes.md` 为准。
+> source-of-truth 注记：本文唯一采用的最终 10 篇清单是 current canonical reading set，即 Guo 2024、Aratchige 2025、Chen 2024 (`2412.17481`)、Tran 2025、Wu 2025、Yan 2025、Xu 2026、Yue 2026、Chen 2026 (`2602.11583`)、Wang 2026；`analysis/2026-03-26-high-quality-survey-top10-cross-review.md` 中更严格的 high-quality Top 10 仅作为比较性审计工件，不作为本文并列口径。统一决议见 `analysis/2026-03-26-source-of-truth-unification.md`。
 
 ---
 

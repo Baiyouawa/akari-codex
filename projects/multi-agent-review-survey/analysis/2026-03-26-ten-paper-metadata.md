@@ -5,6 +5,8 @@
 - Scope: 对当前用于结构化精读、综合报告与 research ideas 的 10 篇论文进行交叉复核，统一 canonical reading set，并修正先前文档间的选文不一致问题。
 - Supersedes: 先前同名文件中的 10 篇子集定义；本修订版以 `analysis/2026-03-26-ten-survey-structured-reading-notes.md` 与 `analysis/2026-03-26-ten-survey-research-ideas.md` 实际使用的论文集合为准。
 
+> 2026-03-26 source-of-truth 注记：本文件现为项目**最终唯一** 10 篇清单；`analysis/2026-03-26-high-quality-survey-top10-cross-review.md` 仅保留为比较性审计工件，不再作为 metadata / 精读笔记 / 中文主报告的并列 Top 10 口径。统一决议见 `analysis/2026-03-26-source-of-truth-unification.md`。
+
 ## 发现并修正的问题
 
 复核 `analysis/2026-03-26-ten-paper-metadata.md`、`analysis/2026-03-26-ten-survey-structured-reading-notes.md`、`analysis/2026-03-26-ten-survey-synthesis-report.md` 后，发现三份文档引用的 10 篇论文集合不一致：
