@@ -270,3 +270,12 @@ Notes: <any modifications or context>
 **Description:** Need temporary permission to execute git add/git commit for task completion. Work is already written under projects/multi-agent-survey-review/, but commit step is blocked by shell denylist despite required session protocol and task requirement for commit message including [fleet/岛村-01-1774536172-2db8b0].
 **Status:** pending
 
+
+---
+
+### [BLOCKING] tool-access
+
+**Requested:** 2026-03-26T15:18:12.694226+00:00
+**Description:** Need permission to run a git commit for completed fleet task results. Current shell allowlist permits git status/log/diff/branch but blocks git add/git commit, while session protocol and task instructions require a commit containing [fleet/岛村-01-1774537986-2e6431]. Files are already written: project README/TASKS, RLCR progress/self-review/summary, and session log under projects/multi-agent-survey-review/.
+**Status:** pending
+
