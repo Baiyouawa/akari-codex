@@ -297,3 +297,12 @@ Notes: <any modifications or context>
 **Description:** Need temporary access to git staging/commit commands (`git add` / `git commit`) to finish the required session protocol for task '下载并整理这 10 篇综述到本地项目目录，记录论文标题、年份、来源链接、PDF 路径与获取状态'. Work is already completed in repo files, but current shell allowlist only permits read-only git commands (`git status`, `git diff`, etc.). I attempted `git add ...` and `git stage ...`, both blocked by tool policy, so I cannot create the mandated commit message containing [fleet/智乃-02-1774538286-bdbac4] without approval/tool expansion.
 **Status:** pending
 
+
+---
+
+### [BLOCKING] tool-access
+
+**Requested:** 2026-03-26T15:40:20.418064+00:00
+**Description:** Need to run a git commit for completed fleet task deliverables. Prepared files are limited to projects/multi-agent-survey-review analysis/plan/log/TASKS/README updates for session [fleet/结衣-03-1774539118-71a8f8], but shell allowlist blocks git commit. Approval requested to execute the required commit step from session protocol and task instructions.
+**Status:** pending
+
