@@ -2600,7 +2600,8 @@
       "session_id": "侑-00-1774527533-c00ede",
       "project": "zero-basics-plan",
       "claimed_at": 1774527533.0428777,
-      "active": true
+      "active": false,
+      "released_at": 1774528199.1123552
     },
     "claim-f7d3fecf74a2": {
       "task_id": "414cabb4afaa04a6",
@@ -2668,6 +2669,14 @@
       "claimed_at": 1774527991.0206857,
       "active": false,
       "released_at": 1774528125.715631
+    },
+    "claim-329f10a81f40": {
+      "task_id": "955c6abcc8422860",
+      "worker_id": "岛村-01",
+      "session_id": "岛村-01-1774528171-979a09",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774528171.2456908,
+      "active": true
     }
   }
 }

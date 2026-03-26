@@ -835,19 +835,25 @@ class AgentLoop:
             ok = snap.total_ok
             failed = snap.total_failed
             lines = [
-                f"Fleet 状态: {active}/{snap.max_workers} 个 Agent 活跃",
-                f"已启动: {launched}, 已完成: {completed} (成功{ok}, 失败{failed})",
+                f"🏭 Fleet 状态: {active}/{snap.max_workers} 个 Agent 活跃",
+                f"📊 已启动: {launched}, 已完成: {completed} (✅{ok} ❌{failed})",
             ]
-            if snap.active_list:
-                lines.append("\n当前工作中:")
+
+            if scheduler._dashboard:
+                detail = self._render_worker_details(scheduler._dashboard)
+                if detail:
+                    lines.append(detail)
+            elif snap.active_list:
+                lines.append("\n👷 当前工作中:")
                 for w in snap.active_list:
                     idle_tag = " [探索]" if w["is_idle"] else ""
                     lines.append(
                         f"  {w['worker_id']}: {w['project']}/{w['task_id']} "
                         f"({w['elapsed_seconds']:.0f}s){idle_tag}"
                     )
+
             if not snap.active_list and completed > 0:
-                lines.append("所有任务已完成。")
+                lines.append("\n🏁 所有任务已完成。")
 
             blocked_items = scheduler.drain_blocked_notifications()
             if blocked_items:
@@ -860,9 +866,14 @@ class AgentLoop:
                     )
                 lines.append("请告知主人定夺！")
 
-            if scheduler._dashboard:
-                lines.append(f"\n--- Dashboard ---\n{scheduler._dashboard.render_snapshot()}")
             return "\n".join(lines)
+
+        if skill_name == "multiagent_worker_detail":
+            scheduler = get_fleet_scheduler()
+            if not scheduler or not scheduler._dashboard:
+                return "没有运行中的 Dashboard"
+            worker_id = args.get("worker_id", "")
+            return self._render_single_worker(scheduler._dashboard, worker_id)
 
         if skill_name == "multiagent_stop":
             scheduler = get_fleet_scheduler()
