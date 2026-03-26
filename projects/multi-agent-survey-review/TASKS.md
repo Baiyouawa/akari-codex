@@ -33,8 +33,8 @@
 - [ ] 筛选 2024-2026 年与 multi-agent 相关的最新 10 篇高质量综述论文，优先 arXiv/ACL/NeurIPS/ICML/ICLR/IEEE/ACM 等可信来源，并记录题目、年份、链接与筛选理由
   Done when: TBD
 
-- [ ] 将这 10 篇综述论文下载到本地，按统一目录结构整理 PDF 与元数据，确保文件可追溯到原始来源
-  Done when: TBD
+- [x] 将这 10 篇综述论文下载到本地，按统一目录结构整理 PDF 与元数据，确保文件可追溯到原始来源
+  Done when: 产出 `projects/multi-agent-survey-review/literature/papers/` 标准归档目录、`projects/multi-agent-survey-review/literature/indexes/papers_index.jsonl`、`projects/multi-agent-survey-review/literature/indexes/papers_index.csv`、`projects/multi-agent-survey-review/literature/meta/2026-03-26-ingest-summary.json`，并完成对应计划的 progress/self-review/summary 文件
 
 - [x] 对 10 篇综述分别进行详读，提炼每篇的研究背景、问题定义、分类框架、核心观点、方法脉络、数据集/benchmark、局限性与未来方向
   Done when: 产出 `projects/multi-agent-survey-review/analysis/2026-03-26-ten-survey-background-problem-framework-notes.md`，并完成 `projects/multi-agent-survey-review/plans/对-10-篇综述分别进行详读-提炼每篇的研究背景-问题定义-分类框架-核心观点-方法脉络-数据集-benchmark-局-progress.md`、`projects/multi-agent-survey-review/plans/对-10-篇综述分别进行详读-提炼每篇的研究背景-问题定义-分类框架-核心观点-方法脉络-数据集-benchmark-局-self-review.md`、`projects/multi-agent-survey-review/plans/对-10-篇综述分别进行详读-提炼每篇的研究背景-问题定义-分类框架-核心观点-方法脉络-数据集-benchmark-局-summary.md`
