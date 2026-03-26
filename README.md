@@ -182,7 +182,7 @@ python -m runner.chat
 │              │                                             │
 │  ┌───────────┴────────────────────────────┐               │
 │  │ SkillRegistry                           │               │
-│  │ 原子(12) + 复合(30) + 系统(38) = 80+   │               │
+│  │ 原子(12) + 复合(26) + 系统(38) = 76+   │               │
 │  └────────────────────────────────────────┘               │
 │              │                                             │
 │  ┌───────────┴────────────────────────────┐               │
@@ -264,15 +264,15 @@ openakari-codex/
 │   ├── system.md                   #   核心系统 Prompt(安全边界/工具/原则)
 │   └── developer.md                #   仓库结构说明 + 执行约定
 │
-├── skills/                         # 30 种复合 Skill (SKILL.md)
-│   ├── architecture/               #   架构重设计
+├── skills/                         # 26 种复合 Skill (SKILL.md)
+│   ├── humanize/                   #   ★ 核心: RLCR 迭代审查 + gen-plan
+│   ├── compound/                   #   经验嵌入（自我进化引擎）
+│   ├── postmortem/                 #   事后分析（根因追溯）
 │   ├── lit-review/                 #   文献调研
 │   ├── develop/                    #   代码开发
 │   ├── orient/                     #   定向评估
-│   ├── humanize/                   #   RLCR 代码审查
 │   ├── horizon-scan/               #   前沿扫描
-│   ├── critique/                   #   对抗式审查
-│   └── ...                         #   共 30 个
+│   └── ...                         #   共 26 个
 │
 ├── projects/                       # 研究项目工作区
 │   ├── akari/                      #   元项目 — 系统自改进
@@ -370,7 +370,7 @@ python -m runner.chat "看看现在什么状态"
 3. 到期提醒检查: 前缀注入到期提醒
   ↓
 4. 构建 AgentLoop:
-   - 注入 SkillRegistry(80+ Skill 目录)
+   - 注入 SkillRegistry(76+ Skill 目录)
    - 注入记忆上下文(短期+长期+反思)
    - 注入仓库状态信息
   ↓
@@ -1637,14 +1637,14 @@ vim decisions/0070-my-decision.md
 
 | 新增功能 | 说明 |
 |---------|------|
+| **Humanize RLCR 核心工作流** | gen-plan → 实现 → 审查 → 修复 闭环，Fleet 每任务强制审查(API fallback) |
 | 多轮 Agent 推理循环 | AgentLoop + 5 种 Action |
-| 统一 Skill 体系 | 80+ Skill 统一注册表 |
+| 统一 Skill 体系 | 76+ Skill 统一注册表（以 Humanize 为核心） |
 | Multi-Agent 并行系统 | Fleet 30+ Worker 调度 |
+| 自主学习闭环 | 三层记忆 + 反思 + compound 经验嵌入 + postmortem 根因分析 + 空闲探索 |
 | QQ 完整多媒体 | 图片/语音/文件/表情包收发与识别 |
 | 真实电话外呼 | SIP + OpenAI Realtime |
 | 角色扮演系统 | 按用户定制人设 |
-| 三层记忆系统 | 短期/长期/反思 |
-| Humanize 代码审查 | RLCR 独立审查闭环 + Fleet 每任务强制审查(API fallback) |
 | 表情包系统 | 自动收藏/Vision 标签/场景匹配发送 |
 | 媒体缓存管理 | 2 天过期自动清理 + 重要标记保护 + 表情包豁免 |
 | 治理与溯源 | 69 条 ADR + 审批门控 + 溯源记录 |
