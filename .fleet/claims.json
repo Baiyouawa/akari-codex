@@ -2520,7 +2520,8 @@
       "session_id": "柚子-01-1774527082-743142",
       "project": "zero-basics-plan",
       "claimed_at": 1774527082.3817225,
-      "active": true
+      "active": false,
+      "released_at": 1774527916.93424
     },
     "claim-6adb31ce270c": {
       "task_id": "52f52e78bb2f249d",
@@ -2590,7 +2591,8 @@
       "session_id": "灯里-00-1774527450-0da636",
       "project": "zero-basics-plan",
       "claimed_at": 1774527450.308757,
-      "active": true
+      "active": false,
+      "released_at": 1774527951.2450778
     },
     "claim-e7d609bbaabc": {
       "task_id": "52f52e78bb2f249d",
@@ -2606,7 +2608,8 @@
       "session_id": "岛村-01-1774527623-59af2a",
       "project": "zero-basics-plan",
       "claimed_at": 1774527623.1674016,
-      "active": true
+      "active": false,
+      "released_at": 1774527878.512208
     },
     "claim-3268d3a54e51": {
       "task_id": "955c6abcc8422860",
@@ -2614,7 +2617,8 @@
       "session_id": "岛村-01-1774527630-045534",
       "project": "zero-basics-plan",
       "claimed_at": 1774527630.541147,
-      "active": true
+      "active": false,
+      "released_at": 1774527959.312092
     },
     "claim-84bc504891c7": {
       "task_id": "7fd3799597aace9e",
@@ -2631,6 +2635,39 @@
       "project": "zero-basics-plan",
       "claimed_at": 1774527743.3298988,
       "active": true
+    },
+    "claim-e4885031bfef": {
+      "task_id": "76852e1dfafd4c6f",
+      "worker_id": "心奈-03",
+      "session_id": "心奈-03-1774527923-5cf14e",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774527923.5745888,
+      "active": true
+    },
+    "claim-f243fec14bdc": {
+      "task_id": "414cabb4afaa04a6",
+      "worker_id": "由希奈-04",
+      "session_id": "由希奈-04-1774527983-38c81a",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774527983.6568,
+      "active": true
+    },
+    "claim-e9b3e640441f": {
+      "task_id": "054bfa9c0aa5dbb6",
+      "worker_id": "结衣-03",
+      "session_id": "结衣-03-1774527991-984469",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774527991.010405,
+      "active": true
+    },
+    "claim-490b38f8dd68": {
+      "task_id": "955c6abcc8422860",
+      "worker_id": "侑-00",
+      "session_id": "侑-00-1774527991-701923",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774527991.0206857,
+      "active": false,
+      "released_at": 1774528125.715631
     }
   }
 }
