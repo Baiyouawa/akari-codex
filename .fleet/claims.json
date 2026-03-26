@@ -3412,7 +3412,8 @@
       "session_id": "灯里-00-1774540219-778841",
       "project": "multi-agent-survey-review",
       "claimed_at": 1774540219.7835095,
-      "active": true
+      "active": false,
+      "released_at": 1774541039.700416
     },
     "claim-5606d64e75c5": {
       "task_id": "787116a4dc9bb644",
@@ -3420,7 +3421,8 @@
       "session_id": "岛村-01-1774540369-1b67c6",
       "project": "multi-agent-survey-review",
       "claimed_at": 1774540369.994266,
-      "active": true
+      "active": false,
+      "released_at": 1774541091.014521
     },
     "claim-237ca650ef67": {
       "task_id": "eab015b082455db5",
