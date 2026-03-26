@@ -12,8 +12,8 @@
 - [x] 调研开发工具链资料：覆盖 Cursor、VS Code、终端、包管理、环境配置、基本调试方法，重点整理适合零基础的 VibeCoding 入门实践资料。
   Done when: 形成带来源的调研笔记，覆盖 Cursor / VS Code / 终端 / 包管理 / 环境配置 / 调试 / VibeCoding 入门实践，并给出课程落地建议；见 `projects/zero-basics-plan/analysis/dev-toolchain-beginner-research.md`
 
-- [x] 调研 VibeCoding / AI 辅助编程资料：说明概念、工作流、提示词基础、如何与 Cursor 配合完成小项目、常见误区与安全注意事项。
-  Done when: 形成带来源的调研笔记，覆盖概念 / 工作流 / 提示词基础 / Cursor 小项目流程 / 常见误区 / 安全注意事项，并给出课程落地建议；见 `projects/zero-basics-plan/analysis/2026-03-26-vibecoding-ai-assisted-programming-research.md`
+- [ ] 调研 VibeCoding / AI 辅助编程资料：说明概念、工作流、提示词基础、如何与 Cursor 配合完成小项目、常见误区与安全注意事项。
+  Done when: TBD
 
 - [x] 调研 Python 与编程基础资料：覆盖语法、数据结构、函数、模块、文件读写、虚拟环境，为后续 AI / 深度学习学习做铺垫。
   Done when: 形成带来源的调研笔记，覆盖语法 / 数据结构 / 函数 / 模块 / 文件读写 / 虚拟环境，并给出课程映射、练习设计与最小资料包建议；见 `projects/zero-basics-plan/analysis/2026-03-26-python-programming-basics-research.md`
@@ -24,8 +24,8 @@
 - [ ] 调研实践项目案例：为 28 天课程匹配由浅入深的小练习或小项目，如命令行练习、Git 协作练习、Cursor 辅助编码、小型深度学习 demo。
   Done when: TBD
 
-- [ ] 整理最终 Markdown 文档结构：输出一份完整《零基础计划》教程草案，要求包含课程说明、4 周周目标、28 天日程安排、每周末系统课程、每日资料链接、每日任务与阶段性产出。
-  Done when: TBD
+- [x] 整理最终 Markdown 文档结构：输出一份完整《零基础计划》教程草案，要求包含课程说明、4 周周目标、28 天日程安排、每周末系统课程、每日资料链接、每日任务与阶段性产出。
+  Done when: 形成完整教程草案并落盘到 `projects/zero-basics-plan/zero-basics-plan-course-draft.md`，且包含课程说明 / 4 周周目标 / 28 天日程 / 每周末系统课程 / 每日资料链接 / 每日任务 / 阶段性产出
 
 - [ ] 对所有收集到的资料进行可追溯性审查：检查链接可访问性、内容质量、是否适合初学者，并标注推荐理由与难度。
   Done when: TBD
