@@ -500,6 +500,18 @@ class FleetScheduler:
                 added += 1
             return added
 
+    def peek_preassigned(self) -> tuple[int, list[str]]:
+        """预分配队列长度 + 前若干条任务摘要（供小白固定格式汇报）。"""
+        with self._preassigned_lock:
+            n = len(self._preassigned)
+            previews: list[str] = []
+            for t in self._preassigned[:20]:
+                tx = (t.text or "").strip()
+                if len(tx) > 120:
+                    tx = tx[:117] + "..."
+                previews.append(tx or "(空任务)")
+            return n, previews
+
     def add_project_filter(self, project: str) -> None:
         """Add a project to the filter set (thread-safe via frozen replace)."""
         from dataclasses import replace
@@ -615,7 +627,8 @@ def stop_fleet() -> str:
         return "Fleet is not running"
     _scheduler_instance.stop()
     status = _scheduler_instance.get_status()
-    _scheduler_instance = None
+    # 不在此处清空 _scheduler_instance：由调度线程 _shutdown() 结束时释放，
+    # 否则 multiagent_status 会在收尾阶段误判为「未运行」。
     return f"Fleet stopping...\n\n{status}"
 
 

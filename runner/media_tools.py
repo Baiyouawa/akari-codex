@@ -20,6 +20,8 @@ import os
 import re
 import time
 import urllib.request
+import zipfile
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -711,6 +713,188 @@ def get_file_for_send(path: str) -> dict[str, Any]:
         "size": p.stat().st_size,
         "mime": mimetypes.guess_type(str(p))[0] or "application/octet-stream",
     }
+
+
+# ─── QQ 发文件：目录打包为 zip（项目整包发送）──────────────────
+
+_ZIP_EXCLUDE_DIR_NAMES: frozenset[str] = frozenset({
+    ".git", "node_modules", "__pycache__", ".venv", "venv", ".mypy_cache",
+    ".pytest_cache", ".tox", "dist", "build", ".eggs", "target", ".cargo",
+    ".fleet", ".humanize", ".idea", ".vscode", "coverage", "htmlcov",
+    ".ruff_cache", ".nox", "eggs",
+})
+
+
+def _zip_exclude_path(rel_parts: tuple[str, ...]) -> bool:
+    for part in rel_parts:
+        if part in _ZIP_EXCLUDE_DIR_NAMES:
+            return True
+        if part.endswith(".egg-info"):
+            return True
+    return False
+
+
+def _relative_under_root(path: Path, root: Path) -> str | None:
+    try:
+        rel = path.resolve().relative_to(root.resolve())
+    except ValueError:
+        return None
+    if _zip_exclude_path(rel.parts):
+        return None
+    return "/".join(rel.parts)
+
+
+def pack_path_for_qq_send(
+    source: str,
+    repo_root: Path,
+    *,
+    label: str = "",
+) -> dict[str, Any]:
+    """将本机文件或目录打成 zip（或单文件直发），供 QQ `[FILE:路径]` 发送。
+
+    - **单文件**且小于 `QQ_SEND_ZIP_MAX_MB`：不打包，直接返回该文件绝对路径。
+    - **目录**：打包到 `logs/media_cache/exports/`，排除 .git/node_modules 等常见大包。
+
+    环境变量：
+    - `QQ_SEND_ZIP_MAX_MB`：zip 与单文件直发上限（默认 90，QQ 单文件宜小于约 100MB）
+    - `QQ_SEND_ZIP_MAX_FILES`：目录内最多纳入文件数（默认 12000）
+    - `QQ_SEND_ZIP_SKIP_FILE_MB`：单个子文件超过此大小则跳过不纳入 zip（默认 48）
+    """
+    max_zip_bytes = int(os.environ.get("QQ_SEND_ZIP_MAX_MB", "90")) * 1024 * 1024
+    max_files = int(os.environ.get("QQ_SEND_ZIP_MAX_FILES", "12000"))
+    skip_member_bytes = int(os.environ.get("QQ_SEND_ZIP_SKIP_FILE_MB", "48")) * 1024 * 1024
+
+    raw = Path(source).expanduser()
+    if not raw.is_absolute():
+        p = (repo_root / raw).resolve()
+    else:
+        p = raw.resolve()
+
+    if not p.exists():
+        return {"ok": False, "error": f"路径不存在: {source}"}
+
+    if p.is_file():
+        st = p.stat()
+        if st.st_size > max_zip_bytes:
+            return {
+                "ok": False,
+                "error": f"单文件过大 ({st.st_size} bytes)，超过 QQ_SEND_ZIP_MAX_MB 限制，请用网盘或其他方式传",
+            }
+        return {
+            "ok": True,
+            "kind": "file",
+            "path": str(p),
+            "name": p.name,
+            "size": st.st_size,
+            "note": "单文件可直接发，无需 zip",
+        }
+
+    if not p.is_dir():
+        return {"ok": False, "error": f"不是文件或目录: {p}"}
+
+    members: list[tuple[Path, str]] = []
+    skipped_large = 0
+    for f in sorted(p.rglob("*")):
+        if not f.is_file() or f.is_symlink():
+            continue
+        arc = _relative_under_root(f, p)
+        if arc is None:
+            continue
+        try:
+            sz = f.stat().st_size
+        except OSError:
+            continue
+        if sz > skip_member_bytes:
+            skipped_large += 1
+            continue
+        members.append((f, arc))
+        if len(members) >= max_files:
+            break
+
+    if not members:
+        msg = "目录下没有可打包的文件（可能全被排除或超过单文件大小上限）"
+        if skipped_large:
+            msg += f"；已跳过 {skipped_large} 个过大的文件"
+        return {"ok": False, "error": msg}
+
+    export_root = _get_cache_dir() / "exports"
+    export_root.mkdir(parents=True, exist_ok=True)
+    slug = re.sub(r"[^\w.-]+", "-", (label or p.name).strip())[:48].strip("-") or "project"
+    ts = datetime.now().strftime("%Y%m%d-%H%M%S")
+    zip_path = export_root / f"qq-send-{slug}-{ts}.zip"
+
+    total_uncompressed = 0
+    try:
+        with zipfile.ZipFile(
+            zip_path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=6
+        ) as zf:
+            for fpath, arcname in members:
+                try:
+                    st = fpath.stat()
+                except OSError:
+                    continue
+                total_uncompressed += st.st_size
+                if total_uncompressed > max_zip_bytes * 4:
+                    return {
+                        "ok": False,
+                        "error": "未压缩体积过大，已中止。可缩小目录或调高 QQ_SEND_ZIP_MAX_MB 后重试",
+                    }
+                zf.write(fpath, arcname)
+    except Exception as e:
+        if zip_path.is_file():
+            zip_path.unlink(missing_ok=True)
+        return {"ok": False, "error": f"打包失败: {type(e).__name__}: {e}"}
+
+    zsize = zip_path.stat().st_size
+    if zsize > max_zip_bytes:
+        zip_path.unlink(missing_ok=True)
+        return {
+            "ok": False,
+            "error": (
+                f"压缩包仍过大 ({zsize} bytes > {max_zip_bytes})。"
+                "可排除大文件、拆开发送，或提高 QQ_SEND_ZIP_MAX_MB（注意 QQ 实际限制）。"
+            ),
+        }
+
+    note_parts = [f"已打包 {len(members)} 个文件"]
+    if skipped_large:
+        note_parts.append(f"跳过 {skipped_large} 个超过 {skip_member_bytes // (1024 * 1024)}MB 的文件")
+    if len(members) >= max_files:
+        note_parts.append(f"已达文件数上限 {max_files}，其余未纳入")
+
+    return {
+        "ok": True,
+        "kind": "zip",
+        "path": str(zip_path.resolve()),
+        "name": zip_path.name,
+        "size": zsize,
+        "note": "；".join(note_parts),
+    }
+
+
+def safe_project_dir_name(name: str) -> bool:
+    """projects 子目录名是否安全（防路径穿越）。"""
+    n = name.strip()
+    if not n or n in (".", ".."):
+        return False
+    if ".." in n or "/" in n or "\\" in n:
+        return False
+    return bool(re.match(r"^[\w][\w.-]*$", n))
+
+
+def pack_project_for_qq_send(project: str, repo_root: Path, *, label: str = "") -> dict[str, Any]:
+    """打包 `projects/<project>` 目录为 zip（参数 project 为项目文件夹名）。"""
+    if not safe_project_dir_name(project):
+        return {"ok": False, "error": "无效的项目名（仅允许字母数字、点、横线，且不能含路径分隔符）"}
+    root = (repo_root / "projects" / project).resolve()
+    if not root.is_dir():
+        return {"ok": False, "error": f"项目目录不存在: projects/{project}"}
+    try:
+        root.relative_to(repo_root.resolve())
+    except ValueError:
+        return {"ok": False, "error": "项目路径不在仓库内"}
+    hint = label.strip() or project
+    return pack_path_for_qq_send(str(root), repo_root, label=hint)
 
 
 def _is_binary(path: Path) -> bool:

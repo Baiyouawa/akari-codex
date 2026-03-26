@@ -352,6 +352,8 @@ class AgentLoop:
             return self._execute_media_skill(skill_name, args)
         if skill_name.startswith(("read_system", "list_system", "request_file", "get_file_for")):
             return self._execute_file_skill(skill_name, args)
+        if skill_name in ("pack_for_qq_send", "send_project_zip"):
+            return self._execute_file_skill(skill_name, args)
         if skill_name.startswith("phone_"):
             return self._execute_phone_skill(skill_name, args)
 
@@ -548,6 +550,36 @@ class AgentLoop:
                 return "需要指定文件路径"
             import json as _json
             return _json.dumps(media_tools.get_file_for_send(path), ensure_ascii=False)
+
+        if skill_name == "pack_for_qq_send":
+            path = args.get("path", "")
+            label = str(args.get("label", "") or args.get("name", "") or "")
+            if not path:
+                return "需要指定 path（目录或文件的绝对路径，或相对仓库根的路径）"
+            info = media_tools.pack_path_for_qq_send(path, self.config.repo_home, label=label)
+            if not info.get("ok"):
+                return str(info.get("error", "打包失败"))
+            return (
+                f"[发送文件指令] 请在 reply 的 message 中包含: [FILE:{info['path']}]\n"
+                f"类型: {info.get('kind', '')}  文件名: {info.get('name', '')}  大小: {info['size']} bytes\n"
+                f"{info.get('note', '')}"
+            )
+
+        if skill_name == "send_project_zip":
+            project = str(args.get("project", "") or args.get("name", "") or "").strip()
+            label = str(args.get("label", "") or "")
+            if not project:
+                return "需要指定 project（projects 下的目录名，例如 zero-basics-plan）"
+            info = media_tools.pack_project_for_qq_send(
+                project, self.config.repo_home, label=label
+            )
+            if not info.get("ok"):
+                return str(info.get("error", "打包失败"))
+            return (
+                f"[发送文件指令] 请在 reply 的 message 中包含: [FILE:{info['path']}]\n"
+                f"项目: {project}  压缩包: {info.get('name', '')}  大小: {info['size']} bytes\n"
+                f"{info.get('note', '')}"
+            )
 
         return f"未知的文件 Skill: {skill_name}"
 
@@ -955,6 +987,226 @@ class AgentLoop:
         )
         return final_report
 
+    def _maybe_autostart_fleet_on_status(self, args: dict[str, Any]) -> str:
+        """查询状态时：若 Fleet 未运行且有待办任务，则自动启动（可关）。"""
+        import os
+        import threading
+        import time as _time
+
+        if args.get("no_autostart"):
+            return ""
+        if os.environ.get("MULTIAGENT_STATUS_AUTOSTART", "1").strip() == "0":
+            return ""
+
+        from fleet.scheduler import get_fleet_scheduler, start_fleet
+        from fleet.config import FleetConfig
+        from fleet.task_scanner import scan_available_tasks
+
+        sched = get_fleet_scheduler()
+        thread_alive = any(
+            t.name == "fleet-scheduler" and t.is_alive()
+            for t in threading.enumerate()
+        )
+        if sched is not None:
+            if sched._running:
+                return ""
+            if thread_alive:
+                return ""
+
+        cfg = FleetConfig.from_env()
+        if cfg.max_workers <= 0:
+            return ""
+
+        eligible = [
+            t for t in scan_available_tasks(self.config.repo_home)
+            if t.fleet_eligible and not t.blocked
+        ]
+        if not eligible:
+            return ""
+
+        start_fleet(
+            repo_root=self.config.repo_home,
+            fleet_config=cfg,
+            background=True,
+            codex_config=self.config,
+        )
+        _time.sleep(0.6)
+        return (
+            "\n▶ 检测到有待认领任务且 Fleet 未在运行，**已自动启动调度**。"
+            "\n  （若不想自动启动：调用时加 `no_autostart: true` 或设置环境变量 "
+            "`MULTIAGENT_STATUS_AUTOSTART=0`）\n"
+        )
+
+    def _format_multiagent_fixed_report(self, args: dict[str, Any], autostart_note: str) -> str:
+        """固定格式 Multi-Agent 汇报（阶段 / Fleet 事实 / 队列 / Agent / 产出）。"""
+        import threading
+        from datetime import datetime, timedelta, timezone
+
+        from fleet.scheduler import get_fleet_scheduler
+
+        repo = self.config.repo_home
+        bj = timezone(timedelta(hours=8))
+        ts = datetime.now(bj).strftime("%Y-%m-%d %H:%M:%S")
+
+        lines: list[str] = [
+            "═══════════════════════════════════════════════════════",
+            "【小白 · Multi-Agent 固定汇报】",
+            f"汇报时间（北京）: {ts}",
+            "═══════════════════════════════════════════════════════",
+            "",
+            "■ 1）小白编排阶段（delegate / Plan）",
+        ]
+        phase = (self._delegate_phase or "").strip()
+        if phase == "planning":
+            lines.append(
+                "   状态: 📝 **Plan 规划中**"
+                "（正在检查或生成各任务的 `plans/*.md`，尚未完成向 Worker 的满载派发）"
+            )
+        elif phase == "launching":
+            lines.append(
+                "   状态: 🚀 **Plan 已就绪，正在拉起 Fleet**"
+                "（调度器启动或预分配任务入队中）"
+            )
+        else:
+            lines.append(
+                "   状态: — **不在 delegate 阻塞阶段**"
+                "（若下方 Fleet 判定为运行中，则任务由调度器按 tick 派发）"
+            )
+
+        sched = get_fleet_scheduler()
+        thread_alive = any(
+            t.name == "fleet-scheduler" and t.is_alive()
+            for t in threading.enumerate()
+        )
+
+        lines.extend(["", "■ 2）Fleet 调度器事实状态（本进程，避免误判）"])
+        if sched is None:
+            lines.append("   调度器实例: **不存在**")
+            lines.append(f"   fleet-scheduler 线程存活: **{'是' if thread_alive else '否'}**")
+            lines.append("   **综合判定**: ⛔ Fleet **未运行**")
+        else:
+            lines.append("   调度器实例: **存在**")
+            lines.append(f"   _running: **{bool(sched._running)}**")
+            lines.append(f"   _draining: **{bool(sched._draining)}**")
+            lines.append(f"   fleet-scheduler 线程存活: **{'是' if thread_alive else '否'}**")
+            if sched._running and not sched._draining:
+                verdict = "✅ Fleet **运行中**"
+            elif thread_alive:
+                verdict = "⏳ **收尾中**（调度线程仍在，如刚 stop 或正在排空）"
+            else:
+                verdict = "⛔ Fleet **已停止**"
+            lines.append(f"   **综合判定**: {verdict}")
+            pf = sched.config.project_filter
+            if pf:
+                lines.append(f"   当前 project_filter: `{', '.join(sorted(pf))}`")
+            else:
+                lines.append("   当前 project_filter: （空，扫描全部项目）")
+
+        snap = sched.metrics.get_snapshot() if sched else None
+
+        lines.extend(
+            [
+                "",
+                "■ 3）仓库与产出格式（按路径找结果）",
+                f"   仓库根: `{repo}`",
+                "   项目目录: `projects/<项目名>/`",
+                "     · `TASKS.md` — 任务 `[ ]` / `[x]`",
+                "     · `plans/` — Humanize 风格计划（与任务对应）",
+                "     · `logs/` — Worker 会话日志（如 `*fleet*.md`）",
+                "     · `analysis/`、`literature/` — 分析与文献笔记",
+            ]
+        )
+
+        lines.extend(["", "■ 4）预分配队列（小白已指定、尚未派出 Worker）"])
+        if sched:
+            n_pre, prev = sched.peek_preassigned()
+            lines.append(f"   剩余: **{n_pre}** 条")
+            if prev:
+                for i, ptxt in enumerate(prev[:12], 1):
+                    lines.append(f"     {i}. {ptxt}")
+            elif n_pre == 0:
+                lines.append("     （队列为空）")
+        else:
+            lines.append("   （无调度器实例）")
+
+        lines.extend(["", "■ 5）当前 Agent 一对一（metrics，可靠）"])
+        if snap and snap.active_list:
+            lines.append(f"   活跃: **{len(snap.active_list)}** / {snap.max_workers}")
+            for i, w in enumerate(snap.active_list, 1):
+                idle = w.get("is_idle")
+                et = (w.get("exploration_type") or "").strip()
+                task = (w.get("task_text") or w.get("task_id") or "?").strip()
+                if idle:
+                    task = f"[空闲探索·{et or w.get('task_id', '')}] {task}".strip()
+                task_short = task[:100] + ("…" if len(task) > 100 else "")
+                wid = w.get("worker_id", "?")
+                proj = w.get("project", "?")
+                el = w.get("elapsed_seconds", 0) or 0
+                lines.append(
+                    f"   |{i:2d}| `{wid}` | {proj} | 🔄执行中 | {task_short} | {el:.0f}s"
+                )
+        else:
+            if sched and sched._running and not sched._draining:
+                lines.append(
+                    "   当前 **0** 个活跃 Worker（tick 间隙、或队列空、或即将拉起空闲探索）"
+                )
+            else:
+                lines.append("   无活跃 Worker。")
+
+        lines.extend(["", "■ 6）近期完成与产出（Dashboard）"])
+        if sched and sched._dashboard:
+            detail = self._render_dashboard_chatter(sched._dashboard)
+            lines.append(detail if detail.strip() else "   （暂无最近交付摘要）")
+        else:
+            lines.append("   （Dashboard 未就绪 — 以 ■7 磁盘日志为准）")
+
+        lines.extend(["", "■ 7）磁盘上最新项目日志（兜底）"])
+        try:
+            log_files = sorted(
+                repo.glob("projects/*/logs/*.md"),
+                key=lambda x: x.stat().st_mtime,
+                reverse=True,
+            )[:8]
+            if log_files:
+                for lf in log_files:
+                    rel = lf.relative_to(repo)
+                    try:
+                        sz = lf.stat().st_size
+                    except OSError:
+                        sz = 0
+                    lines.append(f"   · `{rel}` ({sz} bytes)")
+            else:
+                lines.append("   （暂无 `projects/*/logs/*.md`）")
+        except OSError as e:
+            lines.append(f"   （列举失败: {e}）")
+
+        if snap:
+            lines.extend(
+                [
+                    "",
+                    "■ 8）累计统计（本会话调度器生命周期内）",
+                    f"   已派发: {snap.total_launched} | 已完成: {snap.total_completed} "
+                    f"| ✅{snap.total_ok} ❌{snap.total_failed} | 成功率约 {snap.success_rate:.0%}",
+                ]
+            )
+
+        blocked_items: list[dict[str, str]] = []
+        if sched:
+            blocked_items = sched.drain_blocked_notifications()
+        lines.extend(["", "■ 9）阻塞项（本汇报会清空阻塞队列缓存）"])
+        if blocked_items:
+            for b in blocked_items:
+                wk = b.get("worker", "?")
+                lines.append(f"   ⚠️ `{wk}`: {(b.get('reason') or '')[:220]}")
+        else:
+            lines.append("   无")
+
+        if autostart_note:
+            lines.extend(["", autostart_note.rstrip()])
+
+        lines.extend(["", "═══════════════════════════════════════════════════════"])
+        return "\n".join(lines)
+
     def _sys_multiagent(self, skill_name: str, args: dict[str, Any]) -> str:
         """Multi-Agent 系统操作。"""
         try:
@@ -1035,59 +1287,8 @@ class AgentLoop:
             )
 
         if skill_name == "multiagent_status":
-            if self._delegate_phase == "planning":
-                return "📝 小白正在规划任务、生成执行计划中，请稍等...计划生成完毕后会立刻启动子 Agent。"
-            if self._delegate_phase == "launching":
-                return "🚀 计划已就绪，正在启动 Multi-Agent 系统..."
-
-            scheduler = get_fleet_scheduler()
-            if not scheduler or not scheduler._running or scheduler._draining:
-                return "Multi-Agent 系统目前没有运行"
-            snap = scheduler.metrics.get_snapshot()
-            active = snap.active_workers
-            launched = snap.total_launched
-            completed = snap.total_completed
-            ok = snap.total_ok
-            failed = snap.total_failed
-            lines = [
-                f"🏭 Fleet 状态: {active}/{snap.max_workers} 个 Agent 活跃",
-                f"📊 已启动: {launched}, 已完成: {completed} (✅{ok} ❌{failed})",
-            ]
-
-            if snap.active_list:
-                lines.append(f"\n👷 活跃 Agent ({len(snap.active_list)} 个):")
-                for i, w in enumerate(snap.active_list):
-                    idle_tag = " [自主探索]" if w["is_idle"] else ""
-                    task = w.get("task_text", "") or w["task_id"]
-                    task_display = task[:60] + ("..." if len(task) > 60 else "")
-                    elapsed = w["elapsed_seconds"]
-                    lines.append(
-                        f"  W{i} ({w['worker_id']}){idle_tag}:"
-                    )
-                    lines.append(f"    📋 任务: {task_display}")
-                    lines.append(f"    📂 项目: {w['project']}")
-                    lines.append(f"    ⏱️ 已运行: {elapsed:.0f}s")
-
-            if scheduler._dashboard:
-                detail = self._render_dashboard_chatter(scheduler._dashboard)
-                if detail:
-                    lines.append(detail)
-
-            if not snap.active_list and completed > 0:
-                lines.append("\n🏁 所有任务已完成。")
-
-            blocked_items = scheduler.drain_blocked_notifications()
-            if blocked_items:
-                lines.append(f"\n⚠️ 有 {len(blocked_items)} 个 Agent 遇到阻塞:")
-                for b in blocked_items:
-                    w = b.get("worker", "?")
-                    short_w = w.rsplit("-", 2)[0] if "-" in w else w
-                    lines.append(
-                        f"  {short_w}: {b.get('reason', '未知原因')[:150]}"
-                    )
-                lines.append("请告知主人定夺！")
-
-            return "\n".join(lines)
+            autostart_note = self._maybe_autostart_fleet_on_status(args)
+            return self._format_multiagent_fixed_report(args, autostart_note)
 
         if skill_name == "multiagent_worker_detail":
             scheduler = get_fleet_scheduler()

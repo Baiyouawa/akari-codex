@@ -1,0 +1,122 @@
+[
+  {
+    "id": "2402.01680",
+    "year": "2024",
+    "slug": "2024-guo-et-al-large-language-model-based-multi-agents-a-survey-of-progress-and-challenges-arxiv-2402.01680.pdf",
+    "title": "Large Language Model based Multi-Agents: A Survey of Progress and Challenges",
+    "source_url": "https://arxiv.org/abs/2402.01680",
+    "download_url": "https://arxiv.org/pdf/2402.01680.pdf",
+    "local_path": "projects/multi-agent-survey-review/literature/pdf/2024-guo-et-al-large-language-model-based-multi-agents-a-survey-of-progress-and-challenges-arxiv-2402.01680.pdf",
+    "status": "downloaded",
+    "note": "size=1243493",
+    "size_bytes": 1243493
+  },
+  {
+    "id": "10.1007/s44336-024-00009-2",
+    "year": "2024",
+    "slug": "2024-li-et-al-a-survey-on-llm-based-multi-agent-systems-workflow-infrastructure-and-challenges-springer-10.1007-s44336-024-00009-2.pdf",
+    "title": "A survey on LLM-based multi-agent systems: workflow, infrastructure, and challenges",
+    "source_url": "https://link.springer.com/article/10.1007/s44336-024-00009-2",
+    "download_url": "https://link.springer.com/content/pdf/10.1007/s44336-024-00009-2.pdf",
+    "local_path": "projects/multi-agent-survey-review/literature/pdf/2024-li-et-al-a-survey-on-llm-based-multi-agent-systems-workflow-infrastructure-and-challenges-springer-10.1007-s44336-024-00009-2.pdf",
+    "status": "downloaded",
+    "note": "size=3482567",
+    "size_bytes": 3482567
+  },
+  {
+    "id": "2412.17481",
+    "year": "2025",
+    "slug": "2025-chen-et-al-a-survey-on-llm-based-multi-agent-system-recent-advances-and-new-frontiers-in-application-arxiv-2412.17481.pdf",
+    "title": "A Survey on LLM-based Multi-Agent System: Recent Advances and New Frontiers in Application",
+    "source_url": "https://arxiv.org/abs/2412.17481",
+    "download_url": "https://arxiv.org/pdf/2412.17481.pdf",
+    "local_path": "projects/multi-agent-survey-review/literature/pdf/2025-chen-et-al-a-survey-on-llm-based-multi-agent-system-recent-advances-and-new-frontiers-in-application-arxiv-2412.17481.pdf",
+    "status": "downloaded",
+    "note": "size=404537",
+    "size_bytes": 404537
+  },
+  {
+    "id": "2501.06322",
+    "year": "2025",
+    "slug": "2025-tran-et-al-multi-agent-collaboration-mechanisms-a-survey-of-llms-arxiv-2501.06322.pdf",
+    "title": "Multi-Agent Collaboration Mechanisms: A Survey of LLMs",
+    "source_url": "https://arxiv.org/abs/2501.06322",
+    "download_url": "https://arxiv.org/pdf/2501.06322.pdf",
+    "local_path": "projects/multi-agent-survey-review/literature/pdf/2025-tran-et-al-multi-agent-collaboration-mechanisms-a-survey-of-llms-arxiv-2501.06322.pdf",
+    "status": "downloaded",
+    "note": "size=2420086",
+    "size_bytes": 2420086
+  },
+  {
+    "id": "2502.14321",
+    "year": "2025",
+    "slug": "2025-yan-et-al-beyond-self-talk-a-communication-centric-survey-of-llm-based-multi-agent-systems-arxiv-2502.14321.pdf",
+    "title": "Beyond Self-Talk: A Communication-Centric Survey of LLM-Based Multi-Agent Systems",
+    "source_url": "https://arxiv.org/abs/2502.14321",
+    "download_url": "https://arxiv.org/pdf/2502.14321.pdf",
+    "local_path": "projects/multi-agent-survey-review/literature/pdf/2025-yan-et-al-beyond-self-talk-a-communication-centric-survey-of-llm-based-multi-agent-systems-arxiv-2502.14321.pdf",
+    "status": "downloaded",
+    "note": "size=1147688",
+    "size_bytes": 1147688
+  },
+  {
+    "id": "2502.16804",
+    "year": "2025",
+    "slug": "2025-wu-et-al-multi-agent-autonomous-driving-systems-with-large-language-models-a-survey-of-recent-advances-arxiv-2502.16804.pdf",
+    "title": "Multi-Agent Autonomous Driving Systems with Large Language Models: A Survey of Recent Advances",
+    "source_url": "https://arxiv.org/abs/2502.16804",
+    "download_url": "https://arxiv.org/pdf/2502.16804.pdf",
+    "local_path": "projects/multi-agent-survey-review/literature/pdf/2025-wu-et-al-multi-agent-autonomous-driving-systems-with-large-language-models-a-survey-of-recent-advances-arxiv-2502.16804.pdf",
+    "status": "downloaded",
+    "note": "size=2307367",
+    "size_bytes": 2307367
+  },
+  {
+    "id": "2504.01963",
+    "year": "2025",
+    "slug": "2025-aratchige-ilmini-llms-working-in-harmony-a-survey-on-the-technological-aspects-of-building-effective-llm-based-multi-agent-systems-arxiv-2504.01963.pdf",
+    "title": "LLMs Working in Harmony: A Survey on the Technological Aspects of Building Effective LLM-Based Multi Agent Systems",
+    "source_url": "https://arxiv.org/abs/2504.01963",
+    "download_url": "https://arxiv.org/pdf/2504.01963.pdf",
+    "local_path": "projects/multi-agent-survey-review/literature/pdf/2025-aratchige-ilmini-llms-working-in-harmony-a-survey-on-the-technological-aspects-of-building-effective-llm-based-multi-agent-systems-arxiv-2504.01963.pdf",
+    "status": "downloaded",
+    "note": "size=195656",
+    "size_bytes": 195656
+  },
+  {
+    "id": "2505.21116",
+    "year": "2025",
+    "slug": "2025-lin-et-al-creativity-in-llm-based-multi-agent-systems-a-survey-arxiv-2505.21116.pdf",
+    "title": "Creativity in LLM-based Multi-Agent Systems: A Survey",
+    "source_url": "https://arxiv.org/abs/2505.21116",
+    "download_url": "https://arxiv.org/pdf/2505.21116.pdf",
+    "local_path": "projects/multi-agent-survey-review/literature/pdf/2025-lin-et-al-creativity-in-llm-based-multi-agent-systems-a-survey-arxiv-2505.21116.pdf",
+    "status": "downloaded",
+    "note": "size=1461659",
+    "size_bytes": 1461659
+  },
+  {
+    "id": "2506.09656",
+    "year": "2025",
+    "slug": "2025-zeng-et-al-multi-level-value-alignment-in-agentic-ai-systems-survey-and-perspectives-arxiv-2506.09656.pdf",
+    "title": "Multi-level Value Alignment in Agentic AI Systems: Survey and Perspectives",
+    "source_url": "https://arxiv.org/abs/2506.09656",
+    "download_url": "https://arxiv.org/pdf/2506.09656.pdf",
+    "local_path": "projects/multi-agent-survey-review/literature/pdf/2025-zeng-et-al-multi-level-value-alignment-in-agentic-ai-systems-survey-and-perspectives-arxiv-2506.09656.pdf",
+    "status": "downloaded",
+    "note": "size=1250677",
+    "size_bytes": 1250677
+  },
+  {
+    "id": "2602.11583",
+    "year": "2026",
+    "slug": "2026-chen-et-al-the-five-ws-of-multi-agent-communication-who-talks-to-whom-when-what-and-why-a-survey-from-marl-to-emergent-language-and-llms-arxiv-2602.11583.pdf",
+    "title": "The Five Ws of Multi-Agent Communication: Who Talks to Whom, When, What, and Why -- A Survey from MARL to Emergent Language and LLMs",
+    "source_url": "https://arxiv.org/abs/2602.11583",
+    "download_url": "https://arxiv.org/pdf/2602.11583.pdf",
+    "local_path": "projects/multi-agent-survey-review/literature/pdf/2026-chen-et-al-the-five-ws-of-multi-agent-communication-who-talks-to-whom-when-what-and-why-a-survey-from-marl-to-emergent-language-and-llms-arxiv-2602.11583.pdf",
+    "status": "downloaded",
+    "note": "size=3848111",
+    "size_bytes": 3848111
+  }
+]

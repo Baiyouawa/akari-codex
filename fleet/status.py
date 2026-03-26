@@ -158,6 +158,7 @@ class FleetMetricsTracker:
                     "task_text": w.task_text,
                     "elapsed_seconds": round(elapsed, 1),
                     "is_idle": w.is_idle,
+                    "exploration_type": w.exploration_type or "",
                 })
 
             return FleetStatusSnapshot(

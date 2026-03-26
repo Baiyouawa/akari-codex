@@ -120,7 +120,7 @@ class SkillRegistry:
             ("clear_persona", "清除指定用户的角色扮演人设"),
             ("list_personas", "列出当前所有角色扮演设定"),
             ("multiagent_start", "启动 Multi-Agent 系统并行执行任务。参数: project(项目名), tasks(任务文本列表), max_workers(Agent数量,可选), reason(启动原因,可选)"),
-            ("multiagent_status", "查看 Multi-Agent 系统运行状态（含每个Agent的具体任务、进度、正在做什么）"),
+            ("multiagent_status", "固定格式汇报：小白Plan阶段、Fleet事实状态、预分配队列、各Agent任务与状态、产出路径与最新日志；若Fleet未运行且有待办任务会自动启动。可选参数 no_autostart:true 关闭自动启动"),
             ("multiagent_worker_detail", "查看某个具体Worker的详细信息。参数: worker_id(如W0, W1)"),
             ("multiagent_stop", "停止 Multi-Agent 系统"),
             ("multiagent_report", "查看 Multi-Agent 任务执行报告"),
@@ -131,7 +131,9 @@ class SkillRegistry:
             ("recognize_image", "识别图片内容（Vision LLM）。参数: path_or_url, prompt"),
             ("send_voice", "发送语音消息到 QQ（TTS 合成）。在回复中用 [VOICE:要说的话] 标签"),
             ("recognize_speech", "语音转文字（Whisper STT）。参数: audio_path"),
-            ("send_file", "发送本地文件到 QQ。在回复中用 [FILE:文件路径] 标签"),
+            ("send_file", "发送本地单个文件到 QQ。在回复中用 [FILE:绝对路径] 标签"),
+            ("pack_for_qq_send", "将本机目录或文件打包/准备后通过 QQ 发送。参数: path(路径), label(可选 zip 名前缀)。整目录会打成 zip（排除 .git/node_modules 等）"),
+            ("send_project_zip", "把仓库内 projects/<项目名> 整包打成 zip 发给 QQ。参数: project(目录名如 zero-basics-plan), label(可选)"),
             ("send_emoji", "发送 QQ 表情。在回复中用 [FACE:表情ID] 标签"),
             ("tts_generate", "文字转语音，生成 mp3 文件。参数: text, voice(可选)"),
             # ── 文件系统访问 Skill ────────────────────────
@@ -200,7 +202,11 @@ class SkillRegistry:
         if system:
             humanize_skills = [s for s in system if s.name.startswith("humanize_")]
             media_skills = [s for s in system if s.name.startswith(("send_", "recognize_", "tts_"))]
-            file_skills = [s for s in system if s.name.startswith(("read_system", "list_system", "request_file", "get_file_for"))]
+            file_skills = [
+                s for s in system
+                if s.name.startswith(("read_system", "list_system", "request_file", "get_file_for"))
+                or s.name in ("pack_for_qq_send", "send_project_zip")
+            ]
             phone_skills = [s for s in system if s.name.startswith("phone_")]
             other_system = [
                 s for s in system

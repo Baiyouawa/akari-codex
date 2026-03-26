@@ -14,6 +14,12 @@
     - 发送图片、语音、文件、表情包
     - 回复中嵌入 CQ 码（[IMG:path]、[VOICE:text]、[FILE:path]、[FACE:id]）
 
+发文件（[FILE:…]）说明：
+    NapCat 若在 Windows、小白在 WSL，协议端无法读取 Linux 路径，会导致 upload 静默失败。
+    默认用 base64 内联（与图片/语音一致）。若 NapCat 与仓库同机可读路径，可设
+    ``ONEBOT_FILE_SEND_MODE=path``。超大文件超过 ``ONEBOT_FILE_BASE64_MAX_MB`` 时自动改回路径模式。
+    若 ``upload_private_file`` 仍异常，可试 ``ONEBOT_FILE_API=send_msg``（走 send_msg 的 file 消息段）。
+
 Usage:
     export ONEBOT_SELF_QQ="123456789"
     export ONEBOT_WS_URL="ws://localhost:3001"   # optional
@@ -344,6 +350,40 @@ def _resolve_file_path(file_path: str) -> Path | None:
     return None
 
 
+def _file_payload_for_napcat(p: Path) -> tuple[str, str]:
+    """NapCat 读取 file 字段的方式：默认 base64（解决 WSL 路径 Windows 端不可读）。
+
+    环境变量：
+    - ONEBOT_FILE_SEND_MODE: ``base64``（默认）| ``path`` — 强制只用本地路径
+    - ONEBOT_FILE_BASE64_MAX_MB: 超过此大小的文件仍用路径并打警告（默认 80）
+
+    Returns:
+        (file_field, log_hint) — file_field 传给 API 的 ``file`` 参数
+    """
+    import os
+
+    size = p.stat().st_size
+    mode = os.environ.get("ONEBOT_FILE_SEND_MODE", "base64").strip().lower()
+    max_b64 = int(os.environ.get("ONEBOT_FILE_BASE64_MAX_MB", "80")) * 1024 * 1024
+
+    if mode == "path":
+        return str(p), f"path:{p}"
+
+    if size > max_b64:
+        logger.warning(
+            "文件 %s (%d bytes) 超过 ONEBOT_FILE_BASE64_MAX_MB，改用路径发送；"
+            "若对方仍收不到，请把 NapCat 与仓库放在同一可访问路径或调大该环境变量",
+            p.name,
+            size,
+        )
+        return str(p), f"path>{max_b64}:{p}"
+
+    from runner.media_tools import file_to_base64
+
+    b64 = file_to_base64(p)
+    return f"base64://{b64}", f"base64:{size}B"
+
+
 async def _send_file_via_api(
     ws,
     msg_type: str,
@@ -351,20 +391,31 @@ async def _send_file_via_api(
     group_id: int | None,
     file_path: str,
 ) -> None:
-    """通过 OneBot API 发送文件。支持相对路径自动解析到仓库根目录。"""
+    """通过 OneBot API 发送文件。支持相对路径自动解析到仓库根目录。
+
+    默认使用 ``base64://`` 传递内容（与图片/语音一致），避免 NapCat 在 Windows、
+    小白在 WSL 时无法读取 Linux 绝对路径而导致静默失败。
+    """
     p = _resolve_file_path(file_path)
     if p is None or not p.is_file():
         logger.warning("文件不存在，无法发送: %s（已尝试仓库根目录和递归搜索）", file_path)
         return
 
-    logger.info("准备发送文件: %s (%d bytes)", p, p.stat().st_size)
+    size = p.stat().st_size
+    try:
+        file_param, hint = await asyncio.to_thread(_file_payload_for_napcat, p)
+    except Exception as e:
+        logger.error("准备文件数据失败 %s: %s", p, e)
+        return
+
+    logger.info("准备发送文件: %s (%d bytes) [%s]", p, size, hint)
 
     if msg_type == "private" and user_id is not None:
         payload = {
             "action": "upload_private_file",
             "params": {
                 "user_id": user_id,
-                "file": str(p),
+                "file": file_param,
                 "name": p.name,
             },
         }
@@ -373,7 +424,7 @@ async def _send_file_via_api(
             "action": "upload_group_file",
             "params": {
                 "group_id": group_id,
-                "file": str(p),
+                "file": file_param,
                 "name": p.name,
             },
         }
@@ -382,8 +433,29 @@ async def _send_file_via_api(
                         msg_type, user_id, group_id)
         return
 
-    logger.info("发送文件API调用: action=%s, file=%s, name=%s",
-                payload["action"], str(p), p.name)
+    import os as _os
+
+    api = _os.environ.get("ONEBOT_FILE_API", "upload").strip().lower()
+    if api in ("send_msg", "msg", "segment"):
+        message = [{"type": "file", "data": {"name": p.name, "file": file_param}}]
+        sm: dict = {
+            "action": "send_msg",
+            "params": {"message_type": msg_type, "message": message},
+        }
+        if msg_type == "private" and user_id is not None:
+            sm["params"]["user_id"] = user_id
+        elif msg_type == "group" and group_id is not None:
+            sm["params"]["group_id"] = group_id
+        logger.info("发送文件API: send_msg(file) name=%s [%s]", p.name, hint.split(":", 1)[0])
+        await ws.send(json.dumps(sm))
+        return
+
+    logger.info(
+        "发送文件API: action=%s name=%s mode=%s",
+        payload["action"],
+        p.name,
+        hint.split(":", 1)[0],
+    )
     await ws.send(json.dumps(payload))
 
 
@@ -519,7 +591,7 @@ async def _process_media_tags_and_send(
                 logger.error("TTS 发送失败: %s", e)
 
     file_matches = list(_MEDIA_TAG_FILE.finditer(remaining))
-    for m in reversed(file_matches):
+    for i, m in enumerate(reversed(file_matches)):
         file_path = m.group(1).strip()
         remaining = remaining[:m.start()] + remaining[m.end():]
         if file_path:
@@ -527,6 +599,9 @@ async def _process_media_tags_and_send(
             if resolved and resolved.is_file():
                 logger.info("FILE标签解析: '%s' → %s", file_path, resolved)
                 await _send_file_via_api(ws, msg_type, user_id, group_id, str(resolved))
+                # 多个 [FILE:] 连发时稍间隔，降低 NapCat / 风控失败率
+                if i < len(file_matches) - 1:
+                    await asyncio.sleep(0.4)
             else:
                 logger.warning("FILE标签路径无法解析: '%s'", file_path)
                 fallback = f"抱歉，小白找不到文件 \"{file_path}\"，可以告诉小白完整路径吗？"
