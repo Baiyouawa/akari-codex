@@ -1,0 +1,7 @@
+access_date=2026-03-26T23:10:48+08:00
+download_method=curl -L --fail
+source_url=https://link.springer.com/article/10.1007/s44336-024-00009-2
+pdf_url=https://link.springer.com/content/pdf/10.1007/s44336-024-00009-2.pdf
+status=downloaded
+size_bytes=3482567
+pages=43

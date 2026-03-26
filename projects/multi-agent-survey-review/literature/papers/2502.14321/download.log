@@ -1,0 +1,7 @@
+access_date=2026-03-26T23:10:48+08:00
+download_method=curl -L --fail
+source_url=https://arxiv.org/abs/2502.14321
+pdf_url=https://arxiv.org/pdf/2502.14321.pdf
+status=downloaded
+size_bytes=1147688
+pages=16

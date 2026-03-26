@@ -1,0 +1,52 @@
+{
+  "paper_id": "10.1007/s44336-024-00009-2",
+  "title": "A survey on LLM-based multi-agent systems: workflow, infrastructure, and challenges",
+  "authors": [
+    "Li et al."
+  ],
+  "year": 2024,
+  "abstract": "Open-access review article on LLM-based multi-agent systems published by Springer in Vicinagearth; the local PDF title page labels the article as REVIEW Open Access and the project selection file records the workflow/infrastructure/challenges framing.",
+  "keywords": [
+    "llm-based multi-agent systems",
+    "workflow",
+    "infrastructure",
+    "challenges"
+  ],
+  "review_type": "survey",
+  "topic_tags": [
+    "llm-mas",
+    "workflow",
+    "infrastructure",
+    "survey"
+  ],
+  "venue": "Vicinagearth",
+  "publisher": "Springer Nature",
+  "doi": "10.1007/s44336-024-00009-2",
+  "source_url": "https://link.springer.com/article/10.1007/s44336-024-00009-2",
+  "pdf_url": "https://link.springer.com/content/pdf/10.1007/s44336-024-00009-2.pdf",
+  "access_date": "2026-03-26T23:10:48+08:00",
+  "source_type": "publisher-landing-page",
+  "language": "en",
+  "open_access_status": "open",
+  "license": "Open Access (publisher page)",
+  "local_pdf_path": "projects/multi-agent-survey-review/literature/papers/10.1007_s44336-024-00009-2/paper.pdf",
+  "canonical_pdf_path": "projects/multi-agent-survey-review/literature/pdf/2024-li-et-al-a-survey-on-llm-based-multi-agent-systems-workflow-infrastructure-and-challenges-springer-10.1007-s44336-024-00009-2.pdf",
+  "file_checksum_sha256": "c39a7abf36a6df397138177cde5fe7015f120a9670438e91e357c6e1031555ce",
+  "file_size_bytes": 3482567,
+  "page_count": 43,
+  "validation": {
+    "exists": true,
+    "readable": true,
+    "pdf_header": "%PDF-1.4",
+    "title_snippet": "Li et al. Vicinagearth (2024) 1:9 https://doi.org/10.1007/s44336-024-00009-2 REVIEW Open Access"
+  },
+  "provenance": {
+    "download_method": "curl -L --fail",
+    "verification_method": "python3 + pypdf PdfReader",
+    "selection_source": "projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md",
+    "manifest_source": "projects/multi-agent-survey-review/literature/meta/2026-03-26-selected-10-download-manifest.json",
+    "original_pdf_storage": "projects/multi-agent-survey-review/literature/pdf/2024-li-et-al-a-survey-on-llm-based-multi-agent-systems-workflow-infrastructure-and-challenges-springer-10.1007-s44336-024-00009-2.pdf"
+  },
+  "version_note": "publisher version",
+  "notes": "Metadata normalized for the paper-ingest task that requires per-paper provenance and machine-readable indexing."
+}

@@ -1,0 +1,9 @@
+{
+  "generated_at": "2026-03-26T23:40:21+08:00",
+  "paper_count": 10,
+  "index_jsonl": "projects/multi-agent-survey-review/literature/indexes/papers_index.jsonl",
+  "index_csv": "projects/multi-agent-survey-review/literature/indexes/papers_index.csv",
+  "papers_dir": "projects/multi-agent-survey-review/literature/papers",
+  "run_log": "projects/multi-agent-survey-review/literature/logs/run_2026-03-26T23-40-21+08-00.log",
+  "source_manifest": "projects/multi-agent-survey-review/literature/meta/2026-03-26-selected-10-download-manifest.json"
+}

@@ -1,0 +1,10 @@
+title: A survey on LLM-based multi-agent systems: workflow, infrastructure, and challenges
+paper_id: 10.1007/s44336-024-00009-2
+source_url: https://link.springer.com/article/10.1007/s44336-024-00009-2
+pdf_url: https://link.springer.com/content/pdf/10.1007/s44336-024-00009-2.pdf
+doi: 10.1007/s44336-024-00009-2
+source_type: publisher-landing-page
+access_date: 2026-03-26T23:10:48+08:00
+selection_source: projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md
+manifest_source: projects/multi-agent-survey-review/literature/meta/2026-03-26-selected-10-download-manifest.json
+version_note: publisher version

@@ -1,0 +1,58 @@
+{
+  "paper_id": "2502.14321",
+  "title": "Beyond Self-Talk: A Communication-Centric Survey of LLM-Based Multi-Agent Systems",
+  "authors": [
+    "Bingyu Yan",
+    "Zhibo Zhou",
+    "Litian Zhang",
+    "Lian Zhang",
+    "Ziyi Zhou",
+    "Dezhuang Miao",
+    "Zhoujun Li",
+    "Chaozhuo Li",
+    "Xiaoming Zhang"
+  ],
+  "year": 2025,
+  "abstract": "Large language model-based multi-agent systems have recently gained significant attention due to their potential for complex, collaborative, and intelligent problem-solving capabilities. Existing surveys typically categorize LLM-based multi-agent systems (LLM-MAS) according to their application domains or architectures, overlooking the central role of communication in coordinating agent behaviors and interactions. To address this gap, this paper presents a comprehensive survey of LLM-MAS from a communication-centric perspective. Specifically, we propose a structured framework that integrates system-level communication (architecture, goals, and protocols) with system internal communication (strategies, paradigms, objects, and content), enabling a detailed exploration of how agents interact, negotiate, and achieve collective intelligence. Through an extensive analysis of recent literature, we identify key components in multiple dimensions and summarize their strengths and limitations. In addition, we highlight current challenges, including communication efficiency, security vulnerabilities, inadequate benchmarking, and scalability issues, and outline promising future research directions. This review aims to help researchers and practitioners gain a clear understanding of the communication mechanisms in LLM-MAS, thereby facilitating the design and deployment of robust, scalable, and secure multi-agent systems.",
+  "keywords": [
+    "cs.MA",
+    "cs.CL"
+  ],
+  "review_type": "survey",
+  "topic_tags": [
+    "multi-agent",
+    "survey",
+    "cs.MA",
+    "cs.CL"
+  ],
+  "venue": "arXiv",
+  "publisher": "arXiv",
+  "doi": null,
+  "source_url": "https://arxiv.org/abs/2502.14321",
+  "pdf_url": "https://arxiv.org/pdf/2502.14321.pdf",
+  "access_date": "2026-03-26T23:10:48+08:00",
+  "source_type": "arxiv-landing-page",
+  "language": "en",
+  "open_access_status": "open",
+  "license": null,
+  "local_pdf_path": "projects/multi-agent-survey-review/literature/papers/2502.14321/paper.pdf",
+  "canonical_pdf_path": "projects/multi-agent-survey-review/literature/pdf/2025-yan-et-al-beyond-self-talk-a-communication-centric-survey-of-llm-based-multi-agent-systems-arxiv-2502.14321.pdf",
+  "file_checksum_sha256": "cbeba3fa31e2cde155837c0791bfe169057a44f69443125a58d1552d9fa917ec",
+  "file_size_bytes": 1147688,
+  "page_count": 16,
+  "validation": {
+    "exists": true,
+    "readable": true,
+    "pdf_header": "%PDF-1.5",
+    "title_snippet": "Beyond Self-Talk: A Communication-Centric Survey of LLM-Based Multi-Agent Systems"
+  },
+  "provenance": {
+    "download_method": "curl -L --fail",
+    "verification_method": "python3 + pypdf PdfReader",
+    "selection_source": "projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md",
+    "manifest_source": "projects/multi-agent-survey-review/literature/meta/2026-03-26-selected-10-download-manifest.json",
+    "original_pdf_storage": "projects/multi-agent-survey-review/literature/pdf/2025-yan-et-al-beyond-self-talk-a-communication-centric-survey-of-llm-based-multi-agent-systems-arxiv-2502.14321.pdf"
+  },
+  "version_note": "arXiv preprint version",
+  "notes": "Metadata normalized for the paper-ingest task that requires per-paper provenance and machine-readable indexing."
+}

@@ -1,0 +1,52 @@
+{
+  "paper_id": "10.1007/s10458-023-09633-6",
+  "title": "A survey of multi-agent deep reinforcement learning with communication",
+  "authors": [
+    "Zhu et al."
+  ],
+  "year": 2024,
+  "abstract": "Journal survey on multi-agent deep reinforcement learning with communication. The project selection file records it as the non-LLM communication/MARL complement needed to connect classic communication learning with later LLM-based multi-agent communication surveys.",
+  "keywords": [
+    "multi-agent deep reinforcement learning",
+    "communication",
+    "survey",
+    "MARL"
+  ],
+  "review_type": "survey",
+  "topic_tags": [
+    "marl",
+    "communication",
+    "decision-making",
+    "survey"
+  ],
+  "venue": "Autonomous Agents and Multi-Agent Systems",
+  "publisher": "Springer Nature",
+  "doi": "10.1007/S10458-023-09633-6",
+  "source_url": "https://doi.org/10.1007/S10458-023-09633-6",
+  "pdf_url": "https://link.springer.com/content/pdf/10.1007/S10458-023-09633-6.pdf",
+  "access_date": "2026-03-26T23:10:48+08:00",
+  "source_type": "doi-and-publisher",
+  "language": "en",
+  "open_access_status": "unknown",
+  "license": null,
+  "local_pdf_path": "projects/multi-agent-survey-review/literature/papers/10.1007_s10458-023-09633-6/paper.pdf",
+  "canonical_pdf_path": "projects/multi-agent-survey-review/literature/pdf/2024-zhu-et-al-a-survey-of-multi-agent-deep-reinforcement-learning-with-communication-doi-10.1007-s10458-023-09633-6.pdf",
+  "file_checksum_sha256": "dfef1dd599aa07ac794deda7e791f20b1024749229faa49f19fcd2087d408ec8",
+  "file_size_bytes": 2154897,
+  "page_count": 48,
+  "validation": {
+    "exists": true,
+    "readable": true,
+    "pdf_header": "%PDF-1.4",
+    "title_snippet": "A survey of multi-agent deep reinforcement learning with communication"
+  },
+  "provenance": {
+    "download_method": "curl -L --fail",
+    "verification_method": "python3 + pypdf PdfReader",
+    "selection_source": "projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md",
+    "manifest_source": "projects/multi-agent-survey-review/literature/meta/2026-03-26-selected-10-download-manifest.json",
+    "original_pdf_storage": "projects/multi-agent-survey-review/literature/pdf/2024-zhu-et-al-a-survey-of-multi-agent-deep-reinforcement-learning-with-communication-doi-10.1007-s10458-023-09633-6.pdf"
+  },
+  "version_note": "publisher version",
+  "notes": "Metadata normalized for the paper-ingest task that requires per-paper provenance and machine-readable indexing."
+}

@@ -1,0 +1,10 @@
+title: A survey of multi-agent deep reinforcement learning with communication
+paper_id: 10.1007/s10458-023-09633-6
+source_url: https://doi.org/10.1007/S10458-023-09633-6
+pdf_url: https://link.springer.com/content/pdf/10.1007/S10458-023-09633-6.pdf
+doi: 10.1007/S10458-023-09633-6
+source_type: doi-and-publisher
+access_date: 2026-03-26T23:10:48+08:00
+selection_source: projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md
+manifest_source: projects/multi-agent-survey-review/literature/meta/2026-03-26-selected-10-download-manifest.json
+version_note: publisher version

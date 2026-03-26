@@ -1,0 +1,59 @@
+{
+  "paper_id": "2402.01680",
+  "title": "Large Language Model based Multi-Agents: A Survey of Progress and Challenges",
+  "authors": [
+    "Taicheng Guo",
+    "Xiuying Chen",
+    "Yaqi Wang",
+    "Ruidi Chang",
+    "Shichao Pei",
+    "Nitesh V. Chawla",
+    "Olaf Wiest",
+    "Xiangliang Zhang"
+  ],
+  "year": 2024,
+  "abstract": "Large Language Models (LLMs) have achieved remarkable success across a wide array of tasks. Due to the impressive planning and reasoning abilities of LLMs, they have been used as autonomous agents to do many tasks automatically. Recently, based on the development of using one LLM as a single planning or decision-making agent, LLM-based multi-agent systems have achieved considerable progress in complex problem-solving and world simulation. To provide the community with an overview of this dynamic field, we present this survey to offer an in-depth discussion on the essential aspects of multi-agent systems based on LLMs, as well as the challenges. Our goal is for readers to gain substantial insights on the following questions: What domains and environments do LLM-based multi-agents simulate? How are these agents profiled and how do they communicate? What mechanisms contribute to the growth of agents' capacities? For those interested in delving into this field of study, we also summarize the commonly used datasets or benchmarks for them to have convenient access. To keep researchers updated on the latest studies, we maintain an open-source GitHub repository, dedicated to outlining the research on LLM-based multi-agent systems.",
+  "keywords": [
+    "cs.CL",
+    "cs.AI",
+    "cs.MA"
+  ],
+  "review_type": "survey",
+  "topic_tags": [
+    "multi-agent",
+    "survey",
+    "cs.CL",
+    "cs.AI",
+    "cs.MA"
+  ],
+  "venue": "arXiv",
+  "publisher": "arXiv",
+  "doi": null,
+  "source_url": "https://arxiv.org/abs/2402.01680",
+  "pdf_url": "https://arxiv.org/pdf/2402.01680.pdf",
+  "access_date": "2026-03-26T23:10:48+08:00",
+  "source_type": "arxiv-landing-page",
+  "language": "en",
+  "open_access_status": "open",
+  "license": null,
+  "local_pdf_path": "projects/multi-agent-survey-review/literature/papers/2402.01680/paper.pdf",
+  "canonical_pdf_path": "projects/multi-agent-survey-review/literature/pdf/2024-guo-et-al-large-language-model-based-multi-agents-a-survey-of-progress-and-challenges-arxiv-2402.01680.pdf",
+  "file_checksum_sha256": "d3410856f2b8629ab7365af3bd62fe8291b1a595ec954f1feb859a2688c7179c",
+  "file_size_bytes": 1243493,
+  "page_count": 15,
+  "validation": {
+    "exists": true,
+    "readable": true,
+    "pdf_header": "%PDF-1.5",
+    "title_snippet": "Large Language Model based Multi-Agents: A Survey of Progress and Challenges"
+  },
+  "provenance": {
+    "download_method": "curl -L --fail",
+    "verification_method": "python3 + pypdf PdfReader",
+    "selection_source": "projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md",
+    "manifest_source": "projects/multi-agent-survey-review/literature/meta/2026-03-26-selected-10-download-manifest.json",
+    "original_pdf_storage": "projects/multi-agent-survey-review/literature/pdf/2024-guo-et-al-large-language-model-based-multi-agents-a-survey-of-progress-and-challenges-arxiv-2402.01680.pdf"
+  },
+  "version_note": "arXiv preprint version",
+  "notes": "Metadata normalized for the paper-ingest task that requires per-paper provenance and machine-readable indexing."
+}

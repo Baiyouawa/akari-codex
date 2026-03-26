@@ -1,0 +1,10 @@
+title: Multi-Agent Autonomous Driving Systems with Large Language Models: A Survey of Recent Advances
+paper_id: 2502.16804
+source_url: https://arxiv.org/abs/2502.16804
+pdf_url: https://arxiv.org/pdf/2502.16804.pdf
+doi: 
+source_type: arxiv-landing-page
+access_date: 2026-03-26T23:10:48+08:00
+selection_source: projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md
+manifest_source: projects/multi-agent-survey-review/literature/meta/2026-03-26-selected-10-download-manifest.json
+version_note: arXiv preprint version

@@ -1,0 +1,54 @@
+{
+  "paper_id": "2412.17481",
+  "title": "A Survey on LLM-based Multi-Agent System: Recent Advances and New Frontiers in Application",
+  "authors": [
+    "Shuaihang Chen",
+    "Yuanxing Liu",
+    "Wei Han",
+    "Weinan Zhang",
+    "Ting Liu"
+  ],
+  "year": 2025,
+  "abstract": "LLM-based Multi-Agent Systems ( LLM-MAS ) have become a research hotspot since the rise of large language models (LLMs). However, with the continuous influx of new related works, the existing reviews struggle to capture them comprehensively. This paper presents a comprehensive survey of these studies. We first discuss the definition of LLM-MAS, a framework encompassing much of previous work. We provide an overview of the various applications of LLM-MAS in (i) solving complex tasks, (ii) simulating specific scenarios, and (iii) evaluating generative agents. Building on previous studies, we also highlight several challenges and propose future directions for research in this field.",
+  "keywords": [
+    "cs.CL",
+    "cs.MA"
+  ],
+  "review_type": "survey",
+  "topic_tags": [
+    "multi-agent",
+    "survey",
+    "cs.CL",
+    "cs.MA"
+  ],
+  "venue": "arXiv",
+  "publisher": "arXiv",
+  "doi": null,
+  "source_url": "https://arxiv.org/abs/2412.17481",
+  "pdf_url": "https://arxiv.org/pdf/2412.17481.pdf",
+  "access_date": "2026-03-26T23:10:48+08:00",
+  "source_type": "arxiv-landing-page",
+  "language": "en",
+  "open_access_status": "open",
+  "license": null,
+  "local_pdf_path": "projects/multi-agent-survey-review/literature/papers/2412.17481/paper.pdf",
+  "canonical_pdf_path": "projects/multi-agent-survey-review/literature/pdf/2025-chen-et-al-a-survey-on-llm-based-multi-agent-system-recent-advances-and-new-frontiers-in-application-arxiv-2412.17481.pdf",
+  "file_checksum_sha256": "49d10613e28713573cef0da266f93bec222e550a0c4724001ac771778462ffb0",
+  "file_size_bytes": 404537,
+  "page_count": 13,
+  "validation": {
+    "exists": true,
+    "readable": true,
+    "pdf_header": "%PDF-1.5",
+    "title_snippet": "A Survey on LLM-based Multi-Agent System: Recent Advances and New Frontiers in Application"
+  },
+  "provenance": {
+    "download_method": "curl -L --fail",
+    "verification_method": "python3 + pypdf PdfReader",
+    "selection_source": "projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md",
+    "manifest_source": "projects/multi-agent-survey-review/literature/meta/2026-03-26-selected-10-download-manifest.json",
+    "original_pdf_storage": "projects/multi-agent-survey-review/literature/pdf/2025-chen-et-al-a-survey-on-llm-based-multi-agent-system-recent-advances-and-new-frontiers-in-application-arxiv-2412.17481.pdf"
+  },
+  "version_note": "arXiv preprint version",
+  "notes": "Metadata normalized for the paper-ingest task that requires per-paper provenance and machine-readable indexing."
+}

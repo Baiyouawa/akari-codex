@@ -1,0 +1,55 @@
+{
+  "paper_id": "2503.13415",
+  "title": "A Comprehensive Survey on Multi-Agent Cooperative Decision-Making: Scenarios, Approaches, Challenges and Perspectives",
+  "authors": [
+    "Weiqiang Jin",
+    "Hongyang Du",
+    "Biao Zhao",
+    "Xingwu Tian",
+    "Bohang Shi",
+    "Guang Yang"
+  ],
+  "year": 2025,
+  "abstract": "With the rapid development of artificial intelligence, intelligent decision-making techniques have gradually surpassed human levels in various human-machine competitions, especially in complex multi-agent cooperative task scenarios. Multi-agent cooperative decision-making involves multiple agents working together to complete established tasks and achieve specific objectives. These techniques are widely applicable in real-world scenarios such as autonomous driving, drone navigation, disaster rescue, and simulated military confrontations. This paper begins with a comprehensive survey of the leading simulation environments and platforms used for multi-agent cooperative decision-making. Specifically, we provide an in-depth analysis for these simulation environments from various perspectives, including task formats, reward allocation, and the underlying technologies employed. Subsequently, we provide a comprehensive overview of the mainstream intelligent decision-making approaches, algorithms and models for multi-agent systems (MAS). Theseapproaches can be broadly categorized into five types: rule-based (primarily fuzzy logic), game theory-based, evolutionary algorithms-based, deep multi-agent reinforcement learning (MARL)-based, and large language models(LLMs)reasoning-based. Given the significant advantages of MARL andLLMs-baseddecision-making methods over the traditional rule, game theory, and evolutionary algorithms, this paper focuses on these multi-agent methods utilizing MARL and LLMs-based techniques. We provide an in-depth discussion of these approaches, highlighting their methodology taxonomies, advantages, and drawbacks. Further, several prominent research directions in the future and potential challenges of multi-agent cooperative decision-making are also detailed.",
+  "keywords": [
+    "cs.MA",
+    "cs.AI"
+  ],
+  "review_type": "survey",
+  "topic_tags": [
+    "multi-agent",
+    "survey",
+    "cs.MA",
+    "cs.AI"
+  ],
+  "venue": "arXiv",
+  "publisher": "arXiv",
+  "doi": null,
+  "source_url": "https://arxiv.org/abs/2503.13415",
+  "pdf_url": "https://arxiv.org/pdf/2503.13415.pdf",
+  "access_date": "2026-03-26T23:10:48+08:00",
+  "source_type": "arxiv-landing-page",
+  "language": "en",
+  "open_access_status": "open",
+  "license": null,
+  "local_pdf_path": "projects/multi-agent-survey-review/literature/papers/2503.13415/paper.pdf",
+  "canonical_pdf_path": "projects/multi-agent-survey-review/literature/pdf/2025-misc-a-comprehensive-survey-on-multi-agent-cooperative-decision-making-scenarios-approaches-challenges-and-perspectives-arxiv-2503.13415.pdf",
+  "file_checksum_sha256": "219931f9f97fdf38896347ab7a4e4ddbea1b461f6c5d4c8855d6dc1cc4819e6d",
+  "file_size_bytes": 11793042,
+  "page_count": 54,
+  "validation": {
+    "exists": true,
+    "readable": true,
+    "pdf_header": "%PDF-1.5",
+    "title_snippet": "A Comprehensive Survey on Multi-Agent Cooperative Decision-Making: Scenarios, Approaches, Challenges and Perspectives"
+  },
+  "provenance": {
+    "download_method": "curl -L --fail",
+    "verification_method": "python3 + pypdf PdfReader",
+    "selection_source": "projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md",
+    "manifest_source": "projects/multi-agent-survey-review/literature/meta/2026-03-26-selected-10-download-manifest.json",
+    "original_pdf_storage": "projects/multi-agent-survey-review/literature/pdf/2025-misc-a-comprehensive-survey-on-multi-agent-cooperative-decision-making-scenarios-approaches-challenges-and-perspectives-arxiv-2503.13415.pdf"
+  },
+  "version_note": "arXiv preprint version",
+  "notes": "Metadata normalized for the paper-ingest task that requires per-paper provenance and machine-readable indexing."
+}
