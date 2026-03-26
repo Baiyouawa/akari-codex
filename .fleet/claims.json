@@ -3367,7 +3367,8 @@
       "session_id": "结衣-03-1774540029-55e59d",
       "project": "multi-agent-survey-review",
       "claimed_at": 1774540029.4254842,
-      "active": true
+      "active": false,
+      "released_at": 1774540936.3179643
     },
     "claim-3ca4e6038d3b": {
       "task_id": "eab015b082455db5",

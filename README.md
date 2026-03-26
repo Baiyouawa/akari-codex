@@ -1350,6 +1350,14 @@ export SIP_CALLER_ID="+8612345678"
 | `FLEET_WORKER_MAX_TURNS` | `64` | 单 Worker 最大轮次 |
 | `FLEET_WORKER_TIMEOUT` | `900` | 单 Worker 超时(秒) |
 | `FLEET_IDLE_EXPLORATION` | `1` | 启用空闲探索. `0` = 禁用 |
+| `MULTIAGENT_STATUS_AUTOSTART` | `1` | 查询状态时若 Fleet 未运行且有待办任务，自动启动. `0` = 禁用 |
+
+### QQ 文件发送
+
+| 变量 | 默认值 | 说明 |
+|------|--------|------|
+| `ONEBOT_FILE_SEND_MODE` | `base64` | 文件发送模式: `base64`(默认, 兼容WSL) / `path`(走本地路径) |
+| `ONEBOT_FILE_API` | `upload_private_file` | 文件发送 API: `upload_private_file`(默认) / `send_msg`(走 CQ 码图片协议) |
 
 ### 电话外呼
 
@@ -1658,8 +1666,8 @@ vim decisions/0070-my-decision.md
 |---------|------|
 | **Humanize RLCR 核心工作流** | gen-plan → 实现 → 审查 → 修复 闭环，Fleet 每任务强制审查(API fallback) |
 | 多轮 Agent 推理循环 | AgentLoop + 5 种 Action |
-| 统一 Skill 体系 | 76+ Skill 统一注册表（以 Humanize 为核心） |
-| Multi-Agent 并行系统 | Fleet 30+ Worker 调度 |
+| 统一 Skill 体系 | 86+ Skill 统一注册表（以 Humanize 为核心） |
+| Multi-Agent 并行系统 | Fleet 30+ Worker 调度 + 固定格式状态汇报 + delegate 项目扫描 + Plan 智能复用 |
 | 自主学习闭环 | 三层记忆 + 反思 + compound 经验嵌入 + postmortem 根因分析 + 空闲探索 |
 | QQ 完整多媒体 | 图片/语音/文件/表情包收发与识别 |
 | 真实电话外呼 | SIP + OpenAI Realtime |
