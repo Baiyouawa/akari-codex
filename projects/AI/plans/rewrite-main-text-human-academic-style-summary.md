@@ -9,12 +9,13 @@
 
 ## Deliverables
 - `projects/AI/main.tex`
+- `projects/AI/README.md`
 - `projects/AI/TASKS.md`
+- `projects/AI/logs/2026-03-27T001418+08-fleet-yui-03-1774541449-2f5943-ai-main-tex-rewrite.md`
 - `projects/AI/plans/rewrite-main-text-human-academic-style.md`
 - `projects/AI/plans/rewrite-main-text-human-academic-style-progress.md`
 - `projects/AI/plans/rewrite-main-text-human-academic-style-self-review.md`
 - `projects/AI/plans/rewrite-main-text-human-academic-style-summary.md`
-- `logs/sessions/2026-03-27T001418+08-fleet-yui-03-1774541449-2f5943-ai-main-tex-rewrite.md`
 
 ## Verification Evidence
 - Structural anchors preserved: `grep -n '\\section{Introduction}\|\\subsection{The Design of Functional Requirements with Use Case Diagrams}\|\\subsection{The Design of Functional Behaviour with Activity Diagrams}\|\\begin{thebibliography}\|\\section\*{Appendix: Individual Reflections}' projects/AI/main.tex`

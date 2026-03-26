@@ -3481,7 +3481,8 @@
       "session_id": "由希奈-04-1774541449-c3f973",
       "project": "AI",
       "claimed_at": 1774541449.0942101,
-      "active": true
+      "active": false,
+      "released_at": 1774541809.9816496
     },
     "claim-cffd7cff0ca3": {
       "task_id": "5aa3e3bddb98dfbc",
