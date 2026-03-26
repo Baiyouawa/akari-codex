@@ -15,8 +15,8 @@
 - [x] 输出一份中文Markdown最终报告，包含十篇综述分别的详述内容、对比分析，以及五个后续可做的研究idea（每个包含motivation、问题定义、方法设计、预期贡献与潜在风险）
   Done when: 产出 `projects/multi-agent-survey-review/analysis/2026-03-26-final-chinese-multi-agent-survey-report.md`，并完成对应计划的 progress/self-review/summary 文件
 
-- [ ] 梳理 zero-basics-plan 相关的综述调研目标，聚焦与 28 天课程路线直接相关的主题边界与问题清单
-  Done when: TBD
+- [x] 梳理 zero-basics-plan 相关的综述调研目标，聚焦与 28 天课程路线直接相关的主题边界与问题清单
+  Done when: 产出 `projects/multi-agent-survey-review/analysis/2026-03-26-zero-basics-plan-survey-scope-for-28-day-route.md`，并完成 `projects/multi-agent-survey-review/plans/梳理-zero-basics-plan-相关的综述调研目标-聚焦与-28-天课程路线直接相关的主题边界与问题清单-progress.md`、`projects/multi-agent-survey-review/plans/梳理-zero-basics-plan-相关的综述调研目标-聚焦与-28-天课程路线直接相关的主题边界与问题清单-self-review.md`、`projects/multi-agent-survey-review/plans/梳理-zero-basics-plan-相关的综述调研目标-聚焦与-28-天课程路线直接相关的主题边界与问题清单-summary.md`
 
 - [ ] 检索并收集可支撑该课程路线的高质量资料与综述来源，优先整理可追溯链接、标题、摘要与适用章节
   Done when: TBD
