@@ -1,7 +1,7 @@
 # multi-agent-survey-review — 任务列表
 
-- [ ] 检索并筛选与multi-agent相关的最新十篇综述论文，优先覆盖2024-2026，记录题目、年份、链接、来源与入选理由
-  Done when: TBD
+- [x] 检索并筛选与multi-agent相关的最新十篇综述论文，优先覆盖2024-2026，记录题目、年份、链接、来源与入选理由
+  Done when: 产出 `projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md`，并完成计划进度、自审与摘要文件
 
 - [ ] 将筛选出的十篇综述尽可能下载到本地，保存PDF或可读文本，并整理准确本地路径清单
   Done when: TBD
@@ -25,4 +25,28 @@
   Done when: TBD
 
 - [ ] 审查各 Worker 的证据链完整性与任务完成质量，发现偷懒或伪 blocked 立即重派
+  Done when: TBD
+
+- [ ] 筛选 2024-2026 年与 multi-agent 相关的最新 10 篇高质量综述论文，优先 arXiv/ACL/NeurIPS/ICML/ICLR/IEEE/ACM 等可信来源，并记录题目、年份、链接与筛选理由
+  Done when: TBD
+
+- [ ] 将这 10 篇综述论文下载到本地，按统一目录结构整理 PDF 与元数据，确保文件可追溯到原始来源
+  Done when: TBD
+
+- [ ] 对 10 篇综述分别进行详读，提炼每篇的研究背景、问题定义、分类框架、核心观点、方法脉络、数据集/benchmark、局限性与未来方向
+  Done when: TBD
+
+- [ ] 对 10 篇综述做交叉比较，总结 multi-agent 研究的共同主题、主要分歧、演化趋势与研究空白
+  Done when: TBD
+
+- [ ] 最终输出一份中文 Markdown 报告，包含 10 篇综述逐篇详述内容，并给出 5 个后续可做的 research idea，每个 idea 需包含 motivation 和方法设计
+  Done when: TBD
+
+- [ ] 筛选 2024-2026 年与 multi-agent 相关的最新 10 篇高质量综述论文，优先覆盖 arXiv、ACL Anthology、OpenReview、期刊与顶会教程/综述
+  Done when: TBD
+
+- [ ] 下载并整理这 10 篇综述到本地项目目录，记录论文标题、年份、来源链接、PDF 路径与获取状态
+  Done when: TBD
+
+- [ ] 交叉比较 10 篇综述的主题覆盖、方法谱系、研究空白与趋势，形成统一分析框架
   Done when: TBD
