@@ -3313,7 +3313,8 @@
       "session_id": "岛村-01-1774539128-475fab",
       "project": "multi-agent-survey-review",
       "claimed_at": 1774539128.1904812,
-      "active": true
+      "active": false,
+      "released_at": 1774539854.7549534
     },
     "claim-1fe22fe5bdf4": {
       "task_id": "8a34dbb8b7573628",
