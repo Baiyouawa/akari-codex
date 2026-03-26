@@ -1,598 +1,470 @@
-# 2026-03-26 十篇 multi-agent 综述逐篇详读笔记
+# 2026-03-26 十篇 multi-agent 综述逐篇详读笔记（统一锁定样本集）
 
-- 任务范围：对 10 篇综述逐篇提炼研究问题、分类框架、核心观点、方法谱系、评测设定、优缺点、局限、值得精读章节、关键图表。
-- 说明：本文件为当前项目的结构化精读主交付，依据两类证据整理：
-  1. arXiv 论文主页与元数据（各条目中的 `来源`）。
-  2. 从仓库当前工作树删除差异中恢复的上一轮结构化精读内容，原路径为 `projects/multi-agent-review-survey/analysis/2026-03-26-ten-survey-structured-reading-notes.md`、`projects/multi-agent-review-survey/analysis/2026-03-26-ten-paper-metadata.md` 与 `projects/multi-agent-review-survey/ten_multi_agent_surveys_cn.md`；本次已将其中可核验内容迁移并重组到当前项目。
-- 边界：本文件优先保留可由题目、摘要、章节标题、先前结构化笔记共同支撑的判断；对“值得精读章节/关键图表”采用“按章节标题或综述常见总图位置的推荐阅读位点”表述，并明确为阅读建议而非逐页 OCR 复刻。
+## 样本集声明
+本文件**只**覆盖以下两份基线文件共同锁定的 10 篇论文：
+1. `projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md`
+2. `projects/multi-agent-survey-review/literature/meta/2026-03-26-selected-10-download-manifest.json`
+
+为避免继承旧版污染输入，本文不纳入任何未出现在上述 manifest 中的论文。每篇条目的标题、年份、来源链接与本地 PDF 路径均以 manifest 为准；内容提炼主要来自以下仓库内证据：
+- `projects/multi-agent-survey-review/analysis/2026-03-26-ten-survey-cross-comparison.md`
+- `projects/multi-agent-survey-review/analysis/2026-03-26-ten-survey-background-problem-framework-notes.md`
+- `projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md`
+- `projects/multi-agent-survey-review/literature/meta/2026-03-26-selected-10-download-manifest.json`
+
+证据边界说明：本文件以摘要级、章节级与既有结构化笔记级证据为主；未强行给出逐页页码断言。凡不能稳定追溯到上述文件的细节，均不写入。
 
 ---
 
-## 1. Guo et al. 2024 — Large Language Model based Multi-Agents: A Survey of Progress and Challenges
-
-- 来源：https://arxiv.org/abs/2402.01680
+## 1. Li et al. 2024
+- Paper ID：`10.1007/s44336-024-00009-2`
+- 标题：*A survey on LLM-based multi-agent systems: workflow, infrastructure, and challenges*
 - 年份：2024
-- 主题标签：通用总览、LLM-based multi-agent、组件框架、应用总图
+- 来源：https://link.springer.com/article/10.1007/s44336-024-00009-2
+- 本地 PDF：`projects/multi-agent-survey-review/literature/pdf/2024-li-et-al-a-survey-on-llm-based-multi-agent-systems-workflow-infrastructure-and-challenges-springer-10.1007-s44336-024-00009-2.pdf`
 
 ### 研究问题
-这篇综述试图回答：LLM-based multi-agent systems 由哪些核心组件构成、面向哪些任务/环境、相比单 Agent 的新增能力与挑战分别是什么。
+LLM-based multi-agent systems 的标准工作流由哪些环节组成，这些环节如何支撑 problem-solving 与 world simulation，并在基础设施与挑战层面提出了哪些共性问题。
 
 ### 分类框架
-作者采用“系统组件 + 应用场景 + 挑战”的三层组织方式：
-- 系统组件层：Agents-Environment Interface、Agents Profiling、Agent Management、Agents Communication、Training Scheme、Multi-Agents Orchestration and Efficiency。
-- 应用层：Problem Solving、World Simulation、Dialogue Dataset Generation。
-- 挑战层：扩展性、伦理与风险、编排效率等。
+以 workflow 为主轴，分为 profile、perception、self-action、mutual interaction、evolution 五段。
 
 ### 核心观点
-- multi-agent 的价值不只是“多几个 LLM 并行回答”，而是通过角色设定、交互和管理获得更复杂的任务分解与协作能力。
-- communication、management 和 orchestration 是从单 Agent 走向多 Agent 的真正增量。
-- world simulation 与复杂问题求解是早期 LLM 多智能体最具代表性的两类落地方向。
+- multi-agent 的关键增益在于角色设定、交互和演化形成闭环。
+- workflow 比单纯按应用分类更适合做统一系统抽象。
+- problem-solving 与 world simulation 是最典型的两大应用落点。
 
 ### 方法谱系
-可按“从系统搭建到应用落地”的谱系理解：
-1. 接口与角色设定：如何定义 agent 的 persona、上下文、环境接口。
-2. 管理与通信：如何分工、协商、共享中间状态。
-3. 训练与增强：如何通过训练/反馈提升多 Agent 协同。
-4. 编排与效率：如何控制 token、轮数、调用链和资源成本。
-5. 应用映射：从任务求解扩展到仿真与数据生成。
+从角色/profile 定义，到 perception、self-action、mutual interaction，再到 evolution，体现出从单 agent 能力到多 agent 系统流水线的组织方式。
 
 ### 评测设定
-从恢复笔记可追溯到的 benchmark 包括 GSM8K、HumanEval、MMLU、BIG-bench、ChatArena、RoCoBench、CAMEL、AvalonBench。说明其评测覆盖：
-- 推理/问答：GSM8K、MMLU；
-- 代码：HumanEval；
-- 对话/交互：ChatArena、CAMEL；
-- 协作/博弈：RoCoBench、AvalonBench。
-该综述的评测特征是覆盖广，但 benchmark 口径较杂，尚不是统一多智能体协议。
+以系统案例和 benchmark 汇总为主，偏向通用任务质量与系统组件完整性比较；统一多智能体评测协议仍较弱。
 
-### 优点
-- 适合作为 2024 时点的全景入门综述。
-- 组件、应用、挑战三层结构清晰。
-- 同时讨论 benchmark 与实现资源，对后续落地有帮助。
-
-### 缺点
-- 对后续 2025–2026 年出现的 workflow、tool orchestration、communication 专题深度不足。
-- 更像全景地图，专题深挖有限。
-
-### 局限
-- 时效性局限明显。
-- 分类仍偏宽口径，把多个子方向放在同一框架内，横向可比性一般。
+### 局限性
+- 时间较早，尚未覆盖后续 communication-centric、workflow optimization 等专题化进展。
+- workflow 抽象很强，但组件内部方法粒度不完全统一。
 
 ### 值得精读章节
-- `Agents Communication`：这是后续 communication-centric 综述的起点。
-- `Multi-Agents Orchestration and Efficiency`：适合和 2026 年 workflow/tool-use 综述串读。
-- `LLM-MA for World Simulation`：适合与 role-playing / social agents 方向衔接。
+- workflow 五段主框架章节
+- 挑战与基础设施相关章节
+- problem-solving / world simulation 对照部分
 
 ### 关键图表
-- 系统总览/组件框架图：帮助快速建立 multi-agent 系统的模块化心智模型。
-- 应用分类总表：适合拿来做后续十篇综述的主题对照基线。
+- LLM-MAS 工作流总览图
+- 应用与挑战汇总表
+
+### 证据来源与边界
+主要依据 selection 文件对入选理由的描述、cross-comparison 中 S1 条目、background-notes 中 Li 2024 的八字段提炼，以及 manifest 中题目/年份/路径校验。
 
 ---
 
-## 2. Aratchige & Ilmini 2025 — LLMs Working in Harmony: A Survey on the Technological Aspects of Building Effective LLM-Based Multi Agent Systems
+## 2. Guo et al. 2024
+- Paper ID：`2402.01680`
+- 标题：*Large Language Model based Multi-Agents: A Survey of Progress and Challenges*
+- 年份：2024
+- 来源：https://arxiv.org/abs/2402.01680
+- 本地 PDF：`projects/multi-agent-survey-review/literature/pdf/2024-guo-et-al-large-language-model-based-multi-agents-a-survey-of-progress-and-challenges-arxiv-2402.01680.pdf`
 
-- 来源：https://arxiv.org/abs/2504.01963
+### 研究问题
+LLM-based multi-agents 已在何种环境与任务中使用，agent 的 profiling、communication 与 capability growth 机制如何组织，以及这些系统面临哪些共性挑战。
+
+### 分类框架
+按系统剖析、应用、实现工具与资源三层组织：interface / profiling / communication / capability acquisition → problem solving / world simulation → tools/resources。
+
+### 核心观点
+- 多智能体收益来自 specialization + interaction，而不是简单投票。
+- communication 与 capability acquisition 是从单 agent 走向多 agent 的关键差异。
+- world simulation 是 2024 时点的重要应用方向。
+
+### 方法谱系
+从系统模块拆解切入，再延伸至应用和资源，形成“组件—应用—资源”式总览谱系。
+
+### 评测设定
+既有仓库笔记记录其覆盖 GSM8K、HumanEval、MMLU、BIG-bench、ChatArena、RoCoBench、CAMEL、AvalonBench 等，说明其评测横跨推理、代码、对话与交互。
+
+### 局限性
+- benchmark 口径杂糅，更多是汇总而非统一评测协议。
+- 对后续专题化方向的纵深讨论不足。
+
+### 值得精读章节
+- `Dissecting LLM-MA Systems`
+- `Applications`
+- `Implementation Tools and Resources`
+
+### 关键图表
+- 系统组件总图
+- 应用版图/资源汇总表
+
+### 证据来源与边界
+主要依据 selection 文件、cross-comparison 中 S2、background-notes 中 Guo 2024 条目；benchmark 名录来自仓库既有笔记，不额外扩大到仓库外来源。
+
+---
+
+## 3. Zhu et al. 2024
+- Paper ID：`10.1007/s10458-023-09633-6`
+- 标题：*A survey of multi-agent deep reinforcement learning with communication*
+- 年份：2024
+- 来源：https://dblp.org/rec/journals/aamas/ZhuDW24
+- 本地 PDF：`projects/multi-agent-survey-review/literature/pdf/2024-zhu-et-al-a-survey-of-multi-agent-deep-reinforcement-learning-with-communication-doi-10.1007-s10458-023-09633-6.pdf`
+
+### 研究问题
+在 MARL 中，communication 如何缓解 partial observability 与 non-stationarity；已有 Comm-MADRL 方法应如何被系统分类与比较。
+
+### 分类框架
+以 communication 的多维分析空间为核心，摘要明确给出 9 个维度；仓库内已有对其主要维度的概括包括 communication constraints、communicatee type、communication policy、communicated messages、message combination 等。
+
+### 核心观点
+- communication 是 MADRL 中的关键机制，而非边缘增强项。
+- 最重要的不只是“能不能通信”，而是“传给谁、传什么、在何种约束下学”。
+- 多维分类比单轴 taxonomy 更适合发现组合空白。
+
+### 方法谱系
+从预定义通信机制，发展到可学习 communication policy，再细分通信对象、消息内容、约束和训练方式，形成传统多智能体通信的基础谱系。
+
+### 评测设定
+以 MARL 环境和协同决策任务为主；仓库内 cross-comparison 明确将其归到 communication 与 decision-method 双重基线，常见环境包括 MPE、predator-prey、StarCraft II 一类可控多主体环境。
+
+### 局限性
+- 不直接面向 LLM-based natural language agents。
+- 对开放式文本协作、角色交互和工具调用的覆盖有限。
+
+### 值得精读章节
+- 背景与通信问题定义部分
+- 9 维通信分类框架部分
+- future Comm-MADRL system 展望部分
+
+### 关键图表
+- Comm-MADRL 多维分类图
+- 方法维度组合总结表
+
+### 证据来源与边界
+主要依据 selection 文件对其“传统 MARL 通信补位”定位、cross-comparison 中 S3、background-notes 中 Zhu 2024 条目；环境举例保持在仓库内已出现的名称范围内。
+
+---
+
+## 4. Chen et al. 2025
+- Paper ID：`2412.17481`
+- 标题：*A Survey on LLM-based Multi-Agent System: Recent Advances and New Frontiers in Application*
 - 年份：2025
-- 主题标签：技术底座、architecture、memory、planning
-
-### 研究问题
-该综述试图回答：构建有效的 LLM-based multi-agent systems 时，哪些技术底层最关键，尤其是 architecture、memory、planning 与 frameworks 如何协同。
-
-### 分类框架
-四大核心板块：
-- Architecture
-- Memory
-- Planning
-- Technologies / Frameworks
-
-### 核心观点
-- multi-agent 性能提升往往源于架构设计而非单纯模型替换。
-- memory 与 planning 是长程任务协作的核心支柱。
-- 技术框架层决定了系统是否可复用、可扩展、可工程化。
-
-### 方法谱系
-更偏工程栈谱系：
-1. 体系结构：集中式、层级式、模块化多角色组合。
-2. 记忆机制：短期上下文、长期记忆、共享记忆。
-3. 规划机制：ReAct 类、分层规划、任务拆解与重规划。
-4. 框架实现：从概念原型走向平台化搭建。
-
-### 评测设定
-恢复笔记中对应的典型任务/基准包括 ALFWorld、HotpotQA、HumanEval、MATH、MT-Bench、AlpacaEval、CAMEL、AutoGen。说明其关注：
-- 交互环境任务；
-- 复杂推理与代码；
-- 对话质量与系统框架可用性。
-
-### 优点
-- 工程视角强，适合做系统设计参考。
-- 明确把 memory / planning 拿出来单列，便于做技术拆解。
-- 对后续实现者最友好。
-
-### 缺点
-- 应用侧覆盖没有通用总览类综述广。
-- 对 communication 的专题化讨论不如专门通信综述深入。
-
-### 局限
-- 更偏“怎么搭系统”，不完全回答“哪些任务最需要多 Agent”。
-- 对 benchmark 的统一性讨论仍有限。
-
-### 值得精读章节
-- `Architecture`：用于搭建总体系统蓝图。
-- `Memory`：适合与 role-playing / social agents 的长期一致性问题联读。
-- `Planning`：可与 workflow optimization 综述形成技术链条。
-
-### 关键图表
-- architecture 分类图：看清角色组织和控制流。
-- memory / planning 对照表：适合后续做技术路线选择。
-
----
-
-## 3. Chen et al. 2024 — A Survey on LLM-based Multi-Agent System: Recent Advances and New Frontiers in Application
-
 - 来源：https://arxiv.org/abs/2412.17481
-- 年份：2024（arXiv 时间口径；恢复稿中曾以 2025 文件名保存）
-- 主题标签：应用前沿、复杂任务、仿真、评测
+- 本地 PDF：`projects/multi-agent-survey-review/literature/pdf/2025-chen-et-al-a-survey-on-llm-based-multi-agent-system-recent-advances-and-new-frontiers-in-application-arxiv-2412.17481.pdf`
 
 ### 研究问题
-这篇综述关注：LLM-based MAS 已经扩展到哪些新应用边界，尤其是复杂任务求解、特定场景仿真和生成式 agent 评测。
+LLM-MAS 的最新扩张主要体现在哪些应用前沿，尤其是复杂任务求解、特定场景模拟与 generative agent evaluation 这三条主线如何共同重构领域版图。
 
 ### 分类框架
-- 应用侧三分：solving complex tasks、simulating specific scenarios、evaluating generative agents。
-- 配套补充：core components、interactions、challenges and future directions。
+以三类应用目的为主轴：solving complex tasks、simulating specific scenarios、evaluating generative agents；并辅以 core components 与 challenges/future。
 
 ### 核心观点
-- 多 Agent 的价值正通过“复杂任务、仿真与评测”三条应用主线显化。
-- generative agents 不只是执行器，也正在成为评测对象与评测主体。
-- 应用前沿已经反过来推动系统组件与交互模式演化。
+- 应用目的比单纯系统模块更能解释新论文的增长方向。
+- generative agents 正从执行者变成评测对象与评测主体。
+- 新应用前沿正在反向塑造框架和评测方式。
 
 ### 方法谱系
-- 复杂任务求解：任务分工、协作求解、互审。
-- 场景仿真：让多个 agents 在特定环境中形成行为动力学。
-- agent 评测：让 agent 不只被测试，还参与评测闭环。
-该谱系体现出从“执行任务”走向“模拟系统”和“评估系统”的外扩。
+从 core components 出发，沿三类应用主线展开，再汇总 challenges 与 future directions，体现“组件—应用—评测”式组织。
 
 ### 评测设定
-恢复笔记列出 AgentBench、AUCArena、EvalPlus、GSM8K、HotpotQA、HumanEval、MATH、MMLU、MT-Bench、MLAgentBench、ToolBench、LLMArena、ChatEval。其特征是：
-- 横跨能力评测与系统评测；
-- 开始出现 agent-specific benchmarks；
-- 评测对象不再只是单轮输出，而是系统行为。
+仓库内已有笔记记录其涉及 AgentBench、AUCArena、EvalPlus、GSM8K、HotpotQA、HumanEval、MATH、MMLU、MT-Bench、MLAgentBench、ToolBench、ChatEval 等，反映出其正处于通用 benchmark 向 agent-specific benchmark 过渡的阶段。
 
-### 优点
-- 应用导向强，适合寻找落地研究切口。
-- agent evaluation 讨论比很多通用综述更前。
-- 对“新前沿”这个问题回答比较到位。
-
-### 缺点
-- 纯技术分类深度不如工程/通信专项综述。
-- 方法论可能更偏应用映射，底层机制讨论略散。
-
-### 局限
-- 应用面广也意味着分类口径偏宽。
-- 如果想研究通信协议或 runtime graph，这篇不是最深入口。
+### 局限性
+- 对 communication、workflow 等底层专题不如专项综述深入。
+- 篇幅限制导致细粒度技术讨论有限。
 
 ### 值得精读章节
-- `solving complex tasks`：对应最主流的多 Agent 应用范式。
-- `evaluating generative agents`：适合和 benchmark 脉络专题一起读。
-- `Challenges posed by interactions`：帮助提炼后续研究空白。
+- 三类应用前沿主章节
+- evaluation / resources 相关章节
+- challenges and future directions
 
 ### 关键图表
-- 应用前沿分类图：适合给团队快速解释“现在都拿 multi-agent 做什么”。
-- benchmark / evaluation 汇总表：适合做后续总览矩阵。
+- 应用三分法总图
+- benchmark / resources 汇总表
+
+### 证据来源与边界
+主要依据 selection 文件、cross-comparison 中 S4、background-notes 中 Chen 2412.17481 条目；benchmark 名录不超出仓库既有记录。
 
 ---
 
-## 4. Tran et al. 2025 — Multi-Agent Collaboration Mechanisms: A Survey of LLMs
-
+## 5. Tran et al. 2025
+- Paper ID：`2501.06322`
+- 标题：*Multi-Agent Collaboration Mechanisms: A Survey of LLMs*
+- 年份：2025
 - 来源：https://arxiv.org/abs/2501.06322
-- 年份：2025
-- 主题标签：collaboration taxonomy、合作/竞争/竞合、结构设计
+- 本地 PDF：`projects/multi-agent-survey-review/literature/pdf/2025-tran-et-al-multi-agent-collaboration-mechanisms-a-survey-of-llms-arxiv-2501.06322.pdf`
 
 ### 研究问题
-作者试图系统回答：多个 LLM agents 协作时，合作关系、结构拓扑、策略与协调协议如何组织，哪些机制真正决定集体智能收益。
+LLM-based multi-agent collaboration 到底由哪些关键维度组成，不同协作关系、结构与协调协议如何影响 collective intelligence。
 
 ### 分类框架
-- actors
-- relation types：合作 / 竞争 / 竞合
-- structures：点对点 / 中心化 / 分布式
-- strategies
-- coordination protocols
+按 actors、types（cooperation / competition / coopetition）、structures、strategies、coordination protocols 组织，是当前样本集中协作 taxonomy 最完整的论文之一。
 
 ### 核心观点
-- 多 Agent 的收益来自结构和机制设计，而非简单增加 agent 数量。
-- 合作、竞争、竞合应被视为同等重要的组织关系，而非只研究合作。
-- coordination protocol 是连接角色、结构和策略的关键中层抽象。
+- 多智能体研究应从 isolated models 转向 collaboration-centric designs。
+- cooperation、competition、coopetition 都是重要组织关系。
+- protocol 是把 actor、structure 和 strategy 串联起来的关键抽象层。
 
 ### 方法谱系
-- 关系谱系：从 cooperation 到 competition/coopetition。
-- 结构谱系：从 pairwise 到 centralized，再到 distributed。
-- 协调谱系：从简单消息传递到协议化协作与冲突解决。
-其核心不是任务类型，而是组织机制。
+先定义 collaboration concept，再按协作类型、组织结构、策略与协议逐层展开，属于典型“组织机制”视角的谱系。
 
 ### 评测设定
-恢复笔记提到 LLMArena、CAMEL、AutoGen 以及专门的 `Comprehensive Evaluation and Benchmarking` 章节；摘要还提及 5G/6G、Industry 5.0、QA/NLG、social/cultural settings。可见其评测更关注：
-- 协作关系是否提升结果；
-- 不同协作拓扑下的任务表现；
-- 面向多场景的机制可迁移性。
+更强调协作效果和结构差异在真实任务中的表现；仓库内已有记录点名 LLMArena、CAMEL、AutoGen 等系统与场景线索，但该文重点在协作机制比较，不是单独构建 benchmark 目录。
 
-### 优点
-- collaboration taxonomy 很完整。
-- 适合研究 collective intelligence。
-- 把合作/竞争/竞合并列，是明显优点。
-
-### 缺点
-- tool-use、workflow、memory 等工程纵深不是重点。
-- 对具体 benchmark 的协议级可复现描述可能不如工程综述详细。
-
-### 局限
-- 更适合回答“如何组织多 Agent”，不直接回答“如何落地工业 runtime”。
-- 某些 benchmark/案例需要二次清洗才能严格复用。
+### 局限性
+- memory、tool-use、workflow engineering 不是主轴。
+- benchmark 更像协作案例的比较背景，而不是统一实验协议。
 
 ### 值得精读章节
-- `Collaboration Types`：理解关系设计。
-- `Communication Structures`：与通信综述并读效果最好。
-- `Coordination and Orchestration`：是 collaboration 向 workflow 过渡的桥梁。
+- collaboration concept / problem definition
+- collaboration types
+- coordination and orchestration 相关部分
 
 ### 关键图表
-- collaboration taxonomy 图：是十篇中最适合作为协作机制底图的图之一。
-- relation/structure/protocol 对照表：适合后续做横向编码表。
+- collaboration taxonomy 总图
+- relation / structure / protocol 对照表
+
+### 证据来源与边界
+主要依据 selection 文件对其入选理由、cross-comparison 中 S5、background-notes 中 Tran 2025 条目；未超出仓库内已落库的案例名。
 
 ---
 
-## 5. Wu et al. 2025 — Multi-Agent Autonomous Driving Systems with Large Language Models: A Survey of Recent Advances
-
-- 来源：https://arxiv.org/abs/2502.16804
+## 6. Yan et al. 2025
+- Paper ID：`2502.14321`
+- 标题：*Beyond Self-Talk: A Communication-Centric Survey of LLM-Based Multi-Agent Systems*
 - 年份：2025
-- 主题标签：自动驾驶、垂直应用、高风险真实系统
-
-### 研究问题
-在自动驾驶场景下，单 Agent LLM 方案面临感知受限、协作不足和成本过高等问题；该综述关注多 Agent + LLM 能否通过车-车、车-路、车-助手、agent-人协同来缓解这些问题。
-
-### 分类框架
-按交互对象与协作任务划分：
-- Multi-Vehicle Interaction
-- Vehicle-Infrastructure Interaction
-- Vehicle-Assistant Interaction
-- Agent-Human Interaction
-并配套讨论：Collaborative Perception、Collaborative Decision-Making、Cloud-Edge Deployment、Collaborative Assistance Tools。
-
-### 核心观点
-- 多 Agent 对自动驾驶的价值在于分布式视角整合与协同决策。
-- LLM 在该场景中更像“语义协调层”，而不是替代底层控制器。
-- 真正难点来自实时性、安全性、部署约束，而不是单纯任务分数。
-
-### 方法谱系
-- 从单 Agent ADS 到多 Agent ADS。
-- 从纯感知/决策模块走向协同感知、协同决策。
-- 从端侧孤立系统走向 cloud-edge 协同与人机协作。
-
-### 评测设定
-恢复笔记记录 Waymo Open Motion Dataset、Multi-agent Autonomous Driving Dataset，以及专门的 `Datasets and Benchmark` 章节。说明其评测设置具有明显领域特征：
-- 多车交互；
-- 高实时、强安全约束；
-- 感知/决策/部署联合考察。
-
-### 优点
-- 真实系统约束非常强，研究问题清晰。
-- 交互对象的分类天然可解释。
-- 对“多 Agent 如何进入高风险场景”很有参考价值。
-
-### 缺点
-- 通用性较弱，结论未必能直接外推到一般多 Agent 系统。
-- 强依赖领域背景。
-
-### 局限
-- 垂直领域综述，不是通用 multi-agent 基础综述。
-- benchmark 也更偏专用场景。
-
-### 值得精读章节
-- `Multi-Agent ADS` 总览部分：理解多 Agent 在真实系统中的功能定位。
-- `Collaborative Decision-Making`：是最贴近“多 Agent 真增益”的章节。
-- `Challenges and Future Directions`：适合提炼高风险系统研究缺口。
-
-### 关键图表
-- 自动驾驶多交互对象架构图：适合展示多主体协同拓扑。
-- 数据集与 benchmark 总表：适合做垂直场景 benchmark 脉络归档。
-
----
-
-## 6. Yan et al. 2025 — Beyond Self-Talk: A Communication-Centric Survey of LLM-Based Multi-Agent Systems
-
 - 来源：https://arxiv.org/abs/2502.14321
-- 年份：2025
-- 主题标签：communication-centric、协议、内部通信
+- 本地 PDF：`projects/multi-agent-survey-review/literature/pdf/2025-yan-et-al-beyond-self-talk-a-communication-centric-survey-of-llm-based-multi-agent-systems-arxiv-2502.14321.pdf`
 
 ### 研究问题
-作者认为以往综述偏重应用或架构，而忽视了 communication 在 LLM-MAS 中的核心地位，因此要从通信角度重构整个研究版图。
+在 LLM-MAS 中，communication 由哪些层面组成，system-level 与 system-internal communication 如何共同决定系统能力，并在哪些效率、安全与扩展性问题上暴露短板。
 
 ### 分类框架
-两层框架：
+双层框架：
 - system-level communication：architecture、goals、protocols
 - system-internal communication：strategies、paradigms、objects、content
-可进一步细化为 Communication Architecture、Goal、Protocol、Strategy、Paradigm、Object、Content。
 
 ### 核心观点
-- communication 不是 prompt 细节，而是系统能力变量。
-- 多 Agent 收益高度依赖通信设计质量。
-- scalability、security 和 communication efficiency 是同一问题的不同面。
+- communication 是系统能力变量，不是 prompt 小技巧。
+- 研究 communication 时必须同时看“为什么说、怎么说、说什么”。
+- efficiency、security、benchmarking、scalability 需要一起审视。
 
 ### 方法谱系
-- 从 system-level 通信结构出发：谁和谁连、为什么连。
-- 进入 protocol / strategy：怎么连、何时连。
-- 进一步到 content / object：传什么。
-- 最后走向 benchmark 与 evaluation：如何评估通信是否有效。
+从外层 architecture / goal / protocol 出发，再进入 strategy / paradigm / object / content 的内层通信机制，最后落到 benchmark 和风险。
 
 ### 评测设定
-恢复笔记提到 GAMA-Bench、MultiAgentBench、RealWorldBench 以及单独的 `Benchmarks and Evaluation` 章节。其评测关注点不只是结果分数，还包括：
-- 通信是否必要；
-- 通信是否高效；
-- 通信是否引入风险。
+仓库内已有记录显示其讨论 GAMA-Bench、MultiAgentBench、RealWorldBench 等通信相关评测；更重要的是它强调现有 benchmarks 在覆盖场景、异构域与 agent population scale 上仍有不足。
 
-### 优点
-- 视角极其鲜明，补上通信主线空白。
-- 双层 taxonomy 很适合后续研究设计。
-- 安全、扩展性、性能问题被统一到 communication 角度下审视。
-
-### 缺点
-- 对 memory、workflow、tool-use 关注相对弱。
-- 偏重通信，可能弱化其他系统变量。
-
-### 局限
-- 若读者关注完整系统落地，需要和工程/工作流综述配套阅读。
-- 多模态通信与非文本协议仍处于较早阶段。
+### 局限性
+- 为突出通信，弱化了 memory、tool-use、workflow graph 等其他变量。
+- 多模态通信和工业部署仍处于较早阶段。
 
 ### 值得精读章节
-- `Communication Architecture`：回答“谁和谁说”。
-- `Communication Protocol`：回答“按什么规则说”。
-- `Benchmarks and Evaluation`：回答“通信系统怎么测”。
+- Communication Architecture
+- Communication Protocol
+- Benchmarks & Evaluation
 
 ### 关键图表
-- communication taxonomy 总图：是十篇里最值得反复看的图之一。
-- benchmark 与风险/效率对照表：适合后续抽取评测维度。
+- communication taxonomy 总图
+- benchmark 与效率/风险对照表
+
+### 证据来源与边界
+主要依据 selection 文件、cross-comparison 中 S6、background-notes 中 Yan 2025 条目；benchmark 仅使用仓库已出现的名字与族群判断。
 
 ---
 
-## 7. Xu et al. 2026 — The Evolution of Tool Use in LLM Agents: From Single-Tool Call to Multi-Tool Orchestration
-
-- 来源：https://arxiv.org/abs/2603.22862
-- 年份：2026
-- 主题标签：tool use、多工具编排、工业级 runtime
+## 7. Wu et al. 2025
+- Paper ID：`2502.16804`
+- 标题：*Multi-Agent Autonomous Driving Systems with Large Language Models: A Survey of Recent Advances*
+- 年份：2025
+- 来源：https://arxiv.org/abs/2502.16804
+- 本地 PDF：`projects/multi-agent-survey-review/literature/pdf/2025-wu-et-al-multi-agent-autonomous-driving-systems-with-large-language-models-a-survey-of-recent-advances-arxiv-2502.16804.pdf`
 
 ### 研究问题
-该综述回答：tool use 如何从简单函数调用演化为多工具、长程、受约束的 orchestration 问题；这对 agent systems 的核心研究问题意味着什么。
+单 agent 自动驾驶系统在感知、协作和计算代价上存在明显瓶颈；多 agent + LLM 能否通过车-车、车-路、车-助手与 agent-human 协作缓解这些问题。
 
 ### 分类框架
-六大维度：
-- inference-time planning and execution
-- training and trajectory construction
-- safety and control
-- efficiency under resource constraints
-- capability completeness in open environments
-- benchmark design and evaluation
-此外还有 Topological Planning、Long-Horizon Orchestration、Agent Self-Improvement、Industrial-Grade Governance 等专题。
+以交互对象与协作任务为核心：multi-vehicle、vehicle-infrastructure、vehicle-assistant、agent-human；并延伸到 collaborative perception、collaborative decision-making、cloud-edge deployment、assistance tools。
 
 ### 核心观点
-- 真实 agent 系统的难点常常不是“多 agent”，而是“多工具+长轨迹+受约束执行”。
-- tool orchestration 把 planning、execution、safety、budget 放到同一优化问题中。
-- 工业级 agent 必须把治理和工程约束放进研究问题本身。
+- 多智能体在自动驾驶中的价值首先体现在分布式视角整合与语义协调。
+- LLM 更像高层协调与决策层，不是简单替代底层控制器。
+- 自动驾驶是高风险真实场景中检验 multi-agent 价值的重要方向。
 
 ### 方法谱系
-- 从 single-tool call 到 multi-tool chain。
-- 从静态调用到规划驱动执行。
-- 从执行正确性到预算/安全/开放环境适应。
-- 从单条轨迹走向 trajectory construction 与 self-improvement。
+从 single-agent ADS 回顾切入，再转向 multi-agent ADS 架构与交互模式，最后连接应用、数据集与挑战。
 
 ### 评测设定
-恢复笔记包含 AgentLongBench、AndroidArena、CostBench、HammerBench、MCP-Bench、MTU-Bench、Mobile-Bench、OdysseyBench、RepoBench、RestBench。评测特点：
-- 长程工具使用；
-- 真实或半真实环境；
-- 成本、鲁棒性和治理被纳入。
+以自动驾驶专用 datasets / benchmarks 为主；仓库内已有记录点名 INTERACTION、Waymo Open Motion Dataset 等，突出实时性、安全性与多车协同约束。
 
-### 优点
-- 与当前 agent engineering 非常贴合。
-- benchmark 汇总密度高。
-- 把安全与成本纳入主线，而非附录。
-
-### 缺点
-- 不是纯 multi-agent collaboration survey。
-- 社会交互、role-play 类议题覆盖较弱。
-
-### 局限
-- 更偏工具编排层，对 communication/social interaction 的连接需要读者自己补。
-- 可能低估了多 Agent 身份与组织结构的重要性。
+### 局限性
+- 垂直领域特性强，结论不一定可直接迁移到通用 MAS。
+- 高风险场景使复现实验与评测门槛高。
 
 ### 值得精读章节
-- `Long-Horizon Orchestration`：最值得和 workflow optimization 对读。
-- `Safety and Control`：适合接 industrial governance 问题。
-- `Benchmark design and evaluation`：适合抽取后续实验设置。
+- LLM-based Multi-Agent Interaction
+- Applications
+- Datasets and Benchmark
+- Challenges and Future Directions
 
 ### 关键图表
-- tool-use evolution 时间线/层级图：展示从简单调用到复杂编排的路径。
-- benchmark 总表：是做实验设计时最有实用价值的表之一。
+- 多交互对象自动驾驶架构图
+- 自动驾驶数据集/benchmark 汇总表
+
+### 证据来源与边界
+主要依据 selection 文件、cross-comparison 中 S7、background-notes 中 Wu 2025 条目；数据集名称保持在仓库已有提及范围内。
 
 ---
 
-## 8. Yue et al. 2026 — From Static Templates to Dynamic Runtime Graphs: A Survey of Workflow Optimization for LLM Agents
-
-- 来源：https://arxiv.org/abs/2603.22386
-- 年份：2026
-- 主题标签：workflow optimization、runtime graph、ACG
+## 8. Jin et al. 2025
+- Paper ID：`2503.13415`
+- 标题：*A Comprehensive Survey on Multi-Agent Cooperative Decision-Making: Scenarios, Approaches, Challenges and Perspectives*
+- 年份：2025
+- 来源：https://arxiv.org/abs/2503.13415
+- 本地 PDF：`projects/multi-agent-survey-review/literature/pdf/2025-misc-a-comprehensive-survey-on-multi-agent-cooperative-decision-making-scenarios-approaches-challenges-and-perspectives-arxiv-2503.13415.pdf`
 
 ### 研究问题
-workflow 不再只是静态 prompt chain；作者想回答的是：工作流结构何时确定、哪些部分可被优化、以及哪些信号驱动优化。
+多 agent cooperative decision-making 在不同场景、任务形式、奖励机制和底层技术下如何被系统化梳理；传统方法与 MARL、LLM reasoning 方法如何比较。
 
 ### 分类框架
-三条主轴：
-1. when structure is determined：静态 vs 动态
-2. what part of the workflow is optimized
-3. which evaluation signals guide optimization
-并细分 selection/pruning、pre-execution generation、in-execution editing 等动态优化类型。
+按场景/环境与方法双轴组织：
+- 场景轴：simulation environments、task formats、reward allocation、underlying technologies
+- 方法轴：rule-based、game theory-based、evolutionary algorithms-based、deep MARL-based、LLM reasoning-based
 
 ### 核心观点
-- agent workflow 应被视为图结构，而非固定模板。
-- template、realized graph、trace 是三个不同对象，必须区分。
-- verifier / feedback 对 workflow 优化至关重要。
+- cooperative decision-making 不只是算法问题，也强依赖 environment 与 reward design。
+- 传统 MAS 决策方法与新型 MARL/LLM 方法需要放在同一张谱系图里看。
+- 真实复杂场景推动方法分类从单纯算法比较转向“算法 + 环境 + 协议”联合分析。
 
 ### 方法谱系
-- 静态模板阶段。
-- 动态运行时图阶段。
-- 图级优化阶段：选择、生成、编辑。
-- 反馈驱动阶段：verifier、cost、robustness 联合优化。
+从规则和博弈方法，发展到进化算法，再到 deep MARL，最后纳入 LLM reasoning-based cooperative decision-making，形成一条传统 MAS 到 LLM-MAS 的桥接线。
 
 ### 评测设定
-恢复笔记包含 FlowBench、GAIA、GSM8K、HotpotQA、HumanEval、MATH、MCP-Bench、MCPEval、SOP-Bench、SWE-bench、Terminal-Bench、ToolBench、WorkflowBench。可见其评测不局限于单一任务，而是面向流程执行能力。
+重点不在通用问答 benchmark，而在 simulation environments 与 cooperative tasks；仓库内已有记录提到 MPE、predator-prey、StarCraft II 等环境，体现其环境导向的评测风格。
 
-### 优点
-- taxonomy 非常清晰。
-- 直接提供 ACG（agentic computation graphs）这一强抽象。
-- 很适合后续做 runtime 优化研究。
-
-### 缺点
-- 社会互动、通信细节不是重点。
-- 对领域应用侧案例相对少。
-
-### 局限
-- 更偏 workflow engineering 视角。
-- 若读者关注 role/persona/society，这篇覆盖不够。
+### 局限性
+- 覆盖面广，单个方法簇的纵深有限。
+- LLM reasoning 部分因时间较新，细化程度可能弱于 MARL 部分。
 
 ### 值得精读章节
-- `when structure is determined`：理解静态/动态边界。
-- `in-execution editing`：理解运行时自适应。
-- `Open Problems and Future Directions`：适合直接提 idea。
+- 场景与 environment 总览部分
+- 五类方法总述部分
+- challenges and perspectives
 
 ### 关键图表
-- 静态模板到动态图的范式迁移图。
-- workflow optimization taxonomy 表/图：适合后续研究选题编码。
+- cooperative decision-making 方法谱系图
+- 场景 / 任务形式 / 奖励分配总结表
+
+### 证据来源与边界
+主要依据 selection 文件、cross-comparison 中 S8、background-notes 中 Jin 2025 条目；环境名仅沿用仓库内已出现的例子。
 
 ---
 
-## 9. Chen et al. 2026 — The Five Ws of Multi-Agent Communication: Who Talks to Whom, When, What, and Why -- A Survey from MARL to Emergent Language and LLMs
+## 9. Lin et al. 2025
+- Paper ID：`2505.21116`
+- 标题：*Creativity in LLM-based Multi-Agent Systems: A Survey*
+- 年份：2025
+- 来源：https://arxiv.org/abs/2505.21116
+- 本地 PDF：`projects/multi-agent-survey-review/literature/pdf/2025-lin-et-al-creativity-in-llm-based-multi-agent-systems-a-survey-arxiv-2505.21116.pdf`
 
+### 研究问题
+creative MAS 如何组织 agent proactivity、persona、generation techniques、datasets 与 evaluation，以系统提升文本和图像生成任务中的创造力。
+
+### 分类框架
+围绕 workflow and proactivity、creative techniques（divergent exploration、iterative refinement、collaborative synthesis）、persona/profile、evaluation、datasets 展开。
+
+### 核心观点
+- creativity 是 MAS 的独立能力维度，不只是 infrastructure 的副产物。
+- persona、proactivity 与 workflow integration 会直接影响创意结果。
+- 当前最大短板在 evaluation inconsistency、bias mitigation、coordination conflict 和 lack of unified benchmarks。
+
+### 方法谱系
+从 workflow 与主动作业模式切入，扩展到多种创造性生成技术，再进入 persona/profile 设计，最后讨论 evaluation 与 dataset。
+
+### 评测设定
+以 creative task datasets 和多维评价为主；仓库内已有记录区分 psychological test datasets 与 task-specific datasets，并强调 objective、subjective、user study 混合评测。
+
+### 局限性
+- 与通用协作、通信、tool-use 问题的连接较弱。
+- 主观评价比例高，横向可比性不足。
+
+### 值得精读章节
+- MAS Workflow and Proactivity
+- MAS Techniques for Creativity
+- Evaluation / Datasets
+- Challenges and Future Work
+
+### 关键图表
+- creative MAS 工作流图
+- evaluation taxonomy / datasets 汇总表
+
+### 证据来源与边界
+主要依据 selection 文件、cross-comparison 中 S9、background-notes 中 Lin 2025 条目；数据集与评价类别保持在仓库已落库的分类层级。
+
+---
+
+## 10. Chen et al. 2026
+- Paper ID：`2602.11583`
+- 标题：*The Five Ws of Multi-Agent Communication: Who Talks to Whom, When, What, and Why -- A Survey from MARL to Emergent Language and LLMs*
+- 年份：2026
 - 来源：https://arxiv.org/abs/2602.11583
-- 年份：2026
-- 主题标签：5W 通信理论、跨范式桥接、MARL 到 LLM
+- 本地 PDF：`projects/multi-agent-survey-review/literature/pdf/2026-chen-et-al-the-five-ws-of-multi-agent-communication-who-talks-to-whom-when-what-and-why-a-survey-from-marl-to-emergent-language-and-llms-arxiv-2602.11583.pdf`
 
 ### 研究问题
-多智能体通信研究跨越 MARL、涌现语言、LLM agents，但长期缺少统一框架。该综述提出用 5W 统一通信研究版图。
+如何用 Who / Whom / When / What / Why 五个问题统一刻画 multi-agent communication，并把 MARL、emergent language、LLM-based communication 三条研究传统连接到同一框架中。
 
 ### 分类框架
+Five Ws 是全文核心 taxonomy：
 - Who
 - Whom
 - When
 - What
 - Why
-同时按历史脉络连接 MARL communication、emergent language、LLM-powered multi-agent communication。
+同时按 MARL、emergent language、LLM-based communication 三大范式组织正文。
 
 ### 核心观点
-- 5W 是一种可跨范式复用的通信最小框架。
-- LLM 时代的多 Agent 通信应当和 MARL / emergent language 传统对话。
-- 通信问题可以被系统化拆成“主体、对象、时机、内容、动机”五个基本变量。
+- Five Ws 提供了跨范式的最小统一语言。
+- MARL、EL、LLM 三条路线不是割裂的，而是连续演化的通信研究谱系。
+- communication 的关键不只是是否存在，而是主体、对象、时机、内容与动机的联合设计。
 
 ### 方法谱系
-- 历史谱系：MARL → emergent language → LLM communication。
-- 理论谱系：从单一消息机制转向完整问题分解框架。
-- 方法谱系：以 5W 为坐标重组不同通信方法。
+采用“历史演化 + 统一框架”双线：先回顾 communication as action 的理论基础，再按三大范式重组，最终落到 Five Ws 统一分析和 future directions。
 
 ### 评测设定
-恢复笔记包含 AvalonBench、BattleAgentBench、ChatEval、GAIA、MultiAgentBench、RoCoBench、CAMEL。该综述强调：
-- benchmark 应支持跨范式比较；
-- 通信质量而非单纯结果分数值得单列。
+仓库内已有记录显示其涉及 AvalonBench、BattleAgentBench、ChatEval、GAIA、MultiAgentBench、RoCoBench、CAMEL 等；其重点是 communication evaluation 的跨范式可比性，而非单一任务分数。
 
-### 优点
-- 5W 框架极具可迁移性。
-- 把 LLM 多 Agent 通信放回更长理论历史中。
-- 综述方法学更规范，纳排标准更清楚。
-
-### 缺点
-- 主题高度聚焦通信，非通信议题覆盖较少。
-- 若要做完整系统设计，需要结合 workflow/tool/memory 综述。
-
-### 局限
-- 不是全景 multi-agent survey，而是通信专题旗舰综述。
-- 工程运行时、预算与治理层面讨论不如 workflow/tool-use 文献细。
+### 局限性
+- 主题高度聚焦通信，不是通用 multi-agent 全景综述。
+- 工程运行时、成本治理等维度需要和其他综述互补阅读。
 
 ### 值得精读章节
-- `Search Strategy and Temporal Scope`：看清方法学口径。
-- 5W 主体章节：是全文信息密度最高的部分。
-- `Perspectives on Future Directions`：适合直接提炼开放问题。
+- Methodology and Scope
+- Five Ws 主体章节
+- Discussion, Open Problems, and Future Directions
 
 ### 关键图表
-- 5W 总框架图：建议作为十篇综述中最关键的图之一长期保留。
-- 三大脉络对照图（MARL / emergent language / LLM）：适合做跨范式汇报。
+- Five Ws 总框架图
+- MARL / EL / LLM 三范式对照图
 
----
-
-## 10. Wang et al. 2026 — Role-Playing Agents Driven by Large Language Models: Current Status, Challenges, and Future Trends
-
-- 来源：https://arxiv.org/abs/2601.10122
-- 年份：2026
-- 主题标签：role-playing、social agents、memory、personality
-
-### 研究问题
-这篇综述要回答：role-playing language agents 如何从模板驱动演化为由人格、记忆、动机共同驱动的角色型多智能体系统，以及这一方向的主要技术难题是什么。
-
-### 分类框架
-- Evolution of Research Paradigms
-- Core Technologies of Role-Playing Modeling
-- Construction and Annotation of Role-Specific Data
-- Evaluation Methods and Metrics
-- Future Outlook and Research Trends
-核心技术又分为 Character Setting and Personality Modeling、Character Memory Mechanisms、Behavior and Decision-Making Modeling。
-
-### 核心观点
-- role-playing agents 是 multi-agent 走向 social simulation 的关键分支。
-- personality、memory、motivation 是角色一致性的三大技术支柱。
-- 评测不能只看任务完成，还要看人格一致性、叙事连贯性和关系稳定性。
-
-### 方法谱系
-- 从 prompt-based role setup 到 personality modeling。
-- 从静态角色卡到记忆增强。
-- 从单角色模拟到多角色协作叙事与社会互动。
-- 从生成质量评测到角色 fidelity / alignment 评测。
-
-### 评测设定
-恢复笔记提到 CharacterEval、RoleBench、RoleEval、RoleEval-Chinese、RoleEval-Global、RMTBench、RVBench。说明此方向已有较强的专门评测生态，重视：
-- 人格一致性；
-- 角色行为合理性；
-- 跨文化/跨语言表现。
-
-### 优点
-- 对 social agents 的技术拆解很清晰。
-- 数据构建、标注和评测讨论都较实。
-- 很适合延展到 companion、social simulation、narrative systems。
-
-### 缺点
-- 通用多 Agent 协作/工具调用不是主线。
-- 面向任务型系统的直接指导有限。
-
-### 局限
-- 领域边界更偏 social interaction，而非通用 MAS。
-- 与工业级 runtime、workflow 优化的连接需要额外补充。
-
-### 值得精读章节
-- `Character Memory Mechanisms`：是理解长期角色一致性的关键。
-- `Evaluation Methods and Metrics`：适合抽取 social-agent benchmark。
-- `Future Outlook and Research Trends`：能直接转化为研究选题。
-
-### 关键图表
-- role-playing agent 技术栈图：适合解释角色、记忆、动机三者关系。
-- evaluation taxonomy / benchmark 总表：适合后续做社会型 agent 评测设计。
+### 证据来源与边界
+主要依据 selection 文件、cross-comparison 中 S10、background-notes 中 Chen 2026 条目；benchmark 仅采用仓库已出现的名称与分类。
 
 ---
 
 ## 横向小结
 
-### 十篇综述共同覆盖的主线
-- 通用总览：Guo 2024、Chen 2024
-- 技术底座：Aratchige 2025
-- 协作与通信：Tran 2025、Yan 2025、Chen 2026
-- 工具与工作流：Xu 2026、Yue 2026
-- 垂直/社会化场景：Wu 2025、Wang 2026
+### 当前统一样本集覆盖面
+- 通用 LLM-MAS 总览：Li 2024、Guo 2024、Chen 2025
+- 通信/协作/决策：Zhu 2024、Tran 2025、Yan 2025、Jin 2025、Chen 2026
+- 垂直与新兴应用：Wu 2025、Lin 2025
 
-### 方法谱系总脉络
-1. 通用组件式综述（2024）
-2. 应用/协作专题化综述（2025）
-3. 通信、工具编排、workflow、role-play 的专题纵深综述（2026）
+### 共性判断
+- communication 是 10 篇样本中最强的交叉主题。
+- 2024 年样本更偏通用框架，2025 年样本快速专题化，2026 年样本开始尝试统一理论。
+- benchmark 仍明显碎片化：通用能力基准、协作交互基准、通信专项基准、垂直场景基准彼此尚未统一。
 
-### 评测设定总判断
-- 2024：更多借用通用推理/代码/对话 benchmark。
-- 2025：开始强调 agent-specific benchmarks。
-- 2026：workflow、tool-use、communication、role-play 各自形成专项 benchmark 簇，但横向统一评测仍不足。
+### 本文件与其他产物的分工
+- 本文件：统一样本集下的逐篇详读笔记。
+- `analysis/2026-03-26-ten-survey-background-problem-framework-notes.md`：突出研究背景/问题定义/未来方向八字段。
+- `analysis/2026-03-26-ten-survey-cross-comparison.md`：横向比较、研究空白与统一分析框架。
+
+### 一致性声明
+经对照 `projects/multi-agent-survey-review/literature/meta/2026-03-26-selected-10-download-manifest.json`，本文覆盖的 10 篇论文分别为：
+`10.1007/s44336-024-00009-2`、`2402.01680`、`10.1007/s10458-023-09633-6`、`2412.17481`、`2501.06322`、`2502.14321`、`2502.16804`、`2503.13415`、`2505.21116`、`2602.11583`。
+未包含任何非锁定样本。
