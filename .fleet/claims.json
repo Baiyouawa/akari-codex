@@ -2302,7 +2302,8 @@
       "session_id": "结衣-03-1774523931-0fc573",
       "project": "zero-basics-plan",
       "claimed_at": 1774523931.1461082,
-      "active": true
+      "active": false,
+      "released_at": 1774524358.516656
     },
     "claim-2e5ebf6a2cb9": {
       "task_id": "f0d68c75d6d2d3db",
@@ -2310,6 +2311,14 @@
       "session_id": "千束-00-1774523931-1f5474",
       "project": "zero-basics-plan",
       "claimed_at": 1774523931.1518989,
+      "active": true
+    },
+    "claim-6f850e1b6a50": {
+      "task_id": "0540a677c46288ce",
+      "worker_id": "岛村-01",
+      "session_id": "岛村-01-1774524411-7e6a52",
+      "project": "zero-basics-plan",
+      "claimed_at": 1774524411.7782443,
       "active": true
     }
   }
