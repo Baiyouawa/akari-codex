@@ -3456,7 +3456,8 @@
       "session_id": "岛村-01-1774541448-de5424",
       "project": "AI",
       "claimed_at": 1774541448.9959207,
-      "active": true
+      "active": false,
+      "released_at": 1774541898.5569224
     },
     "claim-e250ffc0d0ec": {
       "task_id": "44f3d023ce34206d",
@@ -3473,7 +3474,8 @@
       "session_id": "结衣-03-1774541449-2f5943",
       "project": "AI",
       "claimed_at": 1774541449.075813,
-      "active": true
+      "active": false,
+      "released_at": 1774541877.4158554
     },
     "claim-7467e131d7db": {
       "task_id": "e2e1257946a456dd",
