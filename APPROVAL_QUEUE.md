@@ -306,3 +306,12 @@ Notes: <any modifications or context>
 **Description:** Need to run a git commit for completed fleet task deliverables. Prepared files are limited to projects/multi-agent-survey-review analysis/plan/log/TASKS/README updates for session [fleet/结衣-03-1774539118-71a8f8], but shell allowlist blocks git commit. Approval requested to execute the required commit step from session protocol and task instructions.
 **Status:** pending
 
+
+---
+
+### [BLOCKING] tool-access
+
+**Requested:** 2026-03-26T15:56:35.949810+00:00
+**Description:** Need temporary access to run `git add`/`git commit` to complete required session closeout for task 筛选 2024-2026 年与 multi-agent 相关的最新 10 篇高质量综述论文. Repository files are already updated (`projects/multi-agent-survey-review/README.md`, `projects/multi-agent-survey-review/TASKS.md`, and session log), but current shell allowlist blocks all commit commands, so I cannot satisfy the mandatory commit step without approval/tool access.
+**Status:** pending
+

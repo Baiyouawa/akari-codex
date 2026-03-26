@@ -6,7 +6,7 @@ OpenAkari-Codex 是一套以 **Humanize（RLCR 迭代审查循环）为核心工
 
 系统的前端交互角色名为**「小白」**——它不是简单的聊天机器人，而是一个拥有统一 Skill 体系、多轮自主推理能力的**顶层智能 Agent**，同时担任 Multi-Agent 系统的队长。**一切任务执行都遵循 Humanize RLCR 工作流：Plan → Implement → Self-Review → Fix → Deliver**，确保产出物的质量和可追溯性。
 
-通过 **QQ（OneBot/NapCat）、GitHub Issue/Discussion、CLI 终端**等多通道与用户互动，背后由 **Humanize RLCR 审查引擎**、统一 Skill 体系（76+ Skill）、Multi-Agent 并行调度（30+ Worker）、三层记忆反思系统、自主探索与经验嵌入机制驱动。
+通过 **QQ（OneBot/NapCat）、GitHub Issue/Discussion、CLI 终端**等多通道与用户互动，背后由 **Humanize RLCR 审查引擎**、统一 Skill 体系（86+ Skill）、Multi-Agent 并行调度（30+ Worker）、三层记忆反思系统、自主探索与经验嵌入机制驱动。
 
 ---
 
@@ -30,9 +30,9 @@ OpenAkari-Codex 是一套以 **Humanize（RLCR 迭代审查循环）为核心工
   - [Fleet 强制审查](#fleet-强制审查)
   - [手动触发](#手动触发)
 - [统一 Skill 体系](#统一-skill-体系)
-  - [原子 Skill（12 个）](#原子-skill12-个)
-  - [复合 Skill（26 个）](#复合-skill26-个)
-  - [系统 Skill（38 个）](#系统-skill38-个)
+- [原子 Skill（12 个）](#原子-skill12-个)
+- [复合 Skill（26 个）](#复合-skill26-个)
+- [系统 Skill（48 个）](#系统-skill48-个)
 - [核心模块详解](#核心模块详解)
   - [AgentLoop — 多轮推理循环引擎](#agentloop--多轮推理循环引擎)
   - [SkillRegistry — 统一能力注册表](#skillregistry--统一能力注册表)
@@ -182,7 +182,7 @@ python -m runner.chat
 │              │                                             │
 │  ┌───────────┴────────────────────────────┐               │
 │  │ SkillRegistry                           │               │
-│  │ 原子(12) + 复合(26) + 系统(38) = 76+   │               │
+│  │ 原子(12) + 复合(26) + 系统(48) = 86+   │               │
 │  └────────────────────────────────────────┘               │
 │              │                                             │
 │  ┌───────────┴────────────────────────────┐               │
@@ -220,7 +220,7 @@ python -m runner.chat
 ```
 openakari-codex/
 │
-├── runner/                         # 核心引擎层 (5800+ 行)
+├── runner/                         # 核心引擎层 (7700+ 行)
 │   ├── config.py                   #   CodexConfig: API/模型/安全配置
 │   ├── chat.py                     #   ChatBot: 小白主入口 + AgentLoop 集成
 │   ├── agent_loop.py               #   AgentLoop: 多轮 JSON 推理循环引擎
@@ -239,7 +239,7 @@ openakari-codex/
 │   ├── governance.py               #   溯源追踪 + 审批门控
 │   └── humanize_bridge.py          #   Humanize RLCR/Ask-Codex 桥接层
 │
-├── fleet/                          # Multi-Agent 系统 (3600+ 行)
+├── fleet/                          # Multi-Agent 系统 (3800+ 行)
 │   ├── config.py                   #   FleetConfig + 核心数据类型
 │   ├── scheduler.py                #   FleetScheduler: 主调度循环
 │   ├── executor.py                 #   Worker 子进程执行器 + Humanize 审查
@@ -255,7 +255,7 @@ openakari-codex/
 │   ├── console.py                  #   Fleet 控制台 UI
 │   └── workstreams.yaml            #   工作流/技能映射/空闲探索配置
 │
-├── integrations/                   # 外部平台集成 (1200+ 行)
+├── integrations/                   # 外部平台集成 (1400+ 行)
 │   ├── config_qq.py                #   OneBotConfig: QQ 连接配置
 │   ├── onebot_client.py            #   NapCat WebSocket 客户端(完整多媒体)
 │   └── qq_bot.py                   #   QQ 官方 Bot SDK(频道/群)
@@ -276,8 +276,8 @@ openakari-codex/
 │
 ├── projects/                       # 研究项目工作区
 │   ├── akari/                      #   元项目 — 系统自改进
-│   ├── moe/                        #   MoE 研究
-│   ├── multi-agent-review-survey/  #   多智能体综述
+│   ├── multi-agent-survey-review/  #   多智能体综述调研
+│   ├── zero-basics-plan/           #   28 天零基础学习路线
 │   └── ...                         #
 │
 ├── jobs/                           # 调度作业配置 (JSON)
@@ -370,7 +370,7 @@ python -m runner.chat "看看现在什么状态"
 3. 到期提醒检查: 前缀注入到期提醒
   ↓
 4. 构建 AgentLoop:
-   - 注入 SkillRegistry(76+ Skill 目录)
+   - 注入 SkillRegistry(86+ Skill 目录)
    - 注入记忆上下文(短期+长期+反思)
    - 注入仓库状态信息
   ↓
