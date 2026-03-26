@@ -1,17 +1,16 @@
 # zero-basics-plan — 任务列表
 
-- [x] 设计整体课程框架：将教程拆分为 4 周共 28 天，每天有明确学习目标、实操任务、配套资料；每周末安排一次系统课程复盘与整合训练。
-  Done when: 形成一份覆盖 4 周 28 天的课程总表，并为每天写明学习目标、实操任务、配套资料、阶段产出；验证 28 个 Day 小节存在。
-  Evidence: `projects/zero-basics-plan/analysis/2026-03-26-28-day-course-framework.md`; `projects/zero-basics-plan/plans/2026-03-26-course-framework.md`; `python3` 校验输出 `day_count 28`
-
-- [ ] 调研 Linux 零基础入门资料：覆盖文件系统、常用命令、权限、软件安装、Shell 基础、实战练习，筛选适合初学者的高质量中文或英文资料并记录来源。
+- [ ] 设计整体课程框架：将教程拆分为 4 周共 28 天，每天有明确学习目标、实操任务、配套资料；每周末安排一次系统课程复盘与整合训练。
   Done when: TBD
+
+- [x] 调研 Linux 零基础入门资料：覆盖文件系统、常用命令、权限、软件安装、Shell 基础、实战练习，筛选适合初学者的高质量中文或英文资料并记录来源。
+  Done when: 形成带来源的调研笔记，包含资料清单、主题映射、课程拆分建议与练习设计；见 `projects/zero-basics-plan/analysis/2026-03-26-linux-beginner-resource-survey.md`
 
 - [x] 调研 Git 与 GitHub 零基础资料：覆盖版本控制概念、仓库初始化、commit、branch、merge、rebase、remote、PR、issue、协作流程，并整理新手友好教程与练习。
   Done when: 形成带来源的调研笔记，包含资料清单、教程骨架、练习设计与 28 天课程拆分建议；见 `projects/zero-basics-plan/analysis/git-github-beginners-research.md`
 
-- [ ] 调研开发工具链资料：覆盖 Cursor、VS Code、终端、包管理、环境配置、基本调试方法，重点整理适合零基础的 VibeCoding 入门实践资料。
-  Done when: TBD
+- [x] 调研开发工具链资料：覆盖 Cursor、VS Code、终端、包管理、环境配置、基本调试方法，重点整理适合零基础的 VibeCoding 入门实践资料。
+  Done when: 形成带来源的调研笔记，覆盖 Cursor / VS Code / 终端 / 包管理 / 环境配置 / 调试 / VibeCoding 入门实践，并给出课程落地建议；见 `projects/zero-basics-plan/analysis/dev-toolchain-beginner-research.md`
 
 - [ ] 调研 VibeCoding / AI 辅助编程资料：说明概念、工作流、提示词基础、如何与 Cursor 配合完成小项目、常见误区与安全注意事项。
   Done when: TBD
