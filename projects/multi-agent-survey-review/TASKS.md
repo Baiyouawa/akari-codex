@@ -3,8 +3,8 @@
 - [x] 检索并筛选与multi-agent相关的最新十篇综述论文，优先覆盖2024-2026，记录题目、年份、链接、来源与入选理由
   Done when: 产出 `projects/multi-agent-survey-review/analysis/2026-03-26-latest-10-multi-agent-survey-selection.md`，并完成计划进度、自审与摘要文件
 
-- [ ] 将筛选出的十篇综述尽可能下载到本地，保存PDF或可读文本，并整理准确本地路径清单
-  Done when: TBD
+- [x] 将筛选出的十篇综述尽可能下载到本地，保存PDF或可读文本，并整理准确本地路径清单
+  Done when: 产出 `projects/multi-agent-survey-review/literature/meta/2026-03-26-selected-10-download-manifest.json` 与 `projects/multi-agent-survey-review/literature/meta/2026-03-26-selected-10-local-paths.md`，并完成 `projects/multi-agent-survey-review/plans/将筛选出的十篇综述尽可能下载到本地-保存pdf或可读文本-并整理准确本地路径清单-progress.md`、`projects/multi-agent-survey-review/plans/将筛选出的十篇综述尽可能下载到本地-保存pdf或可读文本-并整理准确本地路径清单-self-review.md`、`projects/multi-agent-survey-review/plans/将筛选出的十篇综述尽可能下载到本地-保存pdf或可读文本-并整理准确本地路径清单-summary.md`
 
 - [x] 修复十篇综述统一样本集详读笔记，确保与最终筛选结果和下载 manifest 完全一致 [skill: govern]
   Done when: 产出只覆盖 `projects/multi-agent-survey-review/literature/meta/2026-03-26-selected-10-download-manifest.json` 中 10 篇论文的详读笔记 `projects/multi-agent-survey-review/analysis/2026-03-26-ten-survey-detailed-reading-notes.md`，并完成对应计划 progress/self-review/summary 文件
