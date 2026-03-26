@@ -307,7 +307,7 @@ def _review_via_api(
             base_url=cfg.base_url,
             timeout=timeout,
         )
-        resp = client.chat.completions.create(
+        stream = client.chat.completions.create(
             model=model or cfg.model,
             messages=[
                 {"role": "system", "content": _REVIEW_SYSTEM_PROMPT},
@@ -315,8 +315,13 @@ def _review_via_api(
             ],
             temperature=0.2,
             max_tokens=2048,
+            stream=True,
         )
-        output = resp.choices[0].message.content or ""
+        parts: list[str] = []
+        for chunk in stream:
+            if chunk.choices and chunk.choices[0].delta.content:
+                parts.append(chunk.choices[0].delta.content)
+        output = "".join(parts)
     except Exception as e:
         return PostTaskReviewResult(
             reviewed=False, issues_found=0, has_critical=False,
